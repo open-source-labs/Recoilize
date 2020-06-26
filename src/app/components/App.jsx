@@ -1,23 +1,10 @@
 import React, { useState } from 'react';
+import MainContainer from '../Containers/MainContainer'
 
 function App() {
-
-  const [counter, updateCounter] = useState(0);
-
-  const incrementCounter = () => {
-    updateCounter(counter++);
-  }
-
-  const decrementCounter = () => {
-    updateCounter(counter--);
-  } 
-
   return (
-    <div style={{backgroundColor: 'green'}}>
-      React says hello
-      {/* <p>{counter}</p>
-      <button onClick={incrementCounter}>+</button>
-      <button onClick={decrementCounter}>-</button> */}
+    <div className='App'>
+      <MainContainer className='mainContainer' />
     </div>
   );
 }
