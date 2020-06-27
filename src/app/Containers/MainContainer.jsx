@@ -17,9 +17,9 @@ const MainContainer = () => {
       arr: [1, 2, 3, 4, 5],
     },
     {
-      name: 'bar',
+      name: 'foo',
       index: 2,
-      arr: [6, 7, 8, 9, 0],
+      arr: [1, 2, 3, 4, 5],
     },
     {
       name: 'fizz',

@@ -6,14 +6,13 @@ const SnapshotsList = ({snapshots, setCurRender}) => {
   const listOfSnapshots = snapshots.slice(1).reduce((acc, curSnap, i) => {
     // push list item into acc that passed setState functionality into button
     acc.push(
-      <div className="individualSnapshot" key={curSnap.name}>
+      <div
+        className="individualSnapshot"
+        key={curSnap.name}
+        onClick={() => {
+          setCurRender(curSnap.index);
+        }}>
         <li>{curSnap.name}</li>
-        <button
-          onClick={() => {
-            setCurRender(curSnap.index);
-          }}>
-          {i}
-        </button>
       </div>,
     );
     return acc;
