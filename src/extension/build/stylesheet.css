@@ -1,0 +1,37 @@
+/* Containers */
+.MainContainer {
+  display: flex;
+}
+
+.SnapshotsContainer {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.VisualContainer {
+  display: flex;
+  flex-grow: 8;
+  flex-direction: column;
+}
+
+
+/* Components */
+.SnapshotsList {
+  border-style: dashed;
+}
+
+.Diff {
+  border-style: dashed;
+  flex-grow: 1;
+}
+
+.Atoms {
+  border-style: dashed;
+}
+
+.navBar {
+  display: flex;
+  flex-grow: 0;
+  flex-direction: row;
+}

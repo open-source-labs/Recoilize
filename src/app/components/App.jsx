@@ -1,23 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import MainContainer from '../Containers/MainContainer'
 
 function App() {
+  useEffect(() => {
+    // SETUP connection to bg script
+    const backgroundConnection = chrome.runtime.connect({
+      name: "panel"
+    });
 
-  const [counter, updateCounter] = useState(0);
+    // INITIALIZE connection to bg script
+    backgroundConnection.postMessage({
+      name: 'hello',
+    });
 
-  const incrementCounter = () => {
-    updateCounter(counter++);
-  }
-
-  const decrementCounter = () => {
-    updateCounter(counter--);
-  } 
+    // LISTEN for messages FROM bg script
+    backgroundConnection.onMessage.addListener((msg) => {
+      console.log('ON MESSAGE IN APP: ', msg)
+    })
+  })
 
   return (
-    <div style={{backgroundColor: 'green'}}>
-      React says hello
-      {/* <p>{counter}</p>
-      <button onClick={incrementCounter}>+</button>
-      <button onClick={decrementCounter}>-</button> */}
+    <div className='App'>
+      <MainContainer className='mainContainer' />
     </div>
   );
 }
