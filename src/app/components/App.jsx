@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import MainContainer from '../Containers/MainContainer'
+import MainContainer from '../Containers/MainContainer';
 
 function App() {
   useEffect(() => {
     // SETUP connection to bg script
     const backgroundConnection = chrome.runtime.connect({
-      name: "panel"
+      name: 'panel',
     });
 
     // INITIALIZE connection to bg script
@@ -15,9 +15,9 @@ function App() {
 
     // LISTEN for messages FROM bg script
     backgroundConnection.onMessage.addListener((msg) => {
-      console.log('ON MESSAGE IN APP: ', msg)
-    })
-  })
+      console.log('ON MESSAGE IN APP: ', msg);
+    });
+  });
 
   return (
     <div className='App'>
