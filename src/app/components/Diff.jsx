@@ -1,16 +1,17 @@
 // renders the difference between the most recent state change and the previous
 import React from 'react';
+import { diff, formatters } from 'jsondiffpatch';
+import ReactHtmlParser from 'react-html-parser';
 
 const Diff = ({oldSnap, newSnap}) => {
-  // string of "atoms"
-  const oldSnapString = JSON.stringify(oldSnap);
-  // string of "atoms"
-  const newSnapString = JSON.stringify(newSnap);
+  // diffing between oldSnap && newSnap
+  const delta = diff(oldSnap, newSnap);
+  // string of html with comparisons
+  const html = formatters.html.format(delta, oldSnap);
+
   return (
     <div className='Diff'>
-      <p>Diff box</p>
-      <li>{oldSnapString}</li>
-      <li>{newSnapString}</li>
+      {ReactHtmlParser(html)}
     </div>
   )
 }
