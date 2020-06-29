@@ -1,37 +1,72 @@
 /* Containers */
+body {
+  color: #989898;
+}
 .MainContainer {
   display: flex;
+  flex-grow: 1;
 }
 
 .SnapshotsContainer {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
+  border: 2px solid #484848;
+  border-right: none;
+  /* padding: 5px; */
 }
 
 .VisualContainer {
   display: flex;
   flex-grow: 8;
   flex-direction: column;
+  border: 2px solid #484848;
+  color: #E6E6E6;
 }
-
 
 /* Components */
 .SnapshotsList {
-  border-style: dashed;
+  border-style: none;
 }
 
 .Diff {
-  border-style: dashed;
-  flex-grow: 1;
+  border-style: none;
 }
 
 .Atoms {
-  border-style: dashed;
+  border-style: none;
+  padding: 10px;
 }
 
-.navBar {
+.NavBar {
   display: flex;
   flex-grow: 0;
   flex-direction: row;
+  border-bottom: 2px solid #484848;
+  background-color: #2D2D2D;
+}
+
+.individualSnapshot {
+  list-style-type: none;
+  display: flex;
+  flex-direction: row;
+  padding: 10px;
+}
+
+.individualSnapshot:hover {
+  color: #E6E6E6;
+  background-color: #2D2D2D;
+}
+
+/* buttons */
+.navBarButtons {
+  color: #989898;
+  background-color: #2D2D2D;
+  border: none;
+  padding: 8px;
+}
+
+.navBarButtons:hover {
+  color: #E6E6E6;
+  background-color: #212121;
 }
