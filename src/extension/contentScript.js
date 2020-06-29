@@ -1,19 +1,7 @@
-console.log('this is the content script refreshed')
+// once chrome tab connects with our content-script
+window.postMessage({ action: 'contentScriptStarted' });
 
-const sendMessage = message => {
-  console.log('in the send message in the content script');
-  console.log("*")
-  console.log('        ', message, ' <-- message');
-  console.log("*")
-
-  chrome.runtime.sendMessage(message)
-}
-
-// Listening for message from injected script - inject.js
-window.addEventListener('message', e => {
-  //console.log('what do i look like in the window event listener?')
-  // console.log(e.data, ' <--- e.data')
-  // console.log('----')
-  // Making sure the event listened too is from the window 
-  sendMessage(e.data);
+// Listen to messages from Recoilize module within dev webpage
+window.addEventListener('message', msg => {
+  chrome.runtime.sendMessage(message)(msg.data);
 });
