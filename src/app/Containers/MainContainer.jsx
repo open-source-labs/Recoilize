@@ -4,9 +4,6 @@ import VisualContainer from './VisualContainer';
 
 // wraps entire application
 const MainContainer = () => {
-  // dummy state representing the most recent state/clicked state and the previous state
-  const [curRender, setCurRender] = useState(snapshots.length - 1);
-
   // dummy state representing our array of state snapshots
   const [snapshots, setSnapshots] = useState([
     // initial state representation
@@ -35,6 +32,9 @@ const MainContainer = () => {
       arr: ['f', 'g', 'h', 'i', 'j'],
     },
   ]);
+
+  // dummy state representing the most recent state/clicked state and the previous state
+  const [curRender, setCurRender] = useState(snapshots.length - 1);
   return (
     <div className='MainContainer'>
       <SnapshotsContainer setCurRender={setCurRender} snapshots={snapshots} />

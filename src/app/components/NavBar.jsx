@@ -19,6 +19,9 @@ const NavBar = ({ tab, setTab }) => {
       >
         Atoms
       </button>
+      <button className='navBarButtons' onClick={() => setTab('atomTree')}>
+        Atom Tree
+      </button>
     </div>
   );
 };

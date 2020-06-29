@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Diff from '../components/Diff.jsx';
 import Atoms from '../components/Atoms.jsx';
 import NavBar from '../components/NavBar.jsx';
+import AtomTree from '../components/AtomTree.jsx';
 
 // conditionally renders Diff and Atoms
 const VisualContainer = ({ snapshots, oldSnap, newSnap }) => {
@@ -10,6 +11,7 @@ const VisualContainer = ({ snapshots, oldSnap, newSnap }) => {
     diff: <Diff oldSnap={oldSnap} newSnap={newSnap} />,
     // atoms render passing in the "atoms"
     atoms: <Atoms snapshots={snapshots} />,
+    atomTree: <AtomTree />,
   };
   // useState hook to update the component to render in the container
   const [tab, setTab] = useState('diff');
