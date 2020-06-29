@@ -11,16 +11,39 @@ function AtomTree(props) {
   const height = 1500;
 
   // initial state taken from backgroundScript
-  const atomState = props.snapshotHistory;
+  const snapshotHistory = props.snapshotHistory;
+  console.log(Object.entries(snapshotHistory[0]));
+  const mapped = Object.entries(snapshotHistory[0]);
+
+  const atomState = {
+    name: 'Recoil Root',
+    children: mapped,
+  };
+  console.log('atom state', atomState);
 
   // creating the tree map
   const treeMap = d3.tree().nodeSize([width, height]);
+  console.log('tree map', treeMap);
   // creating the nodes of the tree
-  const atomNodes = d3.hierarchy(atomState);
+  const hierarchyNodes = d3.hierarchy(atomState);
+  console.log('hierarchy nodes', hierarchyNodes);
+  // calling the tree function with nodes created from data
+  const finalMap = treeMap(hierarchyNodes);
+  console.log('final map', finalMap);
+
+  // renders a flat array of objects containing all parent-child links
+  // renders the paths onto the component
+  let paths = finalMap.links();
+  console.log('paths', paths);
+
+  // returns a flat array of objects
+  // renders nodes onto the component
+  let nodes = hierarchyNodes.descendants();
+  console.log('nodes', nodes);
 
   return (
     <div className='AtomTree'>
-      <svg id='canvas'></svg>
+      <svg id='canvas' style={{ backgroundColor: 'blue' }}></svg>
     </div>
   );
 }
