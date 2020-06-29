@@ -11,13 +11,17 @@ function AtomTree(props) {
   const height = 1500;
 
   // initial state taken from backgroundScript
-  const snapshotHistory = props.snapshotHistory;
-  console.log(Object.entries(snapshotHistory[0]));
-  const mapped = Object.entries(snapshotHistory[0]);
+  let snapshotHistory = props.snapshotHistory;
+
+  console.log(snapshotHistory[0]);
+  // restructuring the data in a way for d3 to read and convert into a tree format
+  // using the d3.hierarchy method (look up data structure examples for d3.hierarchy)
+
+  // ***** need to parse data *****
 
   const atomState = {
     name: 'Recoil Root',
-    children: mapped,
+    // pass in parsed data here
   };
   console.log('atom state', atomState);
 
@@ -41,9 +45,39 @@ function AtomTree(props) {
   let nodes = hierarchyNodes.descendants();
   console.log('nodes', nodes);
 
+  paths =
+    paths &&
+    paths.map((el, i) => {
+      let d = d3
+        .linkHorizontal()
+        .x((d) => {
+          return d.x + 8000;
+        })
+        .y((d) => d.y - 900);
+
+      return <path key={i} className='link' fill='none' d={d(el)} />;
+    });
+
+  nodes =
+    nodes &&
+    nodes.map((node, i) => {
+      return (
+        <g key={i} transform={`translate(${node.x + 800}, ${node.y - 900})`}>
+          {node.data[1] !== null ? (
+            <rect x='-150' y='0' width='300' height='300'></rect>
+          ) : (
+            <circle r='150' />
+          )}
+        </g>
+      );
+    });
+
   return (
-    <div className='AtomTree'>
-      <svg id='canvas' style={{ backgroundColor: 'blue' }}></svg>
+    <div className='AtomTree' width='100vw' height='1000'>
+      <svg id='canvas' style={{ backgroundColor: 'blue' }} width='100000'>
+        {paths}
+        {nodes}
+      </svg>
     </div>
   );
 }
