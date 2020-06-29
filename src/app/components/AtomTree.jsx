@@ -1,7 +1,8 @@
 import React, { useRef } from 'react';
 import * as d3 from 'd3';
 
-function AtomTree() {
+function AtomTree(props) {
+  console.log('initial atom state in atomTree', props);
   const svg = d3.select('#canvas');
 
   svg

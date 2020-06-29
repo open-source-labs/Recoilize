@@ -30,7 +30,10 @@ function App() {
 
   return (
     <div className='App'>
-      <MainContainer className='mainContainer' />
+      <MainContainer
+        className='mainContainer'
+        snapshotHistory={snapshotHistory}
+      />
     </div>
   );
 }

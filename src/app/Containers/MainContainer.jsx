@@ -3,7 +3,7 @@ import SnapshotsContainer from './SnapshotsContainer';
 import VisualContainer from './VisualContainer';
 
 // wraps entire application
-const MainContainer = () => {
+const MainContainer = (props) => {
   // dummy state representing our array of state snapshots
   const [snapshots, setSnapshots] = useState([
     // initial state representation
@@ -42,6 +42,7 @@ const MainContainer = () => {
         snapshots={snapshots}
         oldSnap={snapshots[curRender - 1]}
         newSnap={snapshots[curRender]}
+        snapshotHistory={props.snapshotHistory}
       />
     </div>
   );
