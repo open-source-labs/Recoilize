@@ -9,14 +9,16 @@ const VisualContainer = ({snapshots, oldSnap, newSnap}) => {
     // diff render passing in the two snapshots that will be compared
     diff: <Diff oldSnap={oldSnap} newSnap={newSnap} />,
     // atoms render passing in the "atoms"
-    atoms: <Atoms snapshots={snapshots} />
-  }
+    atoms: <Atoms snapshots={snapshots} />,
+  };
+  // list of all tab strings to use in NavBar.jsx
+  const tabsList = Object.keys(nav);
   // useState hook to update the component to render in the container
   const [tab, setTab] = useState('diff');
   return (
     <div className="VisualContainer">
       {/* render navbar wrapped in div */}
-      <NavBar setTab={setTab}/>
+      <NavBar setTab={setTab} tabsList={tabsList} />
       {/* conditional render */}
       {nav[tab]}
     </div>
