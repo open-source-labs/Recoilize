@@ -9,7 +9,8 @@
   "permissions": [
     "contextMenus",
     "tabs",
-    "<all_urls>"
+    "<all_urls>",
+    "storage"
   ],
   "background": {
     "scripts": ["bundles/background.bundle.js"],
