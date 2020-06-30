@@ -19,7 +19,7 @@ function App() {
 
     // LISTEN for messages FROM bg script
     backgroundConnection.onMessage.addListener((msg) => {
-      console.log('ON MESSAGE IN APP: ', msg)
+      // console.log('ON MESSAGE IN APP: ', msg)
 
       if (msg.action === 'recordSnapshot') {
         setSnapshotHistory(msg.payload)
@@ -27,11 +27,11 @@ function App() {
     })
   }, [])
 
-  console.log('the dev tool has snapshotHistory: ', snapshotHistory);
+  // console.log('the dev tool has snapshotHistory: ', snapshotHistory);
 
   return (
     <div className='App'>
-      <MainContainer className='mainContainer' />
+      <MainContainer className='mainContainer' snapshots={snapshotHistory} />
     </div>
   );
 }

@@ -2,9 +2,9 @@ import React from 'react';
 
 const Atoms = ({snapshots}) => {
   // array of "atoms"
-  const listOfAtoms = snapshots.slice(1).reduce((acc, curSnap) => {
+  const listOfAtoms = snapshots.reduce((acc, curSnap, i) => {
     // pushing stringify "atom" into accumulator
-    acc.push(<li>{JSON.stringify(curSnap.arr)}</li>);
+    acc.push(<li key={i}>{JSON.stringify(curSnap.arr)}</li>);
     return acc;
   }, []);
   return (
