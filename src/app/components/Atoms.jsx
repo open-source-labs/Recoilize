@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 /////////////////////////////////////////////////
 // NOT FUNCTIONING ONLY WORKED WITH DUMMY DATA //
@@ -12,7 +12,7 @@ const Atoms = ({ snapshots }) => {
     return acc;
   }, []);
   return (
-    <div className="Atoms">
+    <div className='Atoms'>
       <p>Atoms box</p>
       {listOfAtoms}
     </div>

@@ -1,9 +1,9 @@
-import React from "react";
-import SnapshotsList from "../components/SnapshotsList";
+import React from 'react';
+import SnapshotsList from '../components/SnapshotsList';
 
 const SnapshotsContainer = ({ snapshots, setCurRender }) => {
   return (
-    <div className="SnapshotsContainer">
+    <div className='SnapshotsContainer'>
       <h3>Snapshots</h3>
       <SnapshotsList
         // array of snapshots

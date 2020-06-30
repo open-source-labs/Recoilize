@@ -23,7 +23,7 @@ body {
   flex-direction: column;
   border-bottom: 2px solid #484848;
   border-left: 2px solid #484848;
-  color: #E6E6E6;
+  color: #e6e6e6;
 }
 
 /* COMPONENTS */
@@ -45,7 +45,7 @@ body {
   flex-grow: 0;
   flex-direction: row;
   border-bottom: 2px solid #484848;
-  background-color: #2D2D2D;
+  background-color: #2d2d2d;
 }
 
 /* BUTTONS */
@@ -56,31 +56,41 @@ body {
   padding: 10px;
   color: #989898;
   border: none;
-  background-color: #2D2D2D;
+  background-color: #2d2d2d;
   width: 100%;
-  outline: none; 
+  outline: none;
 }
 
 .individualSnapshot:hover {
-  color: #E6E6E6;
+  color: #e6e6e6;
   background-color: #212121;
 }
 
 .individualSnapshot:focus {
-  color: #E6E6E6;
+  color: #e6e6e6;
   background-color: #212121;
 }
 
 .navBarButtons {
   color: #989898;
-  background-color: #2D2D2D;
+  background-color: #2d2d2d;
   border: none;
   padding: 8px;
-  outline: none; 
+  outline: none;
 }
 
 .navBarButtons:hover {
-  color: #E6E6E6;
+  color: #e6e6e6;
   background-color: #212121;
 }
 
+#canvas {
+  border: 1px solid pink;
+  height: 100%;
+  width: 100%;
+}
+.AtomTree {
+  border: 1px solid blue;
+  height: 100vh;
+  width: 100vw;
+}
