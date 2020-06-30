@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import MainContainer from '../Containers/MainContainer';
+import AtomTree from '../components/AtomTree.jsx';
 
 function App() {
   const [snapshotHistory, setSnapshotHistory] = useState([]);
@@ -34,6 +35,7 @@ function App() {
         className='mainContainer'
         snapshotHistory={snapshotHistory}
       />
+      <AtomTree snapshotHistory={snapshotHistory} />
     </div>
   );
 }

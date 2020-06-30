@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import * as d3 from 'd3';
 
 function AtomTree(props) {
@@ -11,7 +11,14 @@ function AtomTree(props) {
   const height = 1500;
 
   // initial state taken from backgroundScript
-  let snapshotHistory = props.snapshotHistory;
+  const [snapshotHistory, setSnapshotHistory] = useState(props.snapshotHistory);
+  const [loading, setLoading] = useState(true);
+  // const [atomState, setAtomState] = useState({});
+
+  useEffect(() => {
+    setSnapshotHistory(props.snapshotHistory);
+  });
+  console.log('snapshotHistory', snapshotHistory);
 
   // restructuring the data in a way for d3 to read and convert into a tree format
   // using the d3.hierarchy method (look up data structure examples for d3.hierarchy)
@@ -20,6 +27,8 @@ function AtomTree(props) {
   const makeTree = (obj) => {
     // every name should be val
     // every children should be array
+    if (!obj) return;
+    console.log('obj inside makeTree', obj);
 
     let result = [];
     let keys = Object.keys(obj);
@@ -27,7 +36,11 @@ function AtomTree(props) {
       let newObj = {};
       newObj.name = key;
       // obj[key] is a nested object so recurse
-      if (typeof obj[key] === 'object' && !Array.isArray(obj[key])) {
+      if (
+        typeof obj[key] === 'object' &&
+        !Array.isArray(obj[key]) &&
+        obj[key]
+      ) {
         newObj.children = makeTree(obj[key]);
       } else if (Array.isArray(obj[key])) {
         // obj[key] is an array
@@ -51,8 +64,8 @@ function AtomTree(props) {
     });
     return result;
   };
-
   // need to make this atom state be dynamic to the current snapshot
+
   const atomState = {
     name: 'Recoil Root',
     // pass in parsed data here
@@ -100,11 +113,13 @@ function AtomTree(props) {
   const node = g.selectAll('.node').data(nodes);
 
   return (
-    <div className='AtomTree' width='100vw' height='1000'>
-      <svg id='canvas' style={{ backgroundColor: 'blue' }} width='100000'>
-        {paths}
-        {nodes}
-      </svg>
+    <div className='AtomTree' width='100vw' height='100vh'>
+      <svg
+        id='canvas'
+        style={{ backgroundColor: 'blue' }}
+        height='100000'
+        width='100000'
+      ></svg>
     </div>
   );
 }
