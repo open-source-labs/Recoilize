@@ -1,19 +1,20 @@
 // renders a list of all of the snapshots that were taking
-import React from 'react';
+import React from "react";
 
-const SnapshotsList = ({snapshots, setCurRender}) => {
+const SnapshotsList = ({ curRender, setCurRender, snapshots }) => {
   // this is where we grab snapshots using one of recoil's hooks and paste in an array
-  const listOfSnapshots = snapshots.slice(1).reduce((acc, curSnap, i) => {
-    // push list item into acc that passed setState functionality into button
+  const listOfSnapshots = snapshots.reduce((acc, curSnap, i) => {
     acc.push(
-      <div
+      <button
         className="individualSnapshot"
-        key={curSnap.name}
+        key={i}
+        // setState functionality to update curRender
         onClick={() => {
-          setCurRender(curSnap.index);
-        }}>
-        <li>{curSnap.name}</li>
-      </div>,
+          setCurRender(i);
+        }}
+      >
+        <li>{i}</li>
+      </button>
     );
     return acc;
   }, []);
