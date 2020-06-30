@@ -1,30 +1,32 @@
-/* Containers */
+html,
 body {
   color: #989898;
+  margin: 0;
+  height: 100%;
 }
+/* CONTAINERS */
+
 .MainContainer {
   display: flex;
-  flex-grow: 1;
 }
 
 .SnapshotsContainer {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  border: 2px solid #484848;
-  border-right: none;
-  /* padding: 5px; */
+  border-bottom: 2px solid #484848;
 }
 
 .VisualContainer {
   display: flex;
   flex-grow: 8;
   flex-direction: column;
-  border: 2px solid #484848;
+  border-bottom: 2px solid #484848;
+  border-left: 2px solid #484848;
   color: #e6e6e6;
 }
 
-/* Components */
+/* COMPONENTS */
 .SnapshotsList {
   border-style: none;
 }
@@ -46,24 +48,35 @@ body {
   background-color: #2d2d2d;
 }
 
+/* BUTTONS */
 .individualSnapshot {
   list-style-type: none;
   display: flex;
-  flex-direction: row;
+  flex-grow: 1;
   padding: 10px;
+  color: #989898;
+  border: none;
+  background-color: #2d2d2d;
+  width: 100%;
+  outline: none;
 }
 
 .individualSnapshot:hover {
   color: #e6e6e6;
-  background-color: #2d2d2d;
+  background-color: #212121;
 }
 
-/* buttons */
+.individualSnapshot:focus {
+  color: #e6e6e6;
+  background-color: #212121;
+}
+
 .navBarButtons {
   color: #989898;
   background-color: #2d2d2d;
   border: none;
   padding: 8px;
+  outline: none;
 }
 
 .navBarButtons:hover {

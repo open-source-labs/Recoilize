@@ -1,48 +1,32 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import SnapshotsContainer from './SnapshotsContainer';
 import VisualContainer from './VisualContainer';
 
 // wraps entire application
-const MainContainer = (props) => {
-  // dummy state representing our array of state snapshots
-  const [snapshots, setSnapshots] = useState([
-    // initial state representation
-    {},
-    {
-      // dummy state
-      name: 'foo',
-      // index utilized to update the diff comparison
-      index: 1,
-      // dummy state
-      arr: [1, 2, 3, 4, 5],
-    },
-    {
-      name: 'foo',
-      index: 2,
-      arr: [1, 2, 3, 4, 5],
-    },
-    {
-      name: 'fizz',
-      index: 3,
-      arr: ['a', 'b', 'c', 'd', 'e'],
-    },
-    {
-      name: 'buzz',
-      index: 4,
-      arr: ['f', 'g', 'h', 'i', 'j'],
-    },
-  ]);
-
-  // dummy state representing the most recent state/clicked state and the previous state
+const MainContainer = ({ snapshots }) => {
+  // useState hook to update the index of snapshots to compare in Diff.jsx
   const [curRender, setCurRender] = useState(snapshots.length - 1);
+
+  useEffect(() => {
+    setCurRender(snapshots.length - 1);
+  }, [snapshots]);
+
   return (
     <div className='MainContainer'>
-      <SnapshotsContainer setCurRender={setCurRender} snapshots={snapshots} />
-      <VisualContainer
+      <SnapshotsContainer
+        // array of snapshots
         snapshots={snapshots}
+        // setState functionality to update curRender
+        setCurRender={setCurRender}
+      />
+      <VisualContainer
+        // array of snapshots
+        snapshots={snapshots}
+        // snapshot at index [curRender -1]
         oldSnap={snapshots[curRender - 1]}
+        // snapshot at index [curRender]
         newSnap={snapshots[curRender]}
-        snapshotHistory={props.snapshotHistory}
+        snapshotHistory={snapshots}
       />
     </div>
   );

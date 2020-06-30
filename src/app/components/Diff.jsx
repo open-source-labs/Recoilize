@@ -8,7 +8,6 @@ const Diff = ({ oldSnap, newSnap }) => {
   const delta = diff(oldSnap, newSnap);
   // string of html with comparisons
   const html = formatters.html.format(delta, oldSnap);
-
   return <div className='Diff'>{ReactHtmlParser(html)}</div>;
 };
 

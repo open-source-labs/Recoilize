@@ -1,29 +1,24 @@
 import React from 'react';
 
-const NavBar = ({ tab, setTab }) => {
-  return (
-    <div className='NavBar'>
+const NavBar = ({ setTab, tabsList }) => {
+  // array of buttons with setTab functionality
+  const renderedTabButtons = tabsList.reduce((acc, el) => {
+    acc.push(
       <button
         className='navBarButtons'
+        key={el}
+        // setState functionality to update tab
         onClick={() => {
-          setTab('diff');
+          setTab(el);
         }}
       >
-        Diff
+        {el}
       </button>
-      <button
-        className='navBarButtons'
-        onClick={() => {
-          setTab('atoms');
-        }}
-      >
-        Atoms
-      </button>
-      <button className='navBarButtons' onClick={() => setTab('atomTree')}>
-        Atom Tree
-      </button>
-    </div>
-  );
+    );
+    return acc;
+  }, []);
+  // render the array of NavBar buttons generated above
+  return <div className='NavBar'>{renderedTabButtons}</div>;
 };
 
 export default NavBar;
