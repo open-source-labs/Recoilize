@@ -13,16 +13,53 @@ function AtomTree(props) {
   // initial state taken from backgroundScript
   let snapshotHistory = props.snapshotHistory;
 
-  console.log(snapshotHistory[0]);
+  console.log(JSON.stringify(snapshotHistory[0]));
   // restructuring the data in a way for d3 to read and convert into a tree format
   // using the d3.hierarchy method (look up data structure examples for d3.hierarchy)
 
   // ***** need to parse data *****
+  const makeTree = (obj) => {
+    // every name should be val
+    // every children should be array
 
+    let result = [];
+    let keys = Object.keys(obj);
+    keys.forEach((key) => {
+      let newObj = {};
+      newObj.name = key;
+      // obj[key] is a nested object so recurse
+      if (typeof obj[key] === 'object' && !Array.isArray(obj[key])) {
+        newObj.children = makeTree(obj[key]);
+      } else if (Array.isArray(obj[key])) {
+        // obj[key] is an array
+        newObj.children = [];
+        obj[key].forEach((el, i) => {
+          newObj.children.push({
+            name: `${key}[${i}]`,
+            value: obj[key][i],
+          });
+        });
+      } else {
+        // obj[key] is a primitive
+        newObj.children = [
+          {
+            name: JSON.stringify(obj[key]),
+          },
+        ];
+      }
+
+      result.push(newObj);
+    });
+    return result;
+  };
+
+  // need to make this atom state be dynamic to the current snapshot
   const atomState = {
     name: 'Recoil Root',
     // pass in parsed data here
+    children: makeTree(snapshotHistory[snapshotHistory.length - 1]),
   };
+
   console.log('atom state', atomState);
 
   // creating the tree map
@@ -51,11 +88,12 @@ function AtomTree(props) {
       let d = d3
         .linkHorizontal()
         .x((d) => {
-          return d.x + 8000;
+          console.log('d path', d);
+          return d.x;
         })
-        .y((d) => d.y - 900);
+        .y((d) => d.y);
 
-      return <path key={i} className='link' fill='none' d={d(el)} />;
+      return <path key={i} className='link' fill='none' />;
     });
 
   nodes =
@@ -71,6 +109,47 @@ function AtomTree(props) {
         </g>
       );
     });
+
+  const zoom = d3.zoom();
+
+  function addZoomListener(zoom) {
+    const canvasElement = document.getElementById('canvas');
+    canvasElement.addEventListener('keydown', (e) => {
+      if (e.keycode === 16) {
+        console.log('hit');
+        startZoom(zoom);
+      }
+    });
+
+    canvasElement.addEventListener('keyup', (e) => {
+      if (e.keycode === 16) endZoom();
+    });
+  }
+
+  function zoomed() {
+    const g = d3.select('#canvas');
+    g.attr('transform', d3.event.transform);
+  }
+
+  function startZoom(zoom) {
+    const svg = d3.select('#canvas');
+    svg.call(zoom.on('zoom', zoomed));
+  }
+
+  function endZoom() {
+    const svg = d3.select('#canvas');
+    svg.on('zoom', null);
+  }
+  svg
+    .append('g')
+    .attr('width', '100%')
+    .attr('height', '100%')
+    .call(
+      d3.zoom().on('zoom', () => {
+        svg.attr('transform', d3.event.transform);
+      })
+    )
+    .append('g');
 
   return (
     <div className='AtomTree' width='100vw' height='1000'>

@@ -11,7 +11,7 @@ const VisualContainer = ({ snapshots, oldSnap, newSnap, snapshotHistory }) => {
     diff: <Diff oldSnap={oldSnap} newSnap={newSnap} />,
     // atoms render passing in the "atoms"
     atoms: <Atoms snapshots={snapshots} />,
-    atomTree: <AtomTree snapshotHistory={snapshotHistory} />,
+    atomTree: <AtomTree snapshotHistory={snapshotHistory} newSnap={newSnap} />,
   };
   // useState hook to update the component to render in the container
   const [tab, setTab] = useState('diff');
