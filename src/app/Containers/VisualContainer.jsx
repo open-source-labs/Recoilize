@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Diff from '../components/Diff.jsx';
 import Atoms from '../components/Atoms.jsx';
 import NavBar from '../components/NavBar.jsx';
+import AtomTree from '../components/AtomTree.jsx';
 
 // conditionally renders Diff and Atoms
 const VisualContainer = ({ snapshots, oldSnap, newSnap }) => {

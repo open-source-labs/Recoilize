@@ -6,8 +6,6 @@ function AtomTree(props) {
   const width = 600;
   const height = 600;
 
-  console.log('props tab', props.tab);
-
   // legend for svg canvas
   const svgContainer = d3
     .select('#canvas')
