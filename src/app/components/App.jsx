@@ -9,10 +9,12 @@ function App() {
     const backgroundConnection = chrome.runtime.connect({
       name: "panel",
     });
+
+    console.log('backgroundConnection: ', backgroundConnection)
     // INITIALIZE connection to bg script
     backgroundConnection.postMessage({
       action: "devToolInitialized",
-      tabId: chrome.devtools.inspectedWindow.tabId,
+      tabId: chrome.devtools.inspectedWindow.tabId
     });
     // LISTEN for messages FROM bg script
     backgroundConnection.onMessage.addListener((msg) => {
