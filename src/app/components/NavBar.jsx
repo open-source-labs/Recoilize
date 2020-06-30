@@ -1,17 +1,19 @@
-import React from 'react';
+import React from "react";
 
-const NavBar = ({tab, setTab, tabsList}) => {
+const NavBar = ({ setTab, tabsList }) => {
   // array of buttons with setTab functionality
   const renderedTabButtons = tabsList.reduce((acc, el) => {
     acc.push(
       <button
-        key={el}
         className="navBarButtons"
+        key={el}
+        // setState functionality to update tab
         onClick={() => {
           setTab(el);
-        }}>
+        }}
+      >
         {el}
-      </button>,
+      </button>
     );
     return acc;
   }, []);

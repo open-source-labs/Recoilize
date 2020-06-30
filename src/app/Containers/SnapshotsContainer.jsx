@@ -1,12 +1,16 @@
-import React from 'react';
-import SnapshotsList from '../components/SnapshotsList';
+import React from "react";
+import SnapshotsList from "../components/SnapshotsList";
 
-const SnapshotsContainer = ({snapshots, setCurRender}) => {
-  // wraps SnapshotList
+const SnapshotsContainer = ({ snapshots, setCurRender }) => {
   return (
     <div className="SnapshotsContainer">
       <h3>Snapshots</h3>
-      <SnapshotsList snapshots={snapshots} setCurRender={setCurRender} />
+      <SnapshotsList
+        // array of snapshots
+        snapshots={snapshots}
+        // setState functionality to update curRender
+        setCurRender={setCurRender}
+      />
     </div>
   );
 };
