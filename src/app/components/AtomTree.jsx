@@ -13,7 +13,6 @@ function AtomTree(props) {
   // initial state taken from backgroundScript
   let snapshotHistory = props.snapshotHistory;
 
-  console.log(JSON.stringify(snapshotHistory[0]));
   // restructuring the data in a way for d3 to read and convert into a tree format
   // using the d3.hierarchy method (look up data structure examples for d3.hierarchy)
 
@@ -82,74 +81,23 @@ function AtomTree(props) {
   let nodes = hierarchyNodes.descendants();
   console.log('nodes', nodes);
 
-  paths =
-    paths &&
-    paths.map((el, i) => {
-      let d = d3
-        .linkHorizontal()
-        .x((d) => {
-          console.log('d path', d);
+  const g = svg.append('g');
+  g.selectAll('.link')
+    .data(paths)
+    .enter()
+    .append('path')
+    .attr('class', 'link')
+    .attr(
+      'd',
+      d3
+        .linkRadial()
+        .angle((d) => {
           return d.x;
         })
-        .y((d) => d.y);
+        .radius((d) => d.y)
+    );
 
-      return <path key={i} className='link' fill='none' />;
-    });
-
-  nodes =
-    nodes &&
-    nodes.map((node, i) => {
-      return (
-        <g key={i} transform={`translate(${node.x + 800}, ${node.y - 900})`}>
-          {node.data[1] !== null ? (
-            <rect x='-150' y='0' width='300' height='300'></rect>
-          ) : (
-            <circle r='150' />
-          )}
-        </g>
-      );
-    });
-
-  const zoom = d3.zoom();
-
-  function addZoomListener(zoom) {
-    const canvasElement = document.getElementById('canvas');
-    canvasElement.addEventListener('keydown', (e) => {
-      if (e.keycode === 16) {
-        console.log('hit');
-        startZoom(zoom);
-      }
-    });
-
-    canvasElement.addEventListener('keyup', (e) => {
-      if (e.keycode === 16) endZoom();
-    });
-  }
-
-  function zoomed() {
-    const g = d3.select('#canvas');
-    g.attr('transform', d3.event.transform);
-  }
-
-  function startZoom(zoom) {
-    const svg = d3.select('#canvas');
-    svg.call(zoom.on('zoom', zoomed));
-  }
-
-  function endZoom() {
-    const svg = d3.select('#canvas');
-    svg.on('zoom', null);
-  }
-  svg
-    .append('g')
-    .attr('width', '100%')
-    .attr('height', '100%')
-    .call(
-      d3.zoom().on('zoom', () => {
-        svg.attr('transform', d3.event.transform);
-      })
-    )
-    .append('g');
+  const node = g.selectAll('.node').data(nodes);
 
   return (
     <div className='AtomTree' width='100vw' height='1000'>
