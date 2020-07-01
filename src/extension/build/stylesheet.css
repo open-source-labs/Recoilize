@@ -4,6 +4,12 @@ body {
   margin: 0;
   height: 100%;
 }
+
+.App, #root {
+  width: 100%;
+  height: 100%;
+}
+
 /* CONTAINERS */
 
 .MainContainer {
@@ -93,4 +99,28 @@ body {
   border: 1px solid blue;
   height: 100vh;
   width: 100vw;
+}
+
+.notFoundContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  font-size: 1.2rem;
+}
+
+.notFoundContainer p {
+  margin: 60px;
+}
+
+.notFoundContainer a {
+  color: #3578e5;
+}
+
+.logo {
+  width: 20%;
+  height: auto;
 }
