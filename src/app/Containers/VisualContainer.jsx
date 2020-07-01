@@ -5,7 +5,7 @@ import NavBar from '../components/NavBar.jsx';
 import AtomTree from '../components/AtomTree.jsx';
 
 // conditionally renders Diff and Atoms
-const VisualContainer = ({ snapshots, oldSnap, newSnap }) => {
+const VisualContainer = ({ snapshotHistory, oldSnap, newSnap }) => {
   // object containing all conditional renders based on navBar
   const nav = {
     diff: (
@@ -19,10 +19,10 @@ const VisualContainer = ({ snapshots, oldSnap, newSnap }) => {
     atoms: (
       <Atoms
         // array of snapshots CURRENT NOT IN USE
-        snapshots={snapshots}
+        snapshotHistory={snapshotHistory}
       />
     ),
-    atomTree: <AtomTree snapshotHistory={snapshots} />,
+    atomTree: <AtomTree snapshotHistory={snapshotHistory} />,
   };
   // array of all all nav obj keys as strings
   const tabsList = Object.keys(nav);

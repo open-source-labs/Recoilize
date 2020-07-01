@@ -9,8 +9,6 @@ function App() {
   useEffect(() => {
     // SETUP connection to bg script
     const backgroundConnection = chrome.runtime.connect();
-
-    console.log('backgroundConnection: ', backgroundConnection)
     // INITIALIZE connection to bg script
     backgroundConnection.postMessage({
       action: 'devToolInitialized',
@@ -30,7 +28,7 @@ function App() {
       <MainContainer
         className='mainContainer'
         // array of snapshots
-        snapshots={snapshotHistory}
+        snapshotHistory={snapshotHistory}
       />
     )
   }
@@ -50,3 +48,4 @@ function App() {
 }
 
 export default App;
+ 
