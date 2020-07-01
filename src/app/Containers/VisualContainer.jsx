@@ -8,7 +8,7 @@ import AtomTree from '../components/AtomTree.jsx';
 const VisualContainer = ({ snapshotHistory, oldSnap, newSnap }) => {
   // object containing all conditional renders based on navBar
   const nav = {
-    diff: (
+    Diff: (
       <Diff
         // snapshot at index [curRender -1]
         oldSnap={oldSnap}
@@ -16,18 +16,18 @@ const VisualContainer = ({ snapshotHistory, oldSnap, newSnap }) => {
         newSnap={newSnap}
       />
     ),
-    atoms: (
+    Atoms: (
       <Atoms
         // array of snapshots CURRENT NOT IN USE
         snapshotHistory={snapshotHistory}
       />
     ),
-    atomTree: <AtomTree snapshotHistory={snapshotHistory} />,
+    'Atom Tree': <AtomTree snapshotHistory={snapshotHistory} />,
   };
   // array of all all nav obj keys as strings
   const tabsList = Object.keys(nav);
   // useState hook to update the component to render in the container
-  const [tab, setTab] = useState('diff');
+  const [tab, setTab] = useState('Diff');
   return (
     <div className='VisualContainer'>
       <NavBar setTab={setTab} tabsList={tabsList} />
