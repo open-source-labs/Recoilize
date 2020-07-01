@@ -20,14 +20,24 @@ function AtomTree(props) {
   useEffect(() => {
     if (!initialRender) {
       document.getElementById('canvas').innerHTML = '';
+      setSnapshotHistory(props.snapshotHistory);
     }
   });
 
-  // setting the snapshotHistory state on re-renders
   useEffect(() => {
-    setSnapshotHistory(props.snapshotHistory);
+    if (!initialRender) {
+      // console.log('d3 event', d3.zoomTransform(svgContainer.node()));
+      // console.log('node', node);
+      setZoomState(d3.zoomTransform(svgContainer.node()));
+    }
+    //setting the zoomState equal to whatever the d3.event.transform so svg canvas stays at the same zoom level on multiple renders
+    // setZoomState(zoomState);
+  }, [snapshotHistory]);
+
+  // only need to set initial render state to false one time
+  useEffect(() => {
     setInitialRender(false);
-  });
+  }, []);
 
   // creating the main svg container for d3 elements
   const svgContainer = d3
@@ -152,7 +162,7 @@ function AtomTree(props) {
     if (!d.children) {
       d3.select(this)
         .append('text')
-        .text(JSON.stringify(d.data))
+        .text(JSON.stringify(d.data, undefined, 2))
         .style('fill', 'white')
         .attr('x', 200)
         .attr('y', 50)
@@ -166,52 +176,44 @@ function AtomTree(props) {
     d3.select(`#popup${i}`).remove();
   });
 
-  useEffect(() => {
-    // this allows svg to be dragged around
-    node.call(
-      d3
-        .drag()
-        .on('start', dragStarted)
-        .on('drag', dragged)
-        .on('end', dragEnded)
-    );
+  // this allows svg to be dragged around
+  node.call(
+    d3.drag().on('start', dragStarted).on('drag', dragged).on('end', dragEnded)
+  );
 
-    // this allows the svg to have zoom functionality
-    svgContainer.call(
-      d3
-        .zoom()
-        .extent([
-          [0, 0],
-          [width, height],
-        ])
-        .scaleExtent([0, 8])
-        .on('zoom', zoomed)
-    );
+  // this allows the svg to have zoom functionality
+  svgContainer.call(
+    d3
+      .zoom()
+      .extent([
+        [0, 0],
+        [width, height],
+      ])
+      .scaleExtent([0, 8])
+      .on('zoom', zoomed)
+  );
 
-    // helpers to allow dragging
-    function dragStarted() {
-      d3.select(this).raise();
-      g.attr('cursor', 'grabbing');
-    }
+  // helpers to allow dragging
+  function dragStarted() {
+    d3.select(this).raise();
+    g.attr('cursor', 'grabbing');
+  }
 
-    function dragged(d) {
-      d3.select(this)
-        .attr('dx', (d.x = d3.event.x))
-        .attr('dy', (d.y = d3.event.y));
-    }
+  function dragged(d) {
+    d3.select(this)
+      .attr('dx', (d.x = d3.event.x))
+      .attr('dy', (d.y = d3.event.y));
+  }
 
-    function dragEnded() {
-      g.attr('cursor', 'grab');
-    }
+  function dragEnded() {
+    g.attr('cursor', 'grab');
+  }
 
-    // helper function that allows for zooming
-    function zoomed() {
-      g.attr('transform', d3.event.transform);
+  // helper function that allows for zooming
+  function zoomed() {
+    g.attr('transform', d3.event.transform);
+  }
 
-      //setting the zoomState equal to whatever the d3.event.transform so svg canvas stays at the same zoom level on multiple renders
-      setZoomState(d3.event.transform);
-    }
-  });
   return (
     <div>
       <div className='AtomTree'>
