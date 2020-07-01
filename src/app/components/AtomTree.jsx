@@ -13,14 +13,20 @@ function AtomTree(props) {
   // **** REFACTOR SO YOU DONT HAVE TO PROPDRILL ****
   const [snapshotHistory, setSnapshotHistory] = useState(props.snapshotHistory);
 
-  // on multiple re-renders, clears the canvas and creates a new tree based on new atom state
+  // this state is needed so that the canvas doesn't clear on the first load
+  const [initialRender, setInitialRender] = useState(true);
+
+  // this only clears the canvas if AtomTree is already rendered on the extension
   useEffect(() => {
-    document.getElementById('canvas').innerHTML = '';
+    if (!initialRender) {
+      document.getElementById('canvas').innerHTML = '';
+    }
   });
 
   // setting the snapshotHistory state on re-renders
   useEffect(() => {
     setSnapshotHistory(props.snapshotHistory);
+    setInitialRender(false);
   });
 
   // creating the main svg container for d3 elements
@@ -100,8 +106,8 @@ function AtomTree(props) {
   g.append('g')
     .attr('fill', 'none')
     .attr('stroke', '#2bff00')
-    .attr('stroke-opacity', 0.9)
-    .attr('stroke-width', 10)
+    // .attr('stroke-opacity', 1)
+    .attr('stroke-width', 5)
     .selectAll('path')
     .data(paths)
     .join('path')
@@ -120,7 +126,7 @@ function AtomTree(props) {
   const node = g
     .append('g')
     .attr('stroke-linejoin', 'round') // no clue what this does
-    .attr('stroke-width', 3)
+    .attr('stroke-width', 1)
     .selectAll('g')
     .data(nodes)
     .join('g')
@@ -136,9 +142,29 @@ function AtomTree(props) {
     .attr('text-anchor', (d) => (d.children ? 'end' : 'start'))
     .text((d) => d.data.name)
     .style('font-size', `2rem`)
+    .style('fill', 'white')
     .clone(true)
     .lower()
-    .attr('stroke', 'white');
+    .attr('stroke', '#2bff00')
+    .attr('stroke-width', 1);
+
+  node.on('mouseover', function (d, i) {
+    if (!d.children) {
+      d3.select(this)
+        .append('text')
+        .text(JSON.stringify(d.data))
+        .style('fill', 'white')
+        .attr('x', 200)
+        .attr('y', 50)
+        .style('font-size', '3rem')
+        .attr('stroke', '#2bff00')
+        .attr('id', `popup${i}`);
+    }
+  });
+
+  node.on('mouseout', function (d, i) {
+    d3.select(`#popup${i}`).remove();
+  });
 
   useEffect(() => {
     // this allows svg to be dragged around
