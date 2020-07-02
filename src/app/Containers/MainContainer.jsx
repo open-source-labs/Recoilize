@@ -3,30 +3,29 @@ import SnapshotsContainer from "./SnapshotsContainer";
 import VisualContainer from "./VisualContainer";
 
 // wraps entire application
-const MainContainer = ({ snapshots }) => {
-  // useState hook to update the index of snapshots to compare in Diff.jsx
-  const [curRender, setCurRender] = useState(snapshots.length - 1);
+const MainContainer = ({ snapshotHistory }) => {
+  // useState hook to update the index of snapshotHistory to compare in Diff.jsx
+  const [curRender, setCurRender] = useState(snapshotHistory.length - 1);
 
   useEffect(() => {
-    setCurRender(snapshots.length - 1);
-  }, [snapshots]);
+    setCurRender(snapshotHistory.length - 1);
+  }, [snapshotHistory]);
 
   return (
     <div className="MainContainer">
       <SnapshotsContainer
-        // array of snapshots
-        snapshots={snapshots}
+        // array of snapshotHistory
+        snapshotHistory={snapshotHistory}
         // setState functionality to update curRender
         setCurRender={setCurRender}
       />
       <VisualContainer
-        // array of snapshots
-        snapshots={snapshots}
+        // array of snapshotHistory
+        snapshotHistory={snapshotHistory}
         // snapshot at index [curRender -1]
-        oldSnap={snapshots[curRender - 1]}
+        oldSnap={snapshotHistory[curRender - 1]}
         // snapshot at index [curRender]
-        newSnap={snapshots[curRender]}
-        snapshotHistory={snapshots}
+        newSnap={snapshotHistory[curRender]}
       />
     </div>
   );

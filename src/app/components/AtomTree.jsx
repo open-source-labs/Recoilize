@@ -6,7 +6,40 @@ function AtomTree(props) {
   const width = 600;
   const height = 600;
 
-  // legend for svg canvas
+  // this state allows the canvas to stay at the zoom level on multiple re-renders
+  const [{ x, y, k }, setZoomState] = useState({});
+
+  // initial state taken from backgroundScript propped drilled down
+  // **** REFACTOR SO YOU DONT HAVE TO PROPDRILL ****
+  const [snapshotHistory, setSnapshotHistory] = useState(props.snapshotHistory);
+
+  // this state is needed so that the canvas doesn't clear on the first load
+  const [initialRender, setInitialRender] = useState(true);
+
+  // this only clears the canvas if AtomTree is already rendered on the extension
+  useEffect(() => {
+    if (!initialRender) {
+      document.getElementById('canvas').innerHTML = '';
+      setSnapshotHistory(props.snapshotHistory);
+    }
+  });
+
+  useEffect(() => {
+    if (!initialRender) {
+      // console.log('d3 event', d3.zoomTransform(svgContainer.node()));
+      // console.log('node', node);
+      setZoomState(d3.zoomTransform(svgContainer.node()));
+    }
+    //setting the zoomState equal to whatever the d3.event.transform so svg canvas stays at the same zoom level on multiple renders
+    // setZoomState(zoomState);
+  }, [snapshotHistory]);
+
+  // only need to set initial render state to false one time
+  useEffect(() => {
+    setInitialRender(false);
+  }, []);
+
+  // creating the main svg container for d3 elements
   const svgContainer = d3
     .select('#canvas')
     .attr('width', width)
@@ -15,17 +48,9 @@ function AtomTree(props) {
   // creating a pseudo-class for reusability
   const g = svgContainer
     .append('g')
-    .attr('transform', `translate(${width / 2 + 4}, ${height / 2 + 2})`);
+    .attr('transform', `translate(${x}, ${y}), scale(${k})`); // sets the canvas to the saved zoomState
 
-  // initial state taken from backgroundScript
-  const [snapshotHistory, setSnapshotHistory] = useState(props.snapshotHistory);
-  useEffect(() => {
-    console.log('props snapshothistory', props.snapshotHistory);
-    document.getElementById('canvas').innerHTML = '';
-    setSnapshotHistory(props.snapshotHistory);
-  });
-  console.log('snapshotHistory', snapshotHistory);
-
+  // function that parses and refactors snapshotHistory into an object d3 can understand
   const makeTree = (obj) => {
     if (!obj) return;
 
@@ -69,9 +94,9 @@ function AtomTree(props) {
     atomState = {
       name: 'Recoil Root',
       // pass in parsed data here
+      // call the helper function passing in the most recent snapshot
       children: makeTree(snapshotHistory[snapshotHistory.length - 1]),
     };
-    console.log('atom state', atomState);
   }
 
   // creating the tree map
@@ -88,11 +113,10 @@ function AtomTree(props) {
   let paths = finalMap.links();
 
   // this creates the paths to each atom and its contents in the tree
-  const link = g
-    .append('g')
+  g.append('g')
     .attr('fill', 'none')
     .attr('stroke', '#2bff00')
-    .attr('stroke-opacity', 0.9)
+    // .attr('stroke-opacity', 1)
     .attr('stroke-width', 5)
     .selectAll('path')
     .data(paths)
@@ -112,7 +136,7 @@ function AtomTree(props) {
   const node = g
     .append('g')
     .attr('stroke-linejoin', 'round') // no clue what this does
-    .attr('stroke-width', 3)
+    .attr('stroke-width', 1)
     .selectAll('g')
     .data(nodes)
     .join('g')
@@ -120,12 +144,44 @@ function AtomTree(props) {
 
   node.append('circle').attr('fill', '#c300ff').attr('r', 50);
 
-  // letting the svg canvas be draggable
+  node
+    .append('text')
+    .attr('dy', '.31em')
+    .attr('x', (d) => (d.children ? -50 : 50))
+    .attr('y', (d) => (d.children ? -15 : null))
+    .attr('text-anchor', (d) => (d.children ? 'end' : 'start'))
+    .text((d) => d.data.name)
+    .style('font-size', `2rem`)
+    .style('fill', 'white')
+    .clone(true)
+    .lower()
+    .attr('stroke', '#2bff00')
+    .attr('stroke-width', 1);
+
+  node.on('mouseover', function (d, i) {
+    if (!d.children) {
+      d3.select(this)
+        .append('text')
+        .text(JSON.stringify(d.data, undefined, 2))
+        .style('fill', 'white')
+        .attr('x', 200)
+        .attr('y', 50)
+        .style('font-size', '3rem')
+        .attr('stroke', '#2bff00')
+        .attr('id', `popup${i}`);
+    }
+  });
+
+  node.on('mouseout', function (d, i) {
+    d3.select(`#popup${i}`).remove();
+  });
+
+  // this allows svg to be dragged around
   node.call(
     d3.drag().on('start', dragStarted).on('drag', dragged).on('end', dragEnded)
   );
 
-  // letting the svg canvas be zoomable
+  // this allows the svg to have zoom functionality
   svgContainer.call(
     d3
       .zoom()
@@ -157,6 +213,7 @@ function AtomTree(props) {
   function zoomed() {
     g.attr('transform', d3.event.transform);
   }
+
   return (
     <div>
       <div className='AtomTree'>
