@@ -7,7 +7,7 @@ const SnapshotsList = ({
   snapshotHistory,
   setSnapshotTimeTravelIndex,
 }) => {
-  // this is where we grab snapshots using one of recoil's hooks and paste in an array
+  // array of individual snapshots with setCurRender and timeTravel functionality
   const listOfSnapshots = snapshotHistory.reduce((acc, curSnap, i) => {
     acc.push(
       <div
@@ -18,17 +18,16 @@ const SnapshotsList = ({
           setCurRender(i);
         }}
       >
-        <li>
-          {i}{' '}
-          <button
-            onClick={() => {
-              console.log(`Time Travel to ${i}`);
-              setSnapshotTimeTravelIndex(i);
-            }}
-          >
-            Time Travel
-          </button>
-        </li>
+        <li>{i}</li>
+        <button
+          className='timeTravelButton'
+          onClick={() => {
+            // invoke setSnapshotTimeTravelIndex with the snapshot index in the args
+            setSnapshotTimeTravelIndex(i);
+          }}
+        >
+          Time Travel
+        </button>
       </div>
     );
     return acc;
