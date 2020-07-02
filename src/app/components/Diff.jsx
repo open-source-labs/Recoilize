@@ -1,7 +1,7 @@
 // renders the difference between the most recent state change and the previous
-import React, { useState } from "react";
-import { diff, formatters } from "jsondiffpatch";
-import ReactHtmlParser from "react-html-parser";
+import React, { useState } from 'react';
+import { diff, formatters } from 'jsondiffpatch';
+import ReactHtmlParser from 'react-html-parser';
 
 const Diff = ({ oldSnap, newSnap }) => {
   //
@@ -14,7 +14,7 @@ const Diff = ({ oldSnap, newSnap }) => {
   rawToggle ? formatters.html.showUnchanged() : formatters.html.hideUnchanged();
 
   return (
-    <div className="Diff">
+    <div className='Diff'>
       <button
         onClick={() => {
           setRawToggle(!rawToggle);

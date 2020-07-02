@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import * as d3 from 'd3';
 
 function AtomTree(props) {
-  // set the heights and width of the tree to be passed into treeMap
+  // set the heights and width of the tree to be passed into treeMap function
   const width = 600;
   const height = 600;
 
@@ -24,14 +24,11 @@ function AtomTree(props) {
     }
   });
 
+  // this sets the zoomState for the canvas to stay at same position and zoom level on re-renders
   useEffect(() => {
     if (!initialRender) {
-      // console.log('d3 event', d3.zoomTransform(svgContainer.node()));
-      // console.log('node', node);
       setZoomState(d3.zoomTransform(svgContainer.node()));
     }
-    //setting the zoomState equal to whatever the d3.event.transform so svg canvas stays at the same zoom level on multiple renders
-    // setZoomState(zoomState);
   }, [snapshotHistory]);
 
   // only need to set initial render state to false one time
@@ -89,6 +86,7 @@ function AtomTree(props) {
     return result;
   };
 
+  // atomState is the object that is passed into d3.hierarchy
   let atomState = {};
   if (snapshotHistory.length > 0) {
     atomState = {
@@ -115,8 +113,7 @@ function AtomTree(props) {
   // this creates the paths to each atom and its contents in the tree
   g.append('g')
     .attr('fill', 'none')
-    .attr('stroke', '#2bff00')
-    // .attr('stroke-opacity', 1)
+    .attr('stroke', '#646464')
     .attr('stroke-width', 5)
     .selectAll('path')
     .data(paths)
@@ -129,10 +126,12 @@ function AtomTree(props) {
         .y((d) => d.x)
     );
 
-  // returns a flat array of objects
-  // renders nodes onto the component
+  // returns a flat array of objects containing all the nodes and their information
+  // renders nodes onto the canvas
   let nodes = hierarchyNodes.descendants();
 
+  // const node is used to create all the nodes
+  // this segment places all the nodes on the canvas
   const node = g
     .append('g')
     .attr('stroke-linejoin', 'round') // no clue what this does
@@ -142,22 +141,27 @@ function AtomTree(props) {
     .join('g')
     .attr('transform', (d) => `translate(${d.y}, ${d.x})`);
 
+  // for each node that got created, append a circle element
   node.append('circle').attr('fill', '#c300ff').attr('r', 50);
 
+  // for each node that got created, append a text element that displays the name of the node
   node
     .append('text')
     .attr('dy', '.31em')
-    .attr('x', (d) => (d.children ? -50 : 50))
-    .attr('y', (d) => (d.children ? -15 : null))
+    .attr('x', (d) => (d.children ? -75 : 75))
+    .attr('y', (d) => (d.children ? null : null))
     .attr('text-anchor', (d) => (d.children ? 'end' : 'start'))
     .text((d) => d.data.name)
     .style('font-size', `2rem`)
     .style('fill', 'white')
     .clone(true)
     .lower()
-    .attr('stroke', '#2bff00')
+    .attr('stroke', 'black')
     .attr('stroke-width', 1);
 
+  // adding a mouseOver event handler to each node
+  // only add popup text on nodes with no children
+  // display the data in the node on hover
   node.on('mouseover', function (d, i) {
     if (!d.children) {
       d3.select(this)
@@ -172,16 +176,17 @@ function AtomTree(props) {
     }
   });
 
+  // add mouseOut event handler that removes the popup text
   node.on('mouseout', function (d, i) {
     d3.select(`#popup${i}`).remove();
   });
 
-  // this allows svg to be dragged around
+  // allows the canvas to be draggable
   node.call(
     d3.drag().on('start', dragStarted).on('drag', dragged).on('end', dragEnded)
   );
 
-  // this allows the svg to have zoom functionality
+  // allows the canvas to be zoomable
   svgContainer.call(
     d3
       .zoom()
@@ -193,7 +198,7 @@ function AtomTree(props) {
       .on('zoom', zoomed)
   );
 
-  // helpers to allow dragging
+  // helper functions that help with dragging functionality
   function dragStarted() {
     d3.select(this).raise();
     g.attr('cursor', 'grabbing');

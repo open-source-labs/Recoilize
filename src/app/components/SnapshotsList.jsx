@@ -1,5 +1,5 @@
 // renders a list of all of the snapshots that were taking
-import React from "react";
+import React from 'react';
 
 const SnapshotsList = ({
   curRender,
@@ -11,7 +11,7 @@ const SnapshotsList = ({
   const listOfSnapshots = snapshotHistory.reduce((acc, curSnap, i) => {
     acc.push(
       <div
-        className="individualSnapshot"
+        className='individualSnapshot'
         key={i}
         // setState functionality to update curRender
         onClick={() => {
@@ -20,7 +20,7 @@ const SnapshotsList = ({
       >
         <li>{i}</li>
         <button
-          className="timeTravelButton"
+          className='timeTravelButton'
           onClick={() => {
             // invoke setSnapshotTimeTravelIndex with the snapshot index in the args
             setSnapshotTimeTravelIndex(i);
@@ -32,7 +32,7 @@ const SnapshotsList = ({
     );
     return acc;
   }, []);
-  return <div className="SnapshotsList">{listOfSnapshots}</div>;
+  return <div className='SnapshotsList'>{listOfSnapshots}</div>;
 };
 
 export default SnapshotsList;

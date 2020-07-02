@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
-import SnapshotsContainer from "./SnapshotsContainer";
-import VisualContainer from "./VisualContainer";
+import React, { useState, useEffect } from 'react';
+import SnapshotsContainer from './SnapshotsContainer';
+import VisualContainer from './VisualContainer';
 
 // wraps entire application
 const MainContainer = ({ snapshotHistory }) => {
@@ -12,7 +12,7 @@ const MainContainer = ({ snapshotHistory }) => {
   }, [snapshotHistory]);
 
   return (
-    <div className="MainContainer">
+    <div className='MainContainer'>
       <SnapshotsContainer
         // array of snapshotHistory
         snapshotHistory={snapshotHistory}
