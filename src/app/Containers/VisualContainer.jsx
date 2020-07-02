@@ -22,7 +22,7 @@ const VisualContainer = ({ snapshotHistory, oldSnap, newSnap }) => {
         snapshotHistory={snapshotHistory}
       />
     ),
-    'Atom Tree': <AtomTree snapshotHistory={snapshotHistory} />,
+    'Atom Tree': <AtomTree newSnap={newSnap} />,
   };
   // array of all all nav obj keys as strings
   const tabsList = Object.keys(nav);
