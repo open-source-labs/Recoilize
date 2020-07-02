@@ -1,17 +1,17 @@
-import React from "react";
-import SnapshotsList from "../components/SnapshotsList";
+import React from 'react';
+import SnapshotsList from '../components/SnapshotsList';
 
 const SnapshotsContainer = ({ snapshotHistory, setCurRender }) => {
   const setSnapshotTimeTravelIndex = (index) => {
     const backgroundConnection = chrome.runtime.connect();
     backgroundConnection.postMessage({
-      action: "snapshotTimeTravel",
+      action: 'snapshotTimeTravel',
       tabId: chrome.devtools.inspectedWindow.tabId,
       payload: { snapshotIndex: index },
     });
   };
   return (
-    <div className="SnapshotsContainer">
+    <div className='SnapshotsContainer'>
       <h3>Snapshots</h3>
       <SnapshotsList
         // array of snapshots

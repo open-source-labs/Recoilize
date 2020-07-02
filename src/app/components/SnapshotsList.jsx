@@ -1,7 +1,12 @@
 // renders a list of all of the snapshots that were taking
 import React from 'react';
 
-const SnapshotsList = ({ curRender, setCurRender, snapshotHistory, setSnapshotTimeTravelIndex }) => {
+const SnapshotsList = ({
+  curRender,
+  setCurRender,
+  snapshotHistory,
+  setSnapshotTimeTravelIndex,
+}) => {
   // this is where we grab snapshots using one of recoil's hooks and paste in an array
   const listOfSnapshots = snapshotHistory.reduce((acc, curSnap, i) => {
     acc.push(
@@ -13,10 +18,17 @@ const SnapshotsList = ({ curRender, setCurRender, snapshotHistory, setSnapshotTi
           setCurRender(i);
         }}
       >
-        <li>{i} <button onClick= {() => {
-          console.log(`Time Travel to ${i}`);
-          setSnapshotTimeTravelIndex(i);
-          }}>Time Travel</button></li>
+        <li>
+          {i}{' '}
+          <button
+            onClick={() => {
+              console.log(`Time Travel to ${i}`);
+              setSnapshotTimeTravelIndex(i);
+            }}
+          >
+            Time Travel
+          </button>
+        </li>
       </div>
     );
     return acc;
