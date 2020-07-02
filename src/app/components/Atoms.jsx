@@ -4,9 +4,9 @@ import React from 'react';
 // NOT FUNCTIONING ONLY WORKED WITH DUMMY DATA //
 /////////////////////////////////////////////////
 
-const Atoms = ({ snapshots }) => {
+const Atoms = ({ snapshotHistory }) => {
   // array of "atoms" - from dummy-data
-  const listOfAtoms = snapshots.reduce((acc, curSnap, i) => {
+  const listOfAtoms = snapshotHistory.reduce((acc, curSnap, i) => {
     // pushing stringify "atom" into accumulator - from dummy-data
     acc.push(<li key={i}>{JSON.stringify(curSnap.arr)}</li>);
     return acc;

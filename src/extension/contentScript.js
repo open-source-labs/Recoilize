@@ -5,3 +5,15 @@ window.postMessage({ action: 'contentScriptStarted' });
 window.addEventListener('message', (msg) => {
   chrome.runtime.sendMessage(msg.data);
 });
+
+// listening for messages from the background script
+chrome.runtime.onMessage.addListener(msg => {
+  // send the message to npm package
+  const { action } = msg;
+  switch (action) {
+    case 'snapshotTimeTravel':
+      console.log('we are sending snapshotTimeTravel message to module: ', msg)
+      window.postMessage(msg);
+      break;
+  }
+});
