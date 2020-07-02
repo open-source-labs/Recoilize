@@ -5,7 +5,8 @@ body {
   height: 100%;
 }
 
-.App, #root {
+.App,
+#root {
   width: 100%;
   height: 100%;
 }
@@ -91,16 +92,17 @@ body {
 }
 
 #canvas {
-  border: 1px solid pink;
   height: 100%;
   width: 100%;
 }
 .AtomTree {
-  border: 1px solid blue;
   height: 100vh;
   width: 100vw;
 }
 
+.node-text {
+  color: white;
+}
 .notFoundContainer {
   display: flex;
   flex-direction: column;
