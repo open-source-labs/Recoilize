@@ -113,7 +113,7 @@ function AtomTree(props) {
   // this creates the paths to each atom and its contents in the tree
   g.append('g')
     .attr('fill', 'none')
-    .attr('stroke', '#2bff00')
+    .attr('stroke', '#646464')
     .attr('stroke-width', 5)
     .selectAll('path')
     .data(paths)
@@ -148,15 +148,15 @@ function AtomTree(props) {
   node
     .append('text')
     .attr('dy', '.31em')
-    .attr('x', (d) => (d.children ? -50 : 50))
-    .attr('y', (d) => (d.children ? -15 : null))
+    .attr('x', (d) => (d.children ? -75 : 75))
+    .attr('y', (d) => (d.children ? null : null))
     .attr('text-anchor', (d) => (d.children ? 'end' : 'start'))
     .text((d) => d.data.name)
     .style('font-size', `2rem`)
     .style('fill', 'white')
     .clone(true)
     .lower()
-    .attr('stroke', '#2bff00')
+    .attr('stroke', 'black')
     .attr('stroke-width', 1);
 
   // adding a mouseOver event handler to each node
