@@ -11,7 +11,7 @@ function AtomTree(props) {
 
   // initial state taken from backgroundScript propped drilled down
   // **** REFACTOR SO YOU DONT HAVE TO PROPDRILL ****
-  const [snapshotHistory, setSnapshotHistory] = useState(props.snapshotHistory);
+  const [snapshotHistory, setSnapshotHistory] = useState(props.newSnap);
 
   // this state is needed so that the canvas doesn't clear on the first load
   const [initialRender, setInitialRender] = useState(true);
@@ -20,7 +20,7 @@ function AtomTree(props) {
   useEffect(() => {
     if (!initialRender) {
       document.getElementById('canvas').innerHTML = '';
-      setSnapshotHistory(props.snapshotHistory);
+      setSnapshotHistory(props.newSnap);
     }
   });
 
@@ -87,15 +87,12 @@ function AtomTree(props) {
   };
 
   // atomState is the object that is passed into d3.hierarchy
-  let atomState = {};
-  if (snapshotHistory.length > 0) {
-    atomState = {
-      name: 'Recoil Root',
-      // pass in parsed data here
-      // call the helper function passing in the most recent snapshot
-      children: makeTree(snapshotHistory[snapshotHistory.length - 1]),
-    };
-  }
+  const atomState = {
+    name: 'Recoil Root',
+    // pass in parsed data here
+    // call the helper function passing in the most recent snapshot
+    children: makeTree(snapshotHistory),
+  };
 
   // creating the tree map
   const treeMap = d3.tree().nodeSize([width, height]);
