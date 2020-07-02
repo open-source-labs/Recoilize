@@ -156,8 +156,8 @@ function AtomTree(props) {
     .style('fill', 'white')
     .clone(true)
     .lower()
-    .attr('stroke', 'black')
-    .attr('stroke-width', 1);
+    .attr('stroke', '#646464')
+    .attr('stroke-width', 2);
 
   // adding a mouseOver event handler to each node
   // only add popup text on nodes with no children
@@ -168,10 +168,10 @@ function AtomTree(props) {
         .append('text')
         .text(JSON.stringify(d.data, undefined, 2))
         .style('fill', 'white')
-        .attr('x', 200)
-        .attr('y', 50)
+        .attr('x', 75)
+        .attr('y', 60)
         .style('font-size', '3rem')
-        .attr('stroke', '#2bff00')
+        .attr('stroke', '#646464')
         .attr('id', `popup${i}`);
     }
   });
