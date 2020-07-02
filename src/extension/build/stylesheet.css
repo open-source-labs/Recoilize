@@ -146,3 +146,10 @@ body {
   width: 20%;
   height: auto;
 }
+
+.json-tree {
+  margin: 10px;
+  padding: 0;
+  background-color: none;
+  list-style: none;
+}

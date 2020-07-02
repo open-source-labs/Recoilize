@@ -3,8 +3,9 @@ import Diff from '../components/Diff.jsx';
 import Atoms from '../components/Atoms.jsx';
 import NavBar from '../components/NavBar.jsx';
 import AtomTree from '../components/AtomTree.jsx';
+import Tree from '../components/Tree.jsx';
 
-// conditionally renders Diff and Atoms
+// conditionally renders Diff, Atoms, AtomTree, and Tree
 const VisualContainer = ({ snapshotHistory, oldSnap, newSnap }) => {
   // object containing all conditional renders based on navBar
   const nav = {
@@ -20,6 +21,12 @@ const VisualContainer = ({ snapshotHistory, oldSnap, newSnap }) => {
       <Atoms
         // array of snapshots CURRENT NOT IN USE
         snapshotHistory={snapshotHistory}
+      />
+    ),
+    Tree: (
+      <Tree
+        // snapshot at index [curRender] 
+        curSnap={newSnap}
       />
     ),
     'Atom Tree': <AtomTree snapshotHistory={snapshotHistory} />,
