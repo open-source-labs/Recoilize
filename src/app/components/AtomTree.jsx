@@ -1,7 +1,29 @@
 import React, { useRef, useState, useEffect } from 'react';
 import * as d3 from 'd3';
+import { makeTree } from '../utils/makeTreeConversion.js';
 
 function AtomTree(props) {
+  // helper functions that help with dragging functionality
+  function dragStarted() {
+    d3.select(this).raise();
+    g.attr('cursor', 'grabbing');
+  }
+
+  function dragged(d) {
+    d3.select(this)
+      .attr('dx', (d.x = d3.event.x))
+      .attr('dy', (d.y = d3.event.y));
+  }
+
+  function dragEnded() {
+    g.attr('cursor', 'grab');
+  }
+
+  // helper function that allows for zooming
+  function zoomed() {
+    g.attr('transform', d3.event.transform);
+  }
+
   // set the heights and width of the tree to be passed into treeMap function
   const width = 600;
   const height = 600;
@@ -47,45 +69,6 @@ function AtomTree(props) {
     .append('g')
     .attr('transform', `translate(${x}, ${y}), scale(${k})`); // sets the canvas to the saved zoomState
 
-  // function that parses and refactors snapshotHistory into an object d3 can understand
-  const makeTree = (obj) => {
-    if (!obj) return;
-
-    let result = [];
-    let keys = Object.keys(obj);
-    keys.forEach((key) => {
-      let newObj = {};
-      newObj.name = key;
-      // obj[key] is a nested object so recurse
-      if (
-        typeof obj[key] === 'object' &&
-        !Array.isArray(obj[key]) &&
-        obj[key]
-      ) {
-        newObj.children = makeTree(obj[key]);
-      } else if (Array.isArray(obj[key])) {
-        // obj[key] is an array
-        newObj.children = [];
-        obj[key].forEach((el, i) => {
-          newObj.children.push({
-            name: `${key}[${i}]`,
-            value: obj[key][i],
-          });
-        });
-      } else {
-        // obj[key] is a primitive
-        newObj.children = [
-          {
-            name: JSON.stringify(obj[key]),
-          },
-        ];
-      }
-
-      result.push(newObj);
-    });
-    return result;
-  };
-
   // atomState is the object that is passed into d3.hierarchy
   const atomState = {
     name: 'Recoil Root',
@@ -98,6 +81,7 @@ function AtomTree(props) {
   const treeMap = d3.tree().nodeSize([width, height]);
 
   // creating the nodes of the tree
+  // pass
   const hierarchyNodes = d3.hierarchy(atomState);
 
   // calling the tree function with nodes created from data
@@ -194,27 +178,6 @@ function AtomTree(props) {
       .scaleExtent([0, 8])
       .on('zoom', zoomed)
   );
-
-  // helper functions that help with dragging functionality
-  function dragStarted() {
-    d3.select(this).raise();
-    g.attr('cursor', 'grabbing');
-  }
-
-  function dragged(d) {
-    d3.select(this)
-      .attr('dx', (d.x = d3.event.x))
-      .attr('dy', (d.y = d3.event.y));
-  }
-
-  function dragEnded() {
-    g.attr('cursor', 'grab');
-  }
-
-  // helper function that allows for zooming
-  function zoomed() {
-    g.attr('transform', d3.event.transform);
-  }
 
   return (
     <div>

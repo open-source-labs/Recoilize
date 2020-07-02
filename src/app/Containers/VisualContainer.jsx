@@ -17,19 +17,19 @@ const VisualContainer = ({ snapshotHistory, oldSnap, newSnap }) => {
         newSnap={newSnap}
       />
     ),
-    Atoms: (
-      <Atoms
-        // array of snapshots CURRENT NOT IN USE
-        snapshotHistory={snapshotHistory}
-      />
-    ),
+    // Atoms: (
+    //   <Atoms
+    //     // array of snapshots CURRENT NOT IN USE
+    //     snapshotHistory={snapshotHistory}
+    //   />
+    // ),
     Tree: (
       <Tree
         // snapshot at index [curRender]
         curSnap={newSnap}
       />
     ),
-    'Atom Tree': <AtomTree newSnap={newSnap} />,
+    Visualizer: <AtomTree newSnap={newSnap} />,
   };
   // array of all all nav obj keys as strings
   const tabsList = Object.keys(nav);
