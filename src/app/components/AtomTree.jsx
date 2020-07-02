@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect } from 'react';
 import * as d3 from 'd3';
 
 function AtomTree(props) {
-  // set the heights and width of the tree to be passed into treeMap
+  // set the heights and width of the tree to be passed into treeMap function
   const width = 600;
   const height = 600;
 
@@ -24,14 +24,11 @@ function AtomTree(props) {
     }
   });
 
+  // this sets the zoomState for the canvas to stay at same position and zoom level on re-renders
   useEffect(() => {
     if (!initialRender) {
-      // console.log('d3 event', d3.zoomTransform(svgContainer.node()));
-      // console.log('node', node);
       setZoomState(d3.zoomTransform(svgContainer.node()));
     }
-    //setting the zoomState equal to whatever the d3.event.transform so svg canvas stays at the same zoom level on multiple renders
-    // setZoomState(zoomState);
   }, [snapshotHistory]);
 
   // only need to set initial render state to false one time
