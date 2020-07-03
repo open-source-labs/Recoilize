@@ -1,48 +1,36 @@
 import React, { useState } from 'react';
 import Diff from '../../components/DiffDir/Diff.jsx';
-import Atoms from '../../components/AtomsDir/Atoms.jsx';
 import NavBar from '../../components/NavBarDir/NavBar.jsx';
 import AtomTree from '../../components/AtomTree.jsx';
 import Tree from '../../components/TreeDir/Tree.jsx';
+import PropTypes from 'prop-types';
 
-
-// conditionally renders Diff, Atoms, AtomTree, and Tree
-const VisualContainer = ({ snapshotHistory, oldSnap, newSnap }) => {
+// Renders Navbar and conditionally renders Diff, AtomTree, and Tree
+const VisualContainer = ({ oldSnap, newSnap }) => {
   // object containing all conditional renders based on navBar
-
   const nav = {
-    Diff: (
-      <Diff
-        // snapshot at index [curRender -1]
-        oldSnap={oldSnap}
-        // snapshot at index [curRender]
-        newSnap={newSnap}
-      />
-    ),
-    // Atoms: (
-    //   <Atoms
-    //     // array of snapshots CURRENT NOT IN USE
-    //     snapshotHistory={snapshotHistory}
-    //   />
-    // ),
-    Tree: (
-      <Tree
-        // snapshot at index [curRender]
-        curSnap={newSnap}
-      />
-    ),
+    Diff: <Diff oldSnap={oldSnap} newSnap={newSnap} />,
+    Tree: <Tree newSnap={newSnap} />,
     Visualizer: <AtomTree newSnap={newSnap} />,
   };
-  // array of all all nav obj keys as strings
+  // array of all nav obj keys
   const tabsList = Object.keys(nav);
-  // useState hook to update the component to render in the container
+  // useState hook to update which component to render in the VisualContainer
   const [tab, setTab] = useState('Diff');
+  // conditionally render based on value of nav[tab]
   return (
     <div className='VisualContainer'>
       <NavBar setTab={setTab} tabsList={tabsList} tab={tab} />
       {nav[tab]}
     </div>
   );
+};
+
+VisualContainer.propTypes = {
+  // snapshot at index [curRender -1]
+  oldSnap: PropTypes.object,
+  // snapshot at index [curRender]
+  newSnap: PropTypes.object,
 };
 
 export default VisualContainer;

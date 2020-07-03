@@ -1,13 +1,14 @@
 import React from "react";
 import JSONTree from 'react-json-tree';
+import PropTypes from 'prop-types';
 
-const Tree = ({ curSnap }) => {
-  // render json tree while passing in curSnap as data to JSONTree
+const Tree = ({ newSnap }) => {
+  // render json tree while passing in newSnap as data to JSONTree
   return (
     <div className="Tree">
-      {curSnap && (
+      {newSnap && (
         <JSONTree
-          data={curSnap}
+          data={newSnap}
           theme={{ tree: () => ({ className: "json-tree" }) }}
           shouldExpandNode={() => true}
           labelRenderer={(raw) =>
@@ -17,6 +18,11 @@ const Tree = ({ curSnap }) => {
       )}
     </div>
   );
+};
+
+Tree.propTypes = {
+  // snapshot at index [curRender]
+  newSnap: PropTypes.object.isRequired,
 };
 
 export default Tree;

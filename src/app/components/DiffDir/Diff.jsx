@@ -2,16 +2,16 @@
 import React, { useState } from 'react';
 import { diff, formatters } from 'jsondiffpatch';
 import ReactHtmlParser from 'react-html-parser';
+import PropTypes from 'prop-types';
 
 const Diff = ({ oldSnap, newSnap }) => {
-  const rawToggleStyling = {}
-  // 
+  // useState hook to update the toggle of showUnchanged or hideUnchanged
   const [rawToggle, setRawToggle] = useState(false);
   // diffing between oldSnap && newSnap
   const delta = diff(oldSnap, newSnap);
   // string of html with comparisons
   const html = formatters.html.format(delta, oldSnap);
-  // conditionally render changes or not
+  // conditionally render changes or not based on rawToggle bool
   rawToggle ? formatters.html.showUnchanged() : formatters.html.hideUnchanged();
 
   return (
@@ -30,6 +30,13 @@ const Diff = ({ oldSnap, newSnap }) => {
       {ReactHtmlParser(html)}
     </div>
   );
+};
+
+Diff.propTypes = {
+  // snapshot at index [curRender -1]
+  oldSnap: PropTypes.object.isRequired,
+  // snapshot at index [curRender]
+  newSnap: PropTypes.object.isRequired,
 };
 
 export default Diff;

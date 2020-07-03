@@ -1,5 +1,6 @@
 // renders a list of all of the snapshots that were taking
 import React from 'react';
+import PropTypes from 'prop-types';
 
 const SnapshotsList = ({
   curRender,
@@ -12,9 +13,12 @@ const SnapshotsList = ({
     acc.push(
       <div
         className='individualSnapshot'
-        style={(curRender === i) ? {'color': '#E6E6E6', 'backgroundColor': '#212121'} : {'color': '#989898'}}
         key={i}
-        // setState functionality to update curRender
+        style={
+          curRender === i
+            ? { color: '#E6E6E6', backgroundColor: '#212121' }
+            : { color: '#989898' }
+        }
         onClick={() => {
           setCurRender(i);
         }}
@@ -23,7 +27,6 @@ const SnapshotsList = ({
         <button
           className='timeTravelButton'
           onClick={() => {
-            // invoke setSnapshotTimeTravelIndex with the snapshot index in the args
             setSnapshotTimeTravelIndex(i);
           }}
         >
@@ -33,7 +36,19 @@ const SnapshotsList = ({
     );
     return acc;
   }, []);
+  // render the array of snapshots divs generated above
   return <div className='SnapshotsList'>{listOfSnapshots}</div>;
+};
+
+SnapshotsList.propTypes = {
+  // index of current snapshot rendered in devtool
+  curRender: PropTypes.number.isRequired,
+  // setState functionality to update curRender
+  setCurRender: PropTypes.func.isRequired,
+  // array of object snapshots of user's state
+  snapshotHistory: PropTypes.arrayOf(PropTypes.object),
+  // function will post message to background.js passing snapshots index in payload
+  setSnapshotTimeTravelIndex: PropTypes.func.isRequired,
 };
 
 export default SnapshotsList;
