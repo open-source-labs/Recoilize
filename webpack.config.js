@@ -47,7 +47,7 @@ module.exports = (env, argv) => {
           contentScript: ['app', 'content'],
           background: ['background'],
         },
-      })
+      }),
     );
   }
   return config;
