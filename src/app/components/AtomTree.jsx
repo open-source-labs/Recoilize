@@ -130,7 +130,6 @@ function AtomTree(props) {
     .append('text')
     .attr('dy', '.31em')
     .attr('x', (d) => (d.children ? -75 : 75))
-    .attr('y', (d) => (d.children ? null : null))
     .attr('text-anchor', (d) => (d.children ? 'end' : 'start'))
     .text((d) => d.data.name)
     .style('font-size', `2rem`)
