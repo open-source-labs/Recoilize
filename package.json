@@ -26,6 +26,7 @@
     "eslint-plugin-flowtype": "^5.1.3",
     "eslint-plugin-react": "^7.20.0",
     "jsondiffpatch": "^0.4.1",
+    "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-html-parser": "^2.0.2",
