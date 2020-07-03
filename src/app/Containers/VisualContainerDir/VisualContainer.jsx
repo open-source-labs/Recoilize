@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
-import Diff from '../components/Diff.jsx';
-import Atoms from '../components/Atoms.jsx';
-import NavBar from '../components/NavBar.jsx';
-import AtomTree from '../components/AtomTree.jsx';
-import Tree from '../components/Tree.jsx';
+import Diff from '../../components/DiffDir/Diff.jsx';
+import Atoms from '../../components/AtomsDir/Atoms.jsx';
+import NavBar from '../../components/NavBarDir/NavBar.jsx';
+import AtomTree from '../../components/AtomTree.jsx';
+import Tree from '../../components/TreeDir/Tree.jsx';
+
 
 // conditionally renders Diff, Atoms, AtomTree, and Tree
 const VisualContainer = ({ snapshotHistory, oldSnap, newSnap }) => {
   // object containing all conditional renders based on navBar
+
   const nav = {
     Diff: (
       <Diff
@@ -37,7 +39,7 @@ const VisualContainer = ({ snapshotHistory, oldSnap, newSnap }) => {
   const [tab, setTab] = useState('Diff');
   return (
     <div className='VisualContainer'>
-      <NavBar setTab={setTab} tabsList={tabsList} />
+      <NavBar setTab={setTab} tabsList={tabsList} tab={tab} />
       {nav[tab]}
     </div>
   );

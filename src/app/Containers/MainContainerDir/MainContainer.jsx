@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import SnapshotsContainer from './SnapshotsContainer';
-import VisualContainer from './VisualContainer';
+import SnapshotsContainer from '../SnapshotContainerDir/SnapshotsContainer.jsx';
+import VisualContainer from '../VisualContainerDir/VisualContainer.jsx';
 
 // wraps entire application
 const MainContainer = ({ snapshotHistory }) => {
@@ -14,6 +14,8 @@ const MainContainer = ({ snapshotHistory }) => {
   return (
     <div className='MainContainer'>
       <SnapshotsContainer
+        // index of current snapshot rendered in devtool
+        curRender={curRender}
         // array of snapshotHistory
         snapshotHistory={snapshotHistory}
         // setState functionality to update curRender

@@ -4,7 +4,8 @@ import { diff, formatters } from 'jsondiffpatch';
 import ReactHtmlParser from 'react-html-parser';
 
 const Diff = ({ oldSnap, newSnap }) => {
-  //
+  const rawToggleStyling = {}
+  // 
   const [rawToggle, setRawToggle] = useState(false);
   // diffing between oldSnap && newSnap
   const delta = diff(oldSnap, newSnap);
@@ -15,13 +16,17 @@ const Diff = ({ oldSnap, newSnap }) => {
 
   return (
     <div className='Diff'>
-      <button
-        onClick={() => {
-          setRawToggle(!rawToggle);
-        }}
-      >
-        Toggle Raw
-      </button>
+      <div className='toggleDiv'>
+        <button
+          className='rawToggle'
+          style={{'color': rawToggle ? '#E6E6E6' : '#989898'}}
+          onClick={() => {
+            setRawToggle(!rawToggle);
+          }}
+        >
+          Raw
+        </button>
+      </div>
       {ReactHtmlParser(html)}
     </div>
   );

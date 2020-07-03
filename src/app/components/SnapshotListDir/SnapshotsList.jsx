@@ -12,6 +12,7 @@ const SnapshotsList = ({
     acc.push(
       <div
         className='individualSnapshot'
+        style={(curRender === i) ? {'color': '#E6E6E6', 'backgroundColor': '#212121'} : {'color': '#989898'}}
         key={i}
         // setState functionality to update curRender
         onClick={() => {

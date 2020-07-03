@@ -1,7 +1,7 @@
 import React from 'react';
-import SnapshotsList from '../components/SnapshotsList';
+import SnapshotsList from '../../components/SnapshotListDir/SnapshotsList.jsx';
 
-const SnapshotsContainer = ({ snapshotHistory, setCurRender }) => {
+const SnapshotsContainer = ({ curRender, snapshotHistory, setCurRender }) => {
   // function will post message to background.js
   const setSnapshotTimeTravelIndex = (index) => {
     // variable to store/reference connection
@@ -17,6 +17,7 @@ const SnapshotsContainer = ({ snapshotHistory, setCurRender }) => {
     <div className='SnapshotsContainer'>
       <h3>Snapshots</h3>
       <SnapshotsList
+        curRender={curRender}
         // array of snapshots
         snapshotHistory={snapshotHistory}
         // setState functionality to update curRender
