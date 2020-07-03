@@ -12,7 +12,7 @@ const Diff = ({ oldSnap, newSnap }) => {
   // string of html with comparisons
   const html = formatters.html.format(delta, oldSnap);
   // conditionally render changes or not based on rawToggle bool
-  rawToggle ? formatters.html.showUnchanged() : formatters.html.hideUnchanged();
+  formatters.html.showUnchanged(rawToggle)
 
   return (
     <div className='Diff'>
