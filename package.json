@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack --mode production",
-    "dev": "webpack --mode development --watch"
+    "dev": "webpack --mode development --watch",
+    "lint": "eslint . --cache --cache-location node_modules/.cache/eslint --ignore-path .gitignore"
   },
   "author": "Bren Yamaguchi, Saejin Kang, Jonathan Escamilla, Sean Smith",
   "license": "MIT",
@@ -37,5 +38,8 @@
     "react-html-parser": "^2.0.2",
     "react-json-tree": "^0.11.2",
     "react-router-dom": "^5.2.0"
+  },
+  "engines": {
+    "node": "^10.12.0 || >=12.0.0"
   }
 }
