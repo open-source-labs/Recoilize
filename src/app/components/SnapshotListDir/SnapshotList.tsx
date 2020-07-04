@@ -19,7 +19,7 @@ const SnapshotsList: React.FC<SnapshotsListProps> = ({
   setSnapshotTimeTravelIndex,
 }) => {
   // array of individual snapshots with setCurRender and timeTravel functionality
-  const listOfSnapshots = snapshotHistory.reduce((acc, curSnap, i) => {
+  const listOfSnapshots = snapshotHistory.reduce((acc, _curSnap, i) => {
     acc.push(
       <div
         className='individualSnapshot'

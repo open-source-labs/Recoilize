@@ -2,6 +2,7 @@ import React from "react";
 import JSONTree from 'react-json-tree';
 
 interface TreeProps {
+  // snapshot at index [curRender]
   newSnap: object,
 }
 
