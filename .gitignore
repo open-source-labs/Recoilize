@@ -2,3 +2,4 @@ node_modules
 package-lock.json
 .vscode
 src/extension/build/bundles
+.DS_Store

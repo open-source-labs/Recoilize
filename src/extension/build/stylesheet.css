@@ -21,7 +21,7 @@ body {
   display: flex;
   flex-direction: column;
   flex-shrink: 1;
-  width: 250px;
+  min-width: 250px;
   border-bottom: 2px solid #484848;
   background-color: #2d2d2d;
   text-align: center;
@@ -46,7 +46,8 @@ body {
   border-style: none;
   display: flex;
   flex-direction: column;
-  padding: 20px;
+  padding: 10px;
+  padding-bottom: 20px;
 }
 
 .Atoms {
@@ -78,6 +79,15 @@ body {
   background-color: #212121;
 }
 
+.toggleDiv {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.Tree {
+  padding: 10px;
+}
+
 /* BUTTONS */
 .navBarButtons {
   color: #989898;
@@ -96,6 +106,7 @@ body {
   border: none;
   color: #989898;
   background: none;
+  outline: none;
 }
 
 .timeTravelButton:hover {
@@ -107,6 +118,12 @@ body {
 .timeTravelButton:focus {
   color: #e6e6e6;
   background-color: #212121;
+}
+
+.rawToggle {
+  background: none;
+  border: none;
+  outline: none;
 }
 
 /* D3 */
