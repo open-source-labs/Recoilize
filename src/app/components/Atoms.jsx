@@ -4,7 +4,7 @@ import React from 'react';
 // NOT FUNCTIONING ONLY WORKED WITH DUMMY DATA //
 /////////////////////////////////////////////////
 
-const Atoms = ({ snapshotHistory }) => {
+const Atoms = ({snapshotHistory}) => {
   // array of "atoms" - from dummy-data
   const listOfAtoms = snapshotHistory.reduce((acc, curSnap, i) => {
     // pushing stringify "atom" into accumulator - from dummy-data
@@ -12,7 +12,7 @@ const Atoms = ({ snapshotHistory }) => {
     return acc;
   }, []);
   return (
-    <div className='Atoms'>
+    <div className="Atoms">
       <p>Atoms box</p>
       {listOfAtoms}
     </div>

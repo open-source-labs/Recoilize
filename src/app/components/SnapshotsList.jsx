@@ -11,28 +11,26 @@ const SnapshotsList = ({
   const listOfSnapshots = snapshotHistory.reduce((acc, curSnap, i) => {
     acc.push(
       <div
-        className='individualSnapshot'
+        className="individualSnapshot"
         key={i}
         // setState functionality to update curRender
         onClick={() => {
           setCurRender(i);
-        }}
-      >
+        }}>
         <li>{i}</li>
         <button
-          className='timeTravelButton'
+          className="timeTravelButton"
           onClick={() => {
             // invoke setSnapshotTimeTravelIndex with the snapshot index in the args
             setSnapshotTimeTravelIndex(i);
-          }}
-        >
+          }}>
           Time Travel
         </button>
-      </div>
+      </div>,
     );
     return acc;
   }, []);
-  return <div className='SnapshotsList'>{listOfSnapshots}</div>;
+  return <div className="SnapshotsList">{listOfSnapshots}</div>;
 };
 
 export default SnapshotsList;

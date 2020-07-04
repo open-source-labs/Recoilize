@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import SnapshotsContainer from './SnapshotsContainer';
 import VisualContainer from './VisualContainer';
 
 // wraps entire application
-const MainContainer = ({ snapshotHistory }) => {
+const MainContainer = ({snapshotHistory}) => {
   // useState hook to update the index of snapshotHistory to compare in Diff.jsx
   const [curRender, setCurRender] = useState(snapshotHistory.length - 1);
 
@@ -12,7 +12,7 @@ const MainContainer = ({ snapshotHistory }) => {
   }, [snapshotHistory]);
 
   return (
-    <div className='MainContainer'>
+    <div className="MainContainer">
       <SnapshotsContainer
         // array of snapshotHistory
         snapshotHistory={snapshotHistory}

@@ -1,6 +1,6 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, {useRef, useState, useEffect} from 'react';
 import * as d3 from 'd3';
-import { makeTree } from '../utils/makeTreeConversion.js';
+import {makeTree} from '../utils/makeTreeConversion.js';
 
 function AtomTree(props) {
   // helper functions that help with dragging functionality
@@ -29,7 +29,7 @@ function AtomTree(props) {
   const height = 600;
 
   // this state allows the canvas to stay at the zoom level on multiple re-renders
-  const [{ x, y, k }, setZoomState] = useState({});
+  const [{x, y, k}, setZoomState] = useState({});
 
   // initial state taken from backgroundScript propped drilled down
   // **** REFACTOR SO YOU DONT HAVE TO PROPDRILL ****
@@ -103,8 +103,8 @@ function AtomTree(props) {
       'd',
       d3
         .linkHorizontal()
-        .x((d) => d.y)
-        .y((d) => d.x)
+        .x(d => d.y)
+        .y(d => d.x),
     );
 
   // returns a flat array of objects containing all the nodes and their information
@@ -120,7 +120,8 @@ function AtomTree(props) {
     .selectAll('g')
     .data(nodes)
     .join('g')
-    .attr('transform', (d) => `translate(${d.y}, ${d.x})`);
+    .attr('transform', d => `translate(${d.y}, ${d.x})`)
+    .attr('class', 'atomNodes');
 
   // for each node that got created, append a circle element
   node.append('circle').attr('fill', '#c300ff').attr('r', 50);
@@ -129,9 +130,9 @@ function AtomTree(props) {
   node
     .append('text')
     .attr('dy', '.31em')
-    .attr('x', (d) => (d.children ? -75 : 75))
-    .attr('text-anchor', (d) => (d.children ? 'end' : 'start'))
-    .text((d) => d.data.name)
+    .attr('x', d => (d.children ? -75 : 75))
+    .attr('text-anchor', d => (d.children ? 'end' : 'start'))
+    .text(d => d.data.name)
     .style('font-size', `2rem`)
     .style('fill', 'white')
     .clone(true)
@@ -163,7 +164,7 @@ function AtomTree(props) {
 
   // allows the canvas to be draggable
   node.call(
-    d3.drag().on('start', dragStarted).on('drag', dragged).on('end', dragEnded)
+    d3.drag().on('start', dragStarted).on('drag', dragged).on('end', dragEnded),
   );
 
   // allows the canvas to be zoomable
@@ -175,13 +176,13 @@ function AtomTree(props) {
         [width, height],
       ])
       .scaleExtent([0, 8])
-      .on('zoom', zoomed)
+      .on('zoom', zoomed),
   );
 
   return (
     <div>
-      <div className='AtomTree'>
-        <svg id='canvas'></svg>
+      <div className="AtomTree">
+        <svg id="canvas"></svg>
       </div>
     </div>
   );

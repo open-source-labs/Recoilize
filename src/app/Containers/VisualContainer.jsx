@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import Diff from '../components/Diff.jsx';
 import Atoms from '../components/Atoms.jsx';
 import NavBar from '../components/NavBar.jsx';
@@ -6,7 +6,7 @@ import AtomTree from '../components/AtomTree.jsx';
 import Tree from '../components/Tree.jsx';
 
 // conditionally renders Diff, Atoms, AtomTree, and Tree
-const VisualContainer = ({ snapshotHistory, oldSnap, newSnap }) => {
+const VisualContainer = ({snapshotHistory, oldSnap, newSnap}) => {
   // object containing all conditional renders based on navBar
   const nav = {
     Diff: (
@@ -36,7 +36,7 @@ const VisualContainer = ({ snapshotHistory, oldSnap, newSnap }) => {
   // useState hook to update the component to render in the container
   const [tab, setTab] = useState('Diff');
   return (
-    <div className='VisualContainer'>
+    <div className="VisualContainer">
       <NavBar setTab={setTab} tabsList={tabsList} />
       {nav[tab]}
     </div>
