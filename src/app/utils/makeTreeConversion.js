@@ -1,11 +1,11 @@
-const makeTree = (obj) => {
+const makeTree = obj => {
   // function that parses and refactors snapshotHistory into an object d3 can understand
 
   if (!obj) return;
 
   let result = [];
   let keys = Object.keys(obj);
-  keys.forEach((key) => {
+  keys.forEach(key => {
     let newObj = {};
     newObj.name = key;
     // obj[key] is a nested object so recurse
@@ -34,4 +34,4 @@ const makeTree = (obj) => {
   return result;
 };
 
-module.exports = { makeTree };
+module.exports = {makeTree};
