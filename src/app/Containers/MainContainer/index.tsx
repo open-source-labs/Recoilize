@@ -3,11 +3,11 @@ import SnapshotsContainer from '../SnapshotContainer';
 import VisualContainer from '../VisualContainer';
 
 interface MainContainerProps {
-  snapshotHistory: object[]
+  snapshotHistory: object[];
 }
 
 // wraps entire application
-const MainContainer: React.FC<MainContainerProps> = ({ snapshotHistory }) => {
+const MainContainer: React.FC<MainContainerProps> = ({snapshotHistory}) => {
   // useState hook to update the index of snapshotHistory to compare in Diff.jsx
   const [curRender, setCurRender] = useState(snapshotHistory.length - 1);
   // useEffect for curRender
@@ -16,7 +16,7 @@ const MainContainer: React.FC<MainContainerProps> = ({ snapshotHistory }) => {
   }, [snapshotHistory]);
   // render containers passing necessary props
   return (
-    <div className='MainContainer'>
+    <div className="MainContainer">
       <SnapshotsContainer
         // index of current snapshot rendered in devtool
         curRender={curRender}

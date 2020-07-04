@@ -16,7 +16,7 @@ const App: React.FC = () => {
       tabId: chrome.devtools.inspectedWindow.tabId,
     });
     // LISTEN for messages FROM bg script
-    backgroundConnection.onMessage.addListener((msg) => {
+    backgroundConnection.onMessage.addListener(msg => {
       if (msg.action === 'recordSnapshot') {
         setSnapshotHistory(msg.payload);
       }
@@ -28,24 +28,22 @@ const App: React.FC = () => {
       // array of snapshots
       snapshotHistory={snapshotHistory}
     />
-  )
+  );
   // Render module not found message if snapHistory is null, this means we have not detected a recoil app with recoilize module installed properly
   const renderModuleNotFoundContainer = (
-    <div className='notFoundContainer'>
-      <img className='logo' src={LOGO_URL} />
+    <div className="notFoundContainer">
+      <img className="logo" src={LOGO_URL} />
       <p>
         Supported only with Recoil apps with the Recoilize NPM module. Follow
         the installation instructions at www.recoilize.com.
       </p>
     </div>
-  )
+  );
   return (
-    <div className='App' key='App'>
-      {snapshotHistory
-        ? renderMainContainer
-        : renderModuleNotFoundContainer}
+    <div className="App" key="App">
+      {snapshotHistory ? renderMainContainer : renderModuleNotFoundContainer}
     </div>
   );
-}
+};
 
 export default App;
