@@ -3,7 +3,7 @@ import Diff from '../components/Diff.jsx';
 import Atoms from '../components/Atoms.jsx';
 import NavBar from '../components/NavBar.jsx';
 import AtomTree from '../components/AtomTree.jsx';
-import Tree from '../components/Tree.jsx';
+import Tree from '../components/TreeDir/Tree.jsx';
 
 // conditionally renders Diff, Atoms, AtomTree, and Tree
 const VisualContainer = ({snapshotHistory, oldSnap, newSnap}) => {
