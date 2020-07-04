@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "outDir": "./build",
+    "module": "commonjs",
+    "pretty": true,
+    "noImplicitAny": true,
+    "removeComments": true,
+    "preserveConstEnums": true,
+    "sourceMap": true,
+    "allowJs": true,
+    "jsx": "react",
+    "target": "esnext",
+    "esModuleInterop": true
+  },
+  "files": [
+    "src/app/components/DiffDir/Diff.tsx",
+    "src/app/components/NavBarDir/NavBar.tsx"
+  ],
+  "types": [
+    "chrome"
+  ],
+}

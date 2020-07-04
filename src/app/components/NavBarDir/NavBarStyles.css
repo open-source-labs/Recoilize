@@ -1,0 +1,20 @@
+.NavBar {
+  display: flex;
+  flex-grow: 0;
+  flex-direction: row;
+  border-bottom: 2px solid #484848;
+  background-color: #2d2d2d;
+}
+
+.navBarButtons {
+  color: #989898;
+  background-color: #2d2d2d;
+  border: none;
+  padding: 8px;
+  outline: none;
+}
+
+.navBarButtons:hover {
+  color: #e6e6e6;
+  background-color: #212121;
+}
