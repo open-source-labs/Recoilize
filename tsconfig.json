@@ -9,14 +9,12 @@
     "sourceMap": true,
     "allowJs": true,
     "jsx": "react",
-    //"ESNext" targets latest supported ES proposed features.
     "target": "esnext",
-    //Emit __importStar and __importDefault helpers for runtime babel ecosystem compatibility and enable --allowSyntheticDefaultImports for typesystem compatibility.
     "esModuleInterop": true
   },
   "files": [
-    "./src/app/components/DiffDir/DiffTs.tsx",
-    "./src/app/components/NavBarDir/NavBarTs.tsx"
+    "src/app/components/DiffDir/Diff.tsx",
+    "src/app/components/NavBarDir/NavBar.tsx"
   ],
   "types": [
     "chrome"

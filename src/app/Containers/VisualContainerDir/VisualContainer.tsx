@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import Diff from '../../components/DiffDir/DiffTs';
-import NavBar from '../../components/NavBarDir/NavBarTs';
+import Diff from '../../components/DiffDir/Diff';
+import NavBar from '../../components/NavBarDir/NavBar';
 import AtomTree from '../../components/AtomTree.jsx';
-import Tree from '../../components/TreeDir/TreeTs';
+import Tree from '../../components/TreeDir/Tree';
 
 interface VisualContainerProps {
   // snapshot at index [curRender -1]
@@ -11,10 +11,14 @@ interface VisualContainerProps {
   newSnap: object
 }
 
+type navTypes = {
+  [index: string]: JSX.Element
+}
+
 // Renders Navbar and conditionally renders Diff, AtomTree, and Tree
 const VisualContainer: React.FC<VisualContainerProps> = ({ oldSnap, newSnap }) => {
   // object containing all conditional renders based on navBar
-  const nav = {
+  const nav: navTypes = {
     Diff: <Diff oldSnap={oldSnap} newSnap={newSnap} />,
     Tree: <Tree newSnap={newSnap} />,
     Visualizer: <AtomTree newSnap={newSnap} />,

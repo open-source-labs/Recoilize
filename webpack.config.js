@@ -3,7 +3,7 @@ const ChromeExtensionReloader = require('webpack-chrome-extension-reloader');
 
 const config = {
   entry: {
-    app: './src/app/index.js',
+    app: './src/app/index.tsx',
     background: './src/extension/background.js',
     content: './src/extension/contentScript.js',
   },
@@ -13,6 +13,11 @@ const config = {
   },
   module: {
     rules: [
+      {
+        test: /\.tsx?$/,
+        use: 'ts-loader',
+        exclude: /node_modules/,
+      },
       {
         test: /\.jsx?/,
         exclude: /(node_modules)/,
@@ -34,6 +39,11 @@ const config = {
         test: /\.css$/,
         use: ['style-loader', 'css-loader'],
       },
+    ],
+  },
+  resolve: {
+    extensions: [
+      '.tsx', '.ts', '.js', '.jsx'
     ],
   },
   plugins: [],

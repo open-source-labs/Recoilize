@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import SnapshotsContainer from '../SnapshotContainerDir/SnapshotsContainer.jsx';
-import VisualContainer from '../VisualContainerDir/VisualContainer.jsx';
-import PropTypes from 'prop-types';
+import SnapshotsContainer from '../SnapshotContainerDir/SnapshotContainer';
+import VisualContainer from '../VisualContainerDir/VisualContainer';
+
+interface MainContainerProps {
+  snapshotHistory: object[]
+}
 
 // wraps entire application
-const MainContainer = ({ snapshotHistory }) => {
+const MainContainer: React.FC<MainContainerProps> = ({ snapshotHistory }) => {
   // useState hook to update the index of snapshotHistory to compare in Diff.jsx
   const [curRender, setCurRender] = useState(snapshotHistory.length - 1);
   // useEffect for curRender
@@ -30,11 +33,6 @@ const MainContainer = ({ snapshotHistory }) => {
       />
     </div>
   );
-};
-
-MainContainer.propTypes = {
-  // array of object snapshots taken of user's state
-  snapshotHistory: PropTypes.arrayOf(PropTypes.object),
 };
 
 export default MainContainer;

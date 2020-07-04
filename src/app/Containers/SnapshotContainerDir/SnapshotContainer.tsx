@@ -1,10 +1,18 @@
 import React from 'react';
-import SnapshotsList from '../../components/SnapshotListDir/SnapshotsList.jsx';
-import PropTypes from 'prop-types';
+import SnapshotsList from '../../components/SnapshotListDir/SnapshotList';
 
-const SnapshotsContainer = ({ curRender, snapshotHistory, setCurRender }) => {
-  // function will post message to background.js
-  const setSnapshotTimeTravelIndex = (index) => {
+interface SnapshotsContainerProps {
+  // index of current snapshot rendered in devtool
+  curRender: number,
+  // array of object snapshots of user's state
+  snapshotHistory: object[],
+  // setState functionality to update curRender
+  setCurRender: React.Dispatch<React.SetStateAction<number>>
+}
+
+const SnapshotsContainer: React.FC <SnapshotsContainerProps> = ({ curRender, snapshotHistory, setCurRender }) => {
+  // functionality to postMessage the selected snapshot index to background.js
+  const setSnapshotTimeTravelIndex = (index: number) => {
     // variable to store/reference connection
     const backgroundConnection = chrome.runtime.connect();
     // post the message with index in payload to the connection
@@ -21,20 +29,10 @@ const SnapshotsContainer = ({ curRender, snapshotHistory, setCurRender }) => {
         curRender={curRender}
         snapshotHistory={snapshotHistory}
         setCurRender={setCurRender}
-        // functionality to postMessage the selected snapshot index to background.js
         setSnapshotTimeTravelIndex={setSnapshotTimeTravelIndex}
       />
     </div>
   );
-};
-
-SnapshotsContainer.propTypes = {
-  // index of current snapshot rendered in devtool
-  curRender: PropTypes.number.isRequired,
-  // array of object snapshots of user's state
-  snapshotHistory: PropTypes.arrayOf(PropTypes.object),
-  // setState functionality to update curRender
-  setCurRender: PropTypes.func.isRequired,
 };
 
 export default SnapshotsContainer;
