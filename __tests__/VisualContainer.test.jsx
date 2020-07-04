@@ -1,7 +1,7 @@
 import React from 'react';
 import {shallow, configure} from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
-import VisualContainer from '../src/app/Containers/VisualContainer.jsx';
+import VisualContainer from '../src/app/Containers/VisualContainer';
 
 configure({adapter: new Adapter()});
 

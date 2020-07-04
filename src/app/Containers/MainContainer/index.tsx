@@ -1,6 +1,6 @@
-import React, {useState, useEffect} from 'react';
-import SnapshotsContainer from '../SnapshotContainerDir/SnapshotContainer';
-import VisualContainer from '../VisualContainerDir/VisualContainer';
+import React, { useState, useEffect } from 'react';
+import SnapshotsContainer from '../SnapshotContainer';
+import VisualContainer from '../VisualContainer';
 
 interface MainContainerProps {
   snapshotHistory: object[];
