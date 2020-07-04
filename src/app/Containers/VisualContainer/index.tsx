@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import Diff from '../../components/DiffDir/Diff';
-import NavBar from '../../components/NavBarDir/NavBar';
+import Diff from '../../components/Diff';
+import NavBar from '../../components/NavBar'; 
 import AtomTree from '../../components/AtomTree.jsx';
-import Tree from '../../components/TreeDir/Tree';
+import Tree from '../../components/Tree';
 
 interface VisualContainerProps {
   // snapshot at index [curRender -1]

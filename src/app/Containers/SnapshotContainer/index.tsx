@@ -1,5 +1,5 @@
 import React from 'react';
-import SnapshotsList from '../../components/SnapshotListDir/SnapshotList';
+import SnapshotsList from '../../components/SnapshotList';
 
 interface SnapshotsContainerProps {
   // index of current snapshot rendered in devtool
