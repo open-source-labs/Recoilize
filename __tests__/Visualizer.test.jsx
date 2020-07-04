@@ -43,11 +43,16 @@ describe('Atom tree visualizer unit test', () => {
   };
   let Visualizer;
   beforeAll(() => {
-    Visualizer = shallow(<AtomTree />);
+    Visualizer = shallow(<AtomTree newSnap={propSnapshot} />);
   });
   //   console.log('d3', d3);
   //   console.log('test component', Visualizer);
   it(`<AtomTree /> should render an svg with id 'canvas' `, () => {
     expect(Visualizer.find('svg').is('#canvas')).toEqual(true);
   });
+  //   it('Expect AtomTree to render d3 elements', () => {
+  //     console.log('component', Visualizer.find('svg'));
+  //     const allD3 = Visualizer.find('svg').find('g');
+  //     expect(allD3.length).toEqual(35);
+  //   });
 });
