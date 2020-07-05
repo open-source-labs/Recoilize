@@ -1,12 +1,23 @@
+// Message Interface
+interface Msg {
+  action: string;
+  tabId: string;
+  payload: object;
+}
+
+interface Connections {
+  [tabId: string]: any;
+}
+
 // * DEBUGGING MESSAGES *
 console.log('bg new');
 
 // once background-script start, start with cleared connections
-connections = {};
+const connections: Connections = {};
 
 // once background starts, start with cleared local storage
-chrome.storage.local.clear(function () {
-  chrome.storage.local.get(null, function (result) {
+chrome.storage.local.clear(function (): void {
+  chrome.storage.local.get(null, function (result): void {
     console.log('storage currently is ' + JSON.stringify(result));
   });
 });
@@ -16,7 +27,7 @@ chrome.runtime.onConnect.addListener(port => {
   // * DEBUGGING MESSAGES *
   console.log(port, ' <-- do we know the port');
 
-  const devToolsListener = (msg, port) => {
+  const devToolsListener = (msg: Msg, port: object) => {
     // * DEBUGGING MESSAGES *
     console.log('in the devToolsListener');
     console.log('the msg: ', msg);
@@ -51,7 +62,7 @@ chrome.runtime.onConnect.addListener(port => {
 
         if (tabId) {
           // if msg tabId provided, send time travel snapshot history to content-script
-          chrome.tabs.sendMessage(tabId, msg);
+          chrome.tabs.sendMessage(Number(tabId), msg);
         } else {
           console.log('ERROR: no tabId was sent with this request');
         }
@@ -188,7 +199,7 @@ chrome.runtime.onMessage.addListener((msg, sender) => {
 });
 
 // when the tab is closed reset local storage for that specific tabId
-chrome.tabs.onRemoved.addListener(function (tabId) {
+chrome.tabs.onRemoved.addListener(tabId => {
   console.log('delete from local storage: ', tabId);
   // we should only do this when tab closes not when port closes.
   chrome.storage.local.remove([`${tabId}`], function () {
