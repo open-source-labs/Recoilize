@@ -9,6 +9,12 @@ interface NetworkProps {
 const Network: React.FC<NetworkProps> = ({newSnap}) => {
 
 
+  const [{x, y, k}, setZoomState] = useState({x: null, y: null, k: null});
+
+  useEffect(() => {
+    setZoomState(d3.zoomTransform(d3.select('#networkCanvas').node()));
+  }, [newSnap]);
+
   useEffect(() => {
     document.getElementById('networkCanvas').innerHTML = '';
 
@@ -23,7 +29,11 @@ const Network: React.FC<NetworkProps> = ({newSnap}) => {
 
     const svg = d3.select('#networkCanvas');
 
-    const markers = svg
+    const g = svg
+      .append('g')
+      .attr('transform', `translate(${x}, ${y}), scale(${k})`); // sets the canvas to the saved zoomState
+
+    const markers = g
       .append('defs')
       .append('marker')
       .attr('id', 'arrowhead')
@@ -62,7 +72,7 @@ const Network: React.FC<NetworkProps> = ({newSnap}) => {
 
     // HELPER FUNCTIONS BELOW FOR D3
     function update(links: any, nodes: any) {
-      link = svg
+      link = g
         .selectAll('.link')
         .data(links)
         .enter()
@@ -74,7 +84,7 @@ const Network: React.FC<NetworkProps> = ({newSnap}) => {
         return d.type;
       });
 
-      edgepaths = svg
+      edgepaths = g
         .selectAll('.edgepath')
         .data(links)
         .enter()
@@ -90,7 +100,7 @@ const Network: React.FC<NetworkProps> = ({newSnap}) => {
         .style('stroke', '#474747')
         .style('stroke-width', '1px');
 
-      edgelabels = svg
+      edgelabels = g
         .selectAll('.edgelabel')
         .data(links)
         .enter()
@@ -114,7 +124,7 @@ const Network: React.FC<NetworkProps> = ({newSnap}) => {
           return d.type;
         });
 
-      node = svg
+      node = g
         .selectAll('.node')
         .data(nodes)
         .enter()
@@ -213,6 +223,48 @@ const Network: React.FC<NetworkProps> = ({newSnap}) => {
       if (!d3.event.active) simulation.alphaTarget(0);
       d.fx = undefined;
       d.fy = undefined;
+    }
+
+    // allows the canvas to be draggable
+    g.call(
+      d3
+        .drag()
+        .on('start', dragStarted)
+        .on('drag', draggedCanvas)
+        .on('end', dragEnded),
+    );
+
+    // allows the canvas to be zoomable
+    svg.call(
+      d3
+        .zoom()
+        .extent([
+          [0, 0],
+          [width, height],
+        ])
+        .scaleExtent([0, 8])
+        .on('zoom', zoomed),
+    );
+
+    // helper functions that help with dragging functionality
+    function dragStarted() {
+      d3.select(this).raise();
+      g.attr('cursor', 'grabbing');
+    }
+
+    function draggedCanvas(d: any) {
+      d3.select(this)
+        .attr('dx', (d.x = d3.event.x))
+        .attr('dy', (d.y = d3.event.y));
+    }
+
+    function dragEnded() {
+      g.attr('cursor', 'grab');
+    }
+
+    // helper function that allows for zooming
+    function zoomed() {
+      g.attr('transform', d3.event.transform);
     }
   });
 
