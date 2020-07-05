@@ -1,5 +1,4 @@
 const makeRelationshipLinks = obj => {
-
   const relationships = {nodes: [], links: []};
 
   if (!obj) return relationships;
@@ -24,7 +23,6 @@ const makeRelationshipLinks = obj => {
 
   // loops node Data and push links into array
   Object.keys(obj).forEach((nodeKey, index) => {
-
     // check all nodeToNode subscriptions (atoms to selectors)
     obj[nodeKey].nodeToNodeSubscriptions.forEach(nodeToNodeSubscription => {
       const targetSource = `${nodeCache[nodeKey]}${nodeCache[nodeToNodeSubscription]}`;
