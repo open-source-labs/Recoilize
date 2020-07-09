@@ -12,7 +12,6 @@
     "target": "esnext",
     "esModuleInterop": true
   },
-  "types": [
-    "chrome"
-  ],
+  "include": ["./src/app/**/*", "./index.d.ts"],
+  "exclude": ["node_modules", ".vscode", "__tests__"]
 }
