@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import * as d3 from 'd3';
 import {makeRelationshipLinks} from '../../utils/makeRelationshipLinks';
+import { stateSnapshot } from '../../../types';
 
 interface NetworkProps {
-  newSnap: object;
+  newSnap: stateSnapshot;
 }
 
 const Network: React.FC<NetworkProps> = ({newSnap}) => {

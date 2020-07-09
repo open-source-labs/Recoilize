@@ -1,5 +1,6 @@
 // renders a list of all of the snapshots that were taking
 import React from 'react';
+import { stateSnapshot } from '../../../types';
 
 interface SnapshotsListProps {
   // index of current snapshot rendered in devtool
@@ -7,7 +8,7 @@ interface SnapshotsListProps {
   // array of object snapshots of user's state
   setCurRender: React.Dispatch<React.SetStateAction<number>>;
   // setState functionality to update curRender
-  snapshotHistory: any[];
+  snapshotHistory: stateSnapshot[];
   // functionality to postMessage the selected snapshot index to background.js
   setSnapshotTimeTravelIndex: (index: number) => void;
 }
@@ -19,15 +20,15 @@ const SnapshotsList: React.FC<SnapshotsListProps> = ({
   setSnapshotTimeTravelIndex,
 }) => {
   // array of individual snapshots with setCurRender and timeTravel functionality
-  const listOfSnapshots = snapshotHistory.reduce((acc, _curSnap, i) => {
+  const listOfSnapshots = snapshotHistory.reduce<JSX.Element[]>((acc, _curSnap, i) => {
     acc.push(
       <div
         className="individualSnapshot"
         key={i}
         style={
           curRender === i
-            ? {color: '#E6E6E6', backgroundColor: '#212121'}
-            : {color: '#989898'}
+            ? { color: '#E6E6E6', backgroundColor: '#212121' }
+            : { color: '#989898' }
         }
         onClick={() => {
           setCurRender(i);
