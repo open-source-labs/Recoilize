@@ -1,15 +1,16 @@
-// renders the difference between the most recent state change and the previous
 import React, {useState} from 'react';
 import {diff, formatters} from 'jsondiffpatch';
 import ReactHtmlParser from 'react-html-parser';
+import { stateSnapshot } from '../../../types'
 
 interface DiffProps {
   // snapshot at index [curRender -1]
-  oldSnap: object;
+  oldSnap: stateSnapshot;
   // snapshot at index [curRender]
-  newSnap: object;
+  newSnap: stateSnapshot;
 }
 
+// renders the difference between the most recent state change and the previous
 const Diff: React.FC<DiffProps> = ({oldSnap, newSnap}) => {
   // useState hook to update the toggle of showUnchanged or hideUnchanged
   const [rawToggle, setRawToggle] = useState(false);

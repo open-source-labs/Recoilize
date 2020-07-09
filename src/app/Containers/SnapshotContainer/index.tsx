@@ -1,11 +1,12 @@
 import React from 'react';
 import SnapshotsList from '../../components/SnapshotList';
+import { stateSnapshot } from '../../../types';
 
 interface SnapshotsContainerProps {
   // index of current snapshot rendered in devtool
   curRender: number;
   // array of object snapshots of user's state
-  snapshotHistory: object[];
+  snapshotHistory: stateSnapshot[];
   // setState functionality to update curRender
   setCurRender: React.Dispatch<React.SetStateAction<number>>;
 }
@@ -23,7 +24,7 @@ const SnapshotsContainer: React.FC<SnapshotsContainerProps> = ({
     backgroundConnection.postMessage({
       action: 'snapshotTimeTravel',
       tabId: chrome.devtools.inspectedWindow.tabId,
-      payload: {snapshotIndex: index},
+      payload: { snapshotIndex: index },
     });
   };
   return (

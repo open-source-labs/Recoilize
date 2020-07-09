@@ -1,22 +1,23 @@
 import React, { useState } from 'react';
 import Diff from '../../components/Diff';
-import NavBar from '../../components/NavBar'; 
-import AtomTree from '../../components/AtomTree.jsx';
+import NavBar from '../../components/NavBar';
+import Visualizer from '../../components/Visualizer.jsx';
 import Tree from '../../components/Tree';
 import Network from '../../components/Network';
+import { stateSnapshot } from '../../../types';
 
 interface VisualContainerProps {
   // snapshot at index [curRender -1]
-  oldSnap: object;
+  oldSnap: stateSnapshot;
   // snapshot at index [curRender]
-  newSnap: object;
+  newSnap: stateSnapshot;
 }
 
 type navTypes = {
-  [index: string]: JSX.Element;
+  [tabName: string]: JSX.Element;
 };
 
-// Renders Navbar and conditionally renders Diff, AtomTree, and Tree
+// Renders Navbar and conditionally renders Diff, Visualizer, and Tree
 const VisualContainer: React.FC<VisualContainerProps> = ({
   oldSnap,
   newSnap,
@@ -25,7 +26,7 @@ const VisualContainer: React.FC<VisualContainerProps> = ({
   const nav: navTypes = {
     Diff: <Diff oldSnap={oldSnap} newSnap={newSnap} />,
     Tree: <Tree newSnap={newSnap} />,
-    Visualizer: <AtomTree newSnap={newSnap} />,
+    Visualizer: <Visualizer newSnap={newSnap} />,
     Network: <Network newSnap={newSnap} />
   };
   // array of all nav obj keys

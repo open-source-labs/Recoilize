@@ -132,7 +132,7 @@ body {
   width: 100%;
 }
 
-.AtomTree {
+.Visualizer {
   height: calc(100vh - 40px);
   width: calc(100vw - 250px);
 }

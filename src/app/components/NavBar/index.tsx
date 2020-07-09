@@ -9,17 +9,17 @@ interface NavBarProps {
   tab: string;
 }
 
-const NavBar: React.FC<NavBarProps> = ({setTab, tabsList, tab}) => {
+const NavBar: React.FC<NavBarProps> = ({ setTab, tabsList, tab }) => {
   // array of buttons with setTab functionality
-  const renderedTabButtons = tabsList.reduce((acc, tabName) => {
+  const renderedTabButtons = tabsList.reduce<JSX.Element[]>((acc, tabName) => {
     acc.push(
       <button
         className="navBarButtons"
         key={tabName}
         style={
           tab === tabName
-            ? {color: '#E6E6E6', backgroundColor: '#212121'}
-            : {color: '#989898'}
+            ? { color: '#E6E6E6', backgroundColor: '#212121' }
+            : { color: '#989898' }
         }
         onClick={() => {
           setTab(tabName);

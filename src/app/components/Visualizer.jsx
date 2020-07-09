@@ -2,7 +2,7 @@ import React, {useRef, useState, useEffect} from 'react';
 import * as d3 from 'd3';
 import {makeTree} from '../utils/makeTreeConversion.js';
 
-function AtomTree({newSnap}) {
+function Visualizer({newSnap}) {
   // set the heights and width of the tree to be passed into treeMap function
   const width = 600;
   const height = 1100;
@@ -14,7 +14,7 @@ function AtomTree({newSnap}) {
     setZoomState(d3.zoomTransform(d3.select('#canvas').node()));
   }, [newSnap]);
 
-  // this only clears the canvas if AtomTree is already rendered on the extension
+  // this only clears the canvas if Visualizer is already rendered on the extension
   useEffect(() => {
     document.getElementById('canvas').innerHTML = '';
 
@@ -167,11 +167,11 @@ function AtomTree({newSnap}) {
 
   return (
     <div>
-      <div className="AtomTree">
+      <div className="Visualizer">
         <svg id="canvas"></svg>
       </div>
     </div>
   );
 }
 
-export default AtomTree;
+export default Visualizer;

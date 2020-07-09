@@ -1,9 +1,10 @@
 import React from 'react';
 import JSONTree from 'react-json-tree';
+import { stateSnapshot } from '../../../types';
 
 interface TreeProps {
   // snapshot at index [curRender]
-  newSnap: object;
+  newSnap: stateSnapshot;
 }
 
 const Tree: React.FC<TreeProps> = ({newSnap}) => {
