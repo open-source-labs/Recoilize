@@ -7,7 +7,7 @@
 const formatFiberNodes = (node) => {
   // initialize empty array for all atoms and selectors.  Elements will be all atom and selector names, as strings
   const recoilNodes = [];
-  // function returns boolean with whether 'node' contains atoms/selector
+  // function returns boolean with whether 'node' ha
   if (checkForAtoms(node)){
     let current = node.memoizedState;
     while (current) {
@@ -61,8 +61,8 @@ const assignName = (node) => {
   if (node.tag === 7) return "Fragment";
 };
 
-export default formatFiberNodes;
-
+//export default formatFiberNodes;
+let test = formatFiberNodes(document.getElementById('root')._reactRootContainer._internalRoot.current)
 
   // const convertState = (node) => {
   //   if (!node.memoizedState) return null;
