@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {useRecoilTransactionObserver_UNSTABLE, useRecoilSnapshot, useGotoRecoilSnapshot, useRecoilValue, useRecoilValueLoadable, useRecoilCallback} from 'recoil';
+import {formatFiberNodes} from './formatFiberNodes';
 
 // isRestored state disables snapshots from being recorded
 let isRestoredState = false;
@@ -13,6 +14,7 @@ export default function Recoilize(props) {
   // We should ask for Array of atoms and selectors.
   // Captures all atoms that were defined to get the initial state
   let nodes = null;
+  
 
   if (typeof props.nodes === 'object' && !Array.isArray(props.nodes)) {
     nodes = Object.values(props.nodes);
@@ -52,8 +54,13 @@ export default function Recoilize(props) {
   useEffect(() => {
 
     if (!isRestoredState) {
+      const devToolData = {
+        filteredSnapshot: filteredSnapshot,
+        componentAtomTree: formatFiberNodes(document.getElementById('root')._reactRootContainer._internalRoot.current)
+      };
+      
       // Post message to content script on every re-render of the developers application only if content script has started
-      sendWindowMessage('recordSnapshot', filteredSnapshot)
+      sendWindowMessage('recordSnapshot', devToolData)
     } else {
       isRestoredState = false;
     }
@@ -66,14 +73,18 @@ export default function Recoilize(props) {
     
   })
 
-  // Listener callback for messages sent to window
+  // Listener callback for messages sent to windowf
   const onMessageReceived = (msg) => {
 
     // Add other actions from dev tool here
     switch (msg.data.action) {
       // Checks to see if content script has started before sending initial snapshot
       case 'contentScriptStarted':
-        sendWindowMessage('moduleInitialized', filteredSnapshot);
+        const devToolData = {
+          filteredSnapshot: filteredSnapshot,
+          componentAtomTree: formatFiberNodes(document.getElementById('root')._reactRootContainer._internalRoot.current)
+        };
+        sendWindowMessage('moduleInitialized', devToolData);
         break;
       // Listens for a request from dev tool to time travel to previous state of the app.
       case 'snapshotTimeTravel':

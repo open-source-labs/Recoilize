@@ -1,6 +1,3 @@
-
-
-
 // node parameter should be root of the fiber node tree, can be grapped with startNode from below
 // const startNode = document.getElementById('root')._reactRootContainer._internalRoot.current;
 
@@ -46,7 +43,7 @@ const createAtomsSelectorArray = (node) => {
       if (current.memoizedState && Array.isArray(current.memoizedState) && typeof current.memoizedState[0] === 'function' && current.memoizedState[1].length === 2) {
 
         // current.memoizedState[1][1].current is a Map that contains the a key, the key is the name of every atom/selector in that fiber node, that key is a string
-        for ([key, value] of current.memoizedState[1][1].current) {
+        for (let [key, value] of current.memoizedState[1][1].current) {
           recoilNodes.push(key)
         }
 
@@ -80,7 +77,7 @@ const assignName = (node) => {
   if (node.tag === 7) return "Fragment";
 };
 
-export default formatFiberNodes;
+module.exports = {formatFiberNodes};
 
 // if testing this function on the browser, use line below to log the formatted tree in the console
 //let formattedFiberNodes = formatFiberNodes(document.getElementById('root')._reactRootContainer._internalRoot.current)
