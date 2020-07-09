@@ -23,7 +23,7 @@ const MainContainer: React.FC<MainContainerProps> = ({ snapshotHistory }) => {
         // index of current snapshot rendered in devtool
         curRender={curRender}
         // array of object snapshots of user's state
-        snapshotHistory={snapshotHistory}
+        snapshotHistoryLength={snapshotHistory.length}
         // setState functionality to update curRender
         setCurRender={setCurRender}
       />

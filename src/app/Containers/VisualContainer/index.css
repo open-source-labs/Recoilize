@@ -1,8 +1,0 @@
-.VisualContainer {
-  display: flex;
-  flex-grow: 8;
-  flex-direction: column;
-  border-bottom: 2px solid #484848;
-  border-left: 2px solid #484848;
-  color: #e6e6e6;
-}

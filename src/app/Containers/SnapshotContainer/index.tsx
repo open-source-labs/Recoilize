@@ -6,14 +6,14 @@ interface SnapshotsContainerProps {
   // index of current snapshot rendered in devtool
   curRender: number;
   // array of object snapshots of user's state
-  snapshotHistory: stateSnapshot[];
+  snapshotHistoryLength: number;
   // setState functionality to update curRender
   setCurRender: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const SnapshotsContainer: React.FC<SnapshotsContainerProps> = ({
   curRender,
-  snapshotHistory,
+  snapshotHistoryLength,
   setCurRender,
 }) => {
   // functionality to postMessage the selected snapshot index to background.js
@@ -32,7 +32,7 @@ const SnapshotsContainer: React.FC<SnapshotsContainerProps> = ({
       <h3>Snapshots</h3>
       <SnapshotsList
         curRender={curRender}
-        snapshotHistory={snapshotHistory}
+        snapshotHistoryLength={snapshotHistoryLength}
         setCurRender={setCurRender}
         setSnapshotTimeTravelIndex={setSnapshotTimeTravelIndex}
       />

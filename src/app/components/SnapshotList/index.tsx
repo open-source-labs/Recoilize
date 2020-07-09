@@ -8,7 +8,7 @@ interface SnapshotsListProps {
   // array of object snapshots of user's state
   setCurRender: React.Dispatch<React.SetStateAction<number>>;
   // setState functionality to update curRender
-  snapshotHistory: stateSnapshot[];
+  snapshotHistoryLength: number;
   // functionality to postMessage the selected snapshot index to background.js
   setSnapshotTimeTravelIndex: (index: number) => void;
 }
@@ -16,12 +16,14 @@ interface SnapshotsListProps {
 const SnapshotsList: React.FC<SnapshotsListProps> = ({
   curRender,
   setCurRender,
-  snapshotHistory,
+  snapshotHistoryLength,
   setSnapshotTimeTravelIndex,
 }) => {
   // array of individual snapshots with setCurRender and timeTravel functionality
-  const listOfSnapshots = snapshotHistory.reduce<JSX.Element[]>((acc, _curSnap, i) => {
-    acc.push(
+  const listOfSnapshotsIndexes: JSX.Element[] = [];
+  // iterate the same length of our snapshotHistory
+  for (let i = 0; i < snapshotHistoryLength; i++) {
+    listOfSnapshotsIndexes.push(
       <div
         className="individualSnapshot"
         key={i}
@@ -41,12 +43,11 @@ const SnapshotsList: React.FC<SnapshotsListProps> = ({
           }}>
           Time Travel
         </button>
-      </div>,
+      </div>
     );
-    return acc;
-  }, []);
+  }
   // render the array of snapshots divs generated above
-  return <div className="SnapshotsList">{listOfSnapshots}</div>;
+  return <div className="SnapshotsList">{listOfSnapshotsIndexes}</div>;
 };
 
 export default SnapshotsList;
