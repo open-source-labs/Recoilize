@@ -5,14 +5,47 @@
 // const startNode = document.getElementById('root')._reactRootContainer._internalRoot.current;
 
 const formatFiberNodes = (node) => {
+  
+  const formattedNode = {
+    // this function grabs a 'name' based on the tag of the node
+    name: assignName(node),
+    tag: node.tag,
+    children: []
+  }
+  
+  // loop through and recursively call all nodes to format their 'sibling' and 'child' properties to our desired tree shape
+  let currentNode = node.child;
+  while (currentNode) {
+    formattedNode.children.push(formatFiberNodes(currentNode));
+    currentNode = currentNode.sibling
+  }
+  
+  // // function returns array of all atoms and selectors, as strings
+  const recoilNodes = createAtomsSelectorArray(node);
+
+
+  // add a property to the formattedNode that consists of all atoms
+  if (recoilNodes.length) formattedNode.recoilNodes = recoilNodes;
+
+  return formattedNode;
+
+}
+
+
+
+
+const createAtomsSelectorArray = (node) => {
   // initialize empty array for all atoms and selectors.  Elements will be all atom and selector names, as strings
   const recoilNodes = [];
-  // function returns boolean with whether 'node' ha
-  if (checkForAtoms(node)){
+  // function that returns boolean with whether 'node' contains atoms or selectors
+  if (checkForAtoms(node)) {
     let current = node.memoizedState;
+    // loop through all memoizedStates in currentNode 
     while (current) {
+      // this is based on the way recoil atoms and selectors are showin in the window.  Currently best way to grab all names of atoms and selectors
       if (current.memoizedState && Array.isArray(current.memoizedState) && typeof current.memoizedState[0] === 'function' && current.memoizedState[1].length === 2) {
-        
+
+        // current.memoizedState[1][1].current is a Map that contains the a key, the key is the name of every atom/selector in that fiber node, that key is a string
         for ([key, value] of current.memoizedState[1][1].current) {
           recoilNodes.push(key)
         }
@@ -21,32 +54,18 @@ const formatFiberNodes = (node) => {
       current = current.next;
     }
   }
-  
-  const formattedNode = {
-    name: assignName(node),
-    //recoilNodes: recoilNodes,
-    tag: node.tag,
-    children: []
-  }
-
-  if (recoilNodes.length) formattedNode.recoilNodes = recoilNodes;
-  
-  let currentNode = node.child;
-  while (currentNode) {
-    formattedNode.children.push(formatFiberNodes(currentNode));
-    currentNode = currentNode.sibling
-  }
-  
-  return formattedNode
-  
+  return recoilNodes;
 }
 
-function checkForAtoms(node){
+const checkForAtoms = (node) => {
   if (node.memoizedState && node.memoizedState.next && node.memoizedState.next.memoizedState && node.memoizedState.next.memoizedState.current) {
     return true;
   }
+  return false;
 }
 
+
+// keep an eye on this section as we test bigger and bigger applications SEAN
 const assignName = (node) => {
   // Find name of a class component
   if (node.type && node.type.name) return node.type.name;
@@ -61,56 +80,7 @@ const assignName = (node) => {
   if (node.tag === 7) return "Fragment";
 };
 
-//export default formatFiberNodes;
-let test = formatFiberNodes(document.getElementById('root')._reactRootContainer._internalRoot.current)
+export default formatFiberNodes;
 
-  // const convertState = (node) => {
-  //   if (!node.memoizedState) return null;
-  //   return {
-  //     key: 'State',
-  //     // Spread operator prevents unwanted circular references
-  //     value: JSON.parse(JSON.stringify(node.memoizedState)),
-  //     type: (node.memoizedState.memoizedState && node._debugHookTypes[0] === 'useState') ? 'hook' : 'componentState',
-  //   }
-  // };
-
-
-// const tempNodesWithAtoms = [];
-// const formatNodes = (node) => {
-//   const atoms = [];
-//   if (checkForAtoms(node)){
-//     console.log('ever show up')
-//     let current = node.memoizedState;
-//     tempNodesWithAtoms.push(node);
-//     while (current) {
-//       if (current.memoizedState && Array.isArray(current.memoizedState) && typeof current.memoizedState[0] === 'function' && current.memoizedState[1].length === 2) {
-  
-//         for ([key, value] of current.memoizedState[1][1].current) {
-//           atoms.push(key)
-//         }
-//         console.log('showing up')
-//       }
-//       current = current.next;
-//     }
-//   }
-//   const formattedNode = {
-//     tag: node.tag,
-//     atoms: atoms,
-//     sibling: null,
-//     children: [node.child],
-//     name: null
-//   }
-//   let siblingNode = node.sibling;
-//   while (siblingNode){
-//     formattedNode.children.push(formatNodes(node.sibling));
-//     siblingNode = siblingNode.sibling;
-//   }
-//   if (node.child){
-//     formattedNode.next = formatNodes(node.child)
-//   }
-//   if (node.type){
-//     formattedNode.name = node.type.name
-//   }
-//   return formattedNode;
-
-// }
+// if testing this function on the browser, use line below to log the formatted tree in the console
+//let formattedFiberNodes = formatFiberNodes(document.getElementById('root')._reactRootContainer._internalRoot.current)
