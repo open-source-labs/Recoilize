@@ -1,6 +1,5 @@
 const makeRelationshipLinks = obj => {
   const relationships = {nodes: [], links: []};
-
   if (!obj) return relationships;
 
   // relationships.nodes = makeNodes(obj);
