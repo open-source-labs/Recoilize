@@ -3,7 +3,7 @@ import Diff from '../../components/Diff';
 import NavBar from '../../components/NavBar';
 import Visualizer from '../../components/Visualizer.jsx';
 import Tree from '../../components/Tree';
-// import Network from '../../components/Network';
+import Network from '../../components/Network';
 import { stateSnapshot } from '../../../types';
 
 interface VisualContainerProps {
@@ -27,7 +27,7 @@ const VisualContainer: React.FC<VisualContainerProps> = ({
     Diff: <Diff oldSnap={oldSnap} newSnap={newSnap} />,
     Tree: <Tree newSnap={newSnap} />,
     Visualizer: <Visualizer newSnap={newSnap} />,
-    // Network: <Network newSnap={newSnap} />
+    Network: <Network newSnap={newSnap} />
   };
   // array of all nav obj keys
   const tabsList = Object.keys(nav);
