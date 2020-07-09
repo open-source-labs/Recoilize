@@ -20,16 +20,10 @@ const formatFiberNodes = (node) => {
   // // function returns array of all atoms and selectors, as strings
   const recoilNodes = createAtomsSelectorArray(node);
 
-
   // add a property to the formattedNode that consists of all atoms
   if (recoilNodes.length) formattedNode.recoilNodes = recoilNodes;
-
   return formattedNode;
-
 }
-
-
-
 
 const createAtomsSelectorArray = (node) => {
   // initialize empty array for all atoms and selectors.  Elements will be all atom and selector names, as strings
