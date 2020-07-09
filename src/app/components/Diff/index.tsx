@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { diff, formatters } from 'jsondiffpatch';
 import ReactHtmlParser from 'react-html-parser';
-import { stateSnapshot } from '../../../types';
+import { filteredSnapshot } from '../../../types'
 
 interface DiffProps {
   // snapshot at index [curRender -1]
-  oldSnap: stateSnapshot;
+  oldSnap: filteredSnapshot;
   // snapshot at index [curRender]
-  newSnap: stateSnapshot;
+  newSnap: filteredSnapshot;
 }
 
 // renders the difference between the most recent state change and the previous

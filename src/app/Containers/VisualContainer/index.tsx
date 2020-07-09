@@ -4,7 +4,7 @@ import NavBar from '../../components/NavBar';
 import Visualizer from '../../components/Visualizer.jsx';
 import Tree from '../../components/Tree';
 import Network from '../../components/Network';
-import { stateSnapshot } from '../../../types';
+import { stateSnapshot, filteredSnapshot } from '../../../types';
 
 interface VisualContainerProps {
   // snapshot at index [curRender -1]
@@ -23,11 +23,13 @@ const VisualContainer: React.FC<VisualContainerProps> = ({
   newSnap,
 }) => {
   // object containing all conditional renders based on navBar
+  const newFilteredSnapshot = newSnap ? newSnap.filteredSnapshot : null;
+  const oldFilteredSnapshot = oldSnap ? oldSnap.filteredSnapshot : null;
   const nav: navTypes = {
-    Diff: <Diff oldSnap={oldSnap} newSnap={newSnap} />,
-    Tree: <Tree newSnap={newSnap} />,
-    Visualizer: <Visualizer newSnap={newSnap} />,
-    Network: <Network newSnap={newSnap} />
+    Diff: <Diff oldSnap={oldFilteredSnapshot} newSnap={newFilteredSnapshot} />,
+    Tree: <Tree newSnap={newFilteredSnapshot} />,
+    Visualizer: <Visualizer newSnap={newFilteredSnapshot} />,
+    Network: <Network newSnap={newFilteredSnapshot} />
   };
   // array of all nav obj keys
   const tabsList = Object.keys(nav);
