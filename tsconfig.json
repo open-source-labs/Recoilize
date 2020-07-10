@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "outDir": "./build",
+    "module": "commonjs",
+    "pretty": true,
+    "noImplicitAny": true,
+    "removeComments": true,
+    "preserveConstEnums": true,
+    "sourceMap": true,
+    "allowJs": true,
+    "jsx": "react",
+    "target": "esnext",
+    "esModuleInterop": true
+  },
+  "include": ["./src/app/**/*", "./index.d.ts"],
+  "exclude": ["node_modules", ".vscode", "__tests__"]
+}

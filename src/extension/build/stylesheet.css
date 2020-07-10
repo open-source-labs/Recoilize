@@ -20,8 +20,12 @@ body {
 .SnapshotsContainer {
   display: flex;
   flex-direction: column;
-  flex-grow: 1;
+  flex-shrink: 1;
+  min-width: 250px;
   border-bottom: 2px solid #484848;
+  background-color: #2d2d2d;
+  text-align: center;
+  color: #e6e6e6;
 }
 
 .VisualContainer {
@@ -40,6 +44,10 @@ body {
 
 .Diff {
   border-style: none;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  padding-bottom: 20px;
 }
 
 .Atoms {
@@ -55,29 +63,32 @@ body {
   background-color: #2d2d2d;
 }
 
-/* BUTTONS */
 .individualSnapshot {
   list-style-type: none;
   display: flex;
   flex-grow: 1;
   padding: 10px;
-  color: #989898;
+  padding-left: 20px;
+  padding-right: 20px;
   border: none;
-  background-color: #2d2d2d;
-  width: 100%;
   outline: none;
+  justify-content: space-between;
 }
 
 .individualSnapshot:hover {
-  color: #e6e6e6;
   background-color: #212121;
 }
 
-.individualSnapshot:focus {
-  color: #e6e6e6;
-  background-color: #212121;
+.toggleDiv {
+  display: flex;
+  justify-content: flex-end;
 }
 
+.Tree {
+  padding: 10px;
+}
+
+/* BUTTONS */
 .navBarButtons {
   color: #989898;
   background-color: #2d2d2d;
@@ -91,13 +102,39 @@ body {
   background-color: #212121;
 }
 
+.timeTravelButton {
+  border: none;
+  color: #989898;
+  background: none;
+  outline: none;
+}
+
+.timeTravelButton:hover {
+  color: #e6e6e6;
+  background-color: #212121;
+  text-emphasis: bold;
+}
+
+.timeTravelButton:focus {
+  color: #e6e6e6;
+  background-color: #212121;
+}
+
+.rawToggle {
+  background: none;
+  border: none;
+  outline: none;
+}
+
+/* D3 */
 #canvas {
   height: 100%;
   width: 100%;
 }
-.AtomTree {
-  height: 100vh;
-  width: 100vw;
+
+.Visualizer {
+  height: calc(100vh - 40px);
+  width: calc(100vw - 250px);
 }
 
 .node-text {
@@ -123,6 +160,18 @@ body {
 }
 
 .logo {
-  width: 20%;
+  width: 100px;
   height: auto;
+}
+
+.json-tree {
+  margin: 10px;
+  padding: 0;
+  background-color: none;
+  list-style: none;
+}
+
+#networkCanvas {
+  height: calc(100vh - 40px);
+  width: calc(100vw - 250px);
 }

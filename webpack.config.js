@@ -3,9 +3,9 @@ const ChromeExtensionReloader = require('webpack-chrome-extension-reloader');
 
 const config = {
   entry: {
-    app: './src/app/index.js',
-    background: './src/extension/background.js',
-    content: './src/extension/contentScript.js',
+    app: './src/app/index.tsx',
+    background: './src/extension/background.ts',
+    content: './src/extension/contentScript.ts',
   },
   output: {
     path: path.resolve(__dirname, 'src/extension/build/bundles'),
@@ -13,6 +13,11 @@ const config = {
   },
   module: {
     rules: [
+      {
+        test: /\.tsx?$/,
+        use: 'ts-loader',
+        exclude: /node_modules/,
+      },
       {
         test: /\.jsx?/,
         exclude: /(node_modules)/,
@@ -36,6 +41,9 @@ const config = {
       },
     ],
   },
+  resolve: {
+    extensions: ['.tsx', '.ts', '.js', '.jsx'],
+  },
   plugins: [],
 };
 
@@ -47,7 +55,7 @@ module.exports = (env, argv) => {
           contentScript: ['app', 'content'],
           background: ['background'],
         },
-      })
+      }),
     );
   }
   return config;
