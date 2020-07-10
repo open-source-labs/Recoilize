@@ -12,7 +12,6 @@ chrome.runtime.onMessage.addListener(msg => {
   const {action} = msg;
   switch (action) {
     case 'snapshotTimeTravel':
-      console.log('we are sending snapshotTimeTravel message to module: ', msg);
       window.postMessage(msg, '*');
       break;
   }

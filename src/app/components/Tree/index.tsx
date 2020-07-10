@@ -4,17 +4,17 @@ import { filteredSnapshot } from '../../../types';
 
 interface TreeProps {
   // snapshot at index [curRender]
-  newSnap: filteredSnapshot;
+  filteredCurSnap: filteredSnapshot;
 }
 
-const Tree: React.FC<TreeProps> = ({newSnap}) => {
+const Tree: React.FC<TreeProps> = ({ filteredCurSnap }) => {
   // render json tree while passing in newSnap as data to JSONTree
   return (
     <div className="Tree">
-      {newSnap && (
+      {filteredCurSnap && (
         <JSONTree
-          data={newSnap}
-          theme={{tree: () => ({className: 'json-tree'})}}
+          data={filteredCurSnap}
+          theme={{ tree: () => ({ className: 'json-tree' }) }}
           shouldExpandNode={() => true}
           labelRenderer={raw =>
             typeof raw[0] !== 'number' ? <span>{raw[0]}</span> : null
