@@ -9,7 +9,6 @@ interface NetworkProps {
 
 const Network: React.FC<NetworkProps> = ({newSnap}) => {
 
-  console.log(newSnap, 'newSnap')
   const [{x, y, k}, setZoomState] = useState({x: null, y: null, k: null});
 
   useEffect(() => {
