@@ -4,17 +4,17 @@ import { makeRelationshipLinks } from '../../utils/makeRelationshipLinks';
 import { filteredSnapshot } from '../../../types';
 
 interface NetworkProps {
-  newSnap: filteredSnapshot;
+  filteredCurSnap: filteredSnapshot;
 }
 
-const Network: React.FC<NetworkProps> = ({ newSnap }) => {
+const Network: React.FC<NetworkProps> = ({ filteredCurSnap }) => {
 
 
   const [{ x, y, k }, setZoomState] = useState({ x: null, y: null, k: null });
 
   useEffect(() => {
     setZoomState(d3.zoomTransform(d3.select('#networkCanvas').node()));
-  }, [newSnap]);
+  }, [filteredCurSnap]);
 
   useEffect(() => {
     document.getElementById('networkCanvas').innerHTML = '';
@@ -66,7 +66,7 @@ const Network: React.FC<NetworkProps> = ({ newSnap }) => {
       .force('center', d3.forceCenter(width / 2, height / 2));
 
     // TRANSFORM DATA INTO D3 SUPPORTED FORMAT FOR NETWORK GRAPH
-    const networkData: any = makeRelationshipLinks(newSnap);
+    const networkData: any = makeRelationshipLinks(filteredCurSnap);
 
     // MAIN UPDATE CALL
     update(networkData.links, networkData.nodes);

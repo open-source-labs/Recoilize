@@ -2,7 +2,7 @@ import React, {useRef, useState, useEffect} from 'react';
 import * as d3 from 'd3';
 import {makeTree} from '../utils/makeTreeConversion.js';
 
-function Visualizer({newSnap}) {
+function Visualizer({filteredCurSnap}) {
   // set the heights and width of the tree to be passed into treeMap function
   const width = 600;
   const height = 1100;
@@ -12,7 +12,7 @@ function Visualizer({newSnap}) {
 
   useEffect(() => {
     setZoomState(d3.zoomTransform(d3.select('#canvas').node()));
-  }, [newSnap]);
+  }, [filteredCurSnap]);
 
   // this only clears the canvas if Visualizer is already rendered on the extension
   useEffect(() => {
@@ -34,7 +34,7 @@ function Visualizer({newSnap}) {
       name: 'Recoil Root',
       // pass in parsed data here
       // call the helper function passing in the most recent snapshot
-      children: makeTree(newSnap),
+      children: makeTree(filteredCurSnap),
     };
 
     // creating the tree map

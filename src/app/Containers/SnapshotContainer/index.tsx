@@ -4,20 +4,20 @@ import { stateSnapshot } from '../../../types';
 
 interface SnapshotsContainerProps {
   // index of current snapshot rendered in devtool
-  curRender: number;
-  // array of object snapshots of user's state
+  renderIndex: number;
+  // length of snapshotHistory array
   snapshotHistoryLength: number;
   // setState functionality to update curRender
-  setCurRender: React.Dispatch<React.SetStateAction<number>>;
+  setRenderIndex: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const SnapshotsContainer: React.FC<SnapshotsContainerProps> = ({
-  curRender,
+  renderIndex,
   snapshotHistoryLength,
-  setCurRender,
+  setRenderIndex,
 }) => {
   // functionality to postMessage the selected snapshot index to background.js
-  const setSnapshotTimeTravelIndex = (index: number) => {
+  const timeTravelFunc = (index: number) => {
     // variable to store/reference connection
     const backgroundConnection = chrome.runtime.connect();
     // post the message with index in payload to the connection
@@ -31,10 +31,10 @@ const SnapshotsContainer: React.FC<SnapshotsContainerProps> = ({
     <div className="SnapshotsContainer">
       <h3>Snapshots</h3>
       <SnapshotsList
-        curRender={curRender}
+        renderIndex={renderIndex}
         snapshotHistoryLength={snapshotHistoryLength}
-        setCurRender={setCurRender}
-        setSnapshotTimeTravelIndex={setSnapshotTimeTravelIndex}
+        setRenderIndex={setRenderIndex}
+        timeTravelFunc={timeTravelFunc}
       />
     </div>
   );

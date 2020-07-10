@@ -4,42 +4,42 @@ import { stateSnapshot } from '../../../types';
 
 interface SnapshotsListProps {
   // index of current snapshot rendered in devtool
-  curRender: number;
-  // array of object snapshots of user's state
-  setCurRender: React.Dispatch<React.SetStateAction<number>>;
-  // setState functionality to update curRender
+  renderIndex: number;
+  // length of snapshotHistory array
   snapshotHistoryLength: number;
+  // setState functionality to update renderIndex
+  setRenderIndex: React.Dispatch<React.SetStateAction<number>>;
   // functionality to postMessage the selected snapshot index to background.js
-  setSnapshotTimeTravelIndex: (index: number) => void;
+  timeTravelFunc: (index: number) => void;
 }
 
 const SnapshotsList: React.FC<SnapshotsListProps> = ({
-  curRender,
-  setCurRender,
+  renderIndex,
   snapshotHistoryLength,
-  setSnapshotTimeTravelIndex,
+  setRenderIndex,
+  timeTravelFunc,
 }) => {
-  // array of individual snapshots with setCurRender and timeTravel functionality
-  const listOfSnapshotsIndexes: JSX.Element[] = [];
+  // array of divs proportional to the length of snapshotHistory
+  const snapshotDivs: JSX.Element[] = [];
   // iterate the same length of our snapshotHistory
   for (let i = 0; i < snapshotHistoryLength; i++) {
-    listOfSnapshotsIndexes.push(
+    snapshotDivs.push(
       <div
         className="individualSnapshot"
         key={i}
         style={
-          curRender === i
+          renderIndex === i
             ? { color: '#E6E6E6', backgroundColor: '#212121' }
             : { color: '#989898' }
         }
         onClick={() => {
-          setCurRender(i);
+          setRenderIndex(i);
         }}>
         <li>{i}</li>
         <button
           className="timeTravelButton"
           onClick={() => {
-            setSnapshotTimeTravelIndex(i);
+            timeTravelFunc(i);
           }}>
           Time Travel
         </button>
@@ -47,7 +47,7 @@ const SnapshotsList: React.FC<SnapshotsListProps> = ({
     );
   }
   // render the array of snapshots divs generated above
-  return <div className="SnapshotsList">{listOfSnapshotsIndexes}</div>;
+  return <div className="SnapshotsList">{snapshotDivs}</div>;
 };
 
 export default SnapshotsList;
