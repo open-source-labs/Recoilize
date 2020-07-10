@@ -1,32 +1,32 @@
-import React, {useState} from 'react';
-import {diff, formatters} from 'jsondiffpatch';
+import React, { useState } from 'react';
+import { diff, formatters } from 'jsondiffpatch';
 import ReactHtmlParser from 'react-html-parser';
 import { filteredSnapshot } from '../../../types'
 
 interface DiffProps {
   // snapshot at index [curRender -1]
-  oldSnap: filteredSnapshot;
+  filteredPrevSnap: filteredSnapshot;
   // snapshot at index [curRender]
-  newSnap: filteredSnapshot;
+  filteredCurSnap: filteredSnapshot;
 }
 
 // renders the difference between the most recent state change and the previous
-const Diff: React.FC<DiffProps> = ({oldSnap, newSnap}) => {
+const Diff: React.FC<DiffProps> = ({ filteredPrevSnap, filteredCurSnap }) => {
+  console.log(filteredCurSnap, 'filteredCurSnap in Diff');
   // useState hook to update the toggle of showUnchanged or hideUnchanged
   const [rawToggle, setRawToggle] = useState(false);
-  // diffing between oldSnap && newSnap
-  const delta = diff(oldSnap, newSnap);
+  // diffing between filteredPrevSnap && filteredCurSnap
+  const delta = diff(filteredPrevSnap, filteredCurSnap);
   // string of html with comparisons
-  const html = formatters.html.format(delta, oldSnap);
+  const html = formatters.html.format(delta, filteredPrevSnap);
   // conditionally render changes or not based on rawToggle bool
   formatters.html.showUnchanged(rawToggle);
-
   return (
     <div className="Diff">
       <div className="toggleDiv">
         <button
           className="rawToggle"
-          style={{color: rawToggle ? '#E6E6E6' : '#989898'}}
+          style={{ color: rawToggle ? '#E6E6E6' : '#989898' }}
           onClick={() => {
             setRawToggle(!rawToggle);
           }}>
