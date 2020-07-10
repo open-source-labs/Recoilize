@@ -23,8 +23,8 @@ const VisualContainer: React.FC<VisualContainerProps> = ({
   newSnap,
 }) => {
   // object containing all conditional renders based on navBar
-  const newFilteredSnapshot = newSnap ? newSnap.filteredSnapshot : null;
-  const oldFilteredSnapshot = oldSnap ? oldSnap.filteredSnapshot : null;
+  const newFilteredSnapshot = newSnap ? newSnap.filteredSnapshot : undefined;
+  const oldFilteredSnapshot = oldSnap ? oldSnap.filteredSnapshot : undefined;
   const nav: navTypes = {
     Diff: <Diff oldSnap={oldFilteredSnapshot} newSnap={newFilteredSnapshot} />,
     Tree: <Tree newSnap={newFilteredSnapshot} />,
