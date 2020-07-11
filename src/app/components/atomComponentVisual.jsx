@@ -4,32 +4,41 @@ import * as d3 from 'd3';
 function AtomComponentVisual({ currentSnapshot }) {
 
   // if user reloads browser while devTool is open and on AtomComponentVisual tab, currentSnapshot will be undefined
-  let filteredSnapshot;
-  let componentAtomTree;
+  let filteredSnapshot = {};
+  let componentAtomTree = {};
   if (currentSnapshot) {
     filteredSnapshot = currentSnapshot.filteredSnapshot;
     componentAtomTree = currentSnapshot.componentAtomTree;
   }
-  console.log('---------');
-  console.log(filteredSnapshot, 'filtered');
-  console.log(componentAtomTree, 'component');
-  console.log('---------');
 
+
+  
   // set the heights and width of the tree to be passed into treeMap function
   const width = 600;
   const height = 1100;
-
+  
   // this state allows the canvas to stay at the zoom level on multiple re-renders
   const [{ x, y, k }, setZoomState] = useState({ x: 0, y: 0, k: 0 });
-
+  
   useEffect(() => {
     setZoomState(d3.zoomTransform(d3.select('#canvas').node()));
   }, [componentAtomTree]);
-
+  
   // this only clears the canvas if Visualizer is already rendered on the extension
   useEffect(() => {
     document.getElementById('canvas').innerHTML = '';
-
+    
+    const atoms = {};
+    const selectors = {};
+    if (filteredSnapshot){
+      for (let [recoilValueName, object] of Object.entries(filteredSnapshot)){
+        if (object.type === 'RecoilState'){
+          atoms[recoilValueName] = object.contents;
+        } else {
+          selectors[recoilValueName] = object.contents;
+        }
+      }
+    }
     // creating the main svg container for d3 elements
     const svgContainer = d3
       .select('#canvas')
@@ -74,14 +83,13 @@ function AtomComponentVisual({ currentSnapshot }) {
     // returns a flat array of objects containing all the nodes and their information
     // renders nodes onto the canvas
     let nodes = hierarchyNodes.descendants();
-    console.log(nodes, 'nodes ++ HERE ME ++ __ 00')
 
     // const node is used to create all the nodes
     // this segment places all the nodes on the canvas
     const node = g
       .append('g')
       .attr('stroke-linejoin', 'round') // no clue what this does
-      .attr('stroke-width', 1)
+      .attr('stroke-width', 5)
       .selectAll('g')
       .data(nodes)
       .join('g')
@@ -89,7 +97,6 @@ function AtomComponentVisual({ currentSnapshot }) {
       .attr('class', 'atomNodes');
 
     // for each node that got created, append a circle element
-
     node.append('circle').attr('fill', colorComponents).attr('r', 50);
 
     // for each node that got created, append a text element that displays the name of the node
@@ -109,24 +116,24 @@ function AtomComponentVisual({ currentSnapshot }) {
     // adding a mouseOver event handler to each node
     // only add popup text on nodes with no children
     // display the data in the node on hover
-    node.on('mouseover', function (d, i) {
-      if (!d.children) {
-        d3.select(this)
-          .append('text')
-          .text(JSON.stringify(d.data, undefined, 2))
-          .style('fill', 'white')
-          .attr('x', 75)
-          .attr('y', 60)
-          .style('font-size', '3rem')
-          .attr('stroke', '#646464')
-          .attr('id', `popup${i}`);
-      }
-    });
+    // node.on('mouseover', function (d, i) {
+    //   if (!d.children) {
+    //     d3.select(this)
+    //       .append('text')
+    //       .text(JSON.stringify(d.data, undefined, 2))
+    //       .style('fill', 'white')
+    //       .attr('x', 75)
+    //       .attr('y', 60)
+    //       .style('font-size', '3rem')
+    //       .attr('stroke', '#646464')
+    //       .attr('id', `popup${i}`);
+    //   }
+    // });
 
-    // add mouseOut event handler that removes the popup text
-    node.on('mouseout', function (d, i) {
-      d3.select(`#popup${i}`).remove();
-    });
+    // // add mouseOut event handler that removes the popup text
+    // node.on('mouseout', function (d, i) {
+    //   d3.select(`#popup${i}`).remove();
+    // });
 
     // allows the canvas to be draggable
     node.call(
@@ -171,9 +178,30 @@ function AtomComponentVisual({ currentSnapshot }) {
     }
 
     function colorComponents(d) {
-      if (d.data.recoilNodes){
-        return '#F96332';
+      // id component node cointains recoil atoms or selectors, make it orange red or yellow, otherwise keep node gray
+      if (d.data.recoilNodes) {
+        let hasAtom = false;
+        let hasSelector = false;
+        for (let i = 0; i < d.data.recoilNodes.length; i++) {
+
+          if (atoms[d.data.recoilNodes[i]]) {
+            hasAtom = true;
+          }
+          if (selectors[d.data.recoilNodes[i]]) {
+            hasSelector = true;
+          }
+        }
+
+        if (hasAtom && hasSelector) {
+          return 'orange';
+        }
+        if (hasAtom) {
+          return 'red'
+        } else {
+          return 'yellow';
+        }
       }
+
       return 'gray';
     }
 

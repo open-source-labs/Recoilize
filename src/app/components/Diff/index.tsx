@@ -12,7 +12,6 @@ interface DiffProps {
 
 // renders the difference between the most recent state change and the previous
 const Diff: React.FC<DiffProps> = ({ filteredPrevSnap, filteredCurSnap }) => {
-  console.log(filteredCurSnap, 'filteredCurSnap in Diff');
   // useState hook to update the toggle of showUnchanged or hideUnchanged
   const [rawToggle, setRawToggle] = useState(false);
   // diffing between filteredPrevSnap && filteredCurSnap
