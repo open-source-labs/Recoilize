@@ -4,7 +4,7 @@ import NavBar from '../../components/NavBar';
 import Visualizer from '../../components/Visualizer.jsx';
 import Tree from '../../components/Tree';
 import Network from '../../components/Network';
-import AtomComponentVisual from '../../components/AtomComponentVisual.jsx'
+import AtomComponentVisualContainer from '../AtomComponentTreeContainer'
 import { stateSnapshot } from '../../../types';
 
 interface VisualContainerProps {
@@ -37,7 +37,7 @@ const VisualContainer: React.FC<VisualContainerProps> = ({
     // atom and selector subscription relationship
     Network: <Network filteredCurSnap={filteredCurSnap} />,
     // tree visualizer of components showing atom/selector relationships
-    AtomComponentVisual: <AtomComponentVisual currentSnapshot={currentSnapshot} />
+    AtomComponentVisualContainer: <AtomComponentVisualContainer currentSnapshot={currentSnapshot} />
   };
   // array of all nav obj keys
   const tabsList = Object.keys(nav);
