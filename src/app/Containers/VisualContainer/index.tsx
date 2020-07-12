@@ -39,7 +39,7 @@ const VisualContainer: React.FC<VisualContainerProps> = ({
     // atom and selector subscription relationship
     Network: <Network filteredCurSnap={filteredCurSnap} />,
     // tree visualizer of components showing atom/selector relationships
-    //AtomComponentVisualContainer: <AtomComponentVisualContainer componentAtomTree={componentAtomTree} filteredSnapshot={filteredCurSnap} atomsAndSelectors={atomsAndSelectors} />
+    AtomComponentVisualContainer: <AtomComponentVisualContainer componentAtomTree={componentAtomTree} filteredSnapshot={filteredCurSnap} />
   };
   // array of all nav obj keys
   const tabsList = Object.keys(nav);
