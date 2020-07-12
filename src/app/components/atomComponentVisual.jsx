@@ -1,24 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import * as d3 from 'd3';
 
-function AtomComponentVisual({ currentSnapshot }) {
-
-  // if user reloads browser while devTool is open and on AtomComponentVisual tab, currentSnapshot will be undefined
-  let filteredSnapshot = {};
-  let componentAtomTree = {};
-  if (currentSnapshot) {
-    filteredSnapshot = currentSnapshot.filteredSnapshot;
-    componentAtomTree = currentSnapshot.componentAtomTree;
-  }
+function AtomComponentVisual({ componentAtomTree}) {
 
 
-  
+
   // set the heights and width of the tree to be passed into treeMap function
   const width = 600;
   const height = 1100;
   
   // this state allows the canvas to stay at the zoom level on multiple re-renders
   const [{ x, y, k }, setZoomState] = useState({ x: 0, y: 0, k: 0 });
+  
   
   useEffect(() => {
     setZoomState(d3.zoomTransform(d3.select('#canvas').node()));
@@ -27,18 +20,6 @@ function AtomComponentVisual({ currentSnapshot }) {
   // this only clears the canvas if Visualizer is already rendered on the extension
   useEffect(() => {
     document.getElementById('canvas').innerHTML = '';
-    
-    const atoms = {};
-    const selectors = {};
-    if (filteredSnapshot){
-      for (let [recoilValueName, object] of Object.entries(filteredSnapshot)){
-        if (object.type === 'RecoilState'){
-          atoms[recoilValueName] = object.contents;
-        } else {
-          selectors[recoilValueName] = object.contents;
-        }
-      }
-    }
     // creating the main svg container for d3 elements
     const svgContainer = d3
       .select('#canvas')
@@ -97,7 +78,7 @@ function AtomComponentVisual({ currentSnapshot }) {
       .attr('class', 'atomNodes');
 
     // for each node that got created, append a circle element
-    node.append('circle').attr('fill', colorComponents).attr('r', 50);
+    node.append('circle').attr('fill', 'blue').attr('r', 50);
 
     // for each node that got created, append a text element that displays the name of the node
     node
@@ -177,33 +158,33 @@ function AtomComponentVisual({ currentSnapshot }) {
       g.attr('transform', d3.event.transform);
     }
 
-    function colorComponents(d) {
-      // id component node cointains recoil atoms or selectors, make it orange red or yellow, otherwise keep node gray
-      if (d.data.recoilNodes) {
-        let hasAtom = false;
-        let hasSelector = false;
-        for (let i = 0; i < d.data.recoilNodes.length; i++) {
+  //   function colorComponents(d) {
+  //     // id component node cointains recoil atoms or selectors, make it orange red or yellow, otherwise keep node gray
+  //     if (d.data.recoilNodes) {
+  //       let hasAtom = false;
+  //       let hasSelector = false;
+  //       for (let i = 0; i < d.data.recoilNodes.length; i++) {
 
-          if (atoms[d.data.recoilNodes[i]]) {
-            hasAtom = true;
-          }
-          if (selectors[d.data.recoilNodes[i]]) {
-            hasSelector = true;
-          }
-        }
+  //         if (atoms[d.data.recoilNodes[i]]) {
+  //           hasAtom = true;
+  //         }
+  //         if (selectors[d.data.recoilNodes[i]]) {
+  //           hasSelector = true;
+  //         }
+  //       }
 
-        if (hasAtom && hasSelector) {
-          return 'orange';
-        }
-        if (hasAtom) {
-          return 'red'
-        } else {
-          return 'yellow';
-        }
-      }
+  //       if (hasAtom && hasSelector) {
+  //         return 'orange';
+  //       }
+  //       if (hasAtom) {
+  //         return 'red'
+  //       } else {
+  //         return 'yellow';
+  //       }
+  //     }
 
-      return 'gray';
-    }
+  //     return 'gray';
+  //   }
 
   });
 
