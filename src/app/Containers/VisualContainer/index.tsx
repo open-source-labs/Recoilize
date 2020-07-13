@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import Diff from '../../components/Diff';
 import NavBar from '../../components/NavBar';
-import Visualizer from '../../components/Visualizer.jsx';
+import Visualizer from '../../components/Visualizer';
 import Tree from '../../components/Tree';
 import Network from '../../components/Network';
 import AtomComponentVisualContainer from '../AtomComponentTreeContainer';
