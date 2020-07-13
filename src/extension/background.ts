@@ -14,15 +14,12 @@ const connections: Connections = {};
 
 // once background starts, start with cleared local storage
 chrome.storage.local.clear(function (): void {
-  chrome.storage.local.get(null, function (result): void {
-  });
+  chrome.storage.local.get(null, function (result): void {});
 });
 
 // LISTEN for initial connection from dev tool
 chrome.runtime.onConnect.addListener(port => {
-
   const devToolsListener = (msg: Msg, port: object) => {
-
     const {tabId, action} = msg;
 
     switch (action) {
@@ -39,7 +36,6 @@ chrome.runtime.onConnect.addListener(port => {
         break;
 
       case 'snapshotTimeTravel':
-
         if (tabId) {
           // if msg tabId provided, send time travel snapshot history to content-script
           chrome.tabs.sendMessage(Number(tabId), msg);
@@ -56,7 +52,6 @@ chrome.runtime.onConnect.addListener(port => {
 
   // ENDS listening to messages from port
   port.onDisconnect.addListener(port => {
-
     // Removes listener
     port.onMessage.removeListener(devToolsListener);
 
@@ -88,7 +83,6 @@ chrome.runtime.onMessage.addListener((msg, sender) => {
 
       // Get current snapshot history from local storage
       chrome.storage.local.get([tabId], function (result) {
-
         // Grab the current snapshot history from local storage
         const tabIdSnapshotHistory = result[tabId] ? [...result[tabId]] : [];
 
@@ -104,7 +98,6 @@ chrome.runtime.onMessage.addListener((msg, sender) => {
 
         // Set local storage with updated snapshotHistory
         chrome.storage.local.set({[tabId]: tabIdSnapshotHistory}, function () {
-
           // ONLY if there is a port connection with the current tabId
           if (connections[tabId]) {
             // Send to dev tool
@@ -123,7 +116,6 @@ chrome.runtime.onMessage.addListener((msg, sender) => {
 
       // set tabId within local storage to initial snapshot sent from module
       chrome.storage.local.set({[tabId]: tabIdSnapshotHistory}, function () {
-
         // if tabId is has opened dev tool port, send snapshotHistory to dev tool.
         if (connections[tabId]) {
           connections[tabId].postMessage({
@@ -143,7 +135,6 @@ chrome.runtime.onMessage.addListener((msg, sender) => {
 chrome.tabs.onRemoved.addListener(tabId => {
   // we should only do this when tab closes not when port closes.
   chrome.storage.local.remove([`${tabId}`], function () {
-    chrome.storage.local.get(null, function (result) {
-    });
+    chrome.storage.local.get(null, function (result) {});
   });
 });

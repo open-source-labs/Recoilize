@@ -1,15 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import * as d3 from 'd3';
-import { makeRelationshipLinks } from '../../utils/makeRelationshipLinks';
-import { filteredSnapshot } from '../../../types';
+import {makeRelationshipLinks} from '../../utils/makeRelationshipLinks';
+import {filteredSnapshot} from '../../../types';
 
 interface NetworkProps {
   filteredCurSnap: filteredSnapshot;
 }
 
-const Network: React.FC<NetworkProps> = ({ filteredCurSnap }) => {
-
-  const [{ x, y, k }, setZoomState] = useState({ x: 0, y: 0, k: 0 });
+const Network: React.FC<NetworkProps> = ({filteredCurSnap}) => {
+  const [{x, y, k}, setZoomState] = useState({x: 0, y: 0, k: 0});
 
   useEffect(() => {
     setZoomState(d3.zoomTransform(d3.select('#networkCanvas').node()));

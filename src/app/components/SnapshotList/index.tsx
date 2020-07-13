@@ -1,6 +1,6 @@
 // renders a list of all of the snapshots that were taking
 import React from 'react';
-import { stateSnapshot } from '../../../types';
+import {stateSnapshot} from '../../../types';
 
 interface SnapshotsListProps {
   // index of current snapshot rendered in devtool
@@ -29,8 +29,8 @@ const SnapshotsList: React.FC<SnapshotsListProps> = ({
         key={i}
         style={
           renderIndex === i
-            ? { color: '#E6E6E6', backgroundColor: '#212121' }
-            : { color: '#989898' }
+            ? {color: '#E6E6E6', backgroundColor: '#212121'}
+            : {color: '#989898'}
         }
         onClick={() => {
           setRenderIndex(i);
@@ -43,7 +43,7 @@ const SnapshotsList: React.FC<SnapshotsListProps> = ({
           }}>
           Time Travel
         </button>
-      </div>
+      </div>,
     );
   }
   // render the array of snapshots divs generated above
