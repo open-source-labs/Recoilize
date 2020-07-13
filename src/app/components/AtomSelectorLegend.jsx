@@ -1,28 +1,14 @@
 import React from 'react';
 
-const AtomSelectorLegend = ({ filteredSnapshot, setSelectedRecoilValue }) => {
-
-  const selectors = {};
-  const atoms = {};
-
-  if (filteredSnapshot) {
-    for (let [recoilValueName, object] of Object.entries(filteredSnapshot)) {
-      if (object.type === 'RecoilState') {
-        atoms[recoilValueName] = object.contents;
-      } else {
-        selectors[recoilValueName] = object.contents;
-      }
-    }
-  }
-
+const AtomSelectorLegend = ({ filteredSnapshot, setSelectedRecoilValue, atoms, selectors }) => {
 
   const selectorList = [];
   const atomList = [];
   Object.entries(selectors).forEach(([selectorName, value], i) => {
-    selectorList.push(<li onClick={() => setSelectedRecoilValue(selectorName)} key={`${selectorName}${i}`}>{selectorName}: {JSON.stringify(value)}</li>)
+    selectorList.push(<li onClick={() => setSelectedRecoilValue([selectorName, 'selector'])} key={`${selectorName}${i}`}>{selectorName}: {JSON.stringify(value)}</li>)
   })
   Object.entries(atoms).forEach(([atomName, value], i) => {
-    atomList.push(<li onClick={() => setSelectedRecoilValue(atomName)} key={`${atomName}${i}`}>{atomName}: {JSON.stringify(value)}</li>)
+    atomList.push(<li onClick={() => setSelectedRecoilValue([atomName, 'atom'])} key={`${atomName}${i}`}>{atomName}: {JSON.stringify(value)}</li>)
   })
 
   return (

@@ -1,14 +1,14 @@
-import React, {useRef, useState, useEffect} from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import * as d3 from 'd3';
-import {makeTree} from '../utils/makeTreeConversion.js';
+import { makeTree } from '../utils/makeTreeConversion.js';
 
-function Visualizer({filteredCurSnap}) {
+function Visualizer({ filteredCurSnap }) {
   // set the heights and width of the tree to be passed into treeMap function
   const width = 600;
   const height = 1100;
 
   // this state allows the canvas to stay at the zoom level on multiple re-renders
-  const [{x, y, k}, setZoomState] = useState({});
+  const [{ x, y, k }, setZoomState] = useState({ x: 0, y: 0, k: 0 });
 
   useEffect(() => {
     setZoomState(d3.zoomTransform(d3.select('#canvas').node()));

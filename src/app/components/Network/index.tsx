@@ -9,7 +9,7 @@ interface NetworkProps {
 
 const Network: React.FC<NetworkProps> = ({ filteredCurSnap }) => {
 
-  const [{ x, y, k }, setZoomState] = useState({ x: null, y: null, k: null });
+  const [{ x, y, k }, setZoomState] = useState({ x: 0, y: 0, k: 0 });
 
   useEffect(() => {
     setZoomState(d3.zoomTransform(d3.select('#networkCanvas').node()));
