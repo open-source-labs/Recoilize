@@ -128,22 +128,39 @@ function AtomComponentVisual({
     // display the data in the node on hover
     node.on('mouseover', function (d, i) {
       if (d.data.recoilNodes) {
-        d3.select(this)
-          .append('text')
-          //.text(JSON.stringify(d.data.recoilNodes))
-          .text(formatAtomSelectorText(d.data.recoilNodes))
-          .style('fill', 'white')
-          .attr('x', -600)
-          .attr('y', 200)
-          .style('font-size', '3.5rem')
-          .attr('stroke', '#646464')
-          .attr('id', `popup${i}`);
+        for (let x = 0; x < d.data.recoilNodes.length; x++) {
+          d3.select(this)
+            .append('text')
+            //.text(JSON.stringify(d.data.recoilNodes))
+            .text(formatAtomSelectorText(d.data.recoilNodes[x]))
+            .style('fill', 'white')
+            .attr('x', -300)
+            .attr('y', 200 + x * 55)
+            .style('font-size', '3.5rem')
+            .attr('stroke', '#646464')
+            .attr('id', `popup${i}${x}`);
+        }
       }
     });
 
+    function formatAtomSelectorText(atomOrSelector) {
+      let str = '';
+
+      atoms.hasOwnProperty(atomOrSelector)
+        ? (str += `ATOM ${atomOrSelector}: ${JSON.stringify(
+            atoms[atomOrSelector],
+          )}.  `)
+        : (str += `SELECTOR ${atomOrSelector}: ${JSON.stringify(
+            selectors[atomOrSelector],
+          )}.  `);
+
+      return str;
+    }
     // add mouseOut event handler that removes the popup text
     node.on('mouseout', function (d, i) {
-      d3.select(`#popup${i}`).remove();
+      for (let x = 0; x < d.data.recoilNodes.length; x++) {
+        d3.select(`#popup${i}${x}`).remove();
+      }
     });
 
     // allows the canvas to be draggable
@@ -217,16 +234,6 @@ function AtomComponentVisual({
       }
 
       return 'gray';
-    }
-
-    function formatAtomSelectorText(atomSelectorArr) {
-      let str = '';
-      atomSelectorArr.forEach(val => {
-        atoms.hasOwnProperty(val)
-          ? (str += `ATOM ${val}: ${JSON.stringify(atoms[val])}.  `)
-          : (str += `SELECTOR ${val}: ${JSON.stringify(selectors[val])}.  `);
-      });
-      return str;
     }
   });
 
