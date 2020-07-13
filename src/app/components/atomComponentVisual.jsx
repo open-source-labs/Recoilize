@@ -26,7 +26,7 @@ function AtomComponentVisual({
 
   useEffect(() => {
     setZoomState(d3.zoomTransform(d3.select('#canvas').node()));
-  }, [componentAtomTree]);
+  }, [componentAtomTree, selectedRecoilValue]);
 
   // this only clears the canvas if Visualizer is already rendered on the extension
   useEffect(() => {
