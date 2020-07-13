@@ -175,3 +175,17 @@ body {
   height: calc(100vh - 40px);
   width: calc(100vw - 250px);
 }
+
+.AtomSelectorLegend {
+  background-color: lightslategray;
+  z-index: 1;
+  position: fixed;
+  right: 0;
+  top: 2.5rem;
+  border: 1px solid gray;
+  width: 10rem;
+  max-height: 25rem;
+  border-top: none;
+  border-right: none;
+  overflow-y: auto;
+}

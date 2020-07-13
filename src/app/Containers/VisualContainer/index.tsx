@@ -4,6 +4,7 @@ import NavBar from '../../components/NavBar';
 import Visualizer from '../../components/Visualizer.jsx';
 import Tree from '../../components/Tree';
 import Network from '../../components/Network';
+import AtomComponentVisualContainer from '../AtomComponentTreeContainer'
 import { stateSnapshot } from '../../../types';
 
 interface VisualContainerProps {
@@ -25,6 +26,8 @@ const VisualContainer: React.FC<VisualContainerProps> = ({
   // conditional render of filtered snaps/ based on non-filtered snaps
   const filteredCurSnap = currentSnapshot ? currentSnapshot.filteredSnapshot : undefined;
   const filteredPrevSnap = previousSnapshot ? previousSnapshot.filteredSnapshot : undefined;
+  const componentAtomTree = currentSnapshot ? currentSnapshot.componentAtomTree : undefined;
+  //const atomsAndSelectors = currentSnapshot ? currentSnapshot.atomsAndSelectors : undefined;
   // object containing all conditional renders based on navBar
   const nav: navTypes = {
     // compare the diff of filteredPrevSnap and filteredCurSnap
@@ -34,7 +37,9 @@ const VisualContainer: React.FC<VisualContainerProps> = ({
     // individual snapshot visualizer
     Visualizer: <Visualizer filteredCurSnap={filteredCurSnap} />,
     // atom and selector subscription relationship
-    Network: <Network filteredCurSnap={filteredCurSnap} />
+    Network: <Network filteredCurSnap={filteredCurSnap} />,
+    // tree visualizer of components showing atom/selector relationships
+    AtomComponentVisualContainer: <AtomComponentVisualContainer componentAtomTree={componentAtomTree} filteredSnapshot={filteredCurSnap} />
   };
   // array of all nav obj keys
   const tabsList = Object.keys(nav);

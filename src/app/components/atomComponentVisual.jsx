@@ -1,18 +1,27 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import * as d3 from 'd3';
-import { makeTree } from '../utils/makeTreeConversion.js';
 
-function Visualizer({ filteredCurSnap }) {
+function AtomComponentVisual({ componentAtomTree, filteredSnapshot, selectedRecoilValue, atoms, selectors }) {
+
   // set the heights and width of the tree to be passed into treeMap function
   const width = 600;
   const height = 1100;
-
   // this state allows the canvas to stay at the zoom level on multiple re-renders
   const [{ x, y, k }, setZoomState] = useState({ x: 0, y: 0, k: 0 });
 
+    // create objects to hold the selected atom or selector and all of it's relationships to other atoms/selectors
+    // const selectorToAtom = {};
+    // const atomToSelector = {};
+    // if (selectedRecoilValue[1] === 'selector'){
+    //   selectorToAtom[selectedRecoilValue[0]] = filteredSnapshot[selectedRecoilValue[0]].nodeDeps;
+    // }
+    // if (selectedRecoilValue[1] === 'atom'){
+    //   atomToSelector[selectedRecoilValue[0]] = filteredSnapshot[selectedRecoilValue[0]].nodeToNodeSubscriptions;
+    // }
+
   useEffect(() => {
     setZoomState(d3.zoomTransform(d3.select('#canvas').node()));
-  }, [filteredCurSnap]);
+  }, [componentAtomTree]);
 
   // this only clears the canvas if Visualizer is already rendered on the extension
   useEffect(() => {
@@ -29,20 +38,13 @@ function Visualizer({ filteredCurSnap }) {
       .append('g')
       .attr('transform', `translate(${x}, ${y}), scale(${k})`); // sets the canvas to the saved zoomState
 
-    // atomState is the object that is passed into d3.hierarchy
-    const atomState = {
-      name: 'Recoil Root',
-      // pass in parsed data here
-      // call the helper function passing in the most recent snapshot
-      children: makeTree(filteredCurSnap),
-    };
-
     // creating the tree map
     const treeMap = d3.tree().nodeSize([width, height]);
 
     // creating the nodes of the tree
     // pass
-    const hierarchyNodes = d3.hierarchy(atomState);
+    //// sean debug
+    const hierarchyNodes = componentAtomTree ? d3.hierarchy(componentAtomTree) : d3.hierarchy({name: "placeholder", children: []});
 
     // calling the tree function with nodes created from data
     const finalMap = treeMap(hierarchyNodes);
@@ -62,9 +64,9 @@ function Visualizer({ filteredCurSnap }) {
       .attr(
         'd',
         d3
-          .linkHorizontal()
-          .x(d => d.y)
-          .y(d => d.x),
+          .linkVertical()
+          .x(d => d.x)
+          .y(d => d.y),
       );
 
     // returns a flat array of objects containing all the nodes and their information
@@ -76,15 +78,15 @@ function Visualizer({ filteredCurSnap }) {
     const node = g
       .append('g')
       .attr('stroke-linejoin', 'round') // no clue what this does
-      .attr('stroke-width', 1)
+      .attr('stroke-width', 5)
       .selectAll('g')
       .data(nodes)
       .join('g')
-      .attr('transform', d => `translate(${d.y}, ${d.x})`)
+      .attr('transform', d => `translate(${d.x}, ${d.y})`)
       .attr('class', 'atomNodes');
 
     // for each node that got created, append a circle element
-    node.append('circle').attr('fill', '#c300ff').attr('r', 50);
+    node.append('circle').attr('fill', colorComponents).attr('r', 50);
 
     // for each node that got created, append a text element that displays the name of the node
     node
@@ -103,24 +105,24 @@ function Visualizer({ filteredCurSnap }) {
     // adding a mouseOver event handler to each node
     // only add popup text on nodes with no children
     // display the data in the node on hover
-    node.on('mouseover', function (d, i) {
-      if (!d.children) {
-        d3.select(this)
-          .append('text')
-          .text(JSON.stringify(d.data, undefined, 2))
-          .style('fill', 'white')
-          .attr('x', 75)
-          .attr('y', 60)
-          .style('font-size', '3rem')
-          .attr('stroke', '#646464')
-          .attr('id', `popup${i}`);
-      }
-    });
+    // node.on('mouseover', function (d, i) {
+    //   if (!d.children) {
+    //     d3.select(this)
+    //       .append('text')
+    //       .text(JSON.stringify(d.data, undefined, 2))
+    //       .style('fill', 'white')
+    //       .attr('x', 75)
+    //       .attr('y', 60)
+    //       .style('font-size', '3rem')
+    //       .attr('stroke', '#646464')
+    //       .attr('id', `popup${i}`);
+    //   }
+    // });
 
-    // add mouseOut event handler that removes the popup text
-    node.on('mouseout', function (d, i) {
-      d3.select(`#popup${i}`).remove();
-    });
+    // // add mouseOut event handler that removes the popup text
+    // node.on('mouseout', function (d, i) {
+    //   d3.select(`#popup${i}`).remove();
+    // });
 
     // allows the canvas to be draggable
     node.call(
@@ -163,15 +165,48 @@ function Visualizer({ filteredCurSnap }) {
     function zoomed() {
       g.attr('transform', d3.event.transform);
     }
-  });
+
+      function colorComponents(d) {
+        // if component node cointains recoil atoms or selectors, make it orange red or yellow, otherwise keep node gray
+        if (d.data.recoilNodes) {
+          if (d.data.recoilNodes.includes(selectedRecoilValue[0])){
+            return 'white';
+          }
+          
+          let hasAtom = false;
+          let hasSelector = false;
+          for (let i = 0; i < d.data.recoilNodes.length; i++) {
+
+            if (atoms.hasOwnProperty([d.data.recoilNodes[i]])) {
+              hasAtom = true;
+            }
+            if (selectors.hasOwnProperty([d.data.recoilNodes[i]])) {
+              hasSelector = true;
+            }
+          }
+
+          if (hasAtom && hasSelector) {
+            return 'orange';
+          }
+          if (hasAtom) {
+            return 'red'
+          } else {
+            return 'yellow';
+          }
+        }
+
+        return 'gray';
+      }
+
+   });
 
   return (
     <div>
-      <div className="Visualizer">
+      <div className="AtomComponentVisual">
         <svg id="canvas"></svg>
       </div>
     </div>
   );
 }
 
-export default Visualizer;
+export default AtomComponentVisual;
