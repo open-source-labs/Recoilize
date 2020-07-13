@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import SnapshotsContainer from '../SnapshotContainer';
 import VisualContainer from '../VisualContainer';
-import { stateSnapshot } from '../../../types/';
+import {stateSnapshot} from '../../../types/';
 
 interface MainContainerProps {
   // snapshotHistory is an array of stateSnapshots
@@ -9,7 +9,7 @@ interface MainContainerProps {
 }
 
 // wraps entire application
-const MainContainer: React.FC<MainContainerProps> = ({ snapshotHistory }) => {
+const MainContainer: React.FC<MainContainerProps> = ({snapshotHistory}) => {
   // useState hook to update the index of current snapshot rendered in devtool
   const [renderIndex, setRenderIndex] = useState(snapshotHistory.length - 1);
   // useEffect for renderIndex
