@@ -1,23 +1,28 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import * as d3 from 'd3';
 
-function AtomComponentVisual({ componentAtomTree, filteredSnapshot, selectedRecoilValue, atoms, selectors }) {
-
+function AtomComponentVisual({
+  componentAtomTree,
+  filteredSnapshot,
+  selectedRecoilValue,
+  atoms,
+  selectors,
+}) {
   // set the heights and width of the tree to be passed into treeMap function
   const width = 600;
   const height = 1100;
   // this state allows the canvas to stay at the zoom level on multiple re-renders
-  const [{ x, y, k }, setZoomState] = useState({ x: 0, y: 0, k: 0 });
+  const [{x, y, k}, setZoomState] = useState({x: 0, y: 0, k: 0});
 
-    // create objects to hold the selected atom or selector and all of it's relationships to other atoms/selectors
-    // const selectorToAtom = {};
-    // const atomToSelector = {};
-    // if (selectedRecoilValue[1] === 'selector'){
-    //   selectorToAtom[selectedRecoilValue[0]] = filteredSnapshot[selectedRecoilValue[0]].nodeDeps;
-    // }
-    // if (selectedRecoilValue[1] === 'atom'){
-    //   atomToSelector[selectedRecoilValue[0]] = filteredSnapshot[selectedRecoilValue[0]].nodeToNodeSubscriptions;
-    // }
+  // create objects to hold the selected atom or selector and all of it's relationships to other atoms/selectors
+  // const selectorToAtom = {};
+  // const atomToSelector = {};
+  // if (selectedRecoilValue[1] === 'selector'){
+  //   selectorToAtom[selectedRecoilValue[0]] = filteredSnapshot[selectedRecoilValue[0]].nodeDeps;
+  // }
+  // if (selectedRecoilValue[1] === 'atom'){
+  //   atomToSelector[selectedRecoilValue[0]] = filteredSnapshot[selectedRecoilValue[0]].nodeToNodeSubscriptions;
+  // }
 
   useEffect(() => {
     setZoomState(d3.zoomTransform(d3.select('#canvas').node()));
@@ -44,7 +49,9 @@ function AtomComponentVisual({ componentAtomTree, filteredSnapshot, selectedReco
     // creating the nodes of the tree
     // pass
     //// sean debug
-    const hierarchyNodes = componentAtomTree ? d3.hierarchy(componentAtomTree) : d3.hierarchy({name: "placeholder", children: []});
+    const hierarchyNodes = componentAtomTree
+      ? d3.hierarchy(componentAtomTree)
+      : d3.hierarchy({name: 'placeholder', children: []});
 
     // calling the tree function with nodes created from data
     const finalMap = treeMap(hierarchyNodes);
@@ -166,39 +173,37 @@ function AtomComponentVisual({ componentAtomTree, filteredSnapshot, selectedReco
       g.attr('transform', d3.event.transform);
     }
 
-      function colorComponents(d) {
-        // if component node cointains recoil atoms or selectors, make it orange red or yellow, otherwise keep node gray
-        if (d.data.recoilNodes) {
-          if (d.data.recoilNodes.includes(selectedRecoilValue[0])){
-            return 'white';
-          }
-          
-          let hasAtom = false;
-          let hasSelector = false;
-          for (let i = 0; i < d.data.recoilNodes.length; i++) {
+    function colorComponents(d) {
+      // if component node cointains recoil atoms or selectors, make it orange red or yellow, otherwise keep node gray
+      if (d.data.recoilNodes) {
+        if (d.data.recoilNodes.includes(selectedRecoilValue[0])) {
+          return 'white';
+        }
 
-            if (atoms.hasOwnProperty([d.data.recoilNodes[i]])) {
-              hasAtom = true;
-            }
-            if (selectors.hasOwnProperty([d.data.recoilNodes[i]])) {
-              hasSelector = true;
-            }
+        let hasAtom = false;
+        let hasSelector = false;
+        for (let i = 0; i < d.data.recoilNodes.length; i++) {
+          if (atoms.hasOwnProperty([d.data.recoilNodes[i]])) {
+            hasAtom = true;
           }
-
-          if (hasAtom && hasSelector) {
-            return 'orange';
-          }
-          if (hasAtom) {
-            return 'red'
-          } else {
-            return 'yellow';
+          if (selectors.hasOwnProperty([d.data.recoilNodes[i]])) {
+            hasSelector = true;
           }
         }
 
-        return 'gray';
+        if (hasAtom && hasSelector) {
+          return 'orange';
+        }
+        if (hasAtom) {
+          return 'red';
+        } else {
+          return 'yellow';
+        }
       }
 
-   });
+      return 'gray';
+    }
+  });
 
   return (
     <div>
