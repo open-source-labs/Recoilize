@@ -9,19 +9,21 @@ function AtomComponentVisual({
   selectors,
 }) {
   // set the heights and width of the tree to be passed into treeMap function
-  const width = 600;
-  const height = 1100;
+  const width = 400;
+  const height = 733.33;
   // this state allows the canvas to stay at the zoom level on multiple re-renders
   const [{x, y, k}, setZoomState] = useState({x: 0, y: 0, k: 0});
 
   // create objects to hold the selected atom or selector and all of it's relationships to other atoms/selectors
   // const selectorToAtom = {};
   // const atomToSelector = {};
-  // if (selectedRecoilValue[1] === 'selector'){
-  //   selectorToAtom[selectedRecoilValue[0]] = filteredSnapshot[selectedRecoilValue[0]].nodeDeps;
+  // if (selectedRecoilValue[1] === 'selector') {
+  //   selectorToAtom[selectedRecoilValue[0]] =
+  //     filteredSnapshot[selectedRecoilValue[0]].nodeDeps;
   // }
-  // if (selectedRecoilValue[1] === 'atom'){
-  //   atomToSelector[selectedRecoilValue[0]] = filteredSnapshot[selectedRecoilValue[0]].nodeToNodeSubscriptions;
+  // if (selectedRecoilValue[1] === 'atom') {
+  //   atomToSelector[selectedRecoilValue[0]] =
+  //     filteredSnapshot[selectedRecoilValue[0]].nodeToNodeSubscriptions;
   // }
 
   useEffect(() => {
@@ -85,7 +87,7 @@ function AtomComponentVisual({
     const node = g
       .append('g')
       .attr('stroke-linejoin', 'round') // no clue what this does
-      .attr('stroke-width', 5)
+      .attr('stroke-width', 1)
       .selectAll('g')
       .data(nodes)
       .join('g')
@@ -93,16 +95,28 @@ function AtomComponentVisual({
       .attr('class', 'atomNodes');
 
     // for each node that got created, append a circle element
-    node.append('circle').attr('fill', colorComponents).attr('r', 50);
+    node
+      .append('circle')
+      .attr('fill', colorComponents)
+      .attr('r', determineSize);
+
+    function determineSize(d) {
+      if (d.data.recoilNodes) {
+        return 150;
+      }
+      return 50;
+    }
 
     // for each node that got created, append a text element that displays the name of the node
     node
       .append('text')
       .attr('dy', '.31em')
-      .attr('x', d => (d.children ? -75 : 75))
-      .attr('text-anchor', d => (d.children ? 'end' : 'start'))
+      .attr('x', d => (d.data.recoilNodes ? -175 : -75))
+      //.attr('x', '-175')
+      //.attr('text-anchor', d => (d.children ? 'end' : 'start'))
+      .attr('text-anchor', 'end')
       .text(d => d.data.name)
-      .style('font-size', `2rem`)
+      .style('font-size', `3rem`)
       .style('fill', 'white')
       .clone(true)
       .lower()
@@ -112,24 +126,25 @@ function AtomComponentVisual({
     // adding a mouseOver event handler to each node
     // only add popup text on nodes with no children
     // display the data in the node on hover
-    // node.on('mouseover', function (d, i) {
-    //   if (!d.children) {
-    //     d3.select(this)
-    //       .append('text')
-    //       .text(JSON.stringify(d.data, undefined, 2))
-    //       .style('fill', 'white')
-    //       .attr('x', 75)
-    //       .attr('y', 60)
-    //       .style('font-size', '3rem')
-    //       .attr('stroke', '#646464')
-    //       .attr('id', `popup${i}`);
-    //   }
-    // });
+    node.on('mouseover', function (d, i) {
+      if (d.data.recoilNodes) {
+        d3.select(this)
+          .append('text')
+          //.text(JSON.stringify(d.data.recoilNodes))
+          .text(formatAtomSelectorText(d.data.recoilNodes))
+          .style('fill', 'white')
+          .attr('x', -600)
+          .attr('y', 200)
+          .style('font-size', '3.5rem')
+          .attr('stroke', '#646464')
+          .attr('id', `popup${i}`);
+      }
+    });
 
-    // // add mouseOut event handler that removes the popup text
-    // node.on('mouseout', function (d, i) {
-    //   d3.select(`#popup${i}`).remove();
-    // });
+    // add mouseOut event handler that removes the popup text
+    node.on('mouseout', function (d, i) {
+      d3.select(`#popup${i}`).remove();
+    });
 
     // allows the canvas to be draggable
     node.call(
@@ -202,6 +217,16 @@ function AtomComponentVisual({
       }
 
       return 'gray';
+    }
+
+    function formatAtomSelectorText(atomSelectorArr) {
+      let str = '';
+      atomSelectorArr.forEach(val => {
+        atoms.hasOwnProperty(val)
+          ? (str += `ATOM ${val}: ${JSON.stringify(atoms[val])}.  `)
+          : (str += `SELECTOR ${val}: ${JSON.stringify(selectors[val])}.  `);
+      });
+      return str;
     }
   });
 
