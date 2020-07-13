@@ -1,15 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import * as d3 from 'd3';
 
-function AtomComponentVisual({ componentAtomTree, filteredSnapshot }) {
+function AtomComponentVisual({ componentAtomTree, filteredSnapshot, selectedRecoilValue }) {
 
   // set the heights and width of the tree to be passed into treeMap function
   const width = 600;
   const height = 1100;
-
   // this state allows the canvas to stay at the zoom level on multiple re-renders
   const [{ x, y, k }, setZoomState] = useState({ x: 0, y: 0, k: 0 });
 
+  const atoms = {};
+  const selectors = {};
+  if (filteredSnapshot) {
+    for (let [recoilValueName, object] of Object.entries(filteredSnapshot)) {
+      if (object.type === 'RecoilState') {
+        atoms[recoilValueName] = object.contents;
+      } else {
+        selectors[recoilValueName] = object.contents;
+      }
+    }
+  }
   useEffect(() => {
     setZoomState(d3.zoomTransform(d3.select('#canvas').node()));
   }, [componentAtomTree]);
@@ -17,18 +27,6 @@ function AtomComponentVisual({ componentAtomTree, filteredSnapshot }) {
   // this only clears the canvas if Visualizer is already rendered on the extension
   useEffect(() => {
     document.getElementById('canvas').innerHTML = '';
-
-    const atoms = {};
-    const selectors = {};
-    if (filteredSnapshot) {
-      for (let [recoilValueName, object] of Object.entries(filteredSnapshot)) {
-        if (object.type === 'RecoilState') {
-          atoms[recoilValueName] = object.contents;
-        } else {
-          selectors[recoilValueName] = object.contents;
-        }
-      }
-    }
 
     // creating the main svg container for d3 elements
     const svgContainer = d3
@@ -172,14 +170,17 @@ function AtomComponentVisual({ componentAtomTree, filteredSnapshot }) {
       function colorComponents(d) {
         // if component node cointains recoil atoms or selectors, make it orange red or yellow, otherwise keep node gray
         if (d.data.recoilNodes) {
+          if (d.data.recoilNodes.includes(selectedRecoilValue)){
+            return 'white';
+          }
           let hasAtom = false;
           let hasSelector = false;
           for (let i = 0; i < d.data.recoilNodes.length; i++) {
 
-            if (atoms[d.data.recoilNodes[i]]) {
+            if (atoms.hasOwnProperty([d.data.recoilNodes[i]])) {
               hasAtom = true;
             }
-            if (selectors[d.data.recoilNodes[i]]) {
+            if (selectors.hasOwnProperty([d.data.recoilNodes[i]])) {
               hasSelector = true;
             }
           }

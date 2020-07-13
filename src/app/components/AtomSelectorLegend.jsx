@@ -1,6 +1,6 @@
 import React from 'react';
 
-const AtomSelectorLegend = ({ filteredSnapshot }) => {
+const AtomSelectorLegend = ({ filteredSnapshot, setSelectedRecoilValue }) => {
 
   const selectors = {};
   const atoms = {};
@@ -15,13 +15,14 @@ const AtomSelectorLegend = ({ filteredSnapshot }) => {
     }
   }
 
+
   const selectorList = [];
   const atomList = [];
   Object.entries(selectors).forEach(([selectorName, value], i) => {
-    selectorList.push(<li key={`${selectorName}${i}`}>{selectorName}: {JSON.stringify(value)}</li>)
+    selectorList.push(<li onClick={() => setSelectedRecoilValue(selectorName)} key={`${selectorName}${i}`}>{selectorName}: {JSON.stringify(value)}</li>)
   })
   Object.entries(atoms).forEach(([atomName, value], i) => {
-    atomList.push(<li key={`${atomName}${i}`}>{atomName}: {JSON.stringify(value)}</li>)
+    atomList.push(<li onClick={() => setSelectedRecoilValue(atomName)} key={`${atomName}${i}`}>{atomName}: {JSON.stringify(value)}</li>)
   })
 
   return (
