@@ -172,7 +172,7 @@ const Visualizer: React.FC<VisualizerProps> = ({filteredCurSnap}) => {
   });
 
   return (
-    <div>
+    <div data-testid="canvas">
       <div className="Visualizer">
         <svg id="canvas"></svg>
       </div>
