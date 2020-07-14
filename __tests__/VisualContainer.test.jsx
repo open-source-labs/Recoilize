@@ -5,7 +5,7 @@ import VisualContainer from '../src/app/Containers/VisualContainer';
 
 configure({adapter: new Adapter()});
 
-describe('Visual Container Tests', () => {
+xdescribe('Visual Container Tests', () => {
   let wrapper;
 
   beforeAll(() => {
