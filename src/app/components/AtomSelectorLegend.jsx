@@ -2,6 +2,7 @@ import React from 'react';
 
 const AtomSelectorLegend = ({
   filteredSnapshot,
+  componentAtomTree,
   setSelectedRecoilValue,
   atoms,
   selectors,
@@ -11,6 +12,7 @@ const AtomSelectorLegend = ({
   Object.entries(selectors).forEach(([selectorName, value], i) => {
     selectorList.push(
       <li
+        className={'selectorLi'}
         onClick={() => setSelectedRecoilValue([selectorName, 'selector'])}
         key={`${selectorName}${i}`}>
         {selectorName}: {JSON.stringify(value)}
@@ -20,6 +22,7 @@ const AtomSelectorLegend = ({
   Object.entries(atoms).forEach(([atomName, value], i) => {
     atomList.push(
       <li
+        className={'atomLi'}
         onClick={() => setSelectedRecoilValue([atomName, 'atom'])}
         key={`${atomName}${i}`}>
         {atomName}: {JSON.stringify(value)}

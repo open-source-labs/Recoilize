@@ -9,24 +9,26 @@ function AtomComponentVisual({
   selectors,
 }) {
   // set the heights and width of the tree to be passed into treeMap function
-  const width = 600;
-  const height = 1100;
+  const width = 400;
+  const height = 733.33;
   // this state allows the canvas to stay at the zoom level on multiple re-renders
   const [{x, y, k}, setZoomState] = useState({x: 0, y: 0, k: 0});
 
   // create objects to hold the selected atom or selector and all of it's relationships to other atoms/selectors
   // const selectorToAtom = {};
   // const atomToSelector = {};
-  // if (selectedRecoilValue[1] === 'selector'){
-  //   selectorToAtom[selectedRecoilValue[0]] = filteredSnapshot[selectedRecoilValue[0]].nodeDeps;
+  // if (selectedRecoilValue[1] === 'selector') {
+  //   selectorToAtom[selectedRecoilValue[0]] =
+  //     filteredSnapshot[selectedRecoilValue[0]].nodeDeps;
   // }
-  // if (selectedRecoilValue[1] === 'atom'){
-  //   atomToSelector[selectedRecoilValue[0]] = filteredSnapshot[selectedRecoilValue[0]].nodeToNodeSubscriptions;
+  // if (selectedRecoilValue[1] === 'atom') {
+  //   atomToSelector[selectedRecoilValue[0]] =
+  //     filteredSnapshot[selectedRecoilValue[0]].nodeToNodeSubscriptions;
   // }
 
   useEffect(() => {
     setZoomState(d3.zoomTransform(d3.select('#canvas').node()));
-  }, [componentAtomTree]);
+  }, [componentAtomTree, selectedRecoilValue]);
 
   // this only clears the canvas if Visualizer is already rendered on the extension
   useEffect(() => {
@@ -85,7 +87,7 @@ function AtomComponentVisual({
     const node = g
       .append('g')
       .attr('stroke-linejoin', 'round') // no clue what this does
-      .attr('stroke-width', 5)
+      .attr('stroke-width', 1)
       .selectAll('g')
       .data(nodes)
       .join('g')
@@ -93,16 +95,31 @@ function AtomComponentVisual({
       .attr('class', 'atomNodes');
 
     // for each node that got created, append a circle element
-    node.append('circle').attr('fill', colorComponents).attr('r', 50);
+    node
+      .append('circle')
+      .attr('fill', colorComponents)
+      .attr('r', determineSize);
+
+    function determineSize(d) {
+      if (d.data.recoilNodes) {
+        if (d.data.recoilNodes.includes(selectedRecoilValue[0])) {
+          return 150;
+        }
+        return 100;
+      }
+      return 50;
+    }
 
     // for each node that got created, append a text element that displays the name of the node
     node
       .append('text')
       .attr('dy', '.31em')
-      .attr('x', d => (d.children ? -75 : 75))
-      .attr('text-anchor', d => (d.children ? 'end' : 'start'))
+      .attr('x', d => (d.data.recoilNodes ? -175 : -75))
+      //.attr('x', '-175')
+      //.attr('text-anchor', d => (d.children ? 'end' : 'start'))
+      .attr('text-anchor', 'end')
       .text(d => d.data.name)
-      .style('font-size', `2rem`)
+      .style('font-size', `3rem`)
       .style('fill', 'white')
       .clone(true)
       .lower()
@@ -112,24 +129,49 @@ function AtomComponentVisual({
     // adding a mouseOver event handler to each node
     // only add popup text on nodes with no children
     // display the data in the node on hover
-    // node.on('mouseover', function (d, i) {
-    //   if (!d.children) {
-    //     d3.select(this)
-    //       .append('text')
-    //       .text(JSON.stringify(d.data, undefined, 2))
-    //       .style('fill', 'white')
-    //       .attr('x', 75)
-    //       .attr('y', 60)
-    //       .style('font-size', '3rem')
-    //       .attr('stroke', '#646464')
-    //       .attr('id', `popup${i}`);
-    //   }
-    // });
+    node.on('mouseover', function (d, i) {
+      if (d.data.recoilNodes) {
+        for (let x = 0; x < d.data.recoilNodes.length; x++) {
+          d3.select(this)
+            .append('text')
+            //.text(JSON.stringify(d.data.recoilNodes))
+            .text(formatAtomSelectorText(d.data.recoilNodes[x]))
+            .style('fill', 'white')
+            .attr('x', formatMouseoverXValue(d.data.recoilNodes[x]))
+            .attr('y', 200 + x * 55)
+            .style('font-size', '3.5rem')
+            .attr('stroke', '#646464')
+            .attr('id', `popup${i}${x}`);
+        }
+      }
+    });
 
-    // // add mouseOut event handler that removes the popup text
-    // node.on('mouseout', function (d, i) {
-    //   d3.select(`#popup${i}`).remove();
-    // });
+    function formatMouseoverXValue(recoilValue) {
+      if (atoms.hasOwnProperty(recoilValue)) {
+        return -300;
+      }
+      return -425;
+    }
+
+    function formatAtomSelectorText(atomOrSelector) {
+      let str = '';
+
+      atoms.hasOwnProperty(atomOrSelector)
+        ? (str += `ATOM ${atomOrSelector}: ${JSON.stringify(
+            atoms[atomOrSelector],
+          )}`)
+        : (str += `SELECTOR ${atomOrSelector}: ${JSON.stringify(
+            selectors[atomOrSelector],
+          )}`);
+
+      return str;
+    }
+    // add mouseOut event handler that removes the popup text
+    node.on('mouseout', function (d, i) {
+      for (let x = 0; x < d.data.recoilNodes.length; x++) {
+        d3.select(`#popup${i}${x}`).remove();
+      }
+    });
 
     // allows the canvas to be draggable
     node.call(
