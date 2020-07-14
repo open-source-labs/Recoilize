@@ -1,6 +1,66 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`if data gets passed into Visualizer 1`] = `
+exports[`should match snapshot when no props are passed in 1`] = `
+<DocumentFragment>
+  <div
+    data-testid="canvas"
+  >
+    <div
+      class="Visualizer"
+    >
+      <svg
+        height="1100"
+        id="canvas"
+        width="600"
+      >
+        <g
+          transform="translate(0, 0), scale(1)"
+        >
+          <g
+            fill="none"
+            stroke="#646464"
+            stroke-width="5"
+          />
+          <g
+            stroke-linejoin="round"
+            stroke-width="1"
+          >
+            <g
+              class="atomNodes"
+              transform="translate(0, 0)"
+            >
+              <text
+                dy=".31em"
+                stroke="#646464"
+                stroke-width="2"
+                style="font-size: 2rem; fill: white;"
+                text-anchor="start"
+                x="75"
+              >
+                Recoil Root
+              </text>
+              <circle
+                fill="#c300ff"
+                r="50"
+              />
+              <text
+                dy=".31em"
+                style="font-size: 2rem; fill: white;"
+                text-anchor="start"
+                x="75"
+              >
+                Recoil Root
+              </text>
+            </g>
+          </g>
+        </g>
+      </svg>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`should match snapshot when props are passed into Visualizer 1`] = `
 <DocumentFragment>
   <div
     data-testid="canvas"
@@ -392,7 +452,7 @@ exports[`if data gets passed into Visualizer 1`] = `
                 text-anchor="start"
                 x="75"
               >
-                nodetoNodeSubscriptions
+                nodeToNodeSubscriptions
               </text>
               <circle
                 fill="#c300ff"
@@ -404,7 +464,7 @@ exports[`if data gets passed into Visualizer 1`] = `
                 text-anchor="start"
                 x="75"
               >
-                nodetoNodeSubscriptions
+                nodeToNodeSubscriptions
               </text>
             </g>
             <g
@@ -500,7 +560,7 @@ exports[`if data gets passed into Visualizer 1`] = `
                 text-anchor="end"
                 x="-75"
               >
-                nodetoNodeSubscriptions
+                nodeToNodeSubscriptions
               </text>
               <circle
                 fill="#c300ff"
@@ -512,7 +572,7 @@ exports[`if data gets passed into Visualizer 1`] = `
                 text-anchor="end"
                 x="-75"
               >
-                nodetoNodeSubscriptions
+                nodeToNodeSubscriptions
               </text>
             </g>
             <g
@@ -608,7 +668,7 @@ exports[`if data gets passed into Visualizer 1`] = `
                 text-anchor="end"
                 x="-75"
               >
-                nodetoNodeSubscriptions
+                nodeToNodeSubscriptions
               </text>
               <circle
                 fill="#c300ff"
@@ -620,7 +680,7 @@ exports[`if data gets passed into Visualizer 1`] = `
                 text-anchor="end"
                 x="-75"
               >
-                nodetoNodeSubscriptions
+                nodeToNodeSubscriptions
               </text>
             </g>
             <g
@@ -716,7 +776,7 @@ exports[`if data gets passed into Visualizer 1`] = `
                 text-anchor="start"
                 x="75"
               >
-                nodetoNodeSubscriptions
+                nodeToNodeSubscriptions
               </text>
               <circle
                 fill="#c300ff"
@@ -728,7 +788,7 @@ exports[`if data gets passed into Visualizer 1`] = `
                 text-anchor="start"
                 x="75"
               >
-                nodetoNodeSubscriptions
+                nodeToNodeSubscriptions
               </text>
             </g>
             <g
@@ -824,7 +884,7 @@ exports[`if data gets passed into Visualizer 1`] = `
                 text-anchor="start"
                 x="75"
               >
-                nodetoNodeSubscriptions
+                nodeToNodeSubscriptions
               </text>
               <circle
                 fill="#c300ff"
@@ -836,7 +896,7 @@ exports[`if data gets passed into Visualizer 1`] = `
                 text-anchor="start"
                 x="75"
               >
-                nodetoNodeSubscriptions
+                nodeToNodeSubscriptions
               </text>
             </g>
             <g
@@ -1040,7 +1100,7 @@ exports[`if data gets passed into Visualizer 1`] = `
                 text-anchor="start"
                 x="75"
               >
-                nodetoNodeSubscriptions[0]
+                nodeToNodeSubscriptions[0]
               </text>
               <circle
                 fill="#c300ff"
@@ -1052,7 +1112,7 @@ exports[`if data gets passed into Visualizer 1`] = `
                 text-anchor="start"
                 x="75"
               >
-                nodetoNodeSubscriptions[0]
+                nodeToNodeSubscriptions[0]
               </text>
             </g>
             <g
@@ -1067,7 +1127,7 @@ exports[`if data gets passed into Visualizer 1`] = `
                 text-anchor="start"
                 x="75"
               >
-                nodetoNodeSubscriptions[1]
+                nodeToNodeSubscriptions[1]
               </text>
               <circle
                 fill="#c300ff"
@@ -1079,7 +1139,7 @@ exports[`if data gets passed into Visualizer 1`] = `
                 text-anchor="start"
                 x="75"
               >
-                nodetoNodeSubscriptions[1]
+                nodeToNodeSubscriptions[1]
               </text>
             </g>
             <g
@@ -1202,7 +1262,7 @@ exports[`if data gets passed into Visualizer 1`] = `
                 text-anchor="start"
                 x="75"
               >
-                nodetoNodeSubscriptions[0]
+                nodeToNodeSubscriptions[0]
               </text>
               <circle
                 fill="#c300ff"
@@ -1214,7 +1274,7 @@ exports[`if data gets passed into Visualizer 1`] = `
                 text-anchor="start"
                 x="75"
               >
-                nodetoNodeSubscriptions[0]
+                nodeToNodeSubscriptions[0]
               </text>
             </g>
             <g
@@ -1431,66 +1491,6 @@ exports[`if data gets passed into Visualizer 1`] = `
                 x="75"
               >
                 "RecoilValueReadOnly"
-              </text>
-            </g>
-          </g>
-        </g>
-      </svg>
-    </div>
-  </div>
-</DocumentFragment>
-`;
-
-exports[`should match snapshot 1`] = `
-<DocumentFragment>
-  <div
-    data-testid="canvas"
-  >
-    <div
-      class="Visualizer"
-    >
-      <svg
-        height="1100"
-        id="canvas"
-        width="600"
-      >
-        <g
-          transform="translate(0, 0), scale(1)"
-        >
-          <g
-            fill="none"
-            stroke="#646464"
-            stroke-width="5"
-          />
-          <g
-            stroke-linejoin="round"
-            stroke-width="1"
-          >
-            <g
-              class="atomNodes"
-              transform="translate(0, 0)"
-            >
-              <text
-                dy=".31em"
-                stroke="#646464"
-                stroke-width="2"
-                style="font-size: 2rem; fill: white;"
-                text-anchor="start"
-                x="75"
-              >
-                Recoil Root
-              </text>
-              <circle
-                fill="#c300ff"
-                r="50"
-              />
-              <text
-                dy=".31em"
-                style="font-size: 2rem; fill: white;"
-                text-anchor="start"
-                x="75"
-              >
-                Recoil Root
               </text>
             </g>
           </g>

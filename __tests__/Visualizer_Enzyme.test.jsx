@@ -9,38 +9,6 @@ import makeTree from '../src/app/utils/makeTreeConversion';
 configure({adapter: new Adapter()});
 
 xdescribe('Atom tree visualizer unit test', () => {
-  const propSnapshot = {
-    dummyAtom1: {
-      contents: {hello: [], hi: []},
-      nodeDeps: [],
-      nodetoNodeSubscriptions: [],
-      type: 'RecoilState',
-    },
-    listState: {
-      contents: [{text: 'list item'}, {text: 'list item'}, {text: 'list item'}],
-      nodeDeps: [],
-      nodetoNodeSubscriptions: ['selectorTest', 'stateLengths'],
-      type: 'RecoilState',
-    },
-    listState2: {
-      contents: [{text: 'list item'}, {text: 'list item'}, {text: 'list item'}],
-      nodeDeps: [],
-      nodetoNodeSubscriptions: ['stateLengths'],
-      type: 'RecoilState',
-    },
-    selectorTest: {
-      contents: 'test',
-      nodeDeps: ['listState'],
-      nodetoNodeSubscriptions: [],
-      type: 'RecoilValueReadOnly',
-    },
-    stateLengths: {
-      contents: 6,
-      nodeDeps: ['listState', 'listState2'],
-      nodetoNodeSubscriptions: [],
-      type: 'RecoilValueReadOnly',
-    },
-  };
   let Visualizer;
   beforeAll(() => {
     Visualizer = shallow(<Visualizer newSnap={propSnapshot} />);

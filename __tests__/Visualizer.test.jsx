@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Visualizer from '../src/app/components/Visualizer';
+import {filteredCurSnapMock} from '../mock/snapshot.js';
 import {
   render,
   fireEvent,
@@ -11,39 +12,6 @@ import {
 } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import '@babel/polyfill';
-
-const propSnapshot = {
-  dummyAtom1: {
-    contents: {hello: [], hi: []},
-    nodeDeps: [],
-    nodetoNodeSubscriptions: [],
-    type: 'RecoilState',
-  },
-  listState: {
-    contents: [{text: 'list item'}, {text: 'list item'}, {text: 'list item'}],
-    nodeDeps: [],
-    nodetoNodeSubscriptions: ['selectorTest', 'stateLengths'],
-    type: 'RecoilState',
-  },
-  listState2: {
-    contents: [{text: 'list item'}, {text: 'list item'}, {text: 'list item'}],
-    nodeDeps: [],
-    nodetoNodeSubscriptions: ['stateLengths'],
-    type: 'RecoilState',
-  },
-  selectorTest: {
-    contents: 'test',
-    nodeDeps: ['listState'],
-    nodetoNodeSubscriptions: [],
-    type: 'RecoilValueReadOnly',
-  },
-  stateLengths: {
-    contents: 6,
-    nodeDeps: ['listState', 'listState2'],
-    nodetoNodeSubscriptions: [],
-    type: 'RecoilValueReadOnly',
-  },
-};
 
 afterEach(cleanup);
 
@@ -63,6 +31,8 @@ it('should render Recoil Root as text', () => {
 });
 
 it('should match snapshot when props are passed into Visualizer', () => {
-  const {asFragment} = render(<Visualizer filteredCurSnap={propSnapshot} />);
+  const {asFragment} = render(
+    <Visualizer filteredCurSnap={filteredCurSnapMock} />,
+  );
   expect(asFragment()).toMatchSnapshot();
 });
