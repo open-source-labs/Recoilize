@@ -6,8 +6,8 @@ const AtomComponentVisualContainer = ({
   componentAtomTree,
   filteredSnapshot,
 }) => {
-  // will need its own state for current atom/ selector
   const [selectedRecoilValue, setSelectedRecoilValue] = useState([]);
+  const componentsWithSelectedVal = [];
 
   const atoms = {};
   const selectors = {};
@@ -35,6 +35,7 @@ const AtomComponentVisualContainer = ({
         setSelectedRecoilValue={setSelectedRecoilValue}
         atoms={atoms}
         selectors={selectors}
+        componentAtomTree={componentAtomTree}
       />
     </div>
   );
