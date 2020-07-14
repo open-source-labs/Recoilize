@@ -85,7 +85,7 @@ const assignName = (node: any) => {
   if (node.tag === 7) return 'Fragment';
 };
 
-module.exports = formatFiberNodes;
+export default formatFiberNodes;
 
 
 // if testing this function on the browser, use line below to log the formatted tree in the console

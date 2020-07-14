@@ -8,7 +8,7 @@ import {
   useRecoilCallback,
   Snapshot,
 } from 'recoil';
-import {formatFiberNodes} from './formatFiberNodes';
+import formatFiberNodes from './formatFiberNodes';
 
 // isRestored state disables snapshots from being recorded
 let isRestoredState = false;
