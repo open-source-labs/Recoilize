@@ -38,4 +38,4 @@ const makeTree = (obj: any) => {
   return result;
 };
 
-module.exports = {makeTree};
+export default makeTree;

@@ -64,4 +64,4 @@ const makeRelationshipLinks = (obj: any) => {
   return relationships;
 };
 
-module.exports = {makeRelationshipLinks};
+export default makeRelationshipLinks;

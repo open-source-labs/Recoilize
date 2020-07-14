@@ -1,6 +1,6 @@
 import React, {useRef, useState, useEffect} from 'react';
 import * as d3 from 'd3';
-import {makeTree} from '../../utils/makeTreeConversion.js';
+import makeTree from '../../utils/makeTreeConversion';
 import {filteredSnapshot} from '../../../types';
 
 interface VisualizerProps {
