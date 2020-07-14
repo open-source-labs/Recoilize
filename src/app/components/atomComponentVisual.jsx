@@ -102,7 +102,10 @@ function AtomComponentVisual({
 
     function determineSize(d) {
       if (d.data.recoilNodes) {
-        return 150;
+        if (d.data.recoilNodes.includes(selectedRecoilValue[0])) {
+          return 150;
+        }
+        return 100;
       }
       return 50;
     }
@@ -134,7 +137,7 @@ function AtomComponentVisual({
             //.text(JSON.stringify(d.data.recoilNodes))
             .text(formatAtomSelectorText(d.data.recoilNodes[x]))
             .style('fill', 'white')
-            .attr('x', -300)
+            .attr('x', formatMouseoverXValue(d.data.recoilNodes[x]))
             .attr('y', 200 + x * 55)
             .style('font-size', '3.5rem')
             .attr('stroke', '#646464')
@@ -143,16 +146,23 @@ function AtomComponentVisual({
       }
     });
 
+    function formatMouseoverXValue(recoilValue) {
+      if (atoms.hasOwnProperty(recoilValue)) {
+        return -300;
+      }
+      return -425;
+    }
+
     function formatAtomSelectorText(atomOrSelector) {
       let str = '';
 
       atoms.hasOwnProperty(atomOrSelector)
         ? (str += `ATOM ${atomOrSelector}: ${JSON.stringify(
             atoms[atomOrSelector],
-          )}.  `)
+          )}`)
         : (str += `SELECTOR ${atomOrSelector}: ${JSON.stringify(
             selectors[atomOrSelector],
-          )}.  `);
+          )}`);
 
       return str;
     }
