@@ -189,3 +189,13 @@ body {
   border-right: none;
   overflow-y: auto;
 }
+
+.atomLi:hover,
+.selectorLi:hover {
+  text-decoration: underline;
+  text-decoration-color: red;
+}
+
+.selectorLi:hover {
+  text-decoration-color: yellow;
+}
