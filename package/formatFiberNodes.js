@@ -40,8 +40,14 @@ const createAtomsSelectorArray = node => {
         current.memoizedState[1].length === 2
       ) {
         // current.memoizedState[1][1].current is a Map that contains the a key, the key is the name of every atom/selector in that fiber node, that key is a string
-        for (let [key, value] of current.memoizedState[1][1].current) {
-          recoilNodes.push(key);
+        // sean
+        if (
+          current.memoizedState[1][1] &&
+          current.memoizedState[1][1].current
+        ) {
+          for (let [key, value] of current.memoizedState[1][1].current) {
+            recoilNodes.push(key);
+          }
         }
       }
       current = current.next;
