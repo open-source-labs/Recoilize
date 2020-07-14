@@ -7,7 +7,6 @@ const AtomComponentVisualContainer = ({
   filteredSnapshot,
 }) => {
   const [selectedRecoilValue, setSelectedRecoilValue] = useState([]);
-  const componentsWithSelectedVal = [];
 
   const atoms = {};
   const selectors = {};
@@ -32,6 +31,7 @@ const AtomComponentVisualContainer = ({
       />
       <AtomSelectorLegend
         filteredSnapshot={filteredSnapshot}
+        selectedRecoilValue={selectedRecoilValue}
         setSelectedRecoilValue={setSelectedRecoilValue}
         atoms={atoms}
         selectors={selectors}
