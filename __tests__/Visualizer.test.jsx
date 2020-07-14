@@ -52,7 +52,7 @@ it('it renders without crashing', () => {
   expect(getByTestId('canvas')).toBeTruthy();
 });
 
-it('should match snapshot', () => {
+it('should match snapshot when no props are passed in', () => {
   const {asFragment} = render(<Visualizer />);
   expect(asFragment()).toMatchSnapshot();
 });
@@ -62,7 +62,7 @@ it('should render Recoil Root as text', () => {
   expect(getByTestId('canvas')).toHaveTextContent('Recoil Root');
 });
 
-it('if data gets passed into Visualizer', () => {
+it('should match snapshot when props are passed into Visualizer', () => {
   const {asFragment} = render(<Visualizer filteredCurSnap={propSnapshot} />);
   expect(asFragment()).toMatchSnapshot();
 });
