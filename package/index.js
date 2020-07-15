@@ -56,10 +56,12 @@ export default function RecoilizeDebugger(props) {
   // React lifecycle hook on re-render
   useEffect(() => {
     if (!isRestoredState) {
-      const devToolData = createDevToolDataObject(filteredSnapshot);
+      setTimeout(() => {
+        const devToolData = createDevToolDataObject(filteredSnapshot);
 
-      // Post message to content script on every re-render of the developers application only if content script has started
-      sendWindowMessage('recordSnapshot', devToolData);
+        // Post message to content script on every re-render of the developers application only if content script has started
+        sendWindowMessage('recordSnapshot', devToolData);
+      });
     } else {
       isRestoredState = false;
     }
@@ -72,12 +74,14 @@ export default function RecoilizeDebugger(props) {
   });
 
   // Listener callback for messages sent to windowf
-  const onMessageReceived = (msg: any) => {
+  const onMessageReceived = msg => {
     // Add other actions from dev tool here
     switch (msg.data.action) {
       // Checks to see if content script has started before sending initial snapshot
       case 'contentScriptStarted':
-        const initialFilteredSnapshot = formatAtomSelectorRelationship(filteredSnapshot);
+        const initialFilteredSnapshot = formatAtomSelectorRelationship(
+          filteredSnapshot,
+        );
         const devToolData = createDevToolDataObject(initialFilteredSnapshot);
         sendWindowMessage('moduleInitialized', devToolData);
         break;
@@ -91,39 +95,46 @@ export default function RecoilizeDebugger(props) {
   };
 
   // Sends window an action and payload message.
-  const sendWindowMessage = (action: any, payload: any) => {
-    window.postMessage({
-      action,
-      payload,
-    }, '*');
+  const sendWindowMessage = (action, payload) => {
+    window.postMessage(
+      {
+        action,
+        payload,
+      },
+      '*',
+    );
   };
 
-  const createDevToolDataObject = (filteredSnapshot: any) => {
+  const createDevToolDataObject = filteredSnapshot => {
     return {
       filteredSnapshot: filteredSnapshot,
       componentAtomTree: formatFiberNodes(
-        root._reactRootContainer._internalRoot
-          .current,
+        root._reactRootContainer._internalRoot.current,
       ),
     };
   };
 
-  const formatAtomSelectorRelationship = (filteredSnapshot) => {
-    if (window.$recoilDebugStates && Array.isArray(window.$recoilDebugStates) && window.$recoilDebugStates.length){
-      let snapObj = window.$recoilDebugStates[window.$recoilDebugStates.length - 1];
-      if (snapObj.hasOwnProperty('nodeDeps')){
-        for (let [key, value] of snapObj.nodeDeps){
+  const formatAtomSelectorRelationship = filteredSnapshot => {
+    if (
+      window.$recoilDebugStates &&
+      Array.isArray(window.$recoilDebugStates) &&
+      window.$recoilDebugStates.length
+    ) {
+      let snapObj =
+        window.$recoilDebugStates[window.$recoilDebugStates.length - 1];
+      if (snapObj.hasOwnProperty('nodeDeps')) {
+        for (let [key, value] of snapObj.nodeDeps) {
           filteredSnapshot[key].nodeDeps = Array.from(value);
         }
       }
-      if (snapObj.hasOwnProperty('nodeToNodeSubscriptions')){   
-        for (let [key, value] of snapObj.nodeToNodeSubscriptions){
+      if (snapObj.hasOwnProperty('nodeToNodeSubscriptions')) {
+        for (let [key, value] of snapObj.nodeToNodeSubscriptions) {
           filteredSnapshot[key].nodeToNodeSubscriptions = Array.from(value);
         }
       }
     }
     return filteredSnapshot;
-  }
+  };
 
   // FOR TIME TRAVEL: time travels to a given snapshot, re renders application.
   const timeTravelToSnapshot = async msg => {
