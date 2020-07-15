@@ -72,12 +72,13 @@ export default function RecoilizeDebugger(props) {
   });
 
   // Listener callback for messages sent to windowf
-  const onMessageReceived = msg => {
+  const onMessageReceived = (msg: any) => {
     // Add other actions from dev tool here
     switch (msg.data.action) {
       // Checks to see if content script has started before sending initial snapshot
       case 'contentScriptStarted':
-        const devToolData = createDevToolDataObject(filteredSnapshot);
+        const initialFilteredSnapshot = formatAtomSelectorRelationship(filteredSnapshot);
+        const devToolData = createDevToolDataObject(initialFilteredSnapshot);
         sendWindowMessage('moduleInitialized', devToolData);
         break;
       // Listens for a request from dev tool to time travel to previous state of the app.
@@ -90,22 +91,39 @@ export default function RecoilizeDebugger(props) {
   };
 
   // Sends window an action and payload message.
-  const sendWindowMessage = (action, payload) => {
+  const sendWindowMessage = (action: any, payload: any) => {
     window.postMessage({
       action,
       payload,
-    });
+    }, '*');
   };
 
-  const createDevToolDataObject = filteredSnapshot => {
+  const createDevToolDataObject = (filteredSnapshot: any) => {
     return {
       filteredSnapshot: filteredSnapshot,
       componentAtomTree: formatFiberNodes(
-        document.getElementById('root')._reactRootContainer._internalRoot
+        root._reactRootContainer._internalRoot
           .current,
       ),
     };
   };
+
+  const formatAtomSelectorRelationship = (filteredSnapshot) => {
+    if (window.$recoilDebugStates && Array.isArray(window.$recoilDebugStates) && window.$recoilDebugStates.length){
+      let snapObj = window.$recoilDebugStates[window.$recoilDebugStates.length - 1];
+      if (snapObj.hasOwnProperty('nodeDeps')){
+        for (let [key, value] of snapObj.nodeDeps){
+          filteredSnapshot[key].nodeDeps = Array.from(value);
+        }
+      }
+      if (snapObj.hasOwnProperty('nodeToNodeSubscriptions')){   
+        for (let [key, value] of snapObj.nodeToNodeSubscriptions){
+          filteredSnapshot[key].nodeToNodeSubscriptions = Array.from(value);
+        }
+      }
+    }
+    return filteredSnapshot;
+  }
 
   // FOR TIME TRAVEL: time travels to a given snapshot, re renders application.
   const timeTravelToSnapshot = async msg => {

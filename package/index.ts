@@ -80,7 +80,8 @@ export default function RecoilizeDebugger(props: any) {
     switch (msg.data.action) {
       // Checks to see if content script has started before sending initial snapshot
       case 'contentScriptStarted':
-        const devToolData = createDevToolDataObject(filteredSnapshot);
+        const initialFilteredSnapshot = formatAtomSelectorRelationship(filteredSnapshot);
+        const devToolData = createDevToolDataObject(initialFilteredSnapshot);
         sendWindowMessage('moduleInitialized', devToolData);
         break;
       // Listens for a request from dev tool to time travel to previous state of the app.
@@ -109,6 +110,23 @@ export default function RecoilizeDebugger(props: any) {
       ),
     };
   };
+
+  const formatAtomSelectorRelationship = (filteredSnapshot) => {
+    if (window.$recoilDebugStates && Array.isArray(window.$recoilDebugStates) && window.$recoilDebugStates.length){
+      let snapObj = window.$recoilDebugStates[window.$recoilDebugStates.length - 1];
+      if (snapObj.hasOwnProperty('nodeDeps')){
+        for (let [key, value] of snapObj.nodeDeps){
+          filteredSnapshot[key].nodeDeps = Array.from(value);
+        }
+      }
+      if (snapObj.hasOwnProperty('nodeToNodeSubscriptions')){   
+        for (let [key, value] of snapObj.nodeToNodeSubscriptions){
+          filteredSnapshot[key].nodeToNodeSubscriptions = Array.from(value);
+        }
+      }
+    }
+    return filteredSnapshot;
+  }
 
   // FOR TIME TRAVEL: time travels to a given snapshot, re renders application.
   const timeTravelToSnapshot = async (msg: any) => {
