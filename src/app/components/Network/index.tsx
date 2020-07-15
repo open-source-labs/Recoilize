@@ -270,7 +270,7 @@ const Network: React.FC<NetworkProps> = ({filteredCurSnap}) => {
   return (
     <div className="networkContainer">
       <div className="Network">
-        <svg id="networkCanvas"></svg>
+        <svg data-testid="networkCanvas" id="networkCanvas"></svg>
       </div>
     </div>
   );
