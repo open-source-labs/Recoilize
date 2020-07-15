@@ -1,9 +1,16 @@
+<meta name='keywords' content='Recoil, Recoil.js, Recoil Dev Tool, Recoilize, Chrome Dev Tool, Recoil Chrome'>
+
 <h1 align='center'>
 Recoilize
 </h1>
+
 <p>
 Recoilize is a debugger tool for application that use the state management library Recoil (ADD LINK TO RECOIL LANDING PAGE OR CHROME DEV STORE)
 </p>
+
+<h1>
+** NOTE: STILL IN BETA **
+</h1>
 
 <h1 align='center'>
 Installation
@@ -34,6 +41,12 @@ ReactDOM.render(
 #### Install Recoilize from Chrome Dev Tools
 
 #### Open your application on the Chrome Browser and start debugging with Recoilize!
+
+### Supported only with Recoil applications
+
+<h3 align='center'> 
+We will keep updating Recoilize alongside the updates from the Recoil.js team!
+</h3>
 
 #### Contributors
 
