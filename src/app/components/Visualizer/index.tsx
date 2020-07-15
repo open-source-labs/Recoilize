@@ -136,7 +136,7 @@ const Visualizer: React.FC<VisualizerProps> = ({filteredCurSnap}) => {
         .on('end', dragEnded),
     );
 
-    // allows the canvas to be zoomable
+    // allows the canvas to be zoom-able
     svgContainer.call(
       d3
         .zoom()

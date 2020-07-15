@@ -1,18 +1,30 @@
-import React, {useState, useEffect} from 'react';
-import AtomComponentVisual from '../../components/AtomComponentVisual';
+import React, {useState} from 'react';
+import AtomComponentVisual from '../../components/AtomComponent';
 import AtomSelectorLegend from '../../components/AtomSelectorLegend';
-
-const AtomComponentVisualContainer = ({
+import {
   componentAtomTree,
   filteredSnapshot,
+  atom,
+  selector,
+} from '../../../types';
+
+interface AtomComponentVisualContainerProps {
+  filteredCurSnap: filteredSnapshot;
+  componentAtomTree: componentAtomTree;
+}
+
+const AtomComponentVisualContainer: React.FC<AtomComponentVisualContainerProps> = ({
+  filteredCurSnap,
+  componentAtomTree,
 }) => {
   const [selectedRecoilValue, setSelectedRecoilValue] = useState([]);
-  const componentsWithSelectedVal = [];
 
-  const atoms = {};
-  const selectors = {};
-  if (filteredSnapshot) {
-    for (let [recoilValueName, object] of Object.entries(filteredSnapshot)) {
+  const atoms: atom = {};
+  const selectors: selector = {};
+  if (filteredCurSnap) {
+    for (let [recoilValueName, object] of Object.entries<any>(
+      filteredCurSnap,
+    )) {
       if (object.type === 'RecoilState') {
         atoms[recoilValueName] = object.contents;
       } else {
@@ -25,17 +37,15 @@ const AtomComponentVisualContainer = ({
     <div>
       <AtomComponentVisual
         componentAtomTree={componentAtomTree}
-        filteredSnapshot={filteredSnapshot}
         selectedRecoilValue={selectedRecoilValue}
         atoms={atoms}
         selectors={selectors}
       />
       <AtomSelectorLegend
-        filteredSnapshot={filteredSnapshot}
+        selectedRecoilValue={selectedRecoilValue}
         setSelectedRecoilValue={setSelectedRecoilValue}
         atoms={atoms}
         selectors={selectors}
-        componentAtomTree={componentAtomTree}
       />
     </div>
   );
