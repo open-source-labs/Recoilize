@@ -5,7 +5,11 @@
   "description": "A Chrome extension that helps debug Recoil applications by memorizing the state of components with every render.",
   "manifest_version": 2,
   "content_security_policy": "script-src 'self' 'unsafe-eval' ; object-src 'self'",
-  "icons": { "128": "assets/covalent-recoil-logo.jpg" },
+  "icons": {
+    "16": "assets/Recoilize.png",
+    "48": "assets/Recoilize.png",
+    "128": "assets/covalent-recoil-logo.jpg"
+  },
   "permissions": ["contextMenus", "tabs", "<all_urls>", "storage"],
   "background": {
     "scripts": ["bundles/background.bundle.js"],
