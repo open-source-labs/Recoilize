@@ -33,16 +33,10 @@ const VisualContainer: React.FC<VisualContainerProps> = ({
   const componentAtomTree = currentSnapshot
     ? currentSnapshot.componentAtomTree
     : undefined;
-  //const atomsAndSelectors = currentSnapshot ? currentSnapshot.atomsAndSelectors : undefined;
   // object containing all conditional renders based on navBar
   const nav: navTypes = {
     // compare the diff of filteredPrevSnap and filteredCurSnap
-    Diff: (
-      <Diff
-        filteredPrevSnap={filteredPrevSnap}
-        filteredCurSnap={filteredCurSnap}
-      />
-    ),
+    Diff: <Diff filteredPrevSnap={filteredPrevSnap} filteredCurSnap={filteredCurSnap} />,
     // render JSON tree of snapshot
     Tree: <Tree filteredCurSnap={filteredCurSnap} />,
     // individual snapshot visualizer
@@ -53,7 +47,7 @@ const VisualContainer: React.FC<VisualContainerProps> = ({
     AtomComponentVisualContainer: (
       <AtomComponentVisualContainer
         componentAtomTree={componentAtomTree}
-        filteredSnapshot={filteredCurSnap}
+        filteredCurSnap={filteredCurSnap}
       />
     ),
   };
