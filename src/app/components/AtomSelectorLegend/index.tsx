@@ -1,13 +1,20 @@
 import React from 'react';
 
-const AtomSelectorLegend = ({
+interface AtomSelectorLegendProps {
+  setSelectedRecoilValue: React.Dispatch<React.SetStateAction<any[]>>;
+  atoms: object;
+  selectors: object;
+  selectedRecoilValue: any[];
+}
+
+const AtomSelectorLegend: React.FC<AtomSelectorLegendProps> = ({
   setSelectedRecoilValue,
   atoms,
   selectors,
   selectedRecoilValue,
 }) => {
-  const selectorList = [];
-  const atomList = [];
+  const selectorList: JSX.Element[] = [];
+  const atomList: JSX.Element[] = [];
   Object.entries(selectors).forEach(([selectorName, value], i) => {
     selectorList.push(
       <div
