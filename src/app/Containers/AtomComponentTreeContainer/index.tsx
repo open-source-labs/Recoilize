@@ -8,12 +8,12 @@ import {
   selector,
 } from '../../../types';
 
-interface fooBar {
+interface AtomComponentVisualContainerProps {
   filteredCurSnap: filteredSnapshot;
   componentAtomTree: componentAtomTree;
 }
 
-const AtomComponentVisualContainer: React.FC<fooBar> = ({
+const AtomComponentVisualContainer: React.FC<AtomComponentVisualContainerProps> = ({
   filteredCurSnap,
   componentAtomTree,
 }) => {
