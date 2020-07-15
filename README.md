@@ -1,22 +1,46 @@
-# recoilize
-Recoilize is a debugger tool for application that use the state management library Recoil < TODO: Link to recoil >
+<h1 align='center'>
+Recoilize
+</h1>
+<p>
+Recoilize is a debugger tool for application that use the state management library Recoil (ADD LINK TO RECOIL LANDING PAGE OR CHROME DEV STORE)
+</p>
 
-# installation
-Your application must use recoil. If you are interested in using Recoil in your application, follow the instructions on the official Recoil github: < recoil github link >\
+<h1 align='center'>
+Installation
+</h1>
 
 #### Install Recoilize Module
-< update with npm module install command when live>
 
-#### Invoke Recoilize Component
-< update with final code snipper >
+```js
+npm install recoilize
+```
 
-# Dev setup
-If you are interested in contributing:
+#### Inject Recoilize into the root your Recoil Application
 
-#### Fork then clone this repo
+#### ** IMPORTANT **
 
-`npm install`
+##### Must import all Atoms and Selectors and pass them into the Recoilize component as shown below
 
-#### Lint
+```js
+ReactDOM.render(
+  <RecoilRoot>
+    <Recoilize nodes={nodes} />
+    <App />
+  </RecoilRoot>,
+  document.getElementById('root'),
+);
+```
 
-`npm run lint`
+#### Install Recoilize from Chrome Dev Tools
+
+#### Open your application on the Chrome Browser and start debugging with Recoilize!
+
+#### Contributors
+
+##### Bren Yamaguchi @brenyama
+
+##### Saejin Kang @skang1004
+
+##### Jonathan Escamilla @jonescamilla
+
+##### Sean Smith @SmithSean17
