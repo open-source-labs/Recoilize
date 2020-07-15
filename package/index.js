@@ -12,7 +12,7 @@ import {formatFiberNodes} from './formatFiberNodes';
 // isRestored state disables snapshots from being recorded
 let isRestoredState = false;
 
-export default function Recoilize(props) {
+export default function RecoilizeDebugger(props) {
   // We should ask for Array of atoms and selectors.
   // Captures all atoms that were defined to get the initial state
   let nodes = null;
