@@ -41,7 +41,6 @@ const Visualizer: React.FC<VisualizerProps> = ({filteredCurSnap}) => {
       // call the helper function passing in the most recent snapshot
       children: makeTree(filteredCurSnap),
     };
-    console.log(makeTree(filteredCurSnap), 'makeTree')
 
     // creating the tree map
     const treeMap: any = d3.tree().nodeSize([width, height]);
