@@ -56,7 +56,10 @@ We will keep updating Recoilize alongside the updates from the Recoil.js team!
  Contributors
 </h1>
 
-<h4> Bren Yamaguchi @brenyama </h4>
-<h4> Saejin Kang @skang1004 </h4>
-<h4> Jonathan Escamilla @jonescamilla </h4>
-<h4> Sean Smith @SmithSean17 </h4>
+<h4>Bren Yamaguchi <a href='https://github.com/brenyama'>@brenyama</a></h4>
+
+<h4>Saejin Kang <a href='https://github.com/skang1004'>@skang1004</a></h4>
+
+<h4>Jonathan Escamilla <a href='https://github.com/jonescamilla'>@jonescamilla</a> </h4>
+
+<h4>Sean Smith <a href='https://github.com/SmithSean17'>@SmithSean17</a> </h4>
