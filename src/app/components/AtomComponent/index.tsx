@@ -108,7 +108,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
       .attr('r', determineSize);
 
     function determineSize(d: any) {
-      if (d.data.recoilNodes) {
+      if (d.data.recoilNodes.length) {
         if (d.data.recoilNodes.includes(selectedRecoilValue[0])) {
           return 150;
         }
@@ -224,7 +224,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
 
     function colorComponents(d: any) {
       // if component node contains recoil atoms or selectors, make it orange red or yellow, otherwise keep node gray
-      if (d.data.recoilNodes) {
+      if (d.data.recoilNodes.length) {
         if (d.data.recoilNodes.includes(selectedRecoilValue[0])) {
           return 'white';
         }
