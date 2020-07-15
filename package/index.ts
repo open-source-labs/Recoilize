@@ -8,12 +8,12 @@ import {
   useRecoilCallback,
   Snapshot,
 } from 'recoil';
-import formatFiberNodes from './_formatFiberNodes';
+import formatFiberNodes from './formatFiberNodes';
 
 // isRestored state disables snapshots from being recorded
 let isRestoredState = false;
 
-export default function Recoilize(props: any) {
+export default function RecoilizeDebugger(props: any) {
   // We should ask for Array of atoms and selectors.
   // Captures all atoms that were defined to get the initial state
   let nodes = null;
@@ -24,14 +24,16 @@ export default function Recoilize(props: any) {
     nodes = props.nodes;
   }
 
-  const snapshot = useRecoilSnapshot();
+  const { root } = props;
+
+  const snapshot: any = useRecoilSnapshot();
 
   // Local state of all previous snapshots to use for time traveling when requested by dev tools.
   const [snapshots, setSnapshots] = useState([snapshot]);
   // const [isRestoredState, setRestoredState] = useState(false);
   const gotoSnapshot = useGotoRecoilSnapshot();
 
-  const filteredSnapshot = {};
+  const filteredSnapshot: any = {};
   const currentTree = snapshot._store.getState().currentTree;
 
   // Traverse all atoms and selector state nodes and get value
@@ -73,7 +75,7 @@ export default function Recoilize(props: any) {
   });
 
   // Listener callback for messages sent to window
-  const onMessageReceived = msg => {
+  const onMessageReceived = (msg: any) => {
     // Add other actions from dev tool here
     switch (msg.data.action) {
       // Checks to see if content script has started before sending initial snapshot
@@ -95,14 +97,14 @@ export default function Recoilize(props: any) {
     window.postMessage({
       action,
       payload,
-    });
+    }, '*');
   };
 
   const createDevToolDataObject = (filteredSnapshot: any) => {
     return {
       filteredSnapshot: filteredSnapshot,
       componentAtomTree: formatFiberNodes(
-        document.getElementById('root')._reactRootContainer._internalRoot
+        root._reactRootContainer._internalRoot
           .current,
       ),
     };

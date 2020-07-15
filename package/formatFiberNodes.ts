@@ -9,12 +9,20 @@ type node = {
   sibling: any;
 };
 
+type formattedNode = {
+  name: string,
+  tag: number,
+  children: any[];
+  recoilNodes: any[];
+}
+
 const formatFiberNodes = (node: node) => {
-  const formattedNode = {
+  const formattedNode: formattedNode = {
     // this function grabs a 'name' based on the tag of the node
     name: assignName(node),
     tag: node.tag,
     children: [],
+    recoilNodes: createAtomsSelectorArray(node),
   };
 
   // loop through and recursively call all nodes to format their 'sibling' and 'child' properties to our desired tree shape
@@ -24,11 +32,6 @@ const formatFiberNodes = (node: node) => {
     currentNode = currentNode.sibling;
   }
 
-  // // function returns array of all atoms and selectors, as strings
-  const recoilNodes = createAtomsSelectorArray(node);
-
-  // add a property to the formattedNode that consists of all atoms
-  if (recoilNodes.length) formattedNode['recoilNodes'] = recoilNodes;
   return formattedNode;
 };
 
