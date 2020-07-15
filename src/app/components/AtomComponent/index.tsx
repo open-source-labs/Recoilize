@@ -21,18 +21,6 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
   // this state allows the canvas to stay at the zoom level on multiple re-renders
   const [{x, y, k}, setZoomState] = useState({x: 0, y: 0, k: 0});
 
-  // create objects to hold the selected atom or selector and all of it's relationships to other atoms/selectors
-  // const selectorToAtom = {};
-  // const atomToSelector = {};
-  // if (selectedRecoilValue[1] === 'selector') {
-  //   selectorToAtom[selectedRecoilValue[0]] =
-  //     filteredCurSnap[selectedRecoilValue[0]].nodeDeps;
-  // }
-  // if (selectedRecoilValue[1] === 'atom') {
-  //   atomToSelector[selectedRecoilValue[0]] =
-  //     filteredCurSnap[selectedRecoilValue[0]].nodeToNodeSubscriptions;
-  // }
-
   useEffect(() => {
     setZoomState(d3.zoomTransform(d3.select('#canvas').node()));
   }, [componentAtomTree, selectedRecoilValue]);
@@ -93,7 +81,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
     // this segment places all the nodes on the canvas
     const node = g
       .append('g')
-      .attr('stroke-linejoin', 'round') // no clue what this does
+      .attr('stroke-linejoin', 'round')
       .attr('stroke-width', 1)
       .selectAll('g')
       .data(nodes)
@@ -106,16 +94,6 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
       .append('circle')
       .attr('fill', colorComponents)
       .attr('r', determineSize);
-
-    function determineSize(d: any) {
-      if (d.data.recoilNodes.length) {
-        if (d.data.recoilNodes.includes(selectedRecoilValue[0])) {
-          return 150;
-        }
-        return 100;
-      }
-      return 50;
-    }
 
     // for each node that got created, append a text element that displays the name of the node
     node
@@ -153,26 +131,6 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
       }
     });
 
-    function formatMouseoverXValue(recoilValue: any) {
-      if (atoms.hasOwnProperty(recoilValue)) {
-        return -300;
-      }
-      return -425;
-    }
-
-    function formatAtomSelectorText(atomOrSelector: any) {
-      let str = '';
-
-      atoms.hasOwnProperty(atomOrSelector)
-        ? (str += `ATOM ${atomOrSelector}: ${JSON.stringify(
-            atoms[atomOrSelector],
-          )}`)
-        : (str += `SELECTOR ${atomOrSelector}: ${JSON.stringify(
-            selectors[atomOrSelector],
-          )}`);
-
-      return str;
-    }
     // add mouseOut event handler that removes the popup text
     node.on('mouseout', function (d: any, i: any) {
       for (let x = 0; x < d.data.recoilNodes.length; x++) {
@@ -222,9 +180,38 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
       g.attr('transform', d3.event.transform);
     }
 
+    function formatMouseoverXValue(recoilValue: any) {
+      if (atoms.hasOwnProperty(recoilValue)) {
+        return -300;
+      }
+      return -425;
+    }
+
+    function formatAtomSelectorText(atomOrSelector: any) {
+      let str = '';
+
+      atoms.hasOwnProperty(atomOrSelector)
+        ? (str += `ATOM ${atomOrSelector}: ${JSON.stringify(
+            atoms[atomOrSelector],
+          )}`)
+        : (str += `SELECTOR ${atomOrSelector}: ${JSON.stringify(
+            selectors[atomOrSelector],
+          )}`);
+
+      return str;
+    }
+    function determineSize(d: any) {
+      if (d.data.recoilNodes && d.data.recoilNodes.length) {
+        if (d.data.recoilNodes.includes(selectedRecoilValue[0])) {
+          return 150;
+        }
+        return 100;
+      }
+      return 50;
+    }
     function colorComponents(d: any) {
       // if component node contains recoil atoms or selectors, make it orange red or yellow, otherwise keep node gray
-      if (d.data.recoilNodes.length) {
+      if (d.data.recoilNodes && d.data.recoilNodes.length) {
         if (d.data.recoilNodes.includes(selectedRecoilValue[0])) {
           return 'white';
         }
