@@ -32,11 +32,11 @@ export type componentAtomTree = {
 //////////////////////////
 export type atom = {
   [name: string]: any;
-} 
+};
 
 //////////////////////////
 // TODO BE BETTER TYPED //
 //////////////////////////
 export type selector = {
   [name: string]: any;
-}
+};
