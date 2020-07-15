@@ -4,6 +4,10 @@
 Recoilize
 </h1>
 
+<p align='center'>
+<img src='./src/extension/build/assets/Recoilize.png' width=120rem>
+</p>
+
 <p>
 Recoilize is a debugger tool for application that use the state management library Recoil (ADD LINK TO RECOIL LANDING PAGE OR CHROME DEV STORE)
 </p>
