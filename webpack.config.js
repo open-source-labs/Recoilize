@@ -1,29 +1,29 @@
 const path = require('path');
-const ChromeExtensionReloader = require('webpack-chrome-extension-reloader');
 
-const config = {
-  entry: {
-    app: './src/app/index.tsx',
-    background: './src/extension/background.ts',
-    content: './src/extension/contentScript.ts',
-  },
+module.exports = {
+  entry: path.resolve(__dirname, './src/client/index.js'),
   output: {
-    path: path.resolve(__dirname, 'src/extension/build/bundles'),
-    filename: '[name].bundle.js',
+    path: path.resolve(__dirname, 'build'),
+    publicPath: '/',
+    filename: 'bundle.js',
+  },
+  mode: process.env.NODE_ENV,
+  devServer: {
+    publicPath: '/build',
+    historyApiFallback: true,
+    hot: true,
+    proxy: {
+      '/': 'http://localhost:3000',
+    },
+  },
+  resolve: {
+    extensions: ['.js', '.jsx'],
   },
   module: {
     rules: [
       {
-        test: /\.tsx?$/,
-        use: 'ts-loader',
-        exclude: /node_modules/,
-      },
-      {
         test: /\.jsx?/,
-        exclude: /(node_modules)/,
-        resolve: {
-          extensions: ['.js', '.jsx'],
-        },
+        exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
           options: {
@@ -32,31 +32,10 @@ const config = {
         },
       },
       {
-        test: /\.scss$/,
+        test: /.(css|scss)$/,
+        exclude: /node_modules/,
         use: ['style-loader', 'css-loader', 'sass-loader'],
-      },
-      {
-        test: /\.css$/,
-        use: ['style-loader', 'css-loader'],
       },
     ],
   },
-  resolve: {
-    extensions: ['.tsx', '.ts', '.js', '.jsx'],
-  },
-  plugins: [],
-};
-
-module.exports = (env, argv) => {
-  if (argv.mode === 'development') {
-    config.plugins.push(
-      new ChromeExtensionReloader({
-        entries: {
-          contentScript: ['app', 'content'],
-          background: ['background'],
-        },
-      }),
-    );
-  }
-  return config;
 };
