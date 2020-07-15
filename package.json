@@ -36,7 +36,6 @@
     "eslint-plugin-react": "^7.20.3",
     "jest": "^26.1.0",
     "prettier": "^2.0.5",
-    "recoil": "0.0.10",
     "ts-loader": "^7.0.5",
     "typescript": "^3.9.6",
     "webpack": "^4.43.0",
