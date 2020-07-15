@@ -1,12 +1,12 @@
 <meta name='keywords' content='Recoil, Recoil.js, Recoil Dev Tool, Recoilize, Chrome Dev Tool, Recoil Chrome'>
 
+<p align='center'>
+<img src='./src/extension/build/assets/Recoilize.png' width=150rem>
+</p>
+
 <h1 align='center'>
 Recoilize
 </h1>
-
-<p align='center'>
-<img src='./src/extension/build/assets/Recoilize.png' width=120rem>
-</p>
 
 <p>
 Recoilize is a debugger tool for application that use the state management library Recoil (ADD LINK TO RECOIL LANDING PAGE OR CHROME DEV STORE)
@@ -26,9 +26,9 @@ Installation
 npm install recoilize
 ```
 
-#### Inject Recoilize into the root your Recoil Application
-
 #### ** IMPORTANT **
+
+#### Inject the Recoilize module into the RecoilRoot of your application
 
 ##### Must import all Atoms and Selectors and pass them into the Recoilize component as shown below
 
@@ -48,16 +48,18 @@ ReactDOM.render(
 
 ### Supported only with Recoil applications
 
-<h3 align='center'> 
+<h2 align='center'> 
 We will keep updating Recoilize alongside the updates from the Recoil.js team!
-</h3>
+</h2>
 
-#### Contributors
+<h1>
+ Contributors
+</h1>
 
-##### Bren Yamaguchi @brenyama
+<h4>Bren Yamaguchi <a href='https://github.com/brenyama'>@brenyama</a></h4>
 
-##### Saejin Kang @skang1004
+<h4>Saejin Kang <a href='https://github.com/skang1004'>@skang1004</a></h4>
 
-##### Jonathan Escamilla @jonescamilla
+<h4>Jonathan Escamilla <a href='https://github.com/jonescamilla'>@jonescamilla</a> </h4>
 
-##### Sean Smith @SmithSean17
+<h4>Sean Smith <a href='https://github.com/SmithSean17'>@SmithSean17</a> </h4>
