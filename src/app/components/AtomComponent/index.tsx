@@ -1,13 +1,20 @@
 import React, {useState, useEffect} from 'react';
 import * as d3 from 'd3';
+import {componentAtomTree, atom, selector} from '../../../types';
 
-function AtomComponentVisual({
+interface AtomComponentVisualProps {
+  componentAtomTree: componentAtomTree;
+  selectedRecoilValue: any[];
+  atoms: atom;
+  selectors: selector;
+}
+
+const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
   componentAtomTree,
-  filteredSnapshot,
   selectedRecoilValue,
   atoms,
   selectors,
-}) {
+}) => {
   // set the heights and width of the tree to be passed into treeMap function
   const width = 400;
   const height = 733.33;
@@ -19,11 +26,11 @@ function AtomComponentVisual({
   // const atomToSelector = {};
   // if (selectedRecoilValue[1] === 'selector') {
   //   selectorToAtom[selectedRecoilValue[0]] =
-  //     filteredSnapshot[selectedRecoilValue[0]].nodeDeps;
+  //     filteredCurSnap[selectedRecoilValue[0]].nodeDeps;
   // }
   // if (selectedRecoilValue[1] === 'atom') {
   //   atomToSelector[selectedRecoilValue[0]] =
-  //     filteredSnapshot[selectedRecoilValue[0]].nodeToNodeSubscriptions;
+  //     filteredCurSnap[selectedRecoilValue[0]].nodeToNodeSubscriptions;
   // }
 
   useEffect(() => {
@@ -74,8 +81,8 @@ function AtomComponentVisual({
         'd',
         d3
           .linkVertical()
-          .x(d => d.x)
-          .y(d => d.y),
+          .x((d: any) => d.x)
+          .y((d: any) => d.y),
       );
 
     // returns a flat array of objects containing all the nodes and their information
@@ -91,7 +98,7 @@ function AtomComponentVisual({
       .selectAll('g')
       .data(nodes)
       .join('g')
-      .attr('transform', d => `translate(${d.x}, ${d.y})`)
+      .attr('transform', (d: any) => `translate(${d.x}, ${d.y})`)
       .attr('class', 'atomNodes');
 
     // for each node that got created, append a circle element
@@ -100,7 +107,7 @@ function AtomComponentVisual({
       .attr('fill', colorComponents)
       .attr('r', determineSize);
 
-    function determineSize(d) {
+    function determineSize(d: any) {
       if (d.data.recoilNodes) {
         if (d.data.recoilNodes.includes(selectedRecoilValue[0])) {
           return 150;
@@ -114,11 +121,11 @@ function AtomComponentVisual({
     node
       .append('text')
       .attr('dy', '.31em')
-      .attr('x', d => (d.data.recoilNodes ? -175 : -75))
+      .attr('x', (d: any) => (d.data.recoilNodes ? -175 : -75))
       //.attr('x', '-175')
       //.attr('text-anchor', d => (d.children ? 'end' : 'start'))
       .attr('text-anchor', 'end')
-      .text(d => d.data.name)
+      .text((d: any) => d.data.name)
       .style('font-size', `3rem`)
       .style('fill', 'white')
       .clone(true)
@@ -129,7 +136,7 @@ function AtomComponentVisual({
     // adding a mouseOver event handler to each node
     // only add popup text on nodes with no children
     // display the data in the node on hover
-    node.on('mouseover', function (d, i) {
+    node.on('mouseover', function (d: any, i: any) {
       if (d.data.recoilNodes) {
         for (let x = 0; x < d.data.recoilNodes.length; x++) {
           d3.select(this)
@@ -146,14 +153,14 @@ function AtomComponentVisual({
       }
     });
 
-    function formatMouseoverXValue(recoilValue) {
+    function formatMouseoverXValue(recoilValue: any) {
       if (atoms.hasOwnProperty(recoilValue)) {
         return -300;
       }
       return -425;
     }
 
-    function formatAtomSelectorText(atomOrSelector) {
+    function formatAtomSelectorText(atomOrSelector: any) {
       let str = '';
 
       atoms.hasOwnProperty(atomOrSelector)
@@ -167,7 +174,7 @@ function AtomComponentVisual({
       return str;
     }
     // add mouseOut event handler that removes the popup text
-    node.on('mouseout', function (d, i) {
+    node.on('mouseout', function (d: any, i: any) {
       for (let x = 0; x < d.data.recoilNodes.length; x++) {
         d3.select(`#popup${i}${x}`).remove();
       }
@@ -182,7 +189,7 @@ function AtomComponentVisual({
         .on('end', dragEnded),
     );
 
-    // allows the canvas to be zoomable
+    // allows the canvas to be zoom-able
     svgContainer.call(
       d3
         .zoom()
@@ -200,7 +207,7 @@ function AtomComponentVisual({
       g.attr('cursor', 'grabbing');
     }
 
-    function dragged(d) {
+    function dragged(d: any) {
       d3.select(this)
         .attr('dx', (d.x = d3.event.x))
         .attr('dy', (d.y = d3.event.y));
@@ -215,8 +222,8 @@ function AtomComponentVisual({
       g.attr('transform', d3.event.transform);
     }
 
-    function colorComponents(d) {
-      // if component node cointains recoil atoms or selectors, make it orange red or yellow, otherwise keep node gray
+    function colorComponents(d: any) {
+      // if component node contains recoil atoms or selectors, make it orange red or yellow, otherwise keep node gray
       if (d.data.recoilNodes) {
         if (d.data.recoilNodes.includes(selectedRecoilValue[0])) {
           return 'white';
@@ -225,10 +232,10 @@ function AtomComponentVisual({
         let hasAtom = false;
         let hasSelector = false;
         for (let i = 0; i < d.data.recoilNodes.length; i++) {
-          if (atoms.hasOwnProperty([d.data.recoilNodes[i]])) {
+          if (atoms.hasOwnProperty(d.data.recoilNodes[i])) {
             hasAtom = true;
           }
-          if (selectors.hasOwnProperty([d.data.recoilNodes[i]])) {
+          if (selectors.hasOwnProperty(d.data.recoilNodes[i])) {
             hasSelector = true;
           }
         }
@@ -254,6 +261,6 @@ function AtomComponentVisual({
       </div>
     </div>
   );
-}
+};
 
 export default AtomComponentVisual;

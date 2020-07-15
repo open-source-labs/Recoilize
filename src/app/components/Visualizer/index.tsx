@@ -1,6 +1,6 @@
 import React, {useRef, useState, useEffect} from 'react';
 import * as d3 from 'd3';
-import {makeTree} from '../../utils/makeTreeConversion.js';
+import makeTree from '../../utils/makeTreeConversion';
 import {filteredSnapshot} from '../../../types';
 
 interface VisualizerProps {
@@ -136,7 +136,7 @@ const Visualizer: React.FC<VisualizerProps> = ({filteredCurSnap}) => {
         .on('end', dragEnded),
     );
 
-    // allows the canvas to be zoomable
+    // allows the canvas to be zoom-able
     svgContainer.call(
       d3
         .zoom()

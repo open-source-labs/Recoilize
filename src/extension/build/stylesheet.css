@@ -21,7 +21,7 @@ body {
   display: flex;
   flex-direction: column;
   flex-shrink: 1;
-  min-width: 250px;
+  min-width: 200px;
   border-bottom: 2px solid #484848;
   background-color: #2d2d2d;
   text-align: center;
@@ -176,26 +176,37 @@ body {
   width: calc(100vw - 250px);
 }
 
+
 .AtomSelectorLegend {
-  background-color: lightslategray;
+  background-color: #2d2d2d;
   z-index: 1;
   position: fixed;
   right: 0;
+  border: 2px solid #484848;
   top: 2.5rem;
-  border: 1px solid gray;
-  width: 10rem;
-  max-height: 25rem;
-  border-top: none;
+  width: 200px;
+  /* max-height: 25rem; */
   border-right: none;
   overflow-y: auto;
+  text-align: center;
+}
+
+
+
+.atomLi,
+.selectorLi {
+  list-style-type: none;
+  display: flex;
+  flex-grow: 1;
+  padding: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  border: none;
+  outline: none;
+  justify-content: space-between;
 }
 
 .atomLi:hover,
 .selectorLi:hover {
-  text-decoration: underline;
-  text-decoration-color: red;
-}
-
-.selectorLi:hover {
-  text-decoration-color: yellow;
+  background-color: #212121;
 }
