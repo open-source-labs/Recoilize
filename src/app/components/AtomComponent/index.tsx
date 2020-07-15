@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import * as d3 from 'd3';
-import { componentAtomTree, atom, selector } from '../../../types';
+import {componentAtomTree, atom, selector} from '../../../types';
 
 interface AtomComponentVisualProps {
   componentAtomTree: componentAtomTree;
@@ -8,8 +8,6 @@ interface AtomComponentVisualProps {
   atoms: atom;
   selectors: selector;
 }
-
-
 
 const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
   componentAtomTree,
@@ -138,7 +136,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
     // adding a mouseOver event handler to each node
     // only add popup text on nodes with no children
     // display the data in the node on hover
-    node.on('mouseover', function (d:any, i:any) {
+    node.on('mouseover', function (d: any, i: any) {
       if (d.data.recoilNodes) {
         for (let x = 0; x < d.data.recoilNodes.length; x++) {
           d3.select(this)
@@ -263,6 +261,6 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
       </div>
     </div>
   );
-}
+};
 
 export default AtomComponentVisual;

@@ -36,7 +36,12 @@ const VisualContainer: React.FC<VisualContainerProps> = ({
   // object containing all conditional renders based on navBar
   const nav: navTypes = {
     // compare the diff of filteredPrevSnap and filteredCurSnap
-    Diff: <Diff filteredPrevSnap={filteredPrevSnap} filteredCurSnap={filteredCurSnap} />,
+    Diff: (
+      <Diff
+        filteredPrevSnap={filteredPrevSnap}
+        filteredCurSnap={filteredCurSnap}
+      />
+    ),
     // render JSON tree of snapshot
     Tree: <Tree filteredCurSnap={filteredCurSnap} />,
     // individual snapshot visualizer

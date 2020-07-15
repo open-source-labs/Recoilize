@@ -1,6 +1,6 @@
 type makeTreeObj = {
-  [name: string]: any
-}
+  [name: string]: any;
+};
 
 const makeTree = (obj: any) => {
   // function that parses and refactors snapshotHistory into an object d3 can understand

@@ -1,14 +1,14 @@
 type relationships = {
   nodes: any[];
   links: any[];
-}
+};
 
 type caches = {
   [key: string]: any;
-}
+};
 
 const makeRelationshipLinks = (obj: any) => {
-  const relationships:relationships = {nodes: [], links: []};
+  const relationships: relationships = {nodes: [], links: []};
   if (!obj) return relationships;
 
   // relationships.nodes = makeNodes(obj);
@@ -32,20 +32,22 @@ const makeRelationshipLinks = (obj: any) => {
   // loops node Data and push links into array
   Object.keys(obj).forEach((nodeKey, _index) => {
     // check all nodeToNode subscriptions (atoms to selectors)
-    obj[nodeKey].nodeToNodeSubscriptions.forEach((nodeToNodeSubscription: any) => {
-      const targetSource = `${nodeCache[nodeKey]}${nodeCache[nodeToNodeSubscription]}`;
+    obj[nodeKey].nodeToNodeSubscriptions.forEach(
+      (nodeToNodeSubscription: any) => {
+        const targetSource = `${nodeCache[nodeKey]}${nodeCache[nodeToNodeSubscription]}`;
 
-      if (
-        nodeCache[nodeToNodeSubscription] &&
-        !sourceTargetCache[targetSource]
-      ) {
-        sourceTargetCache[targetSource] = true;
-        relationships.links.push({
-          source: nodeCache[nodeKey],
-          target: nodeCache[nodeToNodeSubscription],
-        });
-      }
-    });
+        if (
+          nodeCache[nodeToNodeSubscription] &&
+          !sourceTargetCache[targetSource]
+        ) {
+          sourceTargetCache[targetSource] = true;
+          relationships.links.push({
+            source: nodeCache[nodeKey],
+            target: nodeCache[nodeToNodeSubscription],
+          });
+        }
+      },
+    );
 
     // check all nodeDeps subscriptions (selectors to atoms)
     obj[nodeKey].nodeDeps.forEach((nodeDeps: any) => {
