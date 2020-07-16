@@ -22,7 +22,7 @@ body {
   display: flex;
   flex-direction: column;
   flex-shrink: 1;
-  min-width: 200px;
+  min-width: 170px;
   border-bottom: 2px solid #484848;
   background-color: #2d2d2d;
   text-align: center;
@@ -95,6 +95,8 @@ body {
   background-color: #2d2d2d;
   border: none;
   padding: 8px;
+  padding-left: 10px;
+  padding-right: 10px;
   outline: none;
 }
 
