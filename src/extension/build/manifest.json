@@ -10,15 +10,14 @@
     "48": "assets/Recoilize.png",
     "128": "assets/covalent-recoil-logo.jpg"
   },
-  "permissions": ["contextMenus", "tabs", "<all_urls>", "storage"],
+  "permissions": ["tabs", "storage"],
   "background": {
     "scripts": ["bundles/background.bundle.js"],
     "persistent": false
   },
   "content_scripts": [
     {
-      "matches": ["<all_urls>"],
       "js": ["bundles/content.bundle.js"]
     }
-  ]
+  ] 
 }
