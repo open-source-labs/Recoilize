@@ -1,12 +1,8 @@
-import React, {useState, useEffect} from 'react';
+import {useState, useEffect} from 'react';
 import {
   useRecoilTransactionObserver_UNSTABLE,
   useRecoilSnapshot,
   useGotoRecoilSnapshot,
-  useRecoilValue,
-  useRecoilValueLoadable,
-  useRecoilCallback,
-  Snapshot,
 } from 'recoil';
 import formatFiberNodes from './formatFiberNodes';
 
@@ -117,14 +113,17 @@ export default function RecoilizeDebugger(props: any) {
     };
   };
 
-  const formatAtomSelectorRelationship = filteredSnapshot => {
+  const formatAtomSelectorRelationship = (filteredSnapshot: any) => {
+    
+    const windowAny: any = window;
+
     if (
-      window.$recoilDebugStates &&
-      Array.isArray(window.$recoilDebugStates) &&
-      window.$recoilDebugStates.length
+      windowAny.$recoilDebugStates &&
+      Array.isArray(windowAny.$recoilDebugStates) &&
+      windowAny.$recoilDebugStates.length
     ) {
       let snapObj =
-        window.$recoilDebugStates[window.$recoilDebugStates.length - 1];
+        windowAny.$recoilDebugStates[windowAny.$recoilDebugStates.length - 1];
       if (snapObj.hasOwnProperty('nodeDeps')) {
         for (let [key, value] of snapObj.nodeDeps) {
           filteredSnapshot[key].nodeDeps = Array.from(value);
