@@ -41,7 +41,7 @@ const SnapshotsList: React.FC<SnapshotsListProps> = ({
           onClick={() => {
             timeTravelFunc(i);
           }}>
-          Time Travel
+          Jump
         </button>
       </div>,
     );

@@ -36,20 +36,20 @@ const VisualContainer: React.FC<VisualContainerProps> = ({
   // object containing all conditional renders based on navBar
   const nav: navTypes = {
     // compare the diff of filteredPrevSnap and filteredCurSnap
-    Diff: (
+    'State Diff': (
       <Diff
         filteredPrevSnap={filteredPrevSnap}
         filteredCurSnap={filteredCurSnap}
       />
     ),
     // render JSON tree of snapshot
-    Tree: <Tree filteredCurSnap={filteredCurSnap} />,
+    'State Tree': <Tree filteredCurSnap={filteredCurSnap} />,
     // individual snapshot visualizer
-    Visualizer: <Visualizer filteredCurSnap={filteredCurSnap} />,
+    'State Graph': <Visualizer filteredCurSnap={filteredCurSnap} />,
     // atom and selector subscription relationship
-    Network: <Network filteredCurSnap={filteredCurSnap} />,
+    'Atom Network': <Network filteredCurSnap={filteredCurSnap} />,
     // tree visualizer of components showing atom/selector relationships
-    AtomComponentVisualContainer: (
+    'Component Graph': (
       <AtomComponentVisualContainer
         componentAtomTree={componentAtomTree}
         filteredCurSnap={filteredCurSnap}
@@ -59,7 +59,7 @@ const VisualContainer: React.FC<VisualContainerProps> = ({
   // array of all nav obj keys
   const tabsList = Object.keys(nav);
   // useState hook to update which component to render in the VisualContainer
-  const [tab, setTab] = useState('Diff');
+  const [tab, setTab] = useState('State Diff');
   // conditionally render based on value of nav[tab]
   return (
     <div className="VisualContainer">
