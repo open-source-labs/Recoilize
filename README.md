@@ -16,7 +16,7 @@ Recoilize is a Chrome Dev Tool meant for debugging applications built with the n
 </p>
 
 <h1 align='center'>
-** NOTE: STILL IN BETA **
+** STILL IN BETA **
 </h1>
 
 <h2 align='center'>Shows the difference in atoms and selectors from the previous render</h2>
