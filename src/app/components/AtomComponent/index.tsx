@@ -44,8 +44,6 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
     const treeMap = d3.tree().nodeSize([width, height]);
 
     // creating the nodes of the tree
-    // pass
-    //// sean debug
     const hierarchyNodes = componentAtomTree
       ? d3.hierarchy(componentAtomTree)
       : d3.hierarchy({name: 'placeholder', children: []});

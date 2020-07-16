@@ -73,7 +73,7 @@ const checkForAtoms = (node: any) => {
   return false;
 };
 
-// keep an eye on this section as we test bigger and bigger applications SEAN
+// keep an eye on this section as we test bigger and bigger applications
 const assignName = (node: any) => {
   // Find name of a class component
   if (node.type && node.type.name) return node.type.name;
