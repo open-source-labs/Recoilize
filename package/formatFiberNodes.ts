@@ -1,12 +1,28 @@
 // node parameter should be root of the fiber node tree, can be grapped with startNode from below
 // const startNode = document.getElementById('root')._reactRootContainer._internalRoot.current;
 
-const formatFiberNodes = node => {
-  const formattedNode = {
+type node = {
+  tag: number;
+  key: any;
+  elementType: string;
+  child: any;
+  sibling: any;
+};
+
+type formattedNode = {
+  name: string,
+  tag: number,
+  children: any[];
+  recoilNodes: any[];
+}
+
+const formatFiberNodes = (node: node) => {
+  const formattedNode: formattedNode = {
     // this function grabs a 'name' based on the tag of the node
     name: assignName(node),
     tag: node.tag,
     children: [],
+    recoilNodes: createAtomsSelectorArray(node),
   };
 
   // loop through and recursively call all nodes to format their 'sibling' and 'child' properties to our desired tree shape
@@ -16,15 +32,10 @@ const formatFiberNodes = node => {
     currentNode = currentNode.sibling;
   }
 
-  // // function returns array of all atoms and selectors, as strings
-  const recoilNodes = createAtomsSelectorArray(node);
-
-  // add a property to the formattedNode that consists of all atoms
-  if (recoilNodes.length) formattedNode.recoilNodes = recoilNodes;
   return formattedNode;
 };
 
-const createAtomsSelectorArray = node => {
+const createAtomsSelectorArray = (node: any) => {
   // initialize empty array for all atoms and selectors.  Elements will be all atom and selector names, as strings
   const recoilNodes = [];
   // function that returns boolean with whether 'node' contains atoms or selectors
@@ -50,7 +61,7 @@ const createAtomsSelectorArray = node => {
   return recoilNodes;
 };
 
-const checkForAtoms = node => {
+const checkForAtoms = (node: any) => {
   if (
     node.memoizedState &&
     node.memoizedState.next &&
@@ -62,8 +73,8 @@ const checkForAtoms = node => {
   return false;
 };
 
-// keep an eye on this section as we test bigger and bigger applications SEAN
-const assignName = node => {
+// keep an eye on this section as we test bigger and bigger applications
+const assignName = (node: any) => {
   // Find name of a class component
   if (node.type && node.type.name) return node.type.name;
   // Tag 5 === HostComponent
@@ -77,7 +88,7 @@ const assignName = node => {
   if (node.tag === 7) return 'Fragment';
 };
 
-module.exports = {formatFiberNodes};
+export default formatFiberNodes;
 
 // if testing this function on the browser, use line below to log the formatted tree in the console
 //let formattedFiberNodes = formatFiberNodes(document.getElementById('root')._reactRootContainer._internalRoot.current)

@@ -3,6 +3,7 @@ body {
   color: #989898;
   margin: 0;
   height: 100%;
+  background-color: #212121;
 }
 
 .App,
@@ -21,7 +22,7 @@ body {
   display: flex;
   flex-direction: column;
   flex-shrink: 1;
-  min-width: 250px;
+  min-width: 200px;
   border-bottom: 2px solid #484848;
   background-color: #2d2d2d;
   text-align: center;
@@ -174,4 +175,39 @@ body {
 #networkCanvas {
   height: calc(100vh - 40px);
   width: calc(100vw - 250px);
+}
+
+
+.AtomSelectorLegend {
+  background-color: #2d2d2d;
+  z-index: 1;
+  position: fixed;
+  right: 0;
+  border: 2px solid #484848;
+  top: 2.5rem;
+  width: 200px;
+  /* max-height: 25rem; */
+  border-right: none;
+  overflow-y: auto;
+  text-align: center;
+}
+
+
+
+.atomLi,
+.selectorLi {
+  list-style-type: none;
+  display: flex;
+  flex-grow: 1;
+  padding: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  border: none;
+  outline: none;
+  justify-content: space-between;
+}
+
+.atomLi:hover,
+.selectorLi:hover {
+  background-color: #212121;
 }

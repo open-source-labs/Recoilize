@@ -1,14 +1,19 @@
 import React, {useRef, useState, useEffect} from 'react';
 import * as d3 from 'd3';
-import {makeTree} from '../utils/makeTreeConversion.js';
+import makeTree from '../../utils/makeTreeConversion';
+import {filteredSnapshot} from '../../../types';
 
-function Visualizer({filteredCurSnap}) {
+interface VisualizerProps {
+  filteredCurSnap: filteredSnapshot;
+}
+
+const Visualizer: React.FC<VisualizerProps> = ({filteredCurSnap}) => {
   // set the heights and width of the tree to be passed into treeMap function
-  const width = 600;
-  const height = 1100;
+  const width: number = 600;
+  const height: number = 1100;
 
   // this state allows the canvas to stay at the zoom level on multiple re-renders
-  const [{x, y, k}, setZoomState] = useState({});
+  const [{x, y, k}, setZoomState]: any = useState({x: 0, y: 0, k: 0});
 
   useEffect(() => {
     setZoomState(d3.zoomTransform(d3.select('#canvas').node()));
@@ -19,18 +24,18 @@ function Visualizer({filteredCurSnap}) {
     document.getElementById('canvas').innerHTML = '';
 
     // creating the main svg container for d3 elements
-    const svgContainer = d3
+    const svgContainer: any = d3
       .select('#canvas')
       .attr('width', width)
       .attr('height', height);
 
     // creating a pseudo-class for reusability
-    const g = svgContainer
+    const g: any = svgContainer
       .append('g')
       .attr('transform', `translate(${x}, ${y}), scale(${k})`); // sets the canvas to the saved zoomState
 
     // atomState is the object that is passed into d3.hierarchy
-    const atomState = {
+    const atomState: any = {
       name: 'Recoil Root',
       // pass in parsed data here
       // call the helper function passing in the most recent snapshot
@@ -38,18 +43,18 @@ function Visualizer({filteredCurSnap}) {
     };
 
     // creating the tree map
-    const treeMap = d3.tree().nodeSize([width, height]);
+    const treeMap: any = d3.tree().nodeSize([width, height]);
 
     // creating the nodes of the tree
     // pass
-    const hierarchyNodes = d3.hierarchy(atomState);
+    const hierarchyNodes: any = d3.hierarchy(atomState);
 
     // calling the tree function with nodes created from data
-    const finalMap = treeMap(hierarchyNodes);
+    const finalMap: any = treeMap(hierarchyNodes);
 
     // renders a flat array of objects containing all parent-child links
     // renders the paths onto the component
-    let paths = finalMap.links();
+    let paths: any = finalMap.links();
 
     // this creates the paths to each atom and its contents in the tree
     g.append('g')
@@ -63,24 +68,24 @@ function Visualizer({filteredCurSnap}) {
         'd',
         d3
           .linkHorizontal()
-          .x(d => d.y)
-          .y(d => d.x),
+          .x((d: any) => d.y)
+          .y((d: any) => d.x),
       );
 
     // returns a flat array of objects containing all the nodes and their information
     // renders nodes onto the canvas
-    let nodes = hierarchyNodes.descendants();
+    let nodes: any = hierarchyNodes.descendants();
 
     // const node is used to create all the nodes
     // this segment places all the nodes on the canvas
-    const node = g
+    const node: any = g
       .append('g')
       .attr('stroke-linejoin', 'round') // no clue what this does
       .attr('stroke-width', 1)
       .selectAll('g')
       .data(nodes)
       .join('g')
-      .attr('transform', d => `translate(${d.y}, ${d.x})`)
+      .attr('transform', (d: any) => `translate(${d.y}, ${d.x})`)
       .attr('class', 'atomNodes');
 
     // for each node that got created, append a circle element
@@ -90,9 +95,9 @@ function Visualizer({filteredCurSnap}) {
     node
       .append('text')
       .attr('dy', '.31em')
-      .attr('x', d => (d.children ? -75 : 75))
-      .attr('text-anchor', d => (d.children ? 'end' : 'start'))
-      .text(d => d.data.name)
+      .attr('x', (d: any) => (d.children ? -75 : 75))
+      .attr('text-anchor', (d: any) => (d.children ? 'end' : 'start'))
+      .text((d: any) => d.data.name)
       .style('font-size', `2rem`)
       .style('fill', 'white')
       .clone(true)
@@ -103,7 +108,7 @@ function Visualizer({filteredCurSnap}) {
     // adding a mouseOver event handler to each node
     // only add popup text on nodes with no children
     // display the data in the node on hover
-    node.on('mouseover', function (d, i) {
+    node.on('mouseover', function (d: any, i: number): any {
       if (!d.children) {
         d3.select(this)
           .append('text')
@@ -118,7 +123,7 @@ function Visualizer({filteredCurSnap}) {
     });
 
     // add mouseOut event handler that removes the popup text
-    node.on('mouseout', function (d, i) {
+    node.on('mouseout', function (d: any, i: number): any {
       d3.select(`#popup${i}`).remove();
     });
 
@@ -131,7 +136,7 @@ function Visualizer({filteredCurSnap}) {
         .on('end', dragEnded),
     );
 
-    // allows the canvas to be zoomable
+    // allows the canvas to be zoom-able
     svgContainer.call(
       d3
         .zoom()
@@ -144,34 +149,34 @@ function Visualizer({filteredCurSnap}) {
     );
 
     // helper functions that help with dragging functionality
-    function dragStarted() {
+    function dragStarted(): any {
       d3.select(this).raise();
       g.attr('cursor', 'grabbing');
     }
 
-    function dragged(d) {
+    function dragged(d: any): any {
       d3.select(this)
         .attr('dx', (d.x = d3.event.x))
         .attr('dy', (d.y = d3.event.y));
     }
 
-    function dragEnded() {
+    function dragEnded(): any {
       g.attr('cursor', 'grab');
     }
 
     // helper function that allows for zooming
-    function zoomed() {
+    function zoomed(): any {
       g.attr('transform', d3.event.transform);
     }
   });
 
   return (
-    <div>
+    <div data-testid="canvas">
       <div className="Visualizer">
         <svg id="canvas"></svg>
       </div>
     </div>
   );
-}
+};
 
 export default Visualizer;

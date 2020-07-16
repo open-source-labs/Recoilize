@@ -1,0 +1,24 @@
+{
+  "name": "recoilize",
+  "version": "0.1.0",
+  "description": "",
+  "main": "index.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/oslabs-beta/Recoilize"
+  },
+  "peerDependencies": {
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "recoil": "^0.0.10"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepublish": "tsc ./*.ts"
+  },
+  "author": "Bren Yamaguchi Saejin Kang Jonathan Escamilla Sean Smith",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^3.9.6"
+  }
+}

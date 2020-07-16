@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import Diff from '../../components/Diff';
 import NavBar from '../../components/NavBar';
-import Visualizer from '../../components/Visualizer.jsx';
+import Visualizer from '../../components/Visualizer';
 import Tree from '../../components/Tree';
 import Network from '../../components/Network';
-import { stateSnapshot } from '../../../types';
+import AtomComponentVisualContainer from '../AtomComponentTreeContainer';
+import {stateSnapshot} from '../../../types';
 
 interface VisualContainerProps {
   // snapshot at index [curRender -1]
@@ -23,18 +24,37 @@ const VisualContainer: React.FC<VisualContainerProps> = ({
   currentSnapshot,
 }) => {
   // conditional render of filtered snaps/ based on non-filtered snaps
-  const filteredCurSnap = currentSnapshot ? currentSnapshot.filteredSnapshot : undefined;
-  const filteredPrevSnap = previousSnapshot ? previousSnapshot.filteredSnapshot : undefined;
+  const filteredCurSnap = currentSnapshot
+    ? currentSnapshot.filteredSnapshot
+    : undefined;
+  const filteredPrevSnap = previousSnapshot
+    ? previousSnapshot.filteredSnapshot
+    : undefined;
+  const componentAtomTree = currentSnapshot
+    ? currentSnapshot.componentAtomTree
+    : undefined;
   // object containing all conditional renders based on navBar
   const nav: navTypes = {
     // compare the diff of filteredPrevSnap and filteredCurSnap
-    Diff: <Diff filteredPrevSnap={filteredPrevSnap} filteredCurSnap={filteredCurSnap} />,
+    Diff: (
+      <Diff
+        filteredPrevSnap={filteredPrevSnap}
+        filteredCurSnap={filteredCurSnap}
+      />
+    ),
     // render JSON tree of snapshot
     Tree: <Tree filteredCurSnap={filteredCurSnap} />,
     // individual snapshot visualizer
     Visualizer: <Visualizer filteredCurSnap={filteredCurSnap} />,
     // atom and selector subscription relationship
-    Network: <Network filteredCurSnap={filteredCurSnap} />
+    Network: <Network filteredCurSnap={filteredCurSnap} />,
+    // tree visualizer of components showing atom/selector relationships
+    AtomComponentVisualContainer: (
+      <AtomComponentVisualContainer
+        componentAtomTree={componentAtomTree}
+        filteredCurSnap={filteredCurSnap}
+      />
+    ),
   };
   // array of all nav obj keys
   const tabsList = Object.keys(nav);

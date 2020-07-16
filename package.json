@@ -7,15 +7,18 @@
     "build": "webpack --mode production",
     "dev": "webpack --mode development --watch",
     "test": "jest --verbose",
-    "lint": "eslint . --cache --cache-location node_modules/.cache/eslint --ignore-path .gitignore"
+    "lint": "eslint '**/*.tsx' '**/*.ts' '**/*.js' --ignore-path .gitignore"
   },
   "author": "Bren Yamaguchi, Saejin Kang, Jonathan Escamilla, Sean Smith",
   "license": "MIT",
   "devDependencies": {
     "@babel/core": "^7.10.3",
+    "@babel/polyfill": "^7.10.4",
     "@babel/preset-env": "^7.10.3",
     "@babel/preset-react": "^7.10.1",
     "@babel/preset-typescript": "^7.10.4",
+    "@testing-library/jest-dom": "^5.11.0",
+    "@testing-library/react": "^10.4.6",
     "@types/react": "^16.9.41",
     "@types/react-dom": "^16.9.8",
     "babel-eslint": "^10.1.0",
