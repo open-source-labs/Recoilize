@@ -186,7 +186,7 @@ body {
   border: 2px solid #484848;
   top: 2.5rem;
   width: 200px;
-  /* max-height: 25rem; */
+  max-height: 100%;
   border-right: none;
   overflow-y: auto;
   text-align: center;
