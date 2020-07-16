@@ -19,6 +19,31 @@ Recoilize is a Chrome Dev Tool meant for debugging applications built with the n
 ** NOTE: STILL IN BETA **
 </h1>
 
+<h2 align='center'>Shows the difference in atoms and selectors from the previous render</h2>
+<h1 align='center'> 
+<img src='./src/extension/build/assets/state-diff.gif' width=480 />
+</h1>
+
+<h2 align='center'>View your atoms and selectors in a collapsible tree</h2>
+<h1 align='center'> 
+<img src='./src/extension/build/assets/state-tree.gif' width=480 />
+</h1>
+
+<h2 align='center'>Visualize all your atom and selector values in a graph</h2>
+<h1 align='center'> 
+<img src='./src/extension/build/assets/state-graph.gif' width=480 />
+</h1>
+
+<h2 align='center'>Display how all your atoms and selectors relate to each other</h2>
+<h1 align='center'> 
+<img src='./src/extension/build/assets/atom-network.gif' width=480 />
+</h1>
+
+<h2 align='center'>See which of your React components are subscribed to certain atoms and selectors</h2>
+<h1 align='center'> 
+<img src='./src/extension/build/assets/component-graph.gif' width=480 />
+</h1>
+
 <h1 align='center'>
 Installation
 </h1>
