@@ -7,7 +7,7 @@ const formatFiberNodes = node => {
     name: assignName(node),
     tag: node.tag,
     children: [],
-    recoilNodes: createAtomsSelectorArray(node)
+    recoilNodes: createAtomsSelectorArray(node),
   };
 
   // loop through and recursively call all nodes to format their 'sibling' and 'child' properties to our desired tree shape

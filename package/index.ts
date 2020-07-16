@@ -20,10 +20,10 @@ export default function RecoilizeDebugger(props: any) {
     nodes = props.nodes;
   }
 
-  const { root } = props;
-  
+  const {root} = props;
+
   const snapshot: any = useRecoilSnapshot();
-  
+
   // Local state of all previous snapshots to use for time traveling when requested by dev tools.
   const [snapshots, setSnapshots] = useState([snapshot]);
   // const [isRestoredState, setRestoredState] = useState(false);
@@ -114,7 +114,6 @@ export default function RecoilizeDebugger(props: any) {
   };
 
   const formatAtomSelectorRelationship = (filteredSnapshot: any) => {
-
     const windowAny: any = window;
 
     if (

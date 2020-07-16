@@ -10,11 +10,11 @@ type node = {
 };
 
 type formattedNode = {
-  name: string,
-  tag: number,
+  name: string;
+  tag: number;
   children: any[];
   recoilNodes: any[];
-}
+};
 
 const formatFiberNodes = (node: node) => {
   const formattedNode: formattedNode = {
@@ -50,11 +50,11 @@ const createAtomsSelectorArray = (node: any) => {
         typeof current.memoizedState[0] === 'function' &&
         current.memoizedState[1].length === 2
       ) {
-          // current.memoizedState[1][1].current is a Map that contains the a key, the key is the name of every atom/selector in that fiber node, that key is a string
-          for (let [key, value] of current.memoizedState[1][1].current) {
-            recoilNodes.push(key);
-          }
+        // current.memoizedState[1][1].current is a Map that contains the a key, the key is the name of every atom/selector in that fiber node, that key is a string
+        for (let [key, value] of current.memoizedState[1][1].current) {
+          recoilNodes.push(key);
         }
+      }
       current = current.next;
     }
   }

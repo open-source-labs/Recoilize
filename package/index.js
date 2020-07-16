@@ -42,7 +42,7 @@ export default function RecoilizeDebugger(props) {
     const nodeDeps = currentTree.nodeDeps.get(node.key);
     const nodeToNodeSubscriptions = currentTree.nodeToNodeSubscriptions.get(
       node.key,
-      );
+    );
 
     // Construct node data structure for dev tool to consume
     filteredSnapshot[node.key] = {
