@@ -108,10 +108,10 @@ We will continue updating Recoilize alongside Recoil's updates!
  Contributors
 </h1>
 
-<h4><a href='https://github.com/brenyama'>Bren Yamaguchi</a></h4>
+<h4>Bren Yamaguchi <a href='https://github.com/brenyama'>@github </a><a href='https://www.linkedin.com/in/brenyamaguchi/'>@linkedin</a></h4>
 
-<h4><a href='https://github.com/skang1004'>Saejin Kang</a></h4>
+<h4>Saejin Kang <a href='https://github.com/skang1004'>@github </a><a href='https://www.linkedin.com/in/saejinkang1004'>@linkedin</a></h4>
 
-<h4><a href='https://github.com/jonescamilla'>Jonathan Escamilla</a> </h4>
+<h4>Jonathan Escamila <a href='https://github.com/jonescamilla'>@github </a><a href='https://www.linkedin.com/in/jon-escamilla/'>@linkedin</a> </h4>
 
-<h4><a href='https://github.com/SmithSean17'>Sean Smith</a> </h4>
+<h4>Sean Smith <a href='https://github.com/SmithSean17'>@github </a> </h4>
