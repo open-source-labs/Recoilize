@@ -1,7 +1,7 @@
 <meta name='keywords' content='Recoil, Recoil.js, Recoil Dev Tool, Recoilize, Chrome Dev Tool, Recoil Chrome'>
 
 <p align='center'>
-<img src='./src/extension/build/assets/Recoilize.png' width=170rem>
+<img src='./src/extension/build/assets/recoilize-gray-01.png' width=170rem>
 </p>
 
 <h1 align='center'>
