@@ -12,7 +12,32 @@ Recoilize is a Chrome Dev Tool meant for debugging applications built with the n
 </p>
 
 <h1 align='center'>
-** NOTE: STILL IN BETA **
+** STILL IN BETA **
+</h1>
+
+<h2 align='center'>Shows the difference in atoms and selectors from the previous render</h2>
+<h1 align='center'> 
+<img src='./src/extension/build/assets/state-diff.gif' width=600 />
+</h1>
+
+<h2 align='center'>View your atoms and selectors in a collapsible tree</h2>
+<h1 align='center'> 
+<img src='./src/extension/build/assets/state-tree.gif' width=600 />
+</h1>
+
+<h2 align='center'>Visualize all your atom and selector values in a graph</h2>
+<h1 align='center'> 
+<img src='./src/extension/build/assets/state-graph.gif' width=600 />
+</h1>
+
+<h2 align='center'>Display how all your atoms and selectors relate to each other</h2>
+<h1 align='center'> 
+<img src='./src/extension/build/assets/atom-network.gif' width=600 />
+</h1>
+
+<h2 align='center'>See which of your React components are subscribed to certain atoms and selectors</h2>
+<h1 align='center'> 
+<img src='./src/extension/build/assets/component-graph.gif' width=600 />
 </h1>
 
 <h1 align='center'>
@@ -79,10 +104,10 @@ We will continue updating Recoilize alongside Recoil's updates!
  Contributors
 </h1>
 
-<h4><a href='https://github.com/brenyama'>Bren Yamaguchi</a></h4>
+<h4>Bren Yamaguchi <a href='https://github.com/brenyama'>@github </a><a href='https://www.linkedin.com/in/brenyamaguchi/'>@linkedin</a></h4>
 
-<h4><a href='https://github.com/skang1004'>Saejin Kang</a></h4>
+<h4>Saejin Kang <a href='https://github.com/skang1004'>@github </a><a href='https://www.linkedin.com/in/saejinkang1004'>@linkedin</a></h4>
 
-<h4><a href='https://github.com/jonescamilla'>Jonathan Escamilla</a> </h4>
+<h4>Jonathan Escamila <a href='https://github.com/jonescamilla'>@github </a><a href='https://www.linkedin.com/in/jon-escamilla/'>@linkedin</a> </h4>
 
-<h4><a href='https://github.com/SmithSean17'>Sean Smith</a> </h4>
+<h4>Sean Smith <a href='https://github.com/SmithSean17'>@github </a> </h4>
