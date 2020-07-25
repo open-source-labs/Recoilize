@@ -1,12 +1,8 @@
 <meta name='keywords' content='Recoil, Recoil.js, Recoil Dev Tool, Recoilize, Chrome Dev Tool, Recoil Chrome'>
 
 <p align='center'>
-<img src='./src/extension/build/assets/recoilize-gray-01.png' width=170rem>
+<img src='./src/extension/build/assets/cover-photo-logo-recoilize.jpg' width=100%>
 </p>
-
-<h1 align='center'>
-Recoilize
-</h1>
 
 # [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/oslabs-beta/Recoilize/blob/staging/LICENSE) [![npm version](https://img.shields.io/npm/v/react.svg?style=flat)](https://www.npmjs.com/package/react) ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)
 
