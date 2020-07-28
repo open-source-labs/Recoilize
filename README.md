@@ -110,4 +110,4 @@ We will continue updating Recoilize alongside Recoil's updates!
 
 <h4>Jonathan Escamila <a href='https://github.com/jonescamilla'>@github </a><a href='https://www.linkedin.com/in/jon-escamilla/'>@linkedin</a> </h4>
 
-<h4>Sean Smith <a href='https://github.com/SmithSean17'>@github </a> </h4>
+<h4>Sean Smith <a href='https://github.com/SmithSean17'>@github </a><a href='https://www.linkedin.com/in/sean-smith17'>@linkedin</a> </h4>
