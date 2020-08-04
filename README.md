@@ -4,7 +4,7 @@
 <img src='./src/extension/build/assets/cover-photo-logo-recoilize.jpg' width=100%>
 </p>
 
-# [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/oslabs-beta/Recoilize/blob/staging/LICENSE) [![npm version](https://img.shields.io/npm/v/react.svg?style=flat)](https://www.npmjs.com/package/react) ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)
+# [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/oslabs-beta/Recoilize/blob/staging/LICENSE) [![npm version](https://img.shields.io/npm/v/recoilize)](https://www.npmjs.com/package/recoilize) ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)
 
 <p>
 Recoilize is a Chrome Dev Tool meant for debugging applications built with the new Recoil.js state management library!
@@ -104,10 +104,10 @@ We will continue updating Recoilize alongside Recoil's updates!
  Contributors
 </h1>
 
-<h4>Bren Yamaguchi <a href='https://github.com/brenyama'>@github </a><a href='https://www.linkedin.com/in/brenyamaguchi/'>@linkedin</a></h4>
+<h4>Bren Yamaguchi <a target='_blank' href='https://github.com/brenyama'>@github </a><a target='_blank' href='https://www.linkedin.com/in/brenyamaguchi/'>@linkedin</a></h4>
 
-<h4>Saejin Kang <a href='https://github.com/skang1004'>@github </a><a href='https://www.linkedin.com/in/saejinkang1004'>@linkedin</a></h4>
+<h4>Saejin Kang <a target='_blank' href='https://github.com/skang1004'>@github </a><a target='_blank' href='https://www.linkedin.com/in/saejinkang1004'>@linkedin</a></h4>
 
-<h4>Jonathan Escamila <a href='https://github.com/jonescamilla'>@github </a><a href='https://www.linkedin.com/in/jon-escamilla/'>@linkedin</a> </h4>
+<h4>Jonathan Escamila <a target='_blank' href='https://github.com/jonescamilla'>@github </a><a target='_blank' href='https://www.linkedin.com/in/jon-escamilla/'>@linkedin</a> </h4>
 
-<h4>Sean Smith <a href='https://github.com/SmithSean17'>@github </a><a href='https://www.linkedin.com/in/sean-smith17'>@linkedin</a> </h4>
+<h4>Sean Smith <a target='_blank' href='https://github.com/SmithSean17'>@github </a><a target='_blank' href='https://www.linkedin.com/in/sean-smith17'>@linkedin</a> </h4>
