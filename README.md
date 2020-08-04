@@ -104,10 +104,10 @@ We will continue updating Recoilize alongside Recoil's updates!
  Contributors
 </h1>
 
-<h4>Bren Yamaguchi <a target='_blank' href='https://github.com/brenyama'>@github </a><a target='_blank' href='https://www.linkedin.com/in/brenyamaguchi/'>@linkedin</a></h4>
+<h4>Bren Yamaguchi <a href='https://github.com/brenyama' target="_blank">@github </a><a  href='https://www.linkedin.com/in/brenyamaguchi/' target="_blank">@linkedin</a></h4>
 
-<h4>Saejin Kang <a target='_blank' href='https://github.com/skang1004'>@github </a><a target='_blank' href='https://www.linkedin.com/in/saejinkang1004'>@linkedin</a></h4>
+<h4>Saejin Kang <a  href='https://github.com/skang1004' target="_blank">@github </a><a  href='https://www.linkedin.com/in/saejinkang1004' target="_blank">@linkedin</a></h4>
 
-<h4>Jonathan Escamila <a target='_blank' href='https://github.com/jonescamilla'>@github </a><a target='_blank' href='https://www.linkedin.com/in/jon-escamilla/'>@linkedin</a> </h4>
+<h4>Jonathan Escamila <a  href='https://github.com/jonescamilla' target="_blank">@github </a><a  href='https://www.linkedin.com/in/jon-escamilla/' target="_blank">@linkedin</a> </h4>
 
-<h4>Sean Smith <a target='_blank' href='https://github.com/SmithSean17'>@github </a><a target='_blank' href='https://www.linkedin.com/in/sean-smith17'>@linkedin</a> </h4>
+<h4>Sean Smith <a  href='https://github.com/SmithSean17' target="_blank">@github </a><a  href='https://www.linkedin.com/in/sean-smith17' target="_blank">@linkedin</a> </h4>
