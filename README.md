@@ -8,7 +8,9 @@
 
 <p>
 Recoilize is a Chrome Dev Tool meant for debugging applications built with the new Recoil.js state management library!
-(LINK OUR CHROME EXTENSION IN THE STORE AND THE NPM MODULE)
+</p>
+<p>
+Get Recoilize on the <a href='https://chrome.google.com/webstore/detail/recoilize/jhfmmdhbinleghabnblahfjfalfgidik'>Chrome Store!</a>
 </p>
 
 <h1 align='center'>
@@ -89,8 +91,6 @@ ReactDOM.render(
   root,
 );
 ```
-
-#### Get Recoilize from the Chrome Store!
 
 #### Open your application on the Chrome Browser and start debugging with Recoilize!
 
