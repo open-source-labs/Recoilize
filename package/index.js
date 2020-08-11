@@ -57,19 +57,17 @@ export default function RecoilizeDebugger(props) {
 
   // React lifecycle hook on re-render
   useEffect(() => {
-    if (!isRestoredState) {
-      setTimeout(() => {
-        const devToolData = createDevToolDataObject(filteredSnapshot);
+    // Window listener for messages from dev tool UI & background.js
+    window.addEventListener('message', onMessageReceived);
 
-        // Post message to content script on every re-render of the developers application only if content script has started
-        sendWindowMessage('recordSnapshot', devToolData);
-      });
+    if (!isRestoredState) {
+      const devToolData = createDevToolDataObject(filteredSnapshot);
+
+      // Post message to content script on every re-render of the developers application only if content script has started
+      sendWindowMessage('recordSnapshot', devToolData);
     } else {
       isRestoredState = false;
     }
-
-    // Window listener for messages from dev tool UI & background.js
-    window.addEventListener('message', onMessageReceived);
 
     // Clears the window event listener.
     return () => window.removeEventListener('message', onMessageReceived);
