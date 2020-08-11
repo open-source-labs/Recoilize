@@ -22,6 +22,7 @@ const App: React.FC = () => {
         setSnapshotHistory(msg.payload);
       }
     });
+    // Todo: Create a variable that stores a number
   }, []);
   // Render main container if we have detected a recoil app with the recoilize module passing data
   const renderMainContainer = (
