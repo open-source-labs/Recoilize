@@ -3,6 +3,8 @@ import {diff, formatters} from 'jsondiffpatch';
 import ReactHtmlParser from 'react-html-parser';
 import {filteredSnapshot} from '../../../types';
 
+import ThrottleSettings from './SettingsComponents/ThrottleSettings';
+
 // interface SettingsProps {
 //   // snapshot at index [curRender -1]
 //   filteredPrevSnap: filteredSnapshot;
@@ -16,7 +18,7 @@ const Settings: React.FC = () => {
     <div className="Settings">
       <div>Atom and Selectors Filter</div>
       <div>State Management</div>
-      <div>Throttle Setting</div>
+      <ThrottleSettings />
     </div>
   );
 };
