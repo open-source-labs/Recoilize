@@ -17,6 +17,7 @@ let throttleTimer = 0;
 
 export default function RecoilizeDebugger(props) {
   // ! the props can go here, a message can be made to edit the global object for throttling
+  console.log('the throttleTimer is ', throttleTimer);
   const throttle = () => {
     const now = new Date().getTime();
     console.log(now - throttleTimer);
