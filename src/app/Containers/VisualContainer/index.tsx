@@ -55,6 +55,7 @@ const VisualContainer: React.FC<VisualContainerProps> = ({
         filteredCurSnap={filteredCurSnap}
       />
     ),
+    Settings: <Tree filteredCurSnap={filteredCurSnap} />,
   };
   // array of all nav obj keys
   const tabsList = Object.keys(nav);
