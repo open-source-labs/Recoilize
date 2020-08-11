@@ -9,6 +9,9 @@ import {
 } from 'recoil';
 import {formatFiberNodes} from './formatFiberNodes';
 
+// isPersist state will grab the snapshots, if true
+let isPersistedState = false;
+
 // isRestored state disables snapshots from being recorded
 let isRestoredState = false;
 
@@ -62,7 +65,6 @@ export default function RecoilizeDebugger(props) {
 
     if (!isRestoredState) {
       const devToolData = createDevToolDataObject(filteredSnapshot);
-
       // Post message to content script on every re-render of the developers application only if content script has started
       sendWindowMessage('recordSnapshot', devToolData);
     } else {
@@ -79,11 +81,17 @@ export default function RecoilizeDebugger(props) {
     switch (msg.data.action) {
       // Checks to see if content script has started before sending initial snapshot
       case 'contentScriptStarted':
-        const initialFilteredSnapshot = formatAtomSelectorRelationship(
-          filteredSnapshot,
-        );
-        const devToolData = createDevToolDataObject(initialFilteredSnapshot);
-        sendWindowMessage('moduleInitialized', devToolData);
+        // Check if persist state mode was toggled
+        if (!isPersistedState) {
+          const initialFilteredSnapshot = formatAtomSelectorRelationship(
+            filteredSnapshot,
+          );
+          const devToolData = createDevToolDataObject(initialFilteredSnapshot);
+          sendWindowMessage('moduleInitialized', devToolData);
+        } else {
+          // if isPersistState is true, send message to background
+          sendWindowMessage('persistSnapshots', null);
+        }
         break;
       // Listens for a request from dev tool to time travel to previous state of the app.
       case 'snapshotTimeTravel':
