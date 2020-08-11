@@ -44,7 +44,10 @@ chrome.runtime.onConnect.addListener(port => {
 
       // todo: Create this case for throttle edit, and need to do a post to the window
       case 'throttleEdit':
-        console.log('we here in the throttleEdit');
+        console.log(
+          'we here in the throttleEdit ',
+          parseInt(msg.payload.value),
+        );
         break;
 
       default:
