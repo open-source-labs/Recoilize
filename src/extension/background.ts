@@ -44,10 +44,10 @@ chrome.runtime.onConnect.addListener(port => {
 
       // todo: Create this case for throttle edit, and need to do a post to the window
       case 'throttleEdit':
-        console.log(
-          'we here in the throttleEdit ',
-          parseInt(msg.payload.value),
-        );
+        if (tabId) {
+          chrome.tabs.sendMessage(Number(tabId), msg);
+        }
+        // window.postMessage({action: 'throttleChange'}, throttler);
         break;
 
       default:
@@ -86,7 +86,6 @@ chrome.runtime.onMessage.addListener((msg, sender) => {
   switch (action) {
     // Listens to new snapshots (state changes) from module, stores in local storage and sends to dev tool if port is opened
     case 'recordSnapshot':
-      console.log('we here recording');
       // Next snapshot from the msg payload
       const snapshot = msg.payload;
 

@@ -17,12 +17,11 @@ let throttleTimer = 0;
 
 export default function RecoilizeDebugger(props) {
   // ! the props can go here, a message can be made to edit the global object for throttling
-  console.log('the throttleTimer is ', throttleTimer);
   const throttle = () => {
     const now = new Date().getTime();
     console.log(now - throttleTimer);
     // if we get a series of 5 in a row called super fast, then we want to turn the throttle on
-    if (now - throttleTimer < throttleTimer) {
+    if (now - throttleTimer < throttleLimit) {
       console.log('too fast');
       isRestoredState = true;
     } else {
@@ -109,6 +108,13 @@ export default function RecoilizeDebugger(props) {
       case 'snapshotTimeTravel':
         timeTravelToSnapshot(msg);
         break;
+      // Todo: Implementing the throttle change
+      case 'throttleEdit':
+        let throttleVal = parseInt(msg.data.payload.value);
+        throttleLimit = throttleVal;
+        console.log('this is the throttleEdit', throttleVal);
+        break;
+
       default:
         break;
     }

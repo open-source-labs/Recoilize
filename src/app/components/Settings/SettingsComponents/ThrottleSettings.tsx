@@ -5,7 +5,6 @@ const ThrottleSettings: React.FC = () => {
   let num = '';
   const onChange = (event: string) => {
     num = event;
-    console.log('this is the num ', num);
   };
   // Creating function to tie to get to the backend
   const throttleFunc = () => {
@@ -13,6 +12,7 @@ const ThrottleSettings: React.FC = () => {
     // post the message with index in payload to the connection
     backgroundConnection.postMessage({
       action: 'throttleEdit',
+      tabId: chrome.devtools.inspectedWindow.tabId,
       payload: {value: num}, // edit this value to some other number
     });
   };
