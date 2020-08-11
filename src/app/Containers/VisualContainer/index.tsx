@@ -56,12 +56,7 @@ const VisualContainer: React.FC<VisualContainerProps> = ({
         filteredCurSnap={filteredCurSnap}
       />
     ),
-    Settings: (
-      <Settings
-        filteredPrevSnap={filteredPrevSnap}
-        filteredCurSnap={filteredCurSnap}
-      />
-    ),
+    Settings: <Settings />,
   };
   // array of all nav obj keys
   const tabsList = Object.keys(nav);

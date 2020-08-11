@@ -40,10 +40,27 @@ body {
 
 /* COMPONENTS */
 .SnapshotsList {
+  height: 85vh;
+  overflow: hidden;
+  overflow-y: scroll;
   border-style: none;
 }
 
 .Diff {
+  height: 82vh;
+  overflow: hidden;
+  overflow-y: scroll;
+
+  border-style: none;
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  padding-bottom: 20px;
+}
+
+.Settings {
+  height: 80vh;
+  overflow: scroll;
   border-style: none;
   display: flex;
   flex-direction: column;
