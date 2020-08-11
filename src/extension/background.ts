@@ -13,11 +13,13 @@ interface Connections {
 const connections: Connections = {};
 
 // once background starts, start with cleared local storage
+// this only happens when we open chrome again, not on refresh
 chrome.storage.local.clear(function (): void {
   chrome.storage.local.get(null, function (result): void {});
 });
 
 // LISTEN for initial connection from dev tool
+// runs when devtool is connected
 chrome.runtime.onConnect.addListener(port => {
   const devToolsListener = (msg: Msg, port: object) => {
     const {tabId, action} = msg;
@@ -125,7 +127,9 @@ chrome.runtime.onMessage.addListener((msg, sender) => {
         }
       });
       break;
-
+    case 'persistSnapshots':
+      chrome.extension.getBackgroundPage().window.console.log('hi');
+      chrome.storage.local.get(console.log);
     default:
       break;
   }
