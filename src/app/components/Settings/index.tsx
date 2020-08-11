@@ -15,7 +15,7 @@ const Settings: React.FC = () => {
   return (
     <div className="Settings">
       <div>Atom and Selectors Filter</div>
-      <div>Pin State</div>
+      <div>State Management</div>
       <div>Throttle Setting</div>
     </div>
   );
