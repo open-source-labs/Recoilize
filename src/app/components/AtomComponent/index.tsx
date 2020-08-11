@@ -43,6 +43,13 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
     // creating the tree map
     const treeMap = d3.tree().nodeSize([width, height]);
 
+    // chrome.extension
+    //   .getBackgroundPage()
+    //   .window.console.log('this is the componentAtomTree ', componentAtomTree);
+
+    console.log('this is the componentAtomTree ', componentAtomTree);
+    console.log('this is the treemap ', treeMap);
+
     // creating the nodes of the tree
     const hierarchyNodes = componentAtomTree
       ? d3.hierarchy(componentAtomTree)

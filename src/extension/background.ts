@@ -80,6 +80,7 @@ chrome.runtime.onMessage.addListener((msg, sender) => {
   switch (action) {
     // Listens to new snapshots (state changes) from module, stores in local storage and sends to dev tool if port is opened
     case 'recordSnapshot':
+      console.log('we here recording');
       // Next snapshot from the msg payload
       const snapshot = msg.payload;
 
