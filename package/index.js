@@ -12,7 +12,24 @@ import {formatFiberNodes} from './formatFiberNodes';
 // isRestored state disables snapshots from being recorded
 let isRestoredState = false;
 
+// throttle is an object that keeps track of the throttle settings made by the user
+let throttleTimer = 0;
+
 export default function RecoilizeDebugger(props) {
+  // ! the props can go here, a message can be made to edit the global object for throttling
+  const throttle = () => {
+    const now = new Date().getTime();
+    console.log(now - throttleTimer);
+    // if we get a series of 5 in a row called super fast, then we want to turn the throttle on
+    if (now - throttleTimer < throttleTimer) {
+      console.log('too fast');
+      isRestoredState = true;
+    } else {
+      throttleTimer = now;
+    }
+  };
+  throttle();
+
   // We should ask for Array of atoms and selectors.
   // Captures all atoms that were defined to get the initial state
 
