@@ -42,10 +42,10 @@ chrome.runtime.onConnect.addListener(port => {
         }
         break;
 
-      // Todo : Creating a new listener
-      // case 'throttleChange':
-      //   console.log('we hit the throttle change');
-      //   break;
+      // todo: Create this case for throttle edit, and need to do a post to the window
+      case 'throttleEdit':
+        console.log('we here in the throttleEdit');
+        break;
 
       default:
         break;
