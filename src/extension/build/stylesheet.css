@@ -6,6 +6,11 @@ body {
   background-color: #212121;
 }
 
+/* ::-webkit-scrollbar {
+  width: 0px;
+  background: transparent; /* make scrollbar transparent */
+} */
+
 .App,
 #root {
   width: 100%;
@@ -41,16 +46,13 @@ body {
 /* COMPONENTS */
 .SnapshotsList {
   height: 85vh;
-  overflow: hidden;
-  overflow-y: scroll;
+  overflow-y: auto;
   border-style: none;
 }
 
 .Diff {
   height: 82vh;
-  overflow: hidden;
-  overflow-y: scroll;
-
+  overflow: auto;
   border-style: none;
   display: flex;
   flex-direction: column;
@@ -60,7 +62,7 @@ body {
 
 .Settings {
   height: 80vh;
-  overflow: scroll;
+  overflow: auto;
   border-style: none;
   display: flex;
   flex-direction: column;
