@@ -44,6 +44,15 @@ chrome.runtime.onConnect.addListener(port => {
         }
         break;
 
+      case 'persistState':
+        if (tabId) {
+          chrome.extension
+            .getBackgroundPage()
+            .window.console.log('message received in background');
+          // if msg tabId provided, send persistState command to content-script
+          chrome.tabs.sendMessage(Number(tabId), msg);
+        }
+
       default:
         break;
     }
@@ -80,7 +89,7 @@ chrome.runtime.onMessage.addListener((msg, sender) => {
   switch (action) {
     // Listens to new snapshots (state changes) from module, stores in local storage and sends to dev tool if port is opened
     case 'recordSnapshot':
-      console.log('we here recording');
+      // console.log('we here recording');
       // Next snapshot from the msg payload
       const snapshot = msg.payload;
 
@@ -129,8 +138,18 @@ chrome.runtime.onMessage.addListener((msg, sender) => {
       });
       break;
     case 'persistSnapshots':
-      chrome.extension.getBackgroundPage().window.console.log('hi');
-      chrome.storage.local.get(console.log);
+      chrome.extension
+        .getBackgroundPage()
+        .window.console.log('tabIDssssss', tabId);
+
+      // getting the array of filtered snapshots that exists on locoal storage
+      chrome.storage.local.get(tabId, function (result) {
+        console.log('storage values', result[tabId]);
+        connections[tabId].postMessage({
+          action: 'recordSnapshot',
+          payload: result[tabId],
+        });
+      });
     default:
       break;
   }
