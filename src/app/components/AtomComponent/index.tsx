@@ -21,6 +21,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
   // this state allows the canvas to stay at the zoom level on multiple re-renders
   const [{x, y, k}, setZoomState] = useState({x: 0, y: 0, k: 0});
 
+  // ! Saves our zoom state wherever the user zoomed out to
   useEffect(() => {
     setZoomState(d3.zoomTransform(d3.select('#canvas').node()));
   }, [componentAtomTree, selectedRecoilValue]);
@@ -29,47 +30,89 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
   useEffect(() => {
     document.getElementById('canvas').innerHTML = '';
 
-    // creating the main svg container for d3 elements
-    const svgContainer = d3
-      .select('#canvas')
-      .attr('width', width)
-      .attr('height', height);
+    //! clean the componentatomtree to only have the data that we want
+    const cleanComponentAtomTree = (inputObj: any) => {
+      const obj = {} as any;
 
-    // creating a pseudo-class for reusability
-    const g = svgContainer
-      .append('g')
-      .attr('transform', `translate(${x}, ${y}), scale(${k})`); // sets the canvas to the saved zoomState
+      // Create a recursive function that will run through the component atom tree, change the children to what we want
+      const innerClean = (inputObj: any) => {
+        if (!inputObj) {
+          return;
+        }
+        if (inputObj.tag === 0) {
+          obj.children = inputObj.children;
+          obj.name = inputObj.name;
+          obj.recoilNodes = inputObj.recoilNodes;
+          obj.tag = inputObj.tag;
+        } else {
+          for (let i = 0; i < inputObj.children.length; i++) {
+            innerClean(inputObj.children[i]);
+          }
+        }
+      };
+      innerClean(inputObj);
+      return obj;
+    };
 
-    // creating the tree map
-    const treeMap = d3.tree().nodeSize([width, height]);
+    console.log('this is the component atom tree ', componentAtomTree);
+    console.log(
+      'this is the cleaned component atom tree ',
+      cleanComponentAtomTree(componentAtomTree),
+    );
+
+    componentAtomTree = cleanComponentAtomTree(componentAtomTree);
 
     // chrome.extension
     //   .getBackgroundPage()
     //   .window.console.log('this is the componentAtomTree ', componentAtomTree);
-
-    console.log('this is the componentAtomTree ', componentAtomTree);
 
     // creating the nodes of the tree
     const hierarchyNodes = componentAtomTree
       ? d3.hierarchy(componentAtomTree)
       : d3.hierarchy({name: 'placeholder', children: []});
 
-    console.log('this is the hierarchy ', hierarchyNodes);
+    // ! Setting the height & Width
+    const panelWidth = Math.floor(window.innerWidth * 0.5);
+    const dataHeight = hierarchyNodes.height;
+    const treeHeight = dataHeight * 200;
+    const svgHeight = Math.max(treeHeight, window.innerHeight);
+
+    // creating the main svg container for d3 elements
+    const svgContainer = d3
+      .select('#canvas')
+      .attr('width', panelWidth)
+      .attr('height', svgHeight);
+    // creating a pseudo-class for reusability
+
+    const g = svgContainer
+      .append('g')
+      .attr('transform', `translate(${x}, ${y}), scale(${k})`) // sets the canvas to the saved zoomState
+      .call(
+        d3
+          .zoom()
+          .scaleExtent([0.25, 8])
+          // .translateExtent([[-3000, -4000], [3000, 4000]])
+          .on('zoom', function () {
+            g.attr('transform', d3.event.transform);
+          }),
+      );
+
+    // creating the tree map -- this edits the size for each tree
+    const treeMap = d3.tree().nodeSize([300, 300]);
+
     // calling the tree function with nodes created from data
     const finalMap = treeMap(hierarchyNodes);
 
     // renders a flat array of objects containing all parent-child links
     // renders the paths onto the component
     let paths = finalMap.links();
-
-    console.log('these are the paths ', paths);
     const updatedPaths = [];
     for (let i = 0; i < paths.length; i++) {
       if (paths[i].source.data.recoilNodes[0]) {
         updatedPaths.push(paths[i]);
       }
     }
-    console.log('this is updated paths ', updatedPaths);
+
     // this creates the paths to each atom and its contents in the tree
     g.append('g')
       .attr('fill', 'none')
@@ -91,16 +134,11 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
     let nodes = hierarchyNodes.descendants();
     const updatedNodes = [];
     // Todo: Clean up the nodes to only show the components and what they subscribe to
-    console.log('these are the nodes ', nodes); // ! this is all the nodes
-    // Clean up the object of nodes
-    console.log(nodes.length);
     for (let i = 0; i < nodes.length; i++) {
       if (nodes[i].data.recoilNodes[0]) {
         updatedNodes.push(nodes[i]);
       }
     }
-
-    console.log('this is the updated nodess ', updatedNodes);
 
     // const node is used to create all the nodes
     // this segment places all the nodes on the canvas
@@ -234,13 +272,14 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
       }
       return 50;
     }
+
+    // ! Function to color the components
     function colorComponents(d: any) {
       // if component node contains recoil atoms or selectors, make it orange red or yellow, otherwise keep node gray
       if (d.data.recoilNodes && d.data.recoilNodes.length) {
         if (d.data.recoilNodes.includes(selectedRecoilValue[0])) {
           return 'white';
         }
-
         let hasAtom = false;
         let hasSelector = false;
         for (let i = 0; i < d.data.recoilNodes.length; i++) {
@@ -251,7 +290,6 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
             hasSelector = true;
           }
         }
-
         if (hasAtom && hasSelector) {
           return 'orange';
         }
@@ -261,7 +299,6 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
           return 'yellow';
         }
       }
-
       return 'gray';
     }
   });
