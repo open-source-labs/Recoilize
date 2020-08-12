@@ -16,6 +16,9 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
   selectors,
 }) => {
   // set the heights and width of the tree to be passed into treeMap function
+  // const margin = {top: 20, right: 90, bottom: 30, left: 90},
+  // const width = 600 - margin.left - margin.right
+  // height = 733.33 - margin.top - margin.bottom;
   const width = 400;
   const height = 733.33;
   // this state allows the canvas to stay at the zoom level on multiple re-renders
@@ -37,7 +40,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
     // creating a pseudo-class for reusability
     const g = svgContainer
       .append('g')
-      .attr('transform', `translate(${x}, ${y}), scale(${k})`); // sets the canvas to the saved zoomState
+      .attr('transform', `translate(${400}, ${20}), scale(${0.3})`); // sets the canvas to the saved zoomState
 
     let i = 0;
     let duration: Number = 750;
@@ -47,12 +50,11 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
     // creating the tree map
     const treeMap = d3.tree().nodeSize([width, height]);
 
-    //new stuff
     root = d3.hierarchy(componentAtomTree, function (d: any) {
       return d.children;
     });
-    root.x0 = height / 2;
-    root.y0 = 0;
+    root.x0 = 0;
+    root.y0 = width / 2;
 
     update(root);
 
@@ -64,7 +66,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
 
       let node = g
         .selectAll('g.node')
-        .attr('stroke', '#646464')
+        // .attr('stroke', '#646464')
         .attr('stroke-width', 5)
         .data(nodes, function (d: any) {
           return d.id || (d.id = ++i);
@@ -87,34 +89,17 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
         .attr('r', determineSize)
         .attr('fill', colorComponents);
 
-      nodeEnter
-        .append('text')
-        .attr('dy', '.31em')
-        .attr('x', function (d: any) {
-          return d.children || d._children ? -175 : -75;
-        })
-        .attr('text-anchor', function (d: any) {
-          return d.children || d._children ? 'end' : 'start';
-        })
-        .text(function (d: any) {
-          return d.data.name;
-        });
-
       // for each node that got created, append a text element that displays the name of the node
       nodeEnter
         .append('text')
         .attr('dy', '.31em')
-        .attr('x', (d: any) => (d.data.recoilNodes ? -175 : -75))
-        //.attr('x', '-175')
-        //.attr('text-anchor', d => (d.children ? 'end' : 'start'))
+        .attr('x', (d: any) => (d.data.recoilNodes ? -115 : -75))
         .attr('text-anchor', 'end')
         .text((d: any) => d.data.name)
         .style('font-size', `3rem`)
         .style('fill', 'white')
         .clone(true)
-        .lower()
-        .attr('stroke', '#646464')
-        .attr('stroke-width', 5);
+        .lower();
 
       let nodeUpdate = nodeEnter.merge(node);
 
@@ -146,9 +131,13 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
 
       nodeExit.select('text').style('fill-opacity', 1e-6);
 
-      let link = g.selectAll('path.link').data(links, function (d: any) {
-        return d.id;
-      });
+      let link = g
+        .attr('fill', 'none')
+        .attr('stroke-width', 5)
+        .selectAll('path.link')
+        .data(links, function (d: any) {
+          return d.id;
+        });
 
       let linkEnter = link
         .enter()
@@ -224,7 +213,6 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
               .attr('x', formatMouseoverXValue(d.data.recoilNodes[x]))
               .attr('y', 200 + x * 55)
               .style('font-size', '3.5rem')
-              .attr('stroke', '#646464')
               .attr('id', `popup${i}${x}`);
           }
         }
@@ -246,16 +234,23 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
           .on('end', dragEnded),
       );
 
+      let zoom = d3.zoom().on('zoom', zoomed);
+
       // allows the canvas to be zoom-able
       svgContainer.call(
         d3
           .zoom()
           .extent([
-            [0, 0],
+            [width, height],
             [width, height],
           ])
-          .scaleExtent([0, 8])
+          .scaleExtent([0.1, 0.7])
           .on('zoom', zoomed),
+      );
+
+      svgContainer.call(
+        zoom.transform,
+        d3.zoomIdentity.translate(400, 20).scale(0.3),
       );
 
       // helper functions that help with dragging functionality
@@ -275,7 +270,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
       }
 
       // helper function that allows for zooming
-      function zoomed() {
+      function zoomed(d: any) {
         g.attr('transform', d3.event.transform);
       }
 
