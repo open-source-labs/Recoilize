@@ -22,11 +22,17 @@ const makeRelationshipLinks = (obj: any) => {
     nodeCache[nodeKey] = index;
 
     // make the node object and properties
-    return {
+    const objToReturn = {
       name: obj[nodeKey].type === 'RecoilState' ? 'Atom' : 'Selector',
       label: nodeKey,
-      id: index,
-    };
+       id: index,
+    }
+    if (objToReturn.name === 'Atom'){
+      if (obj[nodeKey].nodeDeps.length){
+        objToReturn.name = 'Selector'
+      }
+    }
+    return objToReturn;
   });
 
   // loops node Data and push links into array
