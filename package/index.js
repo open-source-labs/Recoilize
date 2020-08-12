@@ -9,8 +9,9 @@ import {
 } from 'recoil';
 import {formatFiberNodes} from './formatFiberNodes';
 
-// isPersist state will grab the snapshots, if true
-let isPersistedState = false;
+// grabs isPersistedState from sessionStorage
+let isPersistedState = sessionStorage.getItem('isPersistedState');
+console.log('isPersistedState', isPersistedState);
 
 // isRestored state disables snapshots from being recorded
 let isRestoredState = false;
@@ -81,15 +82,13 @@ export default function RecoilizeDebugger(props) {
     switch (msg.data.action) {
       // Checks to see if content script has started before sending initial snapshot
       case 'contentScriptStarted':
-        // Check if persist state mode was toggled
-        if (!isPersistedState) {
+        if (isPersistedState === 'false' || isPersistedState === null) {
           const initialFilteredSnapshot = formatAtomSelectorRelationship(
             filteredSnapshot,
           );
           const devToolData = createDevToolDataObject(initialFilteredSnapshot);
           sendWindowMessage('moduleInitialized', devToolData);
         } else {
-          // if isPersistState is true, send message to background
           sendWindowMessage('persistSnapshots', null);
         }
         break;
@@ -97,8 +96,21 @@ export default function RecoilizeDebugger(props) {
       case 'snapshotTimeTravel':
         timeTravelToSnapshot(msg);
         break;
+      case 'persistState':
+        console.log('message to persist state hit');
+        switchPersistMode();
+        break;
       default:
         break;
+    }
+  };
+
+  // assigns or switches isPersistedState in sessionStorage
+  const switchPersistMode = () => {
+    if (isPersistedState === 'false' || isPersistedState === null) {
+      sessionStorage.setItem('isPersistedState', true);
+    } else {
+      sessionStorage.setItem('isPersistedState', false);
     }
   };
 
