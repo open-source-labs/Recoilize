@@ -48,13 +48,13 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
     //   .window.console.log('this is the componentAtomTree ', componentAtomTree);
 
     console.log('this is the componentAtomTree ', componentAtomTree);
-    console.log('this is the treemap ', treeMap);
 
     // creating the nodes of the tree
     const hierarchyNodes = componentAtomTree
       ? d3.hierarchy(componentAtomTree)
       : d3.hierarchy({name: 'placeholder', children: []});
 
+    console.log('this is the hierarchy ', hierarchyNodes);
     // calling the tree function with nodes created from data
     const finalMap = treeMap(hierarchyNodes);
 
@@ -62,6 +62,14 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
     // renders the paths onto the component
     let paths = finalMap.links();
 
+    console.log('these are the paths ', paths);
+    const updatedPaths = [];
+    for (let i = 0; i < paths.length; i++) {
+      if (paths[i].source.data.recoilNodes[0]) {
+        updatedPaths.push(paths[i]);
+      }
+    }
+    console.log('this is updated paths ', updatedPaths);
     // this creates the paths to each atom and its contents in the tree
     g.append('g')
       .attr('fill', 'none')
@@ -81,6 +89,18 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
     // returns a flat array of objects containing all the nodes and their information
     // renders nodes onto the canvas
     let nodes = hierarchyNodes.descendants();
+    const updatedNodes = [];
+    // Todo: Clean up the nodes to only show the components and what they subscribe to
+    console.log('these are the nodes ', nodes); // ! this is all the nodes
+    // Clean up the object of nodes
+    console.log(nodes.length);
+    for (let i = 0; i < nodes.length; i++) {
+      if (nodes[i].data.recoilNodes[0]) {
+        updatedNodes.push(nodes[i]);
+      }
+    }
+
+    console.log('this is the updated nodess ', updatedNodes);
 
     // const node is used to create all the nodes
     // this segment places all the nodes on the canvas
