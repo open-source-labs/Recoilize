@@ -21,7 +21,12 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
   // this state allows the canvas to stay at the zoom level on multiple re-renders
   const [{x, y, k}, setZoomState] = useState({x: 0, y: 0, k: 0});
 
-  useEffect(() => {}, [componentAtomTree, selectedRecoilValue]);
+  // useState hook to update the toggle of showing diff components
+  const [rawToggle, setRawToggle] = useState(false);
+
+  useEffect(() => {
+    setZoomState(d3.zoomTransform(d3.select('#canvas').node())); // <------------------ LOOK INTO THIS TO SEE HOW TO GET IT TO STOP RE EXPANDING
+  }, [componentAtomTree, selectedRecoilValue]);
 
   //! clean the componentatomtree to only have the data that we want
   const cleanComponentAtomTree = (inputObj: any) => {
@@ -66,7 +71,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
     // returning the new object that we create
     return obj;
   };
-  componentAtomTree = cleanComponentAtomTree(componentAtomTree);
+  let rawComponentAtomTree = cleanComponentAtomTree(componentAtomTree);
 
   useEffect(() => {
     document.getElementById('canvas').innerHTML = '';
@@ -78,7 +83,9 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
       .attr('height', height);
 
     // creating a pseudo-class for reusability
-    const g = svgContainer.append('g');
+    const g = svgContainer
+      .append('g')
+      .attr('transform', `translate(${x}, ${y}), scale(${k})`);
 
     let i = 0;
     let duration: Number = 750;
@@ -88,9 +95,15 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
     // creating the tree map
     const treeMap = d3.tree().nodeSize([width, height]);
 
-    root = d3.hierarchy(componentAtomTree, function (d: any) {
-      return d.children;
-    });
+    if (!rawToggle) {
+      root = d3.hierarchy(rawComponentAtomTree, function (d: any) {
+        return d.children;
+      });
+    } else {
+      root = d3.hierarchy(componentAtomTree, function (d: any) {
+        return d.children;
+      });
+    }
     root.x0 = 0;
     root.y0 = width / 2;
 
@@ -115,7 +128,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
         .append('g')
         .attr('class', 'node')
         .attr('transform', function (d: any) {
-          return `translate(${source.x0}, ${source.y0})`;
+          return `translate(${source.y0}, ${source.x0})`;
         })
         .on('click', click);
 
@@ -130,10 +143,12 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
       nodeEnter
         .append('text')
         .attr('dy', '.31em')
-        .attr('x', (d: any) => (d.data.recoilNodes ? -115 : -75))
-        .attr('text-anchor', 'end')
+        .attr('y', (d: any) => (d.data.recoilNodes ? 138 : -75))
+        .attr('text-anchor', function (d: any) {
+          return d.children || d._children ? 'middle' : 'middle';
+        })
         .text((d: any) => d.data.name)
-        .style('font-size', `3rem`)
+        .style('font-size', `4.5rem`)
         .style('fill', 'white')
         .clone(true)
         .lower();
@@ -145,7 +160,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
         .transition()
         .duration(duration)
         .attr('transform', function (d: any) {
-          return `translate(${d.x}, ${d.y})`;
+          return `translate(${d.y}, ${d.x})`;
         });
 
       // allows user to see hand pop out when clicking is available and maintains color/size
@@ -160,7 +175,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
         .transition()
         .duration(duration)
         .attr('transform', function (d: any) {
-          return `translate(${source.x}, ${source.y})`;
+          return `translate(${source.y}, ${source.x})`;
         })
         .remove();
 
@@ -183,7 +198,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
         .attr('stroke', '#646464')
         .attr('stroke-width', 5)
         .attr('d', function (d: any) {
-          let o = {y: source.y0, x: source.x0};
+          let o = {x: source.x0, y: source.y0};
           return diagonal(o, o);
         });
 
@@ -205,7 +220,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
         .attr('stroke', '#646464')
         .attr('stroke-width', 5)
         .attr('d', function (d: any) {
-          let o = {x: source.x, y: source.y};
+          let o = {y: source.y, x: source.x};
           return diagonal(o, o);
         })
         .remove();
@@ -217,10 +232,10 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
       });
 
       function diagonal(s: any, d: any) {
-        path = `M ${s.x} ${s.y}
-          C ${(s.x + d.x) / 2} ${s.y},
-            ${(s.x + d.x) / 2} ${d.y},
-            ${d.x} ${d.y}`;
+        path = `M ${s.y} ${s.x}
+            C ${(s.y + d.y) / 2} ${s.x},
+              ${(s.y + d.y) / 2} ${d.x},
+              ${d.y} ${d.x}`;
 
         return path;
       }
@@ -287,7 +302,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
 
     svgContainer.call(
       zoom.transform,
-      d3.zoomIdentity.translate(400, 20).scale(0.3),
+      d3.zoomIdentity.translate(100, 300).scale(0.4),
     );
 
     // helper functions that help with dragging functionality
@@ -378,6 +393,14 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
     <div>
       <div className="AtomComponentVisual">
         <svg id="canvas"></svg>
+        <button
+          id="fixedButton"
+          style={{color: rawToggle ? '#E6E6E6' : '#989898'}}
+          onClick={() => {
+            setRawToggle(!rawToggle);
+          }}>
+          Raw
+        </button>
       </div>
     </div>
   );
