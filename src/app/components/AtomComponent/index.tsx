@@ -1,14 +1,12 @@
 import React, {useState, useEffect} from 'react';
 import * as d3 from 'd3';
 import {componentAtomTree, atom, selector} from '../../../types';
-
 interface AtomComponentVisualProps {
   componentAtomTree: componentAtomTree;
   selectedRecoilValue: any[];
   atoms: atom;
   selectors: selector;
 }
-
 const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
   componentAtomTree,
   selectedRecoilValue,
@@ -66,20 +64,18 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
     // returning the new object that we create
     return obj;
   };
+
   componentAtomTree = cleanComponentAtomTree(componentAtomTree);
 
   useEffect(() => {
     document.getElementById('canvas').innerHTML = '';
-
     // creating the main svg container for d3 elements
     const svgContainer = d3
       .select('#canvas')
       .attr('width', width)
       .attr('height', height);
-
     // creating a pseudo-class for reusability
     const g = svgContainer.append('g');
-
     let i = 0;
     let duration: Number = 750;
     let root: any;
@@ -108,7 +104,6 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
         .data(nodes, function (d: any) {
           return d.id || (d.id = ++i);
         });
-
       // this tells node where to be placed and go to
       let nodeEnter = node
         .enter()
@@ -118,14 +113,12 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
           return `translate(${source.x0}, ${source.y0})`;
         })
         .on('click', click);
-
       // determines shape/color/size of node
       nodeEnter
         .append('circle')
         .attr('class', 'node')
         .attr('r', determineSize)
         .attr('fill', colorComponents);
-
       // for each node that got created, append a text element that displays the name of the node
       nodeEnter
         .append('text')
@@ -147,14 +140,12 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
         .attr('transform', function (d: any) {
           return `translate(${d.x}, ${d.y})`;
         });
-
       // allows user to see hand pop out when clicking is available and maintains color/size
       nodeUpdate
         .select('circle.node')
         .attr('r', determineSize)
         .attr('fill', colorComponents)
         .attr('cursor', 'pointer');
-
       let nodeExit = node
         .exit()
         .transition()
@@ -175,7 +166,6 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
         .data(links, function (d: any) {
           return d.id;
         });
-
       let linkEnter = link
         .enter()
         .insert('path', 'g')
@@ -197,7 +187,6 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
         .attr('d', function (d: any) {
           return diagonal(d, d.parent);
         });
-
       let linkExit = link
         .exit()
         .transition()
@@ -215,7 +204,6 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
         d.x0 = d.x;
         d.y0 = d.y;
       });
-
       function diagonal(s: any, d: any) {
         path = `M ${s.x} ${s.y}
           C ${(s.x + d.x) / 2} ${s.y},
@@ -235,7 +223,6 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
         }
         update(d);
       }
-
       // adding a mouseOver event handler to each node
       // only add popup text on nodes with no children
       // display the data in the node on hover
@@ -253,14 +240,12 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
           }
         }
       });
-
       // add mouseOut event handler that removes the popup text
       node.on('mouseout', function (d: any, i: any) {
         for (let x = 0; x < d.data.recoilNodes.length; x++) {
           d3.select(`#popup${i}${x}`).remove();
         }
       });
-
       // allows the canvas to be draggable
       node.call(
         d3
@@ -284,43 +269,35 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
         .scaleExtent([0.1, 0.7])
         .on('zoom', zoomed),
     );
-
     svgContainer.call(
       zoom.transform,
       d3.zoomIdentity.translate(400, 20).scale(0.3),
     );
-
     // helper functions that help with dragging functionality
     function dragStarted() {
       d3.select(this).raise();
       g.attr('cursor', 'grabbing');
     }
-
     function dragged(d: any) {
       d3.select(this)
         .attr('dx', (d.x = d3.event.x))
         .attr('dy', (d.y = d3.event.y));
     }
-
     function dragEnded() {
       g.attr('cursor', 'grab');
     }
-
     // helper function that allows for zooming
     function zoomed(d: any) {
       g.attr('transform', d3.event.transform);
     }
-
     function formatMouseoverXValue(recoilValue: any) {
       if (atoms.hasOwnProperty(recoilValue)) {
         return -300;
       }
       return -425;
     }
-
     function formatAtomSelectorText(atomOrSelector: any) {
       let str = '';
-
       atoms.hasOwnProperty(atomOrSelector)
         ? (str += `ATOM ${atomOrSelector}: ${JSON.stringify(
             atoms[atomOrSelector],
@@ -328,7 +305,6 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
         : (str += `SELECTOR ${atomOrSelector}: ${JSON.stringify(
             selectors[atomOrSelector],
           )}`);
-
       return str;
     }
 
@@ -348,7 +324,6 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
         if (d.data.recoilNodes.includes(selectedRecoilValue[0])) {
           return 'white';
         }
-
         let hasAtom = false;
         let hasSelector = false;
         for (let i = 0; i < d.data.recoilNodes.length; i++) {
@@ -359,7 +334,6 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
             hasSelector = true;
           }
         }
-
         if (hasAtom && hasSelector) {
           return 'orange';
         }
@@ -369,11 +343,9 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
           return 'yellow';
         }
       }
-
       return 'gray';
     }
   });
-
   return (
     <div>
       <div className="AtomComponentVisual">
@@ -382,5 +354,4 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
     </div>
   );
 };
-
 export default AtomComponentVisual;

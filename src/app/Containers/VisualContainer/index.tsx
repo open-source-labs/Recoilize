@@ -5,6 +5,7 @@ import Visualizer from '../../components/Visualizer';
 import Tree from '../../components/Tree';
 import Network from '../../components/Network';
 import AtomComponentVisualContainer from '../AtomComponentTreeContainer';
+import Settings from '../../components/Settings';
 import {stateSnapshot} from '../../../types';
 
 interface VisualContainerProps {
@@ -55,6 +56,7 @@ const VisualContainer: React.FC<VisualContainerProps> = ({
         filteredCurSnap={filteredCurSnap}
       />
     ),
+    Settings: <Settings />,
   };
   // array of all nav obj keys
   const tabsList = Object.keys(nav);
