@@ -64,7 +64,9 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
     // returning the new object that we create
     return obj;
   };
+
   componentAtomTree = cleanComponentAtomTree(componentAtomTree);
+
   useEffect(() => {
     document.getElementById('canvas').innerHTML = '';
     // creating the main svg container for d3 elements
