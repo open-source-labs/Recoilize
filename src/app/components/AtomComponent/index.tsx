@@ -25,7 +25,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
   const [{x, y, k}, setZoomState] = useState({x: 0, y: 0, k: 0});
 
   useEffect(() => {
-    setZoomState(d3.zoomTransform(d3.select('#canvas').node()));
+    // setZoomState(d3.zoomTransform(d3.select('#canvas').node()));
   }, [componentAtomTree, selectedRecoilValue]);
 
   useEffect(() => {
@@ -38,9 +38,8 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
       .attr('height', height);
 
     // creating a pseudo-class for reusability
-    const g = svgContainer
-      .append('g')
-      .attr('transform', `translate(${400}, ${20}), scale(${0.3})`); // sets the canvas to the saved zoomState
+    const g = svgContainer.append('g');
+    // .attr('transform', `translate(${400}, ${20}), scale(${0.3})`); // sets the canvas to the saved zoomState
 
     let i = 0;
     let duration: Number = 750;
@@ -233,108 +232,108 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
           .on('drag', dragged)
           .on('end', dragEnded),
       );
+    }
 
-      let zoom = d3.zoom().on('zoom', zoomed);
+    let zoom = d3.zoom().on('zoom', zoomed);
 
-      // allows the canvas to be zoom-able
-      svgContainer.call(
-        d3
-          .zoom()
-          .extent([
-            [width, height],
-            [width, height],
-          ])
-          .scaleExtent([0.1, 0.7])
-          .on('zoom', zoomed),
-      );
+    // allows the canvas to be zoom-able
+    svgContainer.call(
+      d3
+        .zoom()
+        .extent([
+          [width, height],
+          [width, height],
+        ])
+        .scaleExtent([0.1, 0.7])
+        .on('zoom', zoomed),
+    );
 
-      svgContainer.call(
-        zoom.transform,
-        d3.zoomIdentity.translate(400, 20).scale(0.3),
-      );
+    svgContainer.call(
+      zoom.transform,
+      d3.zoomIdentity.translate(400, 20).scale(0.3),
+    );
 
-      // helper functions that help with dragging functionality
-      function dragStarted() {
-        d3.select(this).raise();
-        g.attr('cursor', 'grabbing');
+    // helper functions that help with dragging functionality
+    function dragStarted() {
+      d3.select(this).raise();
+      g.attr('cursor', 'grabbing');
+    }
+
+    function dragged(d: any) {
+      d3.select(this)
+        .attr('dx', (d.x = d3.event.x))
+        .attr('dy', (d.y = d3.event.y));
+    }
+
+    function dragEnded() {
+      g.attr('cursor', 'grab');
+    }
+
+    // helper function that allows for zooming
+    function zoomed(d: any) {
+      g.attr('transform', d3.event.transform);
+    }
+
+    function formatMouseoverXValue(recoilValue: any) {
+      if (atoms.hasOwnProperty(recoilValue)) {
+        return -300;
       }
+      return -425;
+    }
 
-      function dragged(d: any) {
-        d3.select(this)
-          .attr('dx', (d.x = d3.event.x))
-          .attr('dy', (d.y = d3.event.y));
-      }
+    function formatAtomSelectorText(atomOrSelector: any) {
+      let str = '';
 
-      function dragEnded() {
-        g.attr('cursor', 'grab');
-      }
+      atoms.hasOwnProperty(atomOrSelector)
+        ? (str += `ATOM ${atomOrSelector}: ${JSON.stringify(
+            atoms[atomOrSelector],
+          )}`)
+        : (str += `SELECTOR ${atomOrSelector}: ${JSON.stringify(
+            selectors[atomOrSelector],
+          )}`);
 
-      // helper function that allows for zooming
-      function zoomed(d: any) {
-        g.attr('transform', d3.event.transform);
-      }
+      return str;
+    }
 
-      function formatMouseoverXValue(recoilValue: any) {
-        if (atoms.hasOwnProperty(recoilValue)) {
-          return -300;
+    function determineSize(d: any) {
+      if (d.data.recoilNodes && d.data.recoilNodes.length) {
+        if (d.data.recoilNodes.includes(selectedRecoilValue[0])) {
+          return 150;
         }
-        return -425;
+        return 100;
       }
+      return 50;
+    }
 
-      function formatAtomSelectorText(atomOrSelector: any) {
-        let str = '';
-
-        atoms.hasOwnProperty(atomOrSelector)
-          ? (str += `ATOM ${atomOrSelector}: ${JSON.stringify(
-              atoms[atomOrSelector],
-            )}`)
-          : (str += `SELECTOR ${atomOrSelector}: ${JSON.stringify(
-              selectors[atomOrSelector],
-            )}`);
-
-        return str;
-      }
-
-      function determineSize(d: any) {
-        if (d.data.recoilNodes && d.data.recoilNodes.length) {
-          if (d.data.recoilNodes.includes(selectedRecoilValue[0])) {
-            return 150;
-          }
-          return 100;
+    function colorComponents(d: any) {
+      // if component node contains recoil atoms or selectors, make it orange red or yellow, otherwise keep node gray
+      if (d.data.recoilNodes && d.data.recoilNodes.length) {
+        if (d.data.recoilNodes.includes(selectedRecoilValue[0])) {
+          return 'white';
         }
-        return 50;
-      }
 
-      function colorComponents(d: any) {
-        // if component node contains recoil atoms or selectors, make it orange red or yellow, otherwise keep node gray
-        if (d.data.recoilNodes && d.data.recoilNodes.length) {
-          if (d.data.recoilNodes.includes(selectedRecoilValue[0])) {
-            return 'white';
+        let hasAtom = false;
+        let hasSelector = false;
+        for (let i = 0; i < d.data.recoilNodes.length; i++) {
+          if (atoms.hasOwnProperty(d.data.recoilNodes[i])) {
+            hasAtom = true;
           }
-
-          let hasAtom = false;
-          let hasSelector = false;
-          for (let i = 0; i < d.data.recoilNodes.length; i++) {
-            if (atoms.hasOwnProperty(d.data.recoilNodes[i])) {
-              hasAtom = true;
-            }
-            if (selectors.hasOwnProperty(d.data.recoilNodes[i])) {
-              hasSelector = true;
-            }
-          }
-
-          if (hasAtom && hasSelector) {
-            return 'orange';
-          }
-          if (hasAtom) {
-            return 'red';
-          } else {
-            return 'yellow';
+          if (selectors.hasOwnProperty(d.data.recoilNodes[i])) {
+            hasSelector = true;
           }
         }
 
-        return 'gray';
+        if (hasAtom && hasSelector) {
+          return 'orange';
+        }
+        if (hasAtom) {
+          return 'red';
+        } else {
+          return 'yellow';
+        }
       }
+
+      return 'gray';
     }
   });
 
