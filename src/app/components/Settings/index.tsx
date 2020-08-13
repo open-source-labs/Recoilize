@@ -11,13 +11,23 @@ import AtomSettings from './SettingsComponents/AtomSettings';
 
 interface SettingsProps {
   snapshotHistory: stateSnapshot[];
+  selected: any;
+  setSelected: any;
 }
 
 // renders the difference between the most recent state change and the previous
-const Settings: React.FC<SettingsProps> = ({snapshotHistory}) => {
+const Settings: React.FC<SettingsProps> = ({
+  snapshotHistory,
+  selected,
+  setSelected,
+}) => {
   return (
     <div className="Settings">
-      <AtomSettings snapshotHistory={snapshotHistory} />
+      <AtomSettings
+        snapshotHistory={snapshotHistory}
+        selected={selected}
+        setSelected={setSelected}
+      />
       <StateSettings />
       <ThrottleSettings />
     </div>

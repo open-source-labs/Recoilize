@@ -7,6 +7,10 @@ const LOGO_URL = `https://public.bl.files.1drv.com/y4mFC_icIYGiJ2zg4zuUUlrZjGfCu
 const App: React.FC = () => {
   // useState hook to update the snapshotHistory array
   const [snapshotHistory, setSnapshotHistory] = useState<stateSnapshot[]>([]);
+
+  // todo: created selected to update arra
+  const [selected, setSelected] = useState([]);
+
   // use effect for snapshotHistory
   useEffect(() => {
     // SETUP connection to bg script
@@ -30,6 +34,8 @@ const App: React.FC = () => {
     <MainContainer
       // array of snapshots
       snapshotHistory={snapshotHistory}
+      selected={selected}
+      setSelected={setSelected}
     />
   );
   // Render module not found message if snapHistory is null, this means we have not detected a recoil app with recoilize module installed properly

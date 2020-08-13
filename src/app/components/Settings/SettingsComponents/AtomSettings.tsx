@@ -1,13 +1,19 @@
 import React, {useState, useEffect} from 'react';
 import {filterArray} from '../../SnapshotList/index'; // array of atoms/selectors
 import {Multiselect} from 'multiselect-react-dropdown';
-import {stateSnapshot} from '../../../types';
+import {stateSnapshot} from '../../../../types';
 
 interface AtomSettingsProps {
   snapshotHistory: stateSnapshot[];
+  selected: any;
+  setSelected: any;
 }
 
-const AtomSettings: React.FC<AtomSettingsProps> = ({snapshotHistory}) => {
+const AtomSettings: React.FC<AtomSettingsProps> = ({
+  snapshotHistory,
+  selected,
+  setSelected,
+}) => {
   // https://github.com/srigar/multiselect-react-dropdown
 
   // Make filterArray into array of objects, we want to get the most recent so that we have all possible options
@@ -18,6 +24,8 @@ const AtomSettings: React.FC<AtomSettingsProps> = ({snapshotHistory}) => {
     options.push(obj);
   }
 
+  // ! Selected is prop drilled down from app -> maincontainer -> visualcontainer -> settings -> atom settings
+  console.log('this is the selected in atomSettings ', selected);
   // we need to add to options, the NEW ones that are not in the success options
 
   // Use React hooks to change options array initially set as options
@@ -34,12 +42,14 @@ const AtomSettings: React.FC<AtomSettingsProps> = ({snapshotHistory}) => {
     console.log('This is onSelect selectedList: ', selectedList);
     console.log('This is onSelect selectedItem: ', selectedItem);
     setOptions(selectedList);
+    setSelected(selectedList); // propdrilled, so edited up top
   };
 
   const onRemove = (selectedList: any, removedItem: any) => {
     console.log('This is onRemove selectedList: ', selectedList);
     console.log('This is onRemove removedItem: ', removedItem);
     setOptions(selectedList);
+    setSelected(selectedList);
   };
 
   // each time a new atom or selector is added, we need to update the selectedOptions arry
@@ -50,8 +60,8 @@ const AtomSettings: React.FC<AtomSettingsProps> = ({snapshotHistory}) => {
     <div>
       <h2>Atom and Selector Filter</h2>
       <Multiselect
-        selectedOptions={options}
-        selectedValues={selectedOptions}
+        options={options}
+        selectedValues={selected}
         onSelect={onSelect}
         onRemove={onRemove}
         displayValue="name"

@@ -6,10 +6,16 @@ import {stateSnapshot} from '../../../types/';
 interface MainContainerProps {
   // snapshotHistory is an array of stateSnapshots
   snapshotHistory: stateSnapshot[];
+  selected: any;
+  setSelected: any;
 }
 
 // wraps entire application
-const MainContainer: React.FC<MainContainerProps> = ({snapshotHistory}) => {
+const MainContainer: React.FC<MainContainerProps> = ({
+  snapshotHistory,
+  selected,
+  setSelected,
+}) => {
   // useState hook to update the index of current snapshot rendered in devtool
   const [renderIndex, setRenderIndex] = useState(snapshotHistory.length - 1);
   // useEffect for renderIndex
@@ -34,6 +40,9 @@ const MainContainer: React.FC<MainContainerProps> = ({snapshotHistory}) => {
         currentSnapshot={snapshotHistory[renderIndex]}
         // !passing through snapshotHistory
         snapshotHistory={snapshotHistory}
+        // !passing through selections
+        selected={selected}
+        setSelected={setSelected}
       />
     </div>
   );
