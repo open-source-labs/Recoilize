@@ -42,22 +42,18 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
           outputObj.name = inputObj.name;
           outputObj.recoilNodes = inputObj.recoilNodes;
           outputObj.tag = inputObj.tag;
-          console.log('initial output Obj ', outputObj);
           outputObj = outputObj.children;
         }
         // create another conditional
         else {
           const deepCopy = JSON.parse(JSON.stringify(inputObj));
-          console.log('this is a deepCopy ', deepCopy);
           deepCopy.children = [];
           outputObj.push(deepCopy);
-          // ! FIGURE OUT THIS PROBLEM -- should NOT only be going into outputObj[0].children, need to base off some counter
           if (outputObj.length > 1) {
             outputObj = outputObj[outputObj.length - 1].children;
           } else {
             outputObj = outputObj[0].children;
           }
-          // ++counter;
         }
       }
       // ! recursive call running through the whole component atom tree -- understand this better
@@ -71,7 +67,6 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
     return obj;
   };
   componentAtomTree = cleanComponentAtomTree(componentAtomTree);
-  console.log('new component atom tree ', componentAtomTree);
 
   useEffect(() => {
     document.getElementById('canvas').innerHTML = '';
@@ -84,7 +79,6 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
 
     // creating a pseudo-class for reusability
     const g = svgContainer.append('g');
-    // .attr('transform', `translate(${400}, ${20}), scale(${0.3})`); // sets the canvas to the saved zoomState
 
     let i = 0;
     let duration: Number = 750;
@@ -211,7 +205,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
         .attr('stroke', '#646464')
         .attr('stroke-width', 5)
         .attr('d', function (d: any) {
-          var o = {x: source.x, y: source.y};
+          let o = {x: source.x, y: source.y};
           return diagonal(o, o);
         })
         .remove();
@@ -250,7 +244,6 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
           for (let x = 0; x < d.data.recoilNodes.length; x++) {
             d3.select(this)
               .append('text')
-              //.text(JSON.stringify(d.data.recoilNodes))
               .text(formatAtomSelectorText(d.data.recoilNodes[x]))
               .style('fill', 'white')
               .attr('x', formatMouseoverXValue(d.data.recoilNodes[x]))
