@@ -30,37 +30,58 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
   useEffect(() => {
     document.getElementById('canvas').innerHTML = '';
 
+    console.log('this is the component atom tree ', componentAtomTree);
+
     //! clean the componentatomtree to only have the data that we want
     const cleanComponentAtomTree = (inputObj: any) => {
       const obj = {} as any;
-
+      let counter = 0;
       // Create a recursive function that will run through the component atom tree, change the children to what we want
-      const innerClean = (inputObj: any) => {
-        if (!inputObj) {
-          return;
-        }
-        if (inputObj.tag === 0) {
-          obj.children = inputObj.children;
-          obj.name = inputObj.name;
-          obj.recoilNodes = inputObj.recoilNodes;
-          obj.tag = inputObj.tag;
-        } else {
-          for (let i = 0; i < inputObj.children.length; i++) {
-            innerClean(inputObj.children[i]);
+      const innerClean = (inputObj: any, outputObj: any, counter: any) => {
+        if (
+          inputObj.tag === 0 &&
+          inputObj.name !== 'RecoilRoot' &&
+          inputObj.name !== 'Batcher' &&
+          inputObj.name !== 'RecoilizeDebugger' &&
+          inputObj.name !== 'CssBaseline'
+        ) {
+          // if the obj is empty, we do this
+          if (Object.keys(obj).length === 0) {
+            outputObj.children = [];
+            outputObj.name = inputObj.name;
+            outputObj.recoilNodes = inputObj.recoilNodes;
+            outputObj.tag = inputObj.tag;
+            console.log('initial output Obj ', outputObj);
+            outputObj = outputObj.children;
+          } else {
+            const deepCopy = JSON.parse(JSON.stringify(inputObj));
+            console.log('this is a deepCopy ', deepCopy);
+
+            deepCopy.children = [];
+            outputObj.push(deepCopy);
+
+            // ! FIGURE OUT THIS PROBLEM -- should NOT only be going into outputObj[0].children
+            // outputObj[0].children = [];
+            outputObj = outputObj[0].children;
           }
         }
+
+        // ! recursive call running through the whole component atom tree -- understand this better
+        for (let i = 0; i < inputObj.children.length; i++) {
+          innerClean(inputObj.children[i], outputObj, i);
+        }
+        return outputObj;
       };
-      innerClean(inputObj);
+
+      innerClean(inputObj, obj, counter);
+
+      // returning the new object that we create
       return obj;
     };
 
-    console.log('this is the component atom tree ', componentAtomTree);
-    console.log(
-      'this is the cleaned component atom tree ',
-      cleanComponentAtomTree(componentAtomTree),
-    );
-
     componentAtomTree = cleanComponentAtomTree(componentAtomTree);
+
+    console.log('new component atom tree ', componentAtomTree);
 
     // chrome.extension
     //   .getBackgroundPage()
