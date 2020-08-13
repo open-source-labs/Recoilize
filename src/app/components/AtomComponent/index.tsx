@@ -16,17 +16,55 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
   selectors,
 }) => {
   // set the heights and width of the tree to be passed into treeMap function
-  // const margin = {top: 20, right: 90, bottom: 30, left: 90},
-  // const width = 600 - margin.left - margin.right
-  // height = 733.33 - margin.top - margin.bottom;
   const width = 400;
   const height = 733.33;
   // this state allows the canvas to stay at the zoom level on multiple re-renders
   const [{x, y, k}, setZoomState] = useState({x: 0, y: 0, k: 0});
 
-  useEffect(() => {
-    // setZoomState(d3.zoomTransform(d3.select('#canvas').node()));
-  }, [componentAtomTree, selectedRecoilValue]);
+  useEffect(() => {}, [componentAtomTree, selectedRecoilValue]);
+
+  //! clean the componentatomtree to only have the data that we want
+  const cleanComponentAtomTree = (inputObj: any) => {
+    const obj = {} as any;
+    let counter = 0;
+    // Create a recursive function that will run through the component atom tree, change the children to what we want
+    const innerClean = (inputObj: any, outputObj: any, counter: any) => {
+      if (
+        inputObj.tag === 0 &&
+        inputObj.name !== 'RecoilRoot' &&
+        inputObj.name !== 'Batcher' &&
+        inputObj.name !== 'RecoilizeDebugger' &&
+        inputObj.name !== 'CssBaseline'
+      ) {
+        // if the obj is empty, we do this
+        if (Object.keys(obj).length === 0) {
+          outputObj.children = [];
+          outputObj.name = inputObj.name;
+          outputObj.recoilNodes = inputObj.recoilNodes;
+          outputObj.tag = inputObj.tag;
+          console.log('initial output Obj ', outputObj);
+          outputObj = outputObj.children;
+        } else {
+          console.log('we are here in else', inputObj, counter);
+          const deepCopy = JSON.parse(JSON.stringify(inputObj));
+          // deepCopy.children = [];
+          outputObj.push(deepCopy);
+          outputObj[0].children = [];
+          outputObj = outputObj[0].children;
+        }
+      }
+      // ! recursive call running through the whole component atom tree -- understand this better
+      for (let i = 0; i < inputObj.children.length; i++) {
+        innerClean(inputObj.children[i], outputObj, i);
+      }
+      return outputObj;
+    };
+    innerClean(inputObj, obj, counter);
+    // returning the new object that we create
+    return obj;
+  };
+  componentAtomTree = cleanComponentAtomTree(componentAtomTree);
+  console.log('new component atom tree ', componentAtomTree);
 
   useEffect(() => {
     document.getElementById('canvas').innerHTML = '';
@@ -65,7 +103,6 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
 
       let node = g
         .selectAll('g.node')
-        // .attr('stroke', '#646464')
         .attr('stroke-width', 5)
         .data(nodes, function (d: any) {
           return d.id || (d.id = ++i);
