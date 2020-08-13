@@ -56,6 +56,7 @@ const VisualContainer: React.FC<VisualContainerProps> = ({
         filteredCurSnap={filteredCurSnap}
       />
     ),
+    // settings tab that doesn't want to be in quotes because too cool for school
     Settings: <Settings />,
   };
   // array of all nav obj keys

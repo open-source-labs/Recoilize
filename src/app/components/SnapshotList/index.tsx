@@ -13,6 +13,8 @@ interface SnapshotsListProps {
   timeTravelFunc: (index: number) => void;
 }
 
+let filterArray: any[] = [];
+
 const SnapshotsList: React.FC<SnapshotsListProps> = ({
   renderIndex,
   snapshotHistoryLength,
@@ -33,6 +35,25 @@ const SnapshotsList: React.FC<SnapshotsListProps> = ({
             : {color: '#989898'}
         }
         onClick={() => {
+          let bigState = document.getElementById('root')._reactRootContainer
+            ._internalRoot.current.child.memoizedState.baseState;
+          let lastBigState = bigState[bigState.length - 1].filteredSnapshot;
+          let lastBigStateArray = Object.keys(lastBigState);
+
+          filterArray = lastBigStateArray; // array that is exported to AtomSettings.tsx
+          console.log('This is filterArray: ', filterArray);
+
+          // console.log('This is the initial big state', bigState[0]);
+          // console.log('This is the LAST bigState: ', lastBigState);
+          // console.log('This is the LAST bigState Array: ', lastBigStateArray);
+
+          // bigState.forEach((el, i) => {
+          //   console.log(
+          //     `This is Jump Snapshot at Index ${i}`,
+          //     el.filteredSnapshot,
+          //   );
+          // });
+
           setRenderIndex(i);
         }}>
         <li>{i}</li>
@@ -46,8 +67,15 @@ const SnapshotsList: React.FC<SnapshotsListProps> = ({
       </div>,
     );
   }
+  /*
+  Filter snapshotDivs to show only the snapshots that have
+   an atom/selector from the Atom and Selector Filter in the Settings tab
+  */
+
   // render the array of snapshots divs generated above
   return <div className="SnapshotsList">{snapshotDivs}</div>;
 };
 
 export default SnapshotsList;
+export {filterArray};
+//document.getElementById('root')._reactRootContainer._internalRoot.current.child.memoizedState.next.next.memoizedState.current.currentTree.atomValues

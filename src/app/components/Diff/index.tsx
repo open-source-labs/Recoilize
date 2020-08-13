@@ -20,6 +20,12 @@ const Diff: React.FC<DiffProps> = ({filteredPrevSnap, filteredCurSnap}) => {
   const html = formatters.html.format(delta, filteredPrevSnap);
   // conditionally render changes or not based on rawToggle bool
   formatters.html.showUnchanged(rawToggle);
+
+  //
+  //
+  console.log('hello on Diff');
+  //
+  //
   return (
     <div className="Diff">
       <div className="toggleDiv">
