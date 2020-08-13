@@ -42,7 +42,7 @@ const AtomSettings: React.FC = () => {
   // this.state needed to work with Multiselect, not sure why
   this.state = {
     options: arr, //has to be an array of objects
-    selectedValues: arr, // sets all values as preselected
+    selectedValues: arr, // sets values as preselected
   };
 
   //console.log('This is the arr: ', arr);
