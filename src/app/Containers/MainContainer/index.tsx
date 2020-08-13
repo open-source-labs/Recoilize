@@ -32,6 +32,8 @@ const MainContainer: React.FC<MainContainerProps> = ({snapshotHistory}) => {
         previousSnapshot={snapshotHistory[renderIndex - 1]}
         // snapshot at index [renderIndex]
         currentSnapshot={snapshotHistory[renderIndex]}
+        // !passing through snapshotHistory
+        snapshotHistory={snapshotHistory}
       />
     </div>
   );

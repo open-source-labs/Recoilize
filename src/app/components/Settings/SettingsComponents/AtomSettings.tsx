@@ -1,8 +1,13 @@
 import React, {useState} from 'react';
 import {filterArray} from '../../SnapshotList/index'; // array of atoms/selectors
 import {Multiselect} from 'multiselect-react-dropdown';
+import {stateSnapshot} from '../../../types';
 
-const AtomSettings: React.FC = () => {
+interface AtomSettingsProps {
+  snapshotHistory: stateSnapshot[];
+}
+
+const AtomSettings: React.FC<AtomSettingsProps> = ({snapshotHistory}) => {
   // filterArray is blank before Jump button is pressed
   // filterArray is populated when Jump button is pressed
   // https://github.com/srigar/multiselect-react-dropdown
@@ -13,9 +18,8 @@ const AtomSettings: React.FC = () => {
 
   // Make filterArray into array of objects
   let arr = [];
-  for (let i = 0; i < filterArray.length; i += 1) {
-    // "name" key set to equal the displayValue in Multiselect class
-    let obj = {name: filterArray[i]};
+  for (let key in snapshotHistory[0].filteredSnapshot) {
+    const obj = {name: key};
     arr.push(obj);
   }
 
@@ -38,7 +42,6 @@ const AtomSettings: React.FC = () => {
     updateOptions(selectedList);
   };
 
-  //import "./styles.css";
   // this.state needed to work with Multiselect, not sure why
   this.state = {
     options: arr, //has to be an array of objects
@@ -46,8 +49,8 @@ const AtomSettings: React.FC = () => {
   };
 
   //console.log('This is the arr: ', arr);
-  console.log('SUCCESS This is filterArray imported:  ', filterArray);
-  console.log('SUCCESS Correct Age', age);
+  // console.log('SUCCESS This is filterArray imported:  ', filterArray);
+  // console.log('SUCCESS Correct Age', age);
   console.log('SUCCESS options: ', options);
   console.log('SUCCESS thisstateOptions: ', this.state.options);
   return (

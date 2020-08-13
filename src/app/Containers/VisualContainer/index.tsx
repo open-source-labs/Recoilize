@@ -13,6 +13,8 @@ interface VisualContainerProps {
   previousSnapshot: stateSnapshot;
   // snapshot at index [curRender]
   currentSnapshot: stateSnapshot;
+  // ! passing through snapshot history
+  snapshotHistory: stateSnapshot[];
 }
 
 type navTypes = {
@@ -23,6 +25,7 @@ type navTypes = {
 const VisualContainer: React.FC<VisualContainerProps> = ({
   previousSnapshot,
   currentSnapshot,
+  snapshotHistory,
 }) => {
   // conditional render of filtered snaps/ based on non-filtered snaps
   const filteredCurSnap = currentSnapshot
@@ -57,7 +60,7 @@ const VisualContainer: React.FC<VisualContainerProps> = ({
       />
     ),
     // settings tab that doesn't want to be in quotes because too cool for school
-    Settings: <Settings />,
+    Settings: <Settings snapshotHistory={snapshotHistory} />,
   };
   // array of all nav obj keys
   const tabsList = Object.keys(nav);

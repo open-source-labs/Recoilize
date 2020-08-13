@@ -35,6 +35,7 @@ const SnapshotsList: React.FC<SnapshotsListProps> = ({
             : {color: '#989898'}
         }
         onClick={() => {
+          // Currently, this onclick gets all of the data
           let bigState = document.getElementById('root')._reactRootContainer
             ._internalRoot.current.child.memoizedState.baseState;
           let lastBigState = bigState[bigState.length - 1].filteredSnapshot;
@@ -43,16 +44,16 @@ const SnapshotsList: React.FC<SnapshotsListProps> = ({
           filterArray = lastBigStateArray; // array that is exported to AtomSettings.tsx
           console.log('This is filterArray: ', filterArray);
 
-          // console.log('This is the initial big state', bigState[0]);
-          // console.log('This is the LAST bigState: ', lastBigState);
-          // console.log('This is the LAST bigState Array: ', lastBigStateArray);
+          console.log('This is the initial big state', bigState[0]);
+          console.log('This is the LAST bigState: ', lastBigState);
+          console.log('This is the LAST bigState Array: ', lastBigStateArray);
 
-          // bigState.forEach((el, i) => {
-          //   console.log(
-          //     `This is Jump Snapshot at Index ${i}`,
-          //     el.filteredSnapshot,
-          //   );
-          // });
+          bigState.forEach((el, i) => {
+            console.log(
+              `This is Jump Snapshot at Index ${i}`,
+              el.filteredSnapshot,
+            );
+          });
 
           setRenderIndex(i);
         }}>
