@@ -28,7 +28,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
     const obj = {} as any;
     let counter = 0;
     // Create a recursive function that will run through the component atom tree, change the children to what we want
-    const innerClean = (inputObj: any, outputObj: any, counter: any) => {
+    const innerClean = (inputObj: any, outputObj: any, counter = 0) => {
       if (
         inputObj.tag === 0 &&
         inputObj.name !== 'RecoilRoot' &&
@@ -44,18 +44,25 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
           outputObj.tag = inputObj.tag;
           console.log('initial output Obj ', outputObj);
           outputObj = outputObj.children;
-        } else {
-          console.log('we are here in else', inputObj, counter);
+        }
+        // create another conditional
+        else {
           const deepCopy = JSON.parse(JSON.stringify(inputObj));
-          // deepCopy.children = [];
+          console.log('this is a deepCopy ', deepCopy);
+          deepCopy.children = [];
           outputObj.push(deepCopy);
-          outputObj[0].children = [];
-          outputObj = outputObj[0].children;
+          // ! FIGURE OUT THIS PROBLEM -- should NOT only be going into outputObj[0].children, need to base off some counter
+          if (outputObj.length > 1) {
+            outputObj = outputObj[outputObj.length - 1].children;
+          } else {
+            outputObj = outputObj[0].children;
+          }
+          // ++counter;
         }
       }
       // ! recursive call running through the whole component atom tree -- understand this better
       for (let i = 0; i < inputObj.children.length; i++) {
-        innerClean(inputObj.children[i], outputObj, i);
+        innerClean(inputObj.children[i], outputObj, counter);
       }
       return outputObj;
     };
