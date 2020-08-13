@@ -9,10 +9,30 @@ import {
 } from 'recoil';
 import {formatFiberNodes} from './formatFiberNodes';
 
+// grabs isPersistedState from sessionStorage
+let isPersistedState = sessionStorage.getItem('isPersistedState');
+console.log('isPersistedState', isPersistedState);
+
 // isRestored state disables snapshots from being recorded
 let isRestoredState = false;
 
+// throttle is an object that keeps track of the throttle settings made by the user
+let throttleTimer = 0;
+let throttleLimit = 0;
+
 export default function RecoilizeDebugger(props) {
+  // ! the props can go here, a message can be made to edit the global object for throttling
+  const throttle = () => {
+    const now = new Date().getTime();
+    // if we get a series of 5 in a row called super fast, then we want to turn the throttle on
+    if (now - throttleTimer < throttleLimit) {
+      isRestoredState = true;
+    } else {
+      throttleTimer = now;
+    }
+  };
+  throttle();
+
   // We should ask for Array of atoms and selectors.
   // Captures all atoms that were defined to get the initial state
 
@@ -57,19 +77,16 @@ export default function RecoilizeDebugger(props) {
 
   // React lifecycle hook on re-render
   useEffect(() => {
-    if (!isRestoredState) {
-      setTimeout(() => {
-        const devToolData = createDevToolDataObject(filteredSnapshot);
+    // Window listener for messages from dev tool UI & background.js
+    window.addEventListener('message', onMessageReceived);
 
-        // Post message to content script on every re-render of the developers application only if content script has started
-        sendWindowMessage('recordSnapshot', devToolData);
-      });
+    if (!isRestoredState) {
+      const devToolData = createDevToolDataObject(filteredSnapshot);
+      // Post message to content script on every re-render of the developers application only if content script has started
+      sendWindowMessage('recordSnapshot', devToolData);
     } else {
       isRestoredState = false;
     }
-
-    // Window listener for messages from dev tool UI & background.js
-    window.addEventListener('message', onMessageReceived);
 
     // Clears the window event listener.
     return () => window.removeEventListener('message', onMessageReceived);
@@ -81,18 +98,42 @@ export default function RecoilizeDebugger(props) {
     switch (msg.data.action) {
       // Checks to see if content script has started before sending initial snapshot
       case 'contentScriptStarted':
-        const initialFilteredSnapshot = formatAtomSelectorRelationship(
-          filteredSnapshot,
-        );
-        const devToolData = createDevToolDataObject(initialFilteredSnapshot);
-        sendWindowMessage('moduleInitialized', devToolData);
+        if (isPersistedState === 'false' || isPersistedState === null) {
+          const initialFilteredSnapshot = formatAtomSelectorRelationship(
+            filteredSnapshot,
+          );
+          const devToolData = createDevToolDataObject(initialFilteredSnapshot);
+          sendWindowMessage('moduleInitialized', devToolData);
+        } else {
+          sendWindowMessage('persistSnapshots', null);
+        }
         break;
       // Listens for a request from dev tool to time travel to previous state of the app.
       case 'snapshotTimeTravel':
         timeTravelToSnapshot(msg);
         break;
+      case 'persistState':
+        console.log('message to persist state hit');
+        switchPersistMode();
+        break;
+      // Todo: Implementing the throttle change
+      case 'throttleEdit':
+        let throttleVal = parseInt(msg.data.payload.value);
+        throttleLimit = throttleVal;
+        console.log('this is the throttleEdits', throttleVal);
+        break;
+
       default:
         break;
+    }
+  };
+
+  // assigns or switches isPersistedState in sessionStorage
+  const switchPersistMode = () => {
+    if (isPersistedState === 'false' || isPersistedState === null) {
+      sessionStorage.setItem('isPersistedState', true);
+    } else {
+      sessionStorage.setItem('isPersistedState', false);
     }
   };
 

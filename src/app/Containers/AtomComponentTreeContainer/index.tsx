@@ -43,12 +43,12 @@ const AtomComponentVisualContainer: React.FC<AtomComponentVisualContainerProps> 
         atoms={atoms}
         selectors={selectors}
       />
-      <AtomSelectorLegend
+      {/* <AtomSelectorLegend
         selectedRecoilValue={selectedRecoilValue}
         setSelectedRecoilValue={setSelectedRecoilValue}
         atoms={atoms}
         selectors={selectors}
-      />
+      /> */}
     </div>
   );
 };
