@@ -17,5 +17,8 @@ chrome.runtime.onMessage.addListener(msg => {
     case 'persistState':
       window.postMessage(msg, '*');
       break;
+    case 'throttleEdit':
+      window.postMessage(msg, '*');
+      break;
   }
 });

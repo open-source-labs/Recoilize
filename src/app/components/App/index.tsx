@@ -16,6 +16,7 @@ const App: React.FC = () => {
       action: 'devToolInitialized',
       tabId: chrome.devtools.inspectedWindow.tabId,
     });
+
     // LISTEN for messages FROM bg script
     backgroundConnection.onMessage.addListener(msg => {
       if (msg.action === 'recordSnapshot') {

@@ -52,6 +52,14 @@ chrome.runtime.onConnect.addListener(port => {
           // if msg tabId provided, send persistState command to content-script
           chrome.tabs.sendMessage(Number(tabId), msg);
         }
+        break;
+      // todo: Create this case for throttle edit, and need to do a post to the window
+      case 'throttleEdit':
+        if (tabId) {
+          chrome.tabs.sendMessage(Number(tabId), msg);
+        }
+        // window.postMessage({action: 'throttleChange'}, throttler);
+        break;
 
       default:
         break;
@@ -89,7 +97,6 @@ chrome.runtime.onMessage.addListener((msg, sender) => {
   switch (action) {
     // Listens to new snapshots (state changes) from module, stores in local storage and sends to dev tool if port is opened
     case 'recordSnapshot':
-      // console.log('we here recording');
       // Next snapshot from the msg payload
       const snapshot = msg.payload;
 
