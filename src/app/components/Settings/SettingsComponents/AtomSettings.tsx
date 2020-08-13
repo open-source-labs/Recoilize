@@ -23,11 +23,11 @@ const AtomSettings: React.FC<AtomSettingsProps> = ({snapshotHistory}) => {
   // Use React hooks to change options array initially set as options
   const [selectedOptions, setOptions] = useState(options);
 
-  // Create a conditional that will update the selected options onchange of the array -- updates if they are not equal, will add in NEW ADDITIONS
-  if (!(JSON.stringify(options) === JSON.stringify(selectedOptions))) {
-    console.log('we hit');
-    setOptions(options);
-  }
+  // Todo: Create a conditional that will update the selected options onchange of the array -- updates if they are not equal, will add in NEW ADDITIONS
+  // if (!(JSON.stringify(options) === JSON.stringify(selectedOptions))) {
+  //   console.log('we hit');
+  //   setOptions(options);
+  // }
 
   // onSelect & onRemove functions for when selecting & removing atoms/selectors from the filter
   const onSelect = (selectedList: any, selectedItem: any) => {
