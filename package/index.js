@@ -3,12 +3,8 @@ import {
   useRecoilTransactionObserver_UNSTABLE,
   useRecoilSnapshot,
   useGotoRecoilSnapshot,
-  useRecoilValue,
-  useRecoilValueLoadable,
-  useRecoilCallback,
 } from 'recoil';
 import {formatFiberNodes} from './formatFiberNodes';
-import ESSerializer from 'esserializer';
 
 // grabs isPersistedState from sessionStorage
 let isPersistedState = sessionStorage.getItem('isPersistedState');
@@ -21,7 +17,7 @@ let throttleTimer = 0;
 let throttleLimit = 0;
 
 // persistedSnapshots initially null
-let persistedSnapshots = null;
+// let persistedSnapshots = null;
 
 export default function RecoilizeDebugger(props) {
   // ! the props can go here, a message can be made to edit the global object for throttling
@@ -108,7 +104,7 @@ export default function RecoilizeDebugger(props) {
           const devToolData = createDevToolDataObject(initialFilteredSnapshot);
           sendWindowMessage('moduleInitialized', devToolData);
         } else {
-          jumpToPersistedState();
+          setProperIndexForPersistedState();
           sendWindowMessage('persistSnapshots', null);
         }
         break;
@@ -117,7 +113,6 @@ export default function RecoilizeDebugger(props) {
         timeTravelToSnapshot(msg);
         break;
       case 'persistState':
-        console.log('message to persist state hit');
         switchPersistMode();
         break;
       // Todo: Implementing the throttle change
@@ -132,36 +127,24 @@ export default function RecoilizeDebugger(props) {
   };
 
   // assigns or switches isPersistedState in sessionStorage
-  const switchPersistMode = async () => {
+  const switchPersistMode = () => {
     if (isPersistedState === 'false' || isPersistedState === null) {
-      await sessionStorage.setItem('isPersistedState', true);
-      // stores current list of snapshots in sessionStorage as well
-      persistedSnapshots = snapshots.map(snapshot =>
-        ESSerializer.serialize(snapshot),
-      );
-      await sessionStorage.setItem(
-        'persistedSnapshots',
-        JSON.stringify(persistedSnapshots),
-      );
+      // switch isPersistedState in sessionStorage to true
+      sessionStorage.setItem('isPersistedState', true);
+
+      // stores the length of current list of snapshots in sessionStorage
+      sessionStorage.setItem('persistedSnapshots', snapshots.length);
     } else {
-      await sessionStorage.setItem('isPersistedState', false);
+      // switch isPersistedState in sessionStorage to false
+      sessionStorage.setItem('isPersistedState', false);
     }
   };
 
-  // function to jump to the last state that was saved before refresh
-  const jumpToPersistedState = async () => {
-    // get the stored snapshots from session storage and parse it
-    const retreivedPersistedSnapshots = JSON.parse(
-      sessionStorage.getItem('persistedSnapshots'),
-    );
-    // deserialize each objects
-    persistedSnapshots = retreivedPersistedSnapshots.map(snapshot =>
-      ESSerializer.deserialize(snapshot, Snapshot),
-    );
-    // set the snapshots state with persisted snapshots
-    setSnapshots(persistedSnapshots);
-    // time travel to the last snapshot
-    await gotoSnapshot(snapshots[snapshots.length - 1]);
+  // function retreives length and fills snapshot array
+  const setProperIndexForPersistedState = () => {
+    const retreived = await sessionStorage.getItem('persistedSnapshots');
+    const snapshotsArray = new Array(Number(retreived) + 1).fill({});
+    setSnapshots(snapshotsArray);
   };
 
   // Sends window an action and payload message.
