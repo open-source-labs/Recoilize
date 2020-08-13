@@ -16,12 +16,14 @@ const App: React.FC = () => {
       action: 'devToolInitialized',
       tabId: chrome.devtools.inspectedWindow.tabId,
     });
+
     // LISTEN for messages FROM bg script
     backgroundConnection.onMessage.addListener(msg => {
       if (msg.action === 'recordSnapshot') {
         setSnapshotHistory(msg.payload);
       }
     });
+    // Todo: Create a variable that stores a number
   }, []);
   // Render main container if we have detected a recoil app with the recoilize module passing data
   const renderMainContainer = (

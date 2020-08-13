@@ -14,5 +14,11 @@ chrome.runtime.onMessage.addListener(msg => {
     case 'snapshotTimeTravel':
       window.postMessage(msg, '*');
       break;
+    case 'persistState':
+      window.postMessage(msg, '*');
+      break;
+    case 'throttleEdit':
+      window.postMessage(msg, '*');
+      break;
   }
 });
