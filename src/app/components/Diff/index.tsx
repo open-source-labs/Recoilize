@@ -23,9 +23,6 @@ const Diff: React.FC<DiffProps> = ({filteredPrevSnap, filteredCurSnap}) => {
 
   //
   //
-  console.log('hello on Diff');
-  //
-  //
   return (
     <div className="Diff">
       <div className="toggleDiv">

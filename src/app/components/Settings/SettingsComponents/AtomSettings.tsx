@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {filterArray} from '../../SnapshotList/index'; // array of atoms/selectors
 import {Multiselect} from 'multiselect-react-dropdown';
 import {stateSnapshot} from '../../../types';
@@ -11,40 +11,47 @@ const AtomSettings: React.FC<AtomSettingsProps> = ({snapshotHistory}) => {
   // https://github.com/srigar/multiselect-react-dropdown
 
   // Make filterArray into array of objects, we want to get the most recent so that we have all possible options
-  let arr = [];
+  let options = [];
   for (let key in snapshotHistory[snapshotHistory.length - 1]
     .filteredSnapshot) {
     const obj = {name: key};
-    arr.push(obj);
+    options.push(obj);
   }
 
-  // Use React hooks to change options array initially set as arr
-  const [options, setOptions] = useState(arr);
-  const updateOptions = (updatedArr: any) => setOptions(updatedArr);
+  // we need to add to options, the NEW ones that are not in the success options
+
+  // Use React hooks to change options array initially set as options
+  const [selectedOptions, setOptions] = useState(options);
+
+  // Create a conditional that will update the selected options onchange of the array -- updates if they are not equal, will add in NEW ADDITIONS
+  if (!(JSON.stringify(options) === JSON.stringify(selectedOptions))) {
+    console.log('we hit');
+    setOptions(options);
+  }
 
   // onSelect & onRemove functions for when selecting & removing atoms/selectors from the filter
   const onSelect = (selectedList: any, selectedItem: any) => {
     console.log('This is onSelect selectedList: ', selectedList);
     console.log('This is onSelect selectedItem: ', selectedItem);
-    updateOptions(selectedList);
+    setOptions(selectedList);
   };
 
   const onRemove = (selectedList: any, removedItem: any) => {
     console.log('This is onRemove selectedList: ', selectedList);
     console.log('This is onRemove removedItem: ', removedItem);
-    updateOptions(selectedList);
+    setOptions(selectedList);
   };
 
-  // each time a new atom or selector is added, we need to update the options arry
+  // each time a new atom or selector is added, we need to update the selectedOptions arry
 
-  console.log('SUCCESS options: ', options);
-  console.log('SUCCESS thisstateOptions: ', arr);
+  console.log('These are the selected Options ', selectedOptions);
+  console.log('These are the state options ', options);
   return (
     <div>
       <h2>Atom and Selector Filter</h2>
       <Multiselect
-        options={arr}
-        selectedValues={options}
+        selectedOptions={options}
+        selectedValues={selectedOptions}
         onSelect={onSelect}
         onRemove={onRemove}
         displayValue="name"
