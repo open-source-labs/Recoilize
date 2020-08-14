@@ -11,6 +11,7 @@ interface SnapshotsListProps {
   setRenderIndex: React.Dispatch<React.SetStateAction<number>>;
   // functionality to postMessage the selected snapshot index to background.js
   timeTravelFunc: (index: number) => void;
+  selected: any;
 }
 
 let filterArray: any[] = [];
@@ -20,11 +21,15 @@ const SnapshotsList: React.FC<SnapshotsListProps> = ({
   snapshotHistoryLength,
   setRenderIndex,
   timeTravelFunc,
+  selected,
 }) => {
+  // ! probably need to prop drill down something else as well to get this filter to work
+  console.log('this is selected inside SnapshotList ', selected);
   // array of divs proportional to the length of snapshotHistory
   const snapshotDivs: JSX.Element[] = [];
   // iterate the same length of our snapshotHistory
   for (let i = 0; i < snapshotHistoryLength; i++) {
+    // using the selected, and comparing to an array, if it is in continue
     snapshotDivs.push(
       <div
         className="individualSnapshot"
@@ -35,26 +40,6 @@ const SnapshotsList: React.FC<SnapshotsListProps> = ({
             : {color: '#989898'}
         }
         onClick={() => {
-          // Currently, this onclick gets all of the data
-          // let bigState = document.getElementById('root')._reactRootContainer
-          //   ._internalRoot.current.child.memoizedState.baseState;
-          // let lastBigState = bigState[bigState.length - 1].filteredSnapshot;
-          // let lastBigStateArray = Object.keys(lastBigState);
-
-          // filterArray = lastBigStateArray; // array that is exported to AtomSettings.tsx
-          // console.log('This is filterArray: ', filterArray);
-
-          // console.log('This is the initial big state', bigState[0]);
-          // console.log('This is the LAST bigState: ', lastBigState);
-          // console.log('This is the LAST bigState Array: ', lastBigStateArray);
-
-          // bigState.forEach((el, i) => {
-          //   console.log(
-          //     `This is Jump Snapshot at Index ${i}`,
-          //     el.filteredSnapshot,
-          //   );
-          // });
-
           setRenderIndex(i);
         }}>
         <li>{i}</li>

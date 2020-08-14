@@ -32,6 +32,8 @@ const MainContainer: React.FC<MainContainerProps> = ({
         snapshotHistoryLength={snapshotHistory.length}
         // setState functionality to update renderIndex
         setRenderIndex={setRenderIndex}
+        // ! passing through selected
+        selected={selected}
       />
       <VisualContainer
         // snapshot at index [renderIndex -1]

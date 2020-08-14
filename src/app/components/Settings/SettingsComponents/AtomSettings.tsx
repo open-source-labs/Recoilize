@@ -54,7 +54,7 @@ const AtomSettings: React.FC<AtomSettingsProps> = ({
 
   // each time a new atom or selector is added, we need to update the selectedOptions arry
 
-  console.log('These are the selected Options ', selectedOptions);
+  // console.log('These are the selected Options ', selectedOptions);
   console.log('These are the state options ', options);
   return (
     <div>
