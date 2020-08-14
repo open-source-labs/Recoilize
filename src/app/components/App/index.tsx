@@ -9,13 +9,15 @@ const LOGO_URL = `https://public.bl.files.1drv.com/y4mFC_icIYGiJ2zg4zuUUlrZjGfCu
 const App: React.FC = () => {
   // useState hook to update the snapshotHistory array
   const [snapshotHistory, setSnapshotHistory] = useState<stateSnapshot[]>([]);
-  // console.log('this is the snapshotHistory ', snapshotHistory);
+  console.log('this is the snapshotHistory ', snapshotHistory);
 
   // todo: created selected to update array
   const [selected, setSelected] = useState([]);
+  console.log('this is selected ', selected);
 
   // todo: Create algo that will clean up the big setsnapshothistory object, now and before
   const [filter, setFilter] = useState([]);
+  console.log('this is the filter ', filter);
 
   // use effect for snapshotHistory
   useEffect(() => {
@@ -46,10 +48,10 @@ const App: React.FC = () => {
             msg.payload[msg.payload.length - 2],
             msg.payload[msg.payload.length - 1],
           );
-          filter.push(delta.filteredSnapshot);
+          msg.payload[msg.payload.length - 1] = delta;
+          // filter.push(delta.filteredSnapshot);
+          setFilter(msg.payload);
         }
-        setFilter(filter);
-        console.log('this is the filter ', filter);
       }
     });
     // Todo: Create a variable that stores a number
