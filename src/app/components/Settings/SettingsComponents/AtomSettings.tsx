@@ -8,14 +8,12 @@ interface AtomSettingsProps {
   selected: any;
   setSelected: any;
 }
-
 const AtomSettings: React.FC<AtomSettingsProps> = ({
   snapshotHistory,
   selected,
   setSelected,
 }) => {
   // https://github.com/srigar/multiselect-react-dropdown
-
   // Make filterArray into array of objects, we want to get the most recent so that we have all possible options
   let options = [];
   for (let key in snapshotHistory[snapshotHistory.length - 1]
@@ -36,7 +34,6 @@ const AtomSettings: React.FC<AtomSettingsProps> = ({
   //   console.log('we hit');
   //   setOptions(options);
   // }
-
   // onSelect & onRemove functions for when selecting & removing atoms/selectors from the filter
   const onSelect = (selectedList: any, selectedItem: any) => {
     console.log('This is onSelect selectedList: ', selectedList);
@@ -44,7 +41,6 @@ const AtomSettings: React.FC<AtomSettingsProps> = ({
     setOptions(selectedList);
     setSelected(selectedList); // propdrilled, so edited up top
   };
-
   const onRemove = (selectedList: any, removedItem: any) => {
     console.log('This is onRemove selectedList: ', selectedList);
     console.log('This is onRemove removedItem: ', removedItem);
@@ -69,5 +65,4 @@ const AtomSettings: React.FC<AtomSettingsProps> = ({
     </div>
   );
 };
-
 export default AtomSettings;

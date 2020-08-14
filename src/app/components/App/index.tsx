@@ -12,6 +12,9 @@ const App: React.FC = () => {
   // todo: created selected to update array
   const [selected, setSelected] = useState([]);
 
+  // useState hook for filtered Array
+  const [filterArray, setFilterArray] = useState(['howdy']);
+
   // use effect for snapshotHistory
   useEffect(() => {
     // SETUP connection to bg script
@@ -25,7 +28,15 @@ const App: React.FC = () => {
     // LISTEN for messages FROM bg script
     backgroundConnection.onMessage.addListener(msg => {
       if (msg.action === 'recordSnapshot') {
+        console.log('This is recordSnapshot in App ');
         setSnapshotHistory(msg.payload);
+        filterArray.push('HEY IN APP');
+        setFilterArray(filterArray);
+        console.log('This is msg.payload in App: ', msg.payload);
+        console.log(
+          'This is filterArray in backgroundConnection in App: ',
+          filterArray,
+        );
       }
     });
     // Todo: Create a variable that stores a number

@@ -18,6 +18,10 @@ const MainContainer: React.FC<MainContainerProps> = ({
 }) => {
   // useState hook to update the index of current snapshot rendered in devtool
   const [renderIndex, setRenderIndex] = useState(snapshotHistory.length - 1);
+
+  // useState hook for filtered Array
+  const [filterArray, setFilterArray] = useState(['howdy']);
+
   // useEffect for renderIndex
   useEffect(() => {
     setRenderIndex(snapshotHistory.length - 1);
@@ -36,6 +40,10 @@ const MainContainer: React.FC<MainContainerProps> = ({
         selected={selected}
       />
       <VisualContainer
+        //
+        filterArray={filterArray}
+        //
+        setFilterArray={setFilterArray}
         // snapshot at index [renderIndex -1]
         previousSnapshot={snapshotHistory[renderIndex - 1]}
         // snapshot at index [renderIndex]

@@ -17,6 +17,8 @@ interface VisualContainerProps {
   snapshotHistory: stateSnapshot[];
   selected: any;
   setSelected: any;
+  filterArray: any;
+  setFilterArray: any;
 }
 
 type navTypes = {
@@ -30,7 +32,10 @@ const VisualContainer: React.FC<VisualContainerProps> = ({
   snapshotHistory,
   selected,
   setSelected,
+  filterArray,
+  setFilterArray,
 }) => {
+  console.log('This is filterArray in Visual Container: ', filterArray);
   // conditional render of filtered snaps/ based on non-filtered snaps
   const filteredCurSnap = currentSnapshot
     ? currentSnapshot.filteredSnapshot
@@ -48,6 +53,8 @@ const VisualContainer: React.FC<VisualContainerProps> = ({
       <Diff
         filteredPrevSnap={filteredPrevSnap}
         filteredCurSnap={filteredCurSnap}
+        filterArray={filterArray}
+        setFilterArray={setFilterArray}
       />
     ),
     // render JSON tree of snapshot
