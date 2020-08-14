@@ -1,25 +1,37 @@
 import React, {useState, useEffect} from 'react';
 import * as d3 from 'd3';
 import {componentAtomTree, atom, selector} from '../../../types';
+
 interface AtomComponentVisualProps {
   componentAtomTree: componentAtomTree;
   selectedRecoilValue: any[];
   atoms: atom;
   selectors: selector;
+  setLegend: any;
+  setStr: any;
 }
+
 const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
   componentAtomTree,
   selectedRecoilValue,
   atoms,
   selectors,
+  setLegend,
+  setStr,
 }) => {
   // set the heights and width of the tree to be passed into treeMap function
   const width = 400;
   const height = 733.33;
+
   // this state allows the canvas to stay at the zoom level on multiple re-renders
   const [{x, y, k}, setZoomState] = useState({x: 0, y: 0, k: 0});
 
-  useEffect(() => {}, [componentAtomTree, selectedRecoilValue]);
+  // useState hook to update the toggle of showing diff components
+  const [rawToggle, setRawToggle] = useState(false);
+
+  useEffect(() => {
+    setZoomState(d3.zoomTransform(d3.select('#canvas').node())); // <------------------ LOOK INTO THIS TO SEE HOW TO GET IT TO STOP RE EXPANDING
+  }, [componentAtomTree, selectedRecoilValue]);
 
   //! clean the componentatomtree to only have the data that we want
   const cleanComponentAtomTree = (inputObj: any) => {
@@ -64,29 +76,39 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
     // returning the new object that we create
     return obj;
   };
-
-  componentAtomTree = cleanComponentAtomTree(componentAtomTree);
+  let rawComponentAtomTree = cleanComponentAtomTree(componentAtomTree);
 
   useEffect(() => {
     document.getElementById('canvas').innerHTML = '';
+
     // creating the main svg container for d3 elements
     const svgContainer = d3
       .select('#canvas')
       .attr('width', width)
       .attr('height', height);
+
     // creating a pseudo-class for reusability
-    const g = svgContainer.append('g');
+    const g = svgContainer
+      .append('g')
+      .attr('transform', `translate(${x}, ${y}), scale(${k})`);
+
     let i = 0;
-    let duration: Number = 750;
+    let duration: Number = 750; //change to 1 so its super fast and looks like no re render
     let root: any;
     let path: any;
 
     // creating the tree map
     const treeMap = d3.tree().nodeSize([width, height]);
 
-    root = d3.hierarchy(componentAtomTree, function (d: any) {
-      return d.children;
-    });
+    if (!rawToggle) {
+      root = d3.hierarchy(rawComponentAtomTree, function (d: any) {
+        return d.children;
+      });
+    } else {
+      root = d3.hierarchy(componentAtomTree, function (d: any) {
+        return d.children;
+      });
+    }
     root.x0 = 0;
     root.y0 = width / 2;
 
@@ -104,29 +126,56 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
         .data(nodes, function (d: any) {
           return d.id || (d.id = ++i);
         });
+
       // this tells node where to be placed and go to
+      // adding a mouseOver event handler to each node
+      // display the data in the node on hover
+      // add mouseOut event handler that removes the popup text
       let nodeEnter = node
         .enter()
         .append('g')
         .attr('class', 'node')
         .attr('transform', function (d: any) {
-          return `translate(${source.x0}, ${source.y0})`;
+          return `translate(${source.y0}, ${source.x0})`;
         })
-        .on('click', click);
+        .on('click', click)
+        .on('mouseover', function (d: any, i: any) {
+          if (d.data.recoilNodes) {
+            for (let x = 0; x < d.data.recoilNodes.length; x++) {
+              d3.select(this)
+                .append('text')
+                .text(formatAtomSelectorText(d.data.recoilNodes[x]))
+                .style('fill', 'white')
+                .attr('x', formatMouseoverXValue(d.data.recoilNodes[x]))
+                .attr('y', 200 + x * 55)
+                .style('font-size', '3.5rem')
+                .attr('id', `popup${i}${x}`);
+            }
+          }
+        })
+        .on('mouseout', function (d: any, i: any) {
+          for (let x = 0; x < d.data.recoilNodes.length; x++) {
+            d3.select(`#popup${i}${x}`).remove();
+          }
+        });
+
       // determines shape/color/size of node
       nodeEnter
         .append('circle')
         .attr('class', 'node')
         .attr('r', determineSize)
         .attr('fill', colorComponents);
+
       // for each node that got created, append a text element that displays the name of the node
       nodeEnter
         .append('text')
         .attr('dy', '.31em')
-        .attr('x', (d: any) => (d.data.recoilNodes ? -115 : -75))
-        .attr('text-anchor', 'end')
+        .attr('y', (d: any) => (d.data.recoilNodes ? 138 : -75))
+        .attr('text-anchor', function (d: any) {
+          return d.children || d._children ? 'middle' : 'middle';
+        })
         .text((d: any) => d.data.name)
-        .style('font-size', `3rem`)
+        .style('font-size', `4.5rem`)
         .style('fill', 'white')
         .clone(true)
         .lower();
@@ -138,20 +187,22 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
         .transition()
         .duration(duration)
         .attr('transform', function (d: any) {
-          return `translate(${d.x}, ${d.y})`;
+          return `translate(${d.y}, ${d.x})`;
         });
+
       // allows user to see hand pop out when clicking is available and maintains color/size
       nodeUpdate
         .select('circle.node')
         .attr('r', determineSize)
         .attr('fill', colorComponents)
         .attr('cursor', 'pointer');
+
       let nodeExit = node
         .exit()
         .transition()
         .duration(duration)
         .attr('transform', function (d: any) {
-          return `translate(${source.x}, ${source.y})`;
+          return `translate(${source.y}, ${source.x})`;
         })
         .remove();
 
@@ -166,6 +217,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
         .data(links, function (d: any) {
           return d.id;
         });
+
       let linkEnter = link
         .enter()
         .insert('path', 'g')
@@ -173,7 +225,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
         .attr('stroke', '#646464')
         .attr('stroke-width', 5)
         .attr('d', function (d: any) {
-          let o = {y: source.y0, x: source.x0};
+          let o = {x: source.x0, y: source.y0};
           return diagonal(o, o);
         });
 
@@ -187,6 +239,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
         .attr('d', function (d: any) {
           return diagonal(d, d.parent);
         });
+
       let linkExit = link
         .exit()
         .transition()
@@ -194,7 +247,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
         .attr('stroke', '#646464')
         .attr('stroke-width', 5)
         .attr('d', function (d: any) {
-          let o = {x: source.x, y: source.y};
+          let o = {y: source.y, x: source.x};
           return diagonal(o, o);
         })
         .remove();
@@ -204,11 +257,12 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
         d.x0 = d.x;
         d.y0 = d.y;
       });
+
       function diagonal(s: any, d: any) {
-        path = `M ${s.x} ${s.y}
-          C ${(s.x + d.x) / 2} ${s.y},
-            ${(s.x + d.x) / 2} ${d.y},
-            ${d.x} ${d.y}`;
+        path = `M ${s.y} ${s.x}
+            C ${(s.y + d.y) / 2} ${s.x},
+              ${(s.y + d.y) / 2} ${d.x},
+              ${d.y} ${d.x}`;
 
         return path;
       }
@@ -221,31 +275,17 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
           d.children = d._children;
           d._children = null;
         }
+
         update(d);
-      }
-      // adding a mouseOver event handler to each node
-      // only add popup text on nodes with no children
-      // display the data in the node on hover
-      node.on('mouseover', function (d: any, i: any) {
+
         if (d.data.recoilNodes) {
+          setLegend(false);
           for (let x = 0; x < d.data.recoilNodes.length; x++) {
-            d3.select(this)
-              .append('text')
-              .text(formatAtomSelectorText(d.data.recoilNodes[x]))
-              .style('fill', 'white')
-              .attr('x', formatMouseoverXValue(d.data.recoilNodes[x]))
-              .attr('y', 200 + x * 55)
-              .style('font-size', '3.5rem')
-              .attr('id', `popup${i}${x}`);
+            setStr(formatAtomSelectorText(d.data.recoilNodes[x]));
           }
         }
-      });
-      // add mouseOut event handler that removes the popup text
-      node.on('mouseout', function (d: any, i: any) {
-        for (let x = 0; x < d.data.recoilNodes.length; x++) {
-          d3.select(`#popup${i}${x}`).remove();
-        }
-      });
+      }
+
       // allows the canvas to be draggable
       node.call(
         d3
@@ -269,35 +309,43 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
         .scaleExtent([0.1, 0.7])
         .on('zoom', zoomed),
     );
+
     svgContainer.call(
       zoom.transform,
-      d3.zoomIdentity.translate(400, 20).scale(0.3),
+      d3.zoomIdentity.translate(100, 300).scale(0.4),
     );
+
     // helper functions that help with dragging functionality
     function dragStarted() {
-      d3.select(this).raise();
-      g.attr('cursor', 'grabbing');
+      d3.select(this).g.attr('cursor', 'grabbing');
     }
+
     function dragged(d: any) {
       d3.select(this)
         .attr('dx', (d.x = d3.event.x))
         .attr('dy', (d.y = d3.event.y));
     }
+
     function dragEnded() {
       g.attr('cursor', 'grab');
     }
+
     // helper function that allows for zooming
     function zoomed(d: any) {
       g.attr('transform', d3.event.transform);
     }
+
     function formatMouseoverXValue(recoilValue: any) {
       if (atoms.hasOwnProperty(recoilValue)) {
         return -300;
       }
       return -425;
     }
+
     function formatAtomSelectorText(atomOrSelector: any) {
       let str = '';
+      // console.log('atomorselctor:', atomOrSelector);
+      // console.log('atoms:', atoms);
       atoms.hasOwnProperty(atomOrSelector)
         ? (str += `ATOM ${atomOrSelector}: ${JSON.stringify(
             atoms[atomOrSelector],
@@ -305,6 +353,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
         : (str += `SELECTOR ${atomOrSelector}: ${JSON.stringify(
             selectors[atomOrSelector],
           )}`);
+
       return str;
     }
 
@@ -324,6 +373,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
         if (d.data.recoilNodes.includes(selectedRecoilValue[0])) {
           return 'white';
         }
+
         let hasAtom = false;
         let hasSelector = false;
         for (let i = 0; i < d.data.recoilNodes.length; i++) {
@@ -334,6 +384,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
             hasSelector = true;
           }
         }
+
         if (hasAtom && hasSelector) {
           return 'orange';
         }
@@ -343,15 +394,26 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
           return 'yellow';
         }
       }
+
       return 'gray';
     }
   });
+
   return (
     <div>
       <div className="AtomComponentVisual">
         <svg id="canvas"></svg>
+        <button
+          id="fixedButton"
+          style={{color: rawToggle ? '#E6E6E6' : '#989898'}}
+          onClick={() => {
+            setRawToggle(!rawToggle);
+          }}>
+          Raw
+        </button>
       </div>
     </div>
   );
 };
+
 export default AtomComponentVisual;
