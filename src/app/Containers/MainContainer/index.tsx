@@ -18,6 +18,9 @@ const MainContainer: React.FC<MainContainerProps> = ({
 }) => {
   // useState hook to update the index of current snapshot rendered in devtool
   const [renderIndex, setRenderIndex] = useState(snapshotHistory.length - 1);
+
+  // Todo: usestate hook to update an array with all of the delta snapshots
+
   // useEffect for renderIndex
   useEffect(() => {
     setRenderIndex(snapshotHistory.length - 1);
