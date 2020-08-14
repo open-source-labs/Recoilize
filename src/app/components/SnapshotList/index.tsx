@@ -35,7 +35,8 @@ const SnapshotsList: React.FC<SnapshotsListProps> = ({
   for (let i = 0; i < snapshotHistoryLength; i++) {
     // ! Create function to filter
     let x = false;
-    if (i === 0) {
+    if (i === 0 || 1) {
+      // we need to edit this, for some reason wont work with first render
       x = true;
     } else {
       if (filter[i]) {
