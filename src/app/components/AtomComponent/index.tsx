@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import * as d3 from 'd3';
 import {componentAtomTree, atom, selector} from '../../../types';
-import AtomSelectorLegend from '../AtomSelectorLegend';
 
 interface AtomComponentVisualProps {
   componentAtomTree: componentAtomTree;
@@ -276,10 +275,10 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
           d.children = d._children;
           d._children = null;
         }
+
         update(d);
 
         if (d.data.recoilNodes) {
-          // let arr = []
           setLegend(false);
           for (let x = 0; x < d.data.recoilNodes.length; x++) {
             setStr(formatAtomSelectorText(d.data.recoilNodes[x]));
