@@ -34,17 +34,14 @@ const App: React.FC = () => {
 
         // ! creating the algo
         // if the filter length is zero, then we just push the first one
-
         if (filter.length === 0) {
           filter.push(msg.payload[0]);
         } else {
-          // creat
+          // push the difference between the objects
           const delta = diff(
             msg.payload[msg.payload.length - 2],
             msg.payload[msg.payload.length - 1],
           );
-
-          // console.log('this is the delta ', delta.filteredSnapshot);
           filter.push(delta.filteredSnapshot);
         }
         setFilter(filter);
