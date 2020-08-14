@@ -8,6 +8,7 @@ interface MainContainerProps {
   snapshotHistory: stateSnapshot[];
   selected: any;
   setSelected: any;
+  filter: any;
 }
 
 // wraps entire application
@@ -15,6 +16,7 @@ const MainContainer: React.FC<MainContainerProps> = ({
   snapshotHistory,
   selected,
   setSelected,
+  filter,
 }) => {
   // useState hook to update the index of current snapshot rendered in devtool
   const [renderIndex, setRenderIndex] = useState(snapshotHistory.length - 1);
@@ -38,6 +40,7 @@ const MainContainer: React.FC<MainContainerProps> = ({
         setRenderIndex={setRenderIndex}
         // ! passing through selected
         selected={selected}
+        filter={filter}
       />
       <VisualContainer
         //
