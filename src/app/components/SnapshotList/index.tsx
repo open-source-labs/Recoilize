@@ -12,6 +12,7 @@ interface SnapshotsListProps {
   // functionality to postMessage the selected snapshot index to background.js
   timeTravelFunc: (index: number) => void;
   selected: any;
+  filter: any;
 }
 
 let filterArray: any[] = [];
@@ -22,14 +23,42 @@ const SnapshotsList: React.FC<SnapshotsListProps> = ({
   setRenderIndex,
   timeTravelFunc,
   selected,
+  filter,
 }) => {
   // ! probably need to prop drill down something else as well to get this filter to work
   console.log('this is selected inside SnapshotList ', selected);
+  console.log('this is the filter inside of snapshotlist ', filter);
   // array of divs proportional to the length of snapshotHistory
   const snapshotDivs: JSX.Element[] = [];
+
   // iterate the same length of our snapshotHistory
   for (let i = 0; i < snapshotHistoryLength; i++) {
-    // using the selected, and comparing to an array, if it is in continue
+    let x = false;
+    // using the selected, and comparing to an array, if it is in continue -- compare the keys in each index to the filter
+    const filterFunc = () => {
+      if (i === 0) {
+        x = true;
+      } else {
+        for (let key in filter[i]) {
+          // console.log('this is the key', key);
+          for (let j = 0; j < selected.length; j++) {
+            console.log('this is the key', key);
+            console.log('this is the selected', selected[j].name);
+            if (key === selected[j].name) {
+              x = true; // there is a matching value
+            }
+          }
+        }
+      }
+
+      return false;
+    };
+    filterFunc();
+
+    if (x === false) {
+      continue;
+    }
+
     snapshotDivs.push(
       <div
         className="individualSnapshot"
