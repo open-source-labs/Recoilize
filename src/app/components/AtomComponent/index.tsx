@@ -1,12 +1,15 @@
 import React, {useState, useEffect} from 'react';
 import * as d3 from 'd3';
 import {componentAtomTree, atom, selector} from '../../../types';
+import AtomSelectorLegend from '../AtomSelectorLegend';
 
 interface AtomComponentVisualProps {
   componentAtomTree: componentAtomTree;
   selectedRecoilValue: any[];
   atoms: atom;
   selectors: selector;
+  setLegend: any;
+  setStr: any;
 }
 
 const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
@@ -14,6 +17,8 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
   selectedRecoilValue,
   atoms,
   selectors,
+  setLegend,
+  setStr,
 }) => {
   // set the heights and width of the tree to be passed into treeMap function
   const width = 400;
@@ -272,6 +277,14 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
           d._children = null;
         }
         update(d);
+
+        if (d.data.recoilNodes) {
+          // let arr = []
+          setLegend(false);
+          for (let x = 0; x < d.data.recoilNodes.length; x++) {
+            setStr(formatAtomSelectorText(d.data.recoilNodes[x]));
+          }
+        }
       }
 
       // allows the canvas to be draggable
@@ -332,7 +345,8 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
 
     function formatAtomSelectorText(atomOrSelector: any) {
       let str = '';
-
+      // console.log('atomorselctor:', atomOrSelector);
+      // console.log('atoms:', atoms);
       atoms.hasOwnProperty(atomOrSelector)
         ? (str += `ATOM ${atomOrSelector}: ${JSON.stringify(
             atoms[atomOrSelector],

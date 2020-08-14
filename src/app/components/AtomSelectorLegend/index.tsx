@@ -5,6 +5,8 @@ interface AtomSelectorLegendProps {
   atoms: object;
   selectors: object;
   selectedRecoilValue: any[];
+  legend: any;
+  str: any;
 }
 
 const AtomSelectorLegend: React.FC<AtomSelectorLegendProps> = ({
@@ -12,10 +14,13 @@ const AtomSelectorLegend: React.FC<AtomSelectorLegendProps> = ({
   atoms,
   selectors,
   selectedRecoilValue,
+  legend,
+  str,
 }) => {
   const selectorList: JSX.Element[] = [];
   const atomList: JSX.Element[] = [];
   Object.entries(selectors).forEach(([selectorName, value], i) => {
+    console.log('selectors', selectors);
     selectorList.push(
       <div
         style={
@@ -31,6 +36,7 @@ const AtomSelectorLegend: React.FC<AtomSelectorLegendProps> = ({
     );
   });
   Object.entries(atoms).forEach(([atomName, value], i) => {
+    console.log('atoms:', atoms);
     atomList.push(
       <div
         style={
@@ -46,18 +52,29 @@ const AtomSelectorLegend: React.FC<AtomSelectorLegendProps> = ({
     );
   });
 
-  return (
-    <div className="AtomSelectorLegend">
-      <div>
-        <h4>Atoms</h4>
-        {atomList}
+  console.log('atomList', atomList);
+  console.log('selectorList', selectorList);
+
+  if (!legend) {
+    return (
+      <div className="AtomSelectorLegend" style={{height: 400, width: '10%'}}>
+        <div>{str}</div>
       </div>
-      <div>
-        <h4>Selectors</h4>
-        {selectorList}
+    );
+  } else {
+    return (
+      <div className="AtomSelectorLegend">
+        <div>
+          <h4>Atoms</h4>
+          {atomList}
+        </div>
+        <div>
+          <h4>Selectors</h4>
+          {selectorList}
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 };
 
 export default AtomSelectorLegend;
