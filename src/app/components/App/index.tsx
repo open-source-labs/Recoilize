@@ -36,7 +36,7 @@ const App: React.FC = () => {
         // if (selected.length === 0) {
         // }
 
-        // ! creating the algo
+        // ! setting the array properly
         // if the filter length is zero, then we just push the first one
         if (filter.length === 0) {
           filter.push(msg.payload[0]);
