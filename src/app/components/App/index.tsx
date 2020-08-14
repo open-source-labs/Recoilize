@@ -30,11 +30,18 @@ const App: React.FC = () => {
       if (msg.action === 'recordSnapshot') {
         setSnapshotHistory(msg.payload);
 
-        filter.push('snapshot');
+        // ! creating the algo
+        // if the filter length is zero, then we just push the first one
+        if (filter.length === 0) {
+          filter.push(msg.payload[0]);
+        } else {
+          filter.push(msg.payload[msg.payload.length - 1]);
+        }
+        // console.log('snapshot history ', msg.payload);
+        // else, we must compare current to previous then push to the array
+        // filter.push('snapshot');
         setFilter(filter);
         console.log('this is the filter ', filter);
-        // console.log('we are here in snapshot was recorded');
-        // we need to do the algo to run each time
       }
     });
     // Todo: Create a variable that stores a number
