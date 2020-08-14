@@ -26,39 +26,32 @@ const SnapshotsList: React.FC<SnapshotsListProps> = ({
   filter,
 }) => {
   // ! probably need to prop drill down something else as well to get this filter to work
-  // console.log('this is selected inside SnapshotList ', selected);
-  // console.log('this is the filter inside of snapshotlist ', filter);
+  console.log('this is selected inside SnapshotList ', selected);
+  console.log('this is the filter inside of snapshotlist ', filter);
   // array of divs proportional to the length of snapshotHistory
   const snapshotDivs: JSX.Element[] = [];
 
   // iterate the same length of our snapshotHistory
   for (let i = 0; i < snapshotHistoryLength; i++) {
-    // let x = false;
-    // // using the selected, and comparing to an array, if it is in continue -- compare the keys in each index to the filter
-    // const filterFunc = () => {
-    //   if (i === 0) {
-    //     x = true;
-    //   } else {
-    //     // ! Currently the filter may generate way to many snapshots -- based on the payload. Find how the snapshothistorylength is being set and put the trigger there
-    //     for (let key in filter[i]) {
-    //       // console.log('this is the key', key);
-    //       for (let j = 0; j < selected.length; j++) {
-    //         // console.log('this is the key', key);
-    //         // console.log('this is the selected', selected[j].name);
-    //         if (key === selected[j].name) {
-    //           x = true; // there is a matching value
-    //         }
-    //       }
-    //     }
-    //   }
-
-    //   return false;
-    // };
-    // filterFunc();
-
-    // if (x === false) {
-    //   continue;
-    // }
+    // ! Create function to filter
+    let x = false;
+    if (i === 0) {
+      x = true;
+    } else {
+      if (filter[i]) {
+        for (let key in filter[i].filteredSnapshot) {
+          for (let j = 0; j < selected.length; j++) {
+            if (key === selected[j].name) {
+              x = true;
+            }
+          }
+        }
+      }
+    }
+    // see the iteration if x is false
+    if (x === false) {
+      continue;
+    }
 
     snapshotDivs.push(
       <div
