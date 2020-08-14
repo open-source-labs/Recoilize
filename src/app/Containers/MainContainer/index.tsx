@@ -21,8 +21,7 @@ const MainContainer: React.FC<MainContainerProps> = ({
   // useState hook to update the index of current snapshot rendered in devtool
   const [renderIndex, setRenderIndex] = useState(snapshotHistory.length - 1);
 
-  // useState hook for filtered Array
-  const [filterArray, setFilterArray] = useState(['howdy']);
+  // Todo: usestate hook to update an array with all of the delta snapshots
 
   // useEffect for renderIndex
   useEffect(() => {
@@ -43,10 +42,6 @@ const MainContainer: React.FC<MainContainerProps> = ({
         filter={filter}
       />
       <VisualContainer
-        //
-        filterArray={filterArray}
-        //
-        setFilterArray={setFilterArray}
         // snapshot at index [renderIndex -1]
         previousSnapshot={snapshotHistory[renderIndex - 1]}
         // snapshot at index [renderIndex]
