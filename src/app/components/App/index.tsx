@@ -7,10 +7,13 @@ const LOGO_URL = `https://public.bl.files.1drv.com/y4mFC_icIYGiJ2zg4zuUUlrZjGfCu
 const App: React.FC = () => {
   // useState hook to update the snapshotHistory array
   const [snapshotHistory, setSnapshotHistory] = useState<stateSnapshot[]>([]);
-  console.log('this is the snapshotHistory ', snapshotHistory);
+  // console.log('this is the snapshotHistory ', snapshotHistory);
 
   // todo: created selected to update array
   const [selected, setSelected] = useState([]);
+
+  // todo: Create algo that will clean up the big setsnapshothistory object, now and before
+  const [filter, setFilter] = useState([]);
 
   // use effect for snapshotHistory
   useEffect(() => {
@@ -26,6 +29,12 @@ const App: React.FC = () => {
     backgroundConnection.onMessage.addListener(msg => {
       if (msg.action === 'recordSnapshot') {
         setSnapshotHistory(msg.payload);
+
+        filter.push('snapshot');
+        setFilter(filter);
+        console.log('this is the filter ', filter);
+        // console.log('we are here in snapshot was recorded');
+        // we need to do the algo to run each time
       }
     });
     // Todo: Create a variable that stores a number

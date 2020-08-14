@@ -24,7 +24,7 @@ const SnapshotsList: React.FC<SnapshotsListProps> = ({
   selected,
 }) => {
   // ! probably need to prop drill down something else as well to get this filter to work
-  console.log('this is selected inside SnapshotList ', selected);
+  // console.log('this is selected inside SnapshotList ', selected);
   // array of divs proportional to the length of snapshotHistory
   const snapshotDivs: JSX.Element[] = [];
   // iterate the same length of our snapshotHistory
