@@ -5,6 +5,7 @@ import Visualizer from '../../components/Visualizer';
 import Tree from '../../components/Tree';
 import Network from '../../components/Network';
 import AtomComponentVisualContainer from '../AtomComponentTreeContainer';
+import Settings from '../../components/Settings';
 import {stateSnapshot} from '../../../types';
 
 interface VisualContainerProps {
@@ -23,6 +24,9 @@ const VisualContainer: React.FC<VisualContainerProps> = ({
   previousSnapshot,
   currentSnapshot,
 }) => {
+  // state for checkmark in persist state in settings
+  const [checked, setChecked] = useState(false);
+
   // conditional render of filtered snaps/ based on non-filtered snaps
   const filteredCurSnap = currentSnapshot
     ? currentSnapshot.filteredSnapshot
@@ -55,6 +59,7 @@ const VisualContainer: React.FC<VisualContainerProps> = ({
         filteredCurSnap={filteredCurSnap}
       />
     ),
+    Settings: <Settings checked={checked} setChecked={setChecked} />,
   };
   // array of all nav obj keys
   const tabsList = Object.keys(nav);
