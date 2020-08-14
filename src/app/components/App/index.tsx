@@ -32,6 +32,10 @@ const App: React.FC = () => {
       if (msg.action === 'recordSnapshot') {
         setSnapshotHistory(msg.payload);
 
+        // ! creating algo to make sure selected array is correct
+        // if (selected.length === 0) {
+        // }
+
         // ! creating the algo
         // if the filter length is zero, then we just push the first one
         if (filter.length === 0) {
