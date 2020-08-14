@@ -9,7 +9,7 @@ const LOGO_URL = `https://public.bl.files.1drv.com/y4mFC_icIYGiJ2zg4zuUUlrZjGfCu
 const App: React.FC = () => {
   // useState hook to update the snapshotHistory array
   const [snapshotHistory, setSnapshotHistory] = useState<stateSnapshot[]>([]);
-  console.log('this is the snapshotHistory ', snapshotHistory);
+  // console.log('this is the snapshotHistory ', snapshotHistory);
 
   // todo: created selected to update array
   const [selected, setSelected] = useState([]);
@@ -35,8 +35,14 @@ const App: React.FC = () => {
         setSnapshotHistory(msg.payload);
 
         // ! creating algo to make sure selected array is correct
-        // if (selected.length === 0) {
-        // }
+        if (selected.length === 0) {
+          const arr = [];
+          for (let key in msg.payload[0].filteredSnapshot) {
+            arr.push({name: key});
+          }
+          console.log(arr);
+          setSelected(arr);
+        }
 
         // ! setting the array properly
         // if the filter length is zero, then we just push the first one
