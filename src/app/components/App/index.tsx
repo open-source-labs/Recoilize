@@ -48,9 +48,14 @@ const App: React.FC = () => {
             msg.payload[msg.payload.length - 2],
             msg.payload[msg.payload.length - 1],
           );
-          msg.payload[msg.payload.length - 1] = delta;
-          // filter.push(delta.filteredSnapshot);
-          setFilter(msg.payload);
+          // only push if the snapshot length is chill
+          if (filter.length < msg.payload.length) {
+            filter.push(delta);
+          }
+
+          // msg.payload[msg.payload.length - 1] = delta;
+          // don't use push, this will keep the numbers even
+          setFilter(filter);
         }
       }
     });
