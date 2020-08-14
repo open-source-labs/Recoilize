@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {filterArray} from '../../SnapshotList/index'; // array of atoms/selectors
-import {Multiselect} from 'multiselect-react-dropdown';
+const {Multiselect} = require('multiselect-react-dropdown');
 import {stateSnapshot} from '../../../../types';
 
 interface AtomSettingsProps {
