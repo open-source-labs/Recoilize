@@ -15,12 +15,17 @@ import AtomSettings from './SettingsComponents/AtomSettings';
 //   filteredCurSnap: filteredSnapshot;
 // }
 
+interface StateSettingsProps {
+  checked: boolean;
+  setChecked: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
 // renders the difference between the most recent state change and the previous
-const Settings: React.FC = () => {
+const Settings: React.FC<StateSettingsProps> = ({checked, setChecked}) => {
   return (
     <div className="Settings">
       <AtomSettings />
-      <StateSettings />
+      <StateSettings checked={checked} setChecked={setChecked} />
       <ThrottleSettings />
     </div>
   );
