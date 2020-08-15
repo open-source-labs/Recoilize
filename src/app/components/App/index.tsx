@@ -9,7 +9,7 @@ const LOGO_URL = `https://public.bl.files.1drv.com/y4mFC_icIYGiJ2zg4zuUUlrZjGfCu
 const App: React.FC = () => {
   // useState hook to update the snapshotHistory array
   const [snapshotHistory, setSnapshotHistory] = useState<stateSnapshot[]>([]);
-  // console.log('this is the snapshotHistory ', snapshotHistory);
+  console.log('this is the snapshotHistory ', snapshotHistory);
 
   // todo: created selected to update array
   const [selected, setSelected] = useState([]);
