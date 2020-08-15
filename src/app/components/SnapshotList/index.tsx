@@ -34,21 +34,29 @@ const SnapshotsList: React.FC<SnapshotsListProps> = ({
   // iterate the same length of our snapshotHistory
   for (let i = 0; i < snapshotHistoryLength; i++) {
     // ! Create function to filter
-    let x = false;
-    if (i === 0 || 1) {
-      // we need to edit this, for some reason wont work with first render
-      x = true;
-    } else {
-      if (filter[i]) {
-        for (let key in filter[i].filteredSnapshot) {
-          for (let j = 0; j < selected.length; j++) {
-            if (key === selected[j].name) {
-              x = true;
+    const filterFunc = () => {
+      // don't use the counter for this, not reliable
+      if (i === 0) {
+        console.log('we are here in i === 0');
+        return true;
+      } else {
+        // checks if is in the selected array
+        if (filter[i]) {
+          console.log('inside the filter conditional');
+          for (let key in filter[i].filteredSnapshot) {
+            for (let j = 0; j < selected.length; j++) {
+              if (key === selected[j].name) {
+                return true;
+              }
             }
           }
         }
       }
-    }
+      return false;
+    };
+
+    let x = filterFunc();
+
     // see the iteration if x is false
     if (x === false) {
       continue;
