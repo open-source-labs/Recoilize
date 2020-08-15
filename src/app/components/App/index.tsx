@@ -44,9 +44,9 @@ const App: React.FC = () => {
         // ! Set the snapshot history state
         setSnapshotHistory(msg.payload);
 
-        // ! Getting filter array to push properly
-        // if the filter length is zero, then we just push the first one
-        if (!msg.payload[1]) {
+        // todo: Getting filter array to push properly
+        if (!msg.payload[1] || filter.length === 0) {
+          // ! currently the filter does not work if recoilize is not open, we must change msg.payload to incorporate delta function in the backend
           filter = msg.payload;
           setFilter(msg.payload);
         } else if (filter.length === 0) {
@@ -64,11 +64,9 @@ const App: React.FC = () => {
             filter.push(delta);
           }
           setFilter(filter);
-          // console.log('checking the filter ', filter);
         }
       }
     });
-    // Todo: Create a variable that stores a number
   }, []);
   // Render main container if we have detected a recoil app with the recoilize module passing data
   const renderMainContainer = (
