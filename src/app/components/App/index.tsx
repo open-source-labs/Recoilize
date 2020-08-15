@@ -13,11 +13,11 @@ const App: React.FC = () => {
 
   // todo: created selected to update array
   const [selected, setSelected] = useState([]);
-  console.log('this is selected ', selected);
+  // console.log('this is selected ', selected);
 
   // todo: Create algo that will clean up the big setsnapshothistory object, now and before
   const [filter, setFilter] = useState([]);
-  console.log('this is the filter ', filter);
+  // console.log('this is the filter ', filter);
 
   // use effect for snapshotHistory
   useEffect(() => {
@@ -32,22 +32,23 @@ const App: React.FC = () => {
     // LISTEN for messages FROM bg script
     backgroundConnection.onMessage.addListener(msg => {
       if (msg.action === 'recordSnapshot') {
-        setSnapshotHistory(msg.payload);
-
         // ! creating algo to make sure selected array is correct
         if (selected.length === 0) {
           const arr = [];
           for (let key in msg.payload[0].filteredSnapshot) {
             arr.push({name: key});
           }
-          console.log(arr);
           setSelected(arr);
         }
 
-        // ! setting the array properly
+        setSnapshotHistory(msg.payload);
+
+        // ! Getting filter array to push properly
         // if the filter length is zero, then we just push the first one
         if (filter.length === 0) {
+          console.log('we are in the push');
           filter.push(msg.payload[0]);
+          setFilter(filter);
         } else {
           // push the difference between the objects
           const delta = diff(
@@ -58,10 +59,8 @@ const App: React.FC = () => {
           if (filter.length < msg.payload.length) {
             filter.push(delta);
           }
-
-          // msg.payload[msg.payload.length - 1] = delta;
-          // don't use push, this will keep the numbers even
           setFilter(filter);
+          // console.log('checking the filter ', filter);
         }
       }
     });

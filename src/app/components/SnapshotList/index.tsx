@@ -38,12 +38,10 @@ const SnapshotsList: React.FC<SnapshotsListProps> = ({
     const filterFunc = () => {
       // don't use the counter for this, not reliable
       if (i === 0) {
-        console.log('we are here in i === 0');
         return true;
       }
       // checks if is in the selected array
       if (filter[i]) {
-        console.log('inside the filter conditional');
         for (let key in filter[i].filteredSnapshot) {
           for (let j = 0; j < selected.length; j++) {
             if (key === selected[j].name) {
