@@ -41,6 +41,7 @@ const App: React.FC = () => {
           setSelected(arr);
         }
 
+        // ! SET UP ACTUALLY
         setSnapshotHistory(msg.payload);
 
         // ! Getting filter array to push properly
