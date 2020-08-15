@@ -46,7 +46,9 @@ const App: React.FC = () => {
 
         // ! Getting filter array to push properly
         // if the filter length is zero, then we just push the first one
-        if (filter.length === 0) {
+        if (!msg.payload[1]) {
+          setFilter(msg.payload);
+        } else if (filter.length === 0) {
           console.log('we are in the push');
           filter.push(msg.payload[0]);
           setFilter(filter);
