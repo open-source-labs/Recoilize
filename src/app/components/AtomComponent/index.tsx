@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import * as d3 from 'd3';
 import {componentAtomTree, atom, selector} from '../../../types';
+import {string} from 'prop-types';
 
 interface AtomComponentVisualProps {
   componentAtomTree: componentAtomTree;
@@ -20,8 +21,9 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
   setStr,
 }) => {
   // set the heights and width of the tree to be passed into treeMap function
-  const width = 400;
-  const height = 733.33;
+  let width = 0;
+  let height = 0;
+  let legendStr = '';
 
   // this state allows the canvas to stay at the zoom level on multiple re-renders
   const [{x, y, k}, setZoomState] = useState({x: 0, y: 0, k: 0});
@@ -79,13 +81,16 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
   let rawComponentAtomTree = cleanComponentAtomTree(componentAtomTree);
 
   useEffect(() => {
+    height = document.querySelector('.Component').clientHeight;
+    width = document.querySelector('.Component').clientWidth;
+    legendStr = 'LEGEND STRING';
+
+    console.log('width, height: ', width, ' ', height);
     document.getElementById('canvas').innerHTML = '';
 
     // creating the main svg container for d3 elements
-    const svgContainer = d3
-      .select('#canvas')
-      .attr('width', width)
-      .attr('height', height);
+    const svgContainer = d3.select('#canvas');
+    // .on('dblclick.zoom', console.log('this is where we would put null'));
 
     // creating a pseudo-class for reusability
     const g = svgContainer
@@ -98,7 +103,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
     let path: any;
 
     // creating the tree map
-    const treeMap = d3.tree().nodeSize([width, height]);
+    const treeMap = d3.tree().nodeSize([height, width]);
 
     if (!rawToggle) {
       root = d3.hierarchy(rawComponentAtomTree, function (d: any) {
@@ -109,7 +114,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
         return d.children;
       });
     }
-    root.x0 = 0;
+    root.x0 = 10;
     root.y0 = width / 2;
 
     update(root);
@@ -282,6 +287,9 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
           setLegend(false);
           for (let x = 0; x < d.data.recoilNodes.length; x++) {
             setStr(formatAtomSelectorText(d.data.recoilNodes[x]));
+            legendStr = formatAtomSelectorText(
+              d.data.recoilNodes[x],
+            ).toString();
           }
         }
       }
@@ -302,32 +310,34 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
     svgContainer.call(
       d3
         .zoom()
-        .extent([
-          [width, height],
-          [width, height],
-        ])
-        .scaleExtent([0.1, 0.7])
+        // .extent([
+        //   [0, 0],
+        //   [width, height],
+        // ])
+        .scaleExtent([0.4, 0.9])
         .on('zoom', zoomed),
+      // .on('zoom.multiple', () => d3.event.preventDefault()),
     );
 
     svgContainer.call(
       zoom.transform,
+      // Changes the initial view
       d3.zoomIdentity.translate(100, 300).scale(0.4),
     );
 
     // helper functions that help with dragging functionality
     function dragStarted() {
-      d3.select(this).g.attr('cursor', 'grabbing');
+      // d3.select(this).g.attr('cursor', 'grabbing');
     }
 
     function dragged(d: any) {
-      d3.select(this)
-        .attr('dx', (d.x = d3.event.x))
-        .attr('dy', (d.y = d3.event.y));
+      // d3.select(this)
+      //   .attr('dx', (d.x = d3.event.x))
+      //   .attr('dy', (d.y = d3.event.y));
     }
 
     function dragEnded() {
-      g.attr('cursor', 'grab');
+      // g.attr('cursor', 'grab');
     }
 
     // helper function that allows for zooming
@@ -397,21 +407,22 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
 
       return 'gray';
     }
-  });
+  }, [componentAtomTree, rawToggle]);
 
   return (
-    <div>
-      <div className="AtomComponentVisual">
-        <svg id="canvas"></svg>
-        <button
-          id="fixedButton"
-          style={{color: rawToggle ? '#E6E6E6' : '#989898'}}
-          onClick={() => {
-            setRawToggle(!rawToggle);
-          }}>
-          Raw
-        </button>
-      </div>
+    <div className="AtomComponentVisual">
+      <div className="test">{legendStr}</div>
+      <svg id="canvas"></svg>
+      <button
+        id="fixedButton"
+        style={{
+          color: rawToggle ? '#E6E6E6' : '#989898',
+        }}
+        onClick={() => {
+          setRawToggle(!rawToggle);
+        }}>
+        <span>{rawToggle ? 'Collapse' : 'Expand'}</span>
+      </button>
     </div>
   );
 };

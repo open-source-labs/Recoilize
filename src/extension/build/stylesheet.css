@@ -39,6 +39,16 @@ body {
 }
 
 /* COMPONENTS */
+/* .Component {
+  height: 100%;
+  width: 100%;
+} */
+
+.AtomComponentVisual {
+  height: 100%;
+  width: 100%;
+}
+
 .SnapshotsList {
   height: 85vh;
   overflow-y: auto;
@@ -141,10 +151,11 @@ body {
   position: fixed;
   bottom: 0px;
   right: 0px;
-  width: 50px;
+  width: 65px;
   height: 50px;
   background: transparent;
   border: none !important;
+  margin-right: 5px;
 }
 
 .rawToggle {
@@ -204,17 +215,22 @@ body {
 }
 
 .AtomSelectorLegend {
-  background-color: #2d2d2d;
+  background-color: rgba(45, 45, 45, 0.95);
   z-index: 1;
   position: fixed;
   right: 0;
   border: 2px solid #484848;
   top: 2.5rem;
-  width: 200px;
-  max-height: 80%;
-  border-right: none;
-  overflow-y: auto;
+  width: 250px;
+  height: 400px;
+  overflow-y: scroll;
   text-align: center;
+  margin-right: 5px;
+}
+
+::-webkit-scrollbar {
+  width: 0px; /* Remove scrollbar space */
+  background: transparent; /* Optional: just make scrollbar invisible */
 }
 
 .atomLi,
