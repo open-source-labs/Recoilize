@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {filterArray} from '../../SnapshotList/index'; // array of atoms/selectors
-const {Multiselect} = require('multiselect-react-dropdown');
+const {Multiselect} = require('multiselect-react-dropdown'); // https://www.npmjs.com/package/multiselect-react-dropdown
 import {stateSnapshot} from '../../../../types';
 
 interface AtomSettingsProps {
@@ -13,21 +12,22 @@ const AtomSettings: React.FC<AtomSettingsProps> = ({
   selected,
   setSelected,
 }) => {
-  // https://github.com/srigar/multiselect-react-dropdown
   // Make filterArray into array of objects, we want to get the most recent so that we have all possible options
-  let options = [];
+  let options: any[] = [];
   for (let key in snapshotHistory[snapshotHistory.length - 1]
     .filteredSnapshot) {
     const obj = {name: key};
     options.push(obj);
   }
+  console.log('WHEN IS OPTIONS CREATED: ', options);
 
   // ! Selected is prop drilled down from app -> maincontainer -> visualcontainer -> settings -> atom settings
-  // console.log('this is the selected in atomSettings ', selected);
-  // we need to add to options, the NEW ones that are not in the success options
 
   // Use React hooks to change options array initially set as options
   const [selectedOptions, setOptions] = useState(options);
+
+  console.log('OPTIONS selected: ', selected);
+  console.log('OPTIONS selectedOptions: ', selectedOptions);
 
   // Todo: Create a conditional that will update the selected options onchange of the array -- updates if they are not equal, will add in NEW ADDITIONS
   // if (!(JSON.stringify(options) === JSON.stringify(selected))) {
@@ -36,22 +36,30 @@ const AtomSettings: React.FC<AtomSettingsProps> = ({
   // }
   // onSelect & onRemove functions for when selecting & removing atoms/selectors from the filter
   const onSelect = (selectedList: any, selectedItem: any) => {
-    // console.log('This is onSelect selectedList: ', selectedList);
-    // console.log('This is onSelect selectedItem: ', selectedItem);
+    //console.log('This is onSelect selectedList: ', selectedList);
+    //console.log('This is onSelect selectedItem: ', selectedItem);
+    selected.push(selectedItem);
     setOptions(selectedList);
-    setSelected(selectedList); // propdrilled, so edited up top
+    setSelected(selected); // propdrilled, so edited up top
+    console.log('This is selected AFTER onSelect: ', selected);
+    console.log('These are options onSelect ', options);
+    console.log('This is selectedOption onSelect: ', selectedOptions);
   };
   const onRemove = (selectedList: any, removedItem: any) => {
-    // console.log('This is onRemove selectedList: ', selectedList);
-    // console.log('This is onRemove removedItem: ', removedItem);
+    //console.log('This is onRemove selectedList: ', selectedList);
+    //console.log('This is onRemove removedItem: ', removedItem);
+
+    // Remove removedItem from selected
+    selected.splice(selected.indexOf(removedItem), 1);
     setOptions(selectedList);
-    setSelected(selectedList);
+    setSelected(selected);
+    console.log('This is selected AFTER onRemove: ', selected);
+    console.log('These are the options onRemove', options);
+    console.log('This is selectedOption onRemove: ', selectedOptions);
   };
 
   // each time a new atom or selector is added, we need to update the selectedOptions arry
 
-  // console.log('These are the selected Options ', selectedOptions);
-  // console.log('These are the state options ', options);
   return (
     <div>
       <h2>Atom and Selector Filter</h2>
