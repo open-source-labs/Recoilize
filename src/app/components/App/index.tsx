@@ -8,6 +8,7 @@ const App: React.FC = () => {
   // useState hook to update the snapshotHistory array
   const [snapshotHistory, setSnapshotHistory] = useState<stateSnapshot[]>([]);
   // use effect for snapshotHistory
+  console.log('snapshothistory:', snapshotHistory);
   useEffect(() => {
     // SETUP connection to bg script
     const backgroundConnection = chrome.runtime.connect();

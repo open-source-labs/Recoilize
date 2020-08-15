@@ -93,7 +93,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
       .attr('transform', `translate(${x}, ${y}), scale(${k})`);
 
     let i = 0;
-    let duration: Number = 750; //change to 1 so its super fast and looks like no re render
+    let duration: Number = 1; //change to 1 so its super fast and looks like no re render
     let root: any;
     let path: any;
 
@@ -138,7 +138,18 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
         .attr('transform', function (d: any) {
           return `translate(${source.y0}, ${source.x0})`;
         })
-        .on('click', click)
+        .on('click', function (d: any) {
+          if (d.children) {
+            d._children = d.children;
+            d.children = null;
+          } else {
+            d.children = d._children;
+            d._children = null;
+          }
+
+          update(d);
+          click(d);
+        })
         .on('mouseover', function (d: any, i: any) {
           if (d.data.recoilNodes) {
             for (let x = 0; x < d.data.recoilNodes.length; x++) {
@@ -268,17 +279,9 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
       }
 
       function click(d: any) {
-        if (d.children) {
-          d._children = d.children;
-          d.children = null;
-        } else {
-          d.children = d._children;
-          d._children = null;
-        }
-
-        update(d);
-
-        if (d.data.recoilNodes) {
+        console.log('d.data.recoilnodes:', d.data.recoilNodes.length);
+        if (d.data.recoilNodes.length > 0) {
+          console.log('no children allowed');
           setLegend(false);
           for (let x = 0; x < d.data.recoilNodes.length; x++) {
             setStr(formatAtomSelectorText(d.data.recoilNodes[x]));
@@ -312,7 +315,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
 
     svgContainer.call(
       zoom.transform,
-      d3.zoomIdentity.translate(100, 300).scale(0.4),
+      d3.zoomIdentity.translate(100, 400).scale(0.1),
     );
 
     // helper functions that help with dragging functionality
