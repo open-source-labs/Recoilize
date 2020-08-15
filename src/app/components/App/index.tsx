@@ -16,7 +16,7 @@ const App: React.FC = () => {
   // console.log('this is selected ', selected);
 
   // todo: Create algo that will clean up the big setsnapshothistory object, now and before
-  const [filter, setFilter] = useState([]);
+  let [filter, setFilter] = useState([]);
   // console.log('this is the filter ', filter);
 
   // use effect for snapshotHistory
@@ -47,9 +47,9 @@ const App: React.FC = () => {
         // ! Getting filter array to push properly
         // if the filter length is zero, then we just push the first one
         if (!msg.payload[1]) {
+          filter = msg.payload;
           setFilter(msg.payload);
-        }
-        if (filter.length === 0) {
+        } else if (filter.length === 0) {
           console.log('we are in the push');
           filter.push(msg.payload[0]);
           setFilter(filter);
