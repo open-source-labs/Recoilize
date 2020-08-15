@@ -146,7 +146,7 @@ export default function RecoilizeDebugger(props) {
 
   // function retreives length and fills snapshot array
   const setProperIndexForPersistedState = () => {
-    const retreived = await sessionStorage.getItem('persistedSnapshots');
+    const retreived = sessionStorage.getItem('persistedSnapshots');
     const snapshotsArray = new Array(Number(retreived) + 1).fill({});
     setSnapshots(snapshotsArray);
   };
