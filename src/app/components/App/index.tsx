@@ -41,14 +41,15 @@ const App: React.FC = () => {
           setSelected(arr);
         }
 
-        // ! SET THE STATE AFTER
+        // ! Set the snapshot history state
         setSnapshotHistory(msg.payload);
 
         // ! Getting filter array to push properly
         // if the filter length is zero, then we just push the first one
         if (!msg.payload[1]) {
           setFilter(msg.payload);
-        } else if (filter.length === 0) {
+        }
+        if (filter.length === 0) {
           console.log('we are in the push');
           filter.push(msg.payload[0]);
           setFilter(filter);
