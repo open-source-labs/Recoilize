@@ -33,8 +33,7 @@ const SnapshotsList: React.FC<SnapshotsListProps> = ({
 
   // iterate the same length of our snapshotHistory
   for (let i = 0; i < snapshotHistoryLength; i++) {
-    // ! Create function to filter
-
+    // ! function to filter
     const filterFunc = () => {
       // don't use the counter for this, not reliable
       if (i === 0) {

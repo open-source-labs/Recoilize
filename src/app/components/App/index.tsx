@@ -42,6 +42,8 @@ const App: React.FC = () => {
           setSelected(arr);
         }
 
+        // else, we need to set selected to what we got before
+
         // ! Set the snapshot history state
         setSnapshotHistory(msg.payload);
 
