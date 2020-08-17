@@ -32,7 +32,7 @@ const App: React.FC = () => {
     // LISTEN for messages FROM bg script
     backgroundConnection.onMessage.addListener(msg => {
       if (msg.action === 'recordSnapshot') {
-        // ! creating algo -- sets to the intial length first
+        // ! sets the initial selected
         if (!msg.payload[1] || filter.length === 0) {
           // ensures we only set initially
           const arr = [];
@@ -41,6 +41,7 @@ const App: React.FC = () => {
           }
           setSelected(arr);
         }
+        // ! Else, if not the first time, we want to setSelected to everything, with potential minuses?
 
         // else, we need to set selected to what we got before -- this won't work becuase will just add everything
         // add everything THAT WAS NOT IN the original, we definitely want to add then, but then we don't know we closed out
