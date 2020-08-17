@@ -32,11 +32,6 @@ const AtomSettings: React.FC<AtomSettingsProps> = ({
   const [selectedOptions, setOptions] = useState(options);
 
   // Todo: Create a conditional that will update the selected options onchange of the array -- updates if they are not equal, will add in NEW ADDITIONS
-  // if (!(JSON.stringify(options) === JSON.stringify(selected))) {
-  //   console.log('we hit');
-  //   setSelected(options);
-  // }
-
   // onSelect & onRemove functions for when selecting & removing atoms/selectors from the filter
   const onSelect = (selectedList: any, selectedItem: any) => {
     // console.log('This is onSelect selectedList: ', selectedList);
