@@ -44,8 +44,7 @@ const App: React.FC = () => {
         }
       }
     }
-    // setSelected(selected);
-  }, [snapshotHistory]); // Only re-run the effect if count changes
+  }, [snapshotHistory]); // Only re-run the effect if snapshot history changes -- react hooks
 
   // use effect for snapshotHistory
   useEffect(() => {
@@ -70,7 +69,6 @@ const App: React.FC = () => {
           setSelected(arr);
         } else {
         }
-        // ! Else, if not the first time, we want to setSelected to everything, with potential minuses?
 
         // ! Set the snapshot history state
         setSnapshotHistory(msg.payload);
