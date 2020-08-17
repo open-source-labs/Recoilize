@@ -40,16 +40,17 @@ const App: React.FC = () => {
             arr.push({name: key});
           }
           setSelected(arr);
-        } else {
-          // todo: We need to add if there are new keys inside of the obj
-          const arr = [];
-          // adds to the most recent everything -- how can we be more selective
-          for (let key in msg.payload[msg.payload.length - 1]
-            .filteredSnapshot) {
-            arr.push({name: key});
-          }
-          setSelected(arr);
         }
+        // else {
+        //   // todo: We need to add if there are new keys inside of the obj, we need to know what is inside the list
+        //   const arr = [];
+        //   // adds to the most recent everything -- how can we be more selective
+        //   for (let key in msg.payload[msg.payload.length - 1]
+        //     .filteredSnapshot) {
+        //     arr.push({name: key});
+        //   }
+        //   setSelected(arr);
+        // }
 
         // ! Set the snapshot history state
         setSnapshotHistory(msg.payload);

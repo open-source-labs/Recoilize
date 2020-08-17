@@ -24,12 +24,16 @@ const AtomSettings: React.FC<AtomSettingsProps> = ({
     options.push(obj);
   }
 
+  // do a useeffect based on the snapshoothistory
+
   // ! Selected is prop drilled down from app -> maincontainer -> visualcontainer -> settings -> atom settings
   // console.log('this is the selected in atomSettings ', selected);
   // we need to add to options, the NEW ones that are not in the success options
 
   // Use React hooks to change options array initially set as options
   const [selectedOptions, setOptions] = useState(options);
+
+  console.log('these are the selected Options, ', options);
 
   // Todo: Create a conditional that will update the selected options onchange of the array -- updates if they are not equal, will add in NEW ADDITIONS
   // onSelect & onRemove functions for when selecting & removing atoms/selectors from the filter
