@@ -5,6 +5,7 @@ import {filteredSnapshot} from '../../../types';
 interface NetworkProps {
   filteredCurSnap: filteredSnapshot;
 }
+
 const Network: React.FC<NetworkProps> = ({filteredCurSnap}) => {
   const [{x, y, k}, setZoomState] = useState({x: 0, y: 0, k: 0});
   const [searchValue, setSearchValue] = useState('');
@@ -12,7 +13,7 @@ const Network: React.FC<NetworkProps> = ({filteredCurSnap}) => {
   const handleChange = (e: any) => {
     setSearchValue(e.target.value);
   };
-  //console.log('filteredCurSnap', filteredCurSnap);
+
   useEffect(() => {
     setZoomState(d3.zoomTransform(d3.select('#networkCanvas').node()));
   }, [filteredCurSnap]);
@@ -23,26 +24,23 @@ const Network: React.FC<NetworkProps> = ({filteredCurSnap}) => {
       for (let key in filteredCurSnap) {
         if (key.toLowerCase().includes(searchValue.toLowerCase())) {
           newFilteredCurSnap[key] = filteredCurSnap[key];
-          // console.log('newFilteredCurSnap[key]', newFilteredCurSnap[key]);
-          // console.log('keys', Object.keys(newFilteredCurSnap[key]));
           grabNodeToNodeSubscriptions(newFilteredCurSnap[key]);
           grabNodeDeps(newFilteredCurSnap[key]);
         }
       }
     };
+
     const grabNodeToNodeSubscriptions = (node: any) => {
       let nodeSubscriptionLength = node.nodeToNodeSubscriptions.length;
       if (nodeSubscriptionLength > 0) {
         for (let i = 0; i < nodeSubscriptionLength; i += 1) {
           let currSN = node.nodeToNodeSubscriptions[i];
-          // console.log('currSN', currSN);
           newFilteredCurSnap[currSN] = filteredCurSnap[currSN];
           grabNodeToNodeSubscriptions(filteredCurSnap[currSN]);
         }
       }
     };
     const grabNodeDeps = (node: any) => {
-      //console.log('node in nodeDeps', node);
       let nodeDepsLength = node.nodeDeps.length;
       if (nodeDepsLength > 0) {
         for (let i = 0; i < nodeDepsLength; i += 1) {
@@ -52,8 +50,8 @@ const Network: React.FC<NetworkProps> = ({filteredCurSnap}) => {
         }
       }
     };
+
     filter(filteredCurSnap);
-    //console.log('newFilteredCurSnap after filtering', newFilteredCurSnap);
 
     document.getElementById('networkCanvas').innerHTML = '';
 
@@ -105,6 +103,7 @@ const Network: React.FC<NetworkProps> = ({filteredCurSnap}) => {
     let snap;
     if (searchValue === '') snap = filteredCurSnap;
     else snap = newFilteredCurSnap;
+
     // TRANSFORM DATA INTO D3 SUPPORTED FORMAT FOR NETWORK GRAPH
     const networkData: any = makeRelationshipLinks(snap);
     // MAIN UPDATE CALL
