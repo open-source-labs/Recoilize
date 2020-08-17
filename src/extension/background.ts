@@ -46,9 +46,6 @@ chrome.runtime.onConnect.addListener(port => {
 
       case 'persistState':
         if (tabId) {
-          chrome.extension
-            .getBackgroundPage()
-            .window.console.log('message received in background');
           // if msg tabId provided, send persistState command to content-script
           chrome.tabs.sendMessage(Number(tabId), msg);
         }
@@ -145,10 +142,6 @@ chrome.runtime.onMessage.addListener((msg, sender) => {
       });
       break;
     case 'persistSnapshots':
-      chrome.extension
-        .getBackgroundPage()
-        .window.console.log('tabIDssssss', tabId);
-
       // getting the array of filtered snapshots that exists on locoal storage
       chrome.storage.local.get(tabId, function (result) {
         console.log('storage values', result[tabId]);

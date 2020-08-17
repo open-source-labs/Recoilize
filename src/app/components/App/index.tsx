@@ -14,9 +14,37 @@ const App: React.FC = () => {
 
   // todo: created selected to update array
   const [selected, setSelected] = useState([]);
+  console.log('this is the selected ', selected);
 
   // todo: Create algo that will clean up the big setsnapshothistory object, now and before
-  const [filter, setFilter] = useState([]);
+  let [filter, setFilter] = useState([]);
+
+  // ! Setting up the selected
+  useEffect(() => {
+    let last;
+    if (snapshotHistory[snapshotHistory.length - 1]) {
+      last = snapshotHistory[snapshotHistory.length - 1].filteredSnapshot;
+    }
+    // we must compare with the original
+    for (let key in last) {
+      if (!snapshotHistory[0].filteredSnapshot[key]) {
+        // only push if the name doesn't already exist
+        const check = () => {
+          for (let i = 0; i < selected.length; i++) {
+            // break if it exists
+            if (selected[i].name === key) {
+              return true;
+            }
+          }
+          // does not exist
+          return false;
+        };
+        if (!check()) {
+          selected.push({name: key});
+        }
+      }
+    }
+  }, [snapshotHistory]); // Only re-run the effect if snapshot history changes -- react hooks
 
   // Set an array to keep track of all atoms and selectors (not seen on the frontend at all)
   const [arrayOfEverything, setArrayOfEverything] = useState([]);
@@ -34,74 +62,42 @@ const App: React.FC = () => {
     // LISTEN for messages FROM bg script
     backgroundConnection.onMessage.addListener(msg => {
       if (msg.action === 'recordSnapshot') {
+        // ! sets the initial selected
+        if (!msg.payload[1] || filter.length === 0) {
+          // ensures we only set initially
+          const arr = [];
+          for (let key in msg.payload[0].filteredSnapshot) {
+            arr.push({name: key});
+          }
+          setSelected(arr);
+        }
+
+        // ! Set the snapshot history state
         setSnapshotHistory(msg.payload);
 
-        // Make array of objects initialAtomsArray
-        const initialAtomsArray: any[] = Object.keys(
-          msg.payload[0].filteredSnapshot,
-        );
-
-        // If arrayOfEverything hasn't been populated yet, populate with initialAtomsArrays
-        if (arrayOfEverything.length === 0) {
-          initialAtomsArray.forEach(el => arrayOfEverything.push(el));
-        }
-        setArrayOfEverything(arrayOfEverything);
-
-        console.log('This is arrayOfEverything: ', arrayOfEverything);
-
-        // If selected has no length ie no values, populate with initialAtomsArray for initlal filter
-        if (selected.length === 0) {
-          initialAtomsArray.forEach(el => selected.push({name: el}));
-          setSelected(selected);
-        }
-        setSelected(selected);
-        console.log(
-          'This is selected AFTER checking selected.length AND setSelected-ing again: ',
-          selected,
-        );
-
-        // if the filter length is zero, then we just push the first one
-        if (filter.length === 0) {
+        // ! Setting the FILTER Array
+        if (!msg.payload[1] || filter.length === 0) {
+          // todo: currently the filter does not work if recoilize is not open, we must change msg.payload to incorporate delta function in the backend
+          filter = msg.payload;
+          setFilter(msg.payload);
+        } else if (filter.length === 0) {
+          console.log('we are in the push');
           filter.push(msg.payload[0]);
+          setFilter(filter);
         } else {
           // push the difference between the objects
           const delta = diff(
             msg.payload[msg.payload.length - 2],
             msg.payload[msg.payload.length - 1],
           );
-
-          let detlaArr = Object.keys(delta.filteredSnapshot);
-          // simpleSelected is selected as an array of values instead of an array of objects
-          //let simpleSelected: any[] = selected.map(el => el.name);
-
-          // Go through deltaArr. Add to arrayOfEverything if not already there and add to Atoms&Selectors filter too
-          detlaArr.forEach(el => {
-            if (!arrayOfEverything.includes(el)) {
-              arrayOfEverything.push(el);
-              // If an element from deltaArr also hasn't been introduced to simpleSelected, push a new object into selected
-              // This should update the Atom&Selector filter in the Settings tabs
-              if (!selected.map(el => el.name).includes(el)) {
-                selected.push({name: el});
-                console.log('This is selected AFTER mapping: ', selected);
-                setSelected(selected);
-              }
-              console.log('Changing setSelected with Delta: ', selected);
-            }
-          });
-          console.log('This is deltaArr in APP: ', detlaArr);
-          console.log('This is arrayOfEverything AFTER: ', arrayOfEverything);
-
-          // if (filter.length < msg.payload.length) {
-          //   filter.push(delta.filteredSnapshot);
-          //   console.log('This is delta in APP: ', delta);
-          // }
+          // only push if the snapshot length is chill
+          if (filter.length < msg.payload.length) {
+            filter.push(delta);
+            setFilter(filter);
+          }
         }
-        setFilter(filter);
-        console.log('this is the filter ', filter);
       }
     });
-
-    // Todo: Create a variable that stores a number
   }, []);
   // Render main container if we have detected a recoil app with the recoilize module passing data
   const renderMainContainer = (

@@ -1,8 +1,15 @@
 import React, {useState} from 'react';
 
-const StateSettings: React.FC = () => {
+interface StateSettingsProps {
+  checked: boolean;
+  setChecked: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const StateSettings: React.FC<StateSettingsProps> = ({checked, setChecked}) => {
   // functionality to postMessage the selected snapshot index to background.js
   const persistStateFunc = () => {
+    // setChecked as true or false
+    checked ? setChecked(false) : setChecked(true);
     // variable to store/reference connection
     const backgroundConnection = chrome.runtime.connect();
     // post the message with index in payload to the connection
@@ -14,8 +21,11 @@ const StateSettings: React.FC = () => {
   return (
     <div>
       <h2>Persist State</h2>
-      <input type="checkbox" onChange={persistStateFunc}></input> Checkmark to
-      Save State
+      <input
+        type="checkbox"
+        checked={checked}
+        onChange={persistStateFunc}></input>{' '}
+      Checkmark to Save State
     </div>
   );
 };

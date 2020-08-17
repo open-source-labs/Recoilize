@@ -27,12 +27,13 @@ const SnapshotsList: React.FC<SnapshotsListProps> = ({
 }) => {
   // ! probably need to prop drill down something else as well to get this filter to work
   // console.log('this is selected inside SnapshotList ', selected);
-  // console.log('this is the filter inside of snapshotlist ', filter);
+  // console.log('this is the filter inside of snapshotlist ', filter); // this filter is not resetting on reset
   // array of divs proportional to the length of snapshotHistory
   const snapshotDivs: JSX.Element[] = [];
 
   // iterate the same length of our snapshotHistory
   for (let i = 0; i < snapshotHistoryLength; i++) {
+<<<<<<< HEAD
     // let x = false;
     // // using the selected, and comparing to an array, if it is in continue -- compare the keys in each index to the filter
     // const filterFunc = () => {
@@ -59,6 +60,33 @@ const SnapshotsList: React.FC<SnapshotsListProps> = ({
     // if (x === false) {
     //   continue;
     // }
+=======
+    // ! function to filter
+    const filterFunc = () => {
+      // don't use the counter for this, not reliable
+      if (i === 0) {
+        return true;
+      }
+      // checks if is in the selected array
+      if (filter[i]) {
+        for (let key in filter[i].filteredSnapshot) {
+          for (let j = 0; j < selected.length; j++) {
+            if (key === selected[j].name) {
+              return true;
+            }
+          }
+        }
+      }
+      return false;
+    };
+
+    let x = filterFunc();
+
+    // see the iteration if x is false
+    if (x === false) {
+      continue;
+    }
+>>>>>>> 7ada9ff4b42e090536824ac6b3fe4b419de2d399
 
     snapshotDivs.push(
       <div
