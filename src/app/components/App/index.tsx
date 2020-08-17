@@ -42,19 +42,13 @@ const App: React.FC = () => {
           setSelected(arr);
         } else {
           // todo: We need to add if there are new keys inside of the obj
-          console.log(
-            'this is the msg.payload.length-2 ',
-            msg.payload[msg.payload.length - 2],
-          );
-          console.log(
-            'this is the msg.payload.length-1 ',
-            msg.payload[msg.payload.length - 1],
-          );
-          // for (let key in msg.payload[msg.payload.length - 1]){
-          //   if (!msg.payload[msg.payload.length - 1]){
-          //     arr.push({name: key})
-          //   }
-          // }
+          const arr = [];
+          // adds to the most recent everything -- how can we be more selective
+          for (let key in msg.payload[msg.payload.length - 1]
+            .filteredSnapshot) {
+            arr.push({name: key});
+          }
+          setSelected(arr);
         }
 
         // ! Set the snapshot history state
@@ -78,8 +72,8 @@ const App: React.FC = () => {
           // only push if the snapshot length is chill
           if (filter.length < msg.payload.length) {
             filter.push(delta);
+            setFilter(filter);
           }
-          setFilter(filter);
         }
       }
     });
