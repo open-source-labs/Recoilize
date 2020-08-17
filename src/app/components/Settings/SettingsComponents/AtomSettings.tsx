@@ -24,7 +24,10 @@ const AtomSettings: React.FC<AtomSettingsProps> = ({
     options.push(obj);
   }
 
-  // do a useeffect based on the snapshoothistory
+  // do a useeffect based on the snapshothistory
+  useEffect(() => {
+    console.log('we are here ', selected);
+  }, [snapshotHistory]); // Only re-run the effect if count changes
 
   // ! Selected is prop drilled down from app -> maincontainer -> visualcontainer -> settings -> atom settings
   // console.log('this is the selected in atomSettings ', selected);
