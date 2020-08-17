@@ -72,7 +72,7 @@ const App: React.FC = () => {
         // ! Set the snapshot history state
         setSnapshotHistory(msg.payload);
 
-        // ! Getting FILTER array to push properly
+        // ! Setting the FILTER Array
         if (!msg.payload[1] || filter.length === 0) {
           // todo: currently the filter does not work if recoilize is not open, we must change msg.payload to incorporate delta function in the backend
           filter = msg.payload;
