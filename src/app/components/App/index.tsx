@@ -13,11 +13,9 @@ const App: React.FC = () => {
 
   // todo: created selected to update array
   const [selected, setSelected] = useState([]);
-  // console.log('this is selected ', selected);
 
   // todo: Create algo that will clean up the big setsnapshothistory object, now and before
   let [filter, setFilter] = useState([]);
-  // console.log('this is the filter ', filter);
 
   // use effect for snapshotHistory
   useEffect(() => {
@@ -40,11 +38,21 @@ const App: React.FC = () => {
           for (let key in msg.payload[0].filteredSnapshot) {
             arr.push({name: key});
           }
-          console.log('we are here');
           setSelected(arr);
-        }
+        } else {
+          // todo: We need to add if there are new keys inside of the obj
 
-        // else we want to hit the Delta Array
+          // compare msg.payload.length - 2 and msg.payload.length - 1
+          console.log(
+            'this is the msg.payload.length-2 ',
+            msg.payload[msg.payload.length - 2],
+          );
+          console.log(
+            'this is the msg.payload.length-1 ',
+            msg.payload[msg.payload.length - 1],
+          );
+        }
+        // we just want to add the keys that are new between the two
 
         // ! Set the snapshot history state
         setSnapshotHistory(msg.payload);
