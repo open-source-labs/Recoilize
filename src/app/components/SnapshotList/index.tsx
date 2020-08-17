@@ -1,7 +1,6 @@
 // renders a list of all of the snapshots that were taking
 import React from 'react';
 import {stateSnapshot} from '../../../types';
-
 interface SnapshotsListProps {
   // index of current snapshot rendered in devtool
   renderIndex: number;
@@ -14,9 +13,7 @@ interface SnapshotsListProps {
   selected: any;
   filter: any;
 }
-
 let filterArray: any[] = [];
-
 const SnapshotsList: React.FC<SnapshotsListProps> = ({
   renderIndex,
   snapshotHistoryLength,
@@ -30,37 +27,8 @@ const SnapshotsList: React.FC<SnapshotsListProps> = ({
   // console.log('this is the filter inside of snapshotlist ', filter); // this filter is not resetting on reset
   // array of divs proportional to the length of snapshotHistory
   const snapshotDivs: JSX.Element[] = [];
-
   // iterate the same length of our snapshotHistory
   for (let i = 0; i < snapshotHistoryLength; i++) {
-<<<<<<< HEAD
-    // let x = false;
-    // // using the selected, and comparing to an array, if it is in continue -- compare the keys in each index to the filter
-    // const filterFunc = () => {
-    //   if (i === 0) {
-    //     x = true;
-    //   } else {
-    //     // ! Currently the filter may generate way to many snapshots -- based on the payload. Find how the snapshothistorylength is being set and put the trigger there
-    //     for (let key in filter[i]) {
-    //       // console.log('this is the key', key);
-    //       for (let j = 0; j < selected.length; j++) {
-    //         // console.log('this is the key', key);
-    //         // console.log('this is the selected', selected[j].name);
-    //         if (key === selected[j].name) {
-    //           x = true; // there is a matching value
-    //         }
-    //       }
-    //     }
-    //   }
-
-    //   return false;
-    // };
-    // filterFunc();
-
-    // if (x === false) {
-    //   continue;
-    // }
-=======
     // ! function to filter
     const filterFunc = () => {
       // don't use the counter for this, not reliable
@@ -79,15 +47,11 @@ const SnapshotsList: React.FC<SnapshotsListProps> = ({
       }
       return false;
     };
-
     let x = filterFunc();
-
     // see the iteration if x is false
     if (x === false) {
       continue;
     }
->>>>>>> 7ada9ff4b42e090536824ac6b3fe4b419de2d399
-
     snapshotDivs.push(
       <div
         className="individualSnapshot"
@@ -115,11 +79,9 @@ const SnapshotsList: React.FC<SnapshotsListProps> = ({
   Filter snapshotDivs to show only the snapshots that have
    an atom/selector from the Atom and Selector Filter in the Settings tab
   */
-
   // render the array of snapshots divs generated above
   return <div className="SnapshotsList">{snapshotDivs}</div>;
 };
-
 export default SnapshotsList;
 export {filterArray};
 //document.getElementById('root')._reactRootContainer._internalRoot.current.child.memoizedState.next.next.memoizedState.current.currentTree.atomValues

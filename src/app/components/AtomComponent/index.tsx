@@ -171,7 +171,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
             }
             d3.select(this)
               .append('text')
-              .text(formatAtomSelectorText(atsel))
+              .text(formatAtomSelectorText(atsel).toString())
               .style('fill', 'white')
               .attr('x', formatMouseoverXValue(d.data.recoilNodes[x]))
               // How far the text is below the node
