@@ -32,7 +32,7 @@ const App: React.FC = () => {
     // LISTEN for messages FROM bg script
     backgroundConnection.onMessage.addListener(msg => {
       if (msg.action === 'recordSnapshot') {
-        // ! creating algo to make sure selected array is correct
+        // ! creating algo to make sure selected array is correct -- make sure selected is always correct
         if (selected.length === 0) {
           const arr = [];
           for (let key in msg.payload[0].filteredSnapshot) {
@@ -44,7 +44,7 @@ const App: React.FC = () => {
         // ! Set the snapshot history state
         setSnapshotHistory(msg.payload);
 
-        // todo: Getting filter array to push properly
+        // todo: Getting FILTER array to push properly
         if (!msg.payload[1] || filter.length === 0) {
           // ! currently the filter does not work if recoilize is not open, we must change msg.payload to incorporate delta function in the backend
           filter = msg.payload;
