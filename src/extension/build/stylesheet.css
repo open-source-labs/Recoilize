@@ -40,15 +40,6 @@ body {
 }
 
 /* COMPONENTS */
-/* .Component {
-  height: 100%;
-  width: 100%;
-} */
-
-#htmlBox {
-  position: fixed;
-  display: inline-block;
-}
 
 .AtomComponentVisual {
   height: 100%;

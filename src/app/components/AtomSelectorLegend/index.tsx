@@ -7,7 +7,6 @@ interface AtomSelectorLegendProps {
   selectedRecoilValue: any[];
   str: any;
 }
-
 const AtomSelectorLegend: React.FC<AtomSelectorLegendProps> = ({
   setSelectedRecoilValue,
   atoms,
@@ -18,7 +17,6 @@ const AtomSelectorLegend: React.FC<AtomSelectorLegendProps> = ({
   const selectorList: JSX.Element[] = [];
   const atomList: JSX.Element[] = [];
   Object.entries(selectors).forEach(([selectorName, value], i) => {
-    // console.log('selectors', selectors);
     selectorList.push(
       <div
         style={
@@ -34,7 +32,6 @@ const AtomSelectorLegend: React.FC<AtomSelectorLegendProps> = ({
     );
   });
   Object.entries(atoms).forEach(([atomName, value], i) => {
-    // console.log('atoms:', atoms);
     atomList.push(
       <div
         style={
@@ -49,17 +46,6 @@ const AtomSelectorLegend: React.FC<AtomSelectorLegendProps> = ({
       </div>,
     );
   });
-
-  // console.log('atomList', atomList);
-  // console.log('selectorList', selectorList);
-  // {str[0]}
-  // <br />
-  // {str[1]}
-  // <br />
-  // {str[2]}
-
-  console.log('strType: ', typeof str);
-  // console.log('legend str in legend: ', str);
   const legendTextArray: any = [];
   str.forEach((element: any) => {
     legendTextArray.push(

@@ -28,12 +28,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
   // useState hook to update the toggle of showing diff components
   const [rawToggle, setRawToggle] = useState(false);
 
-  // useEffect(() => {
-  //   setZoomState(d3.zoomTransform(d3.select('#canvas').node()));
-  // }, [componentAtomTree, selectedRecoilValue]);
-
-  //! clean the componentatomtree to only have the data that we want
-  // console.log('tree: ', componentAtomTree);
+  // Possibly filter some more unimportant nodes
   const cleanComponentAtomTree = (inputObj: any) => {
     const obj = {} as any;
     let counter = 0;
@@ -82,12 +77,10 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
     height = document.querySelector('.Component').clientHeight;
     width = document.querySelector('.Component').clientWidth;
 
-    // console.log('width, height: ', width, ' ', height);
     document.getElementById('canvas').innerHTML = '';
 
     // creating the main svg container for d3 elements
     const svgContainer = d3.select('#canvas');
-    // .on('dblclick.zoom', console.log('this is where we would put null'));
 
     // creating a pseudo-class for reusability
     const g = svgContainer
@@ -96,7 +89,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
       .attr('id', 'componentGraph');
 
     let i = 0;
-    let duration: Number = 750; //change to 1 so its super fast and looks like no re render
+    let duration: number = 750;
     let root: any;
     let path: any;
 
@@ -112,12 +105,14 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
         return d.children;
       });
     }
+
+    // Node distance from each other
     root.x0 = 10;
     root.y0 = width / 2;
 
     update(root);
 
-    /* LEAVE THE ZOOM STUFF OUTSIDE OF THE UPDATE() */
+    // d3 zoom functionality
     let zoom = d3.zoom().on('zoom', zoomed);
 
     svgContainer.call(
@@ -132,17 +127,16 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
         .zoom()
         .scaleExtent([0.05, 0.9]) // [zoomOut, zoomIn]
         .on('zoom', zoomed),
-      // .on('zoom.multiple', () => d3.event.preventDefault()),
     );
 
     // helper function that allows for zooming
     function zoomed(d: any) {
       g.attr('transform', d3.event.transform);
     }
-    /* LEAVE THE ZOOM STUFF OUTSIDE OF THE UPDATE() */
 
+    // Update function
     function update(source: any) {
-      let treeData = treeMap(root);
+      treeMap(root);
 
       let nodes = root.descendants(),
         links = root.descendants().slice(1);
@@ -154,10 +148,11 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
           return d.id || (d.id = ++i);
         });
 
-      // this tells node where to be placed and go to
-      // adding a mouseOver event handler to each node
-      // display the data in the node on hover
-      // add mouseOut event handler that removes the popup text
+      /* this tells node where to be placed and go to
+       * adding a mouseOver event handler to each node
+       * display the data in the node on hover
+       * add mouseOut event handler that removes the popup text
+       */
       let nodeEnter = node
         .enter()
         .append('g')
@@ -167,22 +162,23 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
         })
         .on('click', click)
         .on('mouseover', function (d: any, i: any) {
+          // atsel is an array of all the atoms and selectors
           const atsel: any = [];
           if (d.data.recoilNodes) {
             for (let x = 0; x < d.data.recoilNodes.length; x++) {
+              // pushing all the atoms and selectors for the node into 'atsel'
               atsel.push(d.data.recoilNodes[x]);
             }
             d3.select(this)
               .append('text')
               .text(formatAtomSelectorText(atsel))
               .style('fill', 'white')
-              // Figure out the best way to center the text under the node or otherwise place it
               .attr('x', formatMouseoverXValue(d.data.recoilNodes[x]))
-              .attr('y', 200 + x * 55)
+              // How far the text is below the node
+              .attr('y', 225 + x * 55)
               .style('font-size', '3.5rem')
               .attr('id', `popup${i}${x}`);
           }
-          // console.log('atsel: ', atsel);
         })
         .on('mouseout', function (d: any, i: any) {
           for (let x = 0; x < d.data.recoilNodes.length; x++) {
@@ -207,9 +203,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
         })
         .text((d: any) => d.data.name)
         .style('font-size', `4.5rem`)
-        .style('fill', 'white')
-        .clone(true)
-        .lower();
+        .style('fill', 'white');
 
       let nodeUpdate = nodeEnter.merge(node);
 
@@ -236,10 +230,6 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
           return `translate(${source.y}, ${source.x})`;
         })
         .remove();
-
-      nodeExit.select('circle').attr('r', determineSize);
-
-      nodeExit.select('text').style('fill-opacity', 1e-6);
 
       let link = g
         .attr('fill', 'none')
@@ -318,31 +308,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
       }
 
       // allows the canvas to be draggable
-      node.call(
-        d3
-          .drag()
-          .on('start', dragStarted)
-          .on('drag', dragged)
-          .on('end', dragEnded),
-      );
-
-      // helper functions that help with dragging functionality
-      function dragStarted() {
-        console.log('drag start');
-        // d3.select(this).g.attr('cursor', 'grabbing');
-      }
-
-      function dragged(d: any) {
-        console.log('dragging');
-        // d3.select(this)
-        //   .attr('dx', (d.x = d3.event.x))
-        //   .attr('dy', (d.y = d3.event.y));
-      }
-
-      function dragEnded() {
-        console.log('drag end');
-        // g.attr('cursor', 'grab');
-      }
+      node.call(d3.drag());
 
       function formatMouseoverXValue(recoilValue: any) {
         if (atoms.hasOwnProperty(recoilValue)) {
@@ -353,7 +319,6 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
 
       function formatAtomSelectorText(atomOrSelector: any) {
         let strings = [];
-        // console.log('atoms:', atoms);
         for (let i = 0; i < atomOrSelector.length; i++) {
           if (atoms.hasOwnProperty(atomOrSelector[i])) {
             strings.push(
@@ -375,10 +340,13 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
       function determineSize(d: any) {
         if (d.data.recoilNodes && d.data.recoilNodes.length) {
           if (d.data.recoilNodes.includes(selectedRecoilValue[0])) {
+            // Size when the atom/selector is clicked on from legend
             return 150;
           }
+          // Size of atoms and selectors
           return 100;
         }
+        // Size of regular nodes
         return 50;
       }
 
@@ -386,6 +354,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
         // if component node contains recoil atoms or selectors, make it orange red or yellow, otherwise keep node gray
         if (d.data.recoilNodes && d.data.recoilNodes.length) {
           if (d.data.recoilNodes.includes(selectedRecoilValue[0])) {
+            // Color of atom or selector when clicked on in legend
             return 'white';
           }
 
@@ -399,7 +368,6 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
               hasSelector = true;
             }
           }
-
           if (hasAtom && hasSelector) {
             return 'orange';
           }
@@ -409,79 +377,14 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
             return 'yellow';
           }
         }
-
         return 'gray';
       }
-
-      /* The bounding box only covers the first node (421 and 422) so the box is tiny
-       * Gotta figure out how to properly get the entire bounding box for the whole graph
-       */
-
-      // const boundBox = d3.select('#componentGraph').node().getBBox();
-      // // Makes an HTML div element that represents the bounding box
-      // const makeHTMLBox = (el: any) => {
-      //   const htmlBox = document.createElement('div');
-      //   htmlBox.id = 'htmlBox';
-      //   htmlBox.style.bottom = `${el.bottom}px`;
-      //   htmlBox.style.height = `${el.height}px`;
-      //   htmlBox.style.width = `${el.width}px`;
-      //   htmlBox.style.left = `${el.left}px`;
-      //   htmlBox.style.right = `${el.right}px`;
-      //   htmlBox.style.top = `${el.top}px`;
-      //   htmlBox.style.backgroundColor = 'white';
-      //   htmlBox.style.zIndex = '5';
-      //   return htmlBox;
-      // };
-      // const gBoundBox = makeHTMLBox(boundBox);
-      // document.querySelector('.AtomComponentVisual').appendChild(gBoundBox);
-
-      // console.log('bound box: ', d3.select('#componentGraph').node().getBBox());
-
-      // const gBox = d3.select('#componentGraph').node().getBBox();
-      // function zoomFit(paddingPercent?: Number, transitionDuration?: Number) {
-      //   const bounds = gBox;
-      //   const parent = d3.select('#componentGraph').node().parentElement;
-      //   const fullWidth = parent.clientWidth;
-      //   const fullHeight = parent.clientHeight;
-      //   const width = bounds.width;
-      //   const height = bounds.height;
-      //   const midX = bounds.x + width / 2;
-      //   const midY = bounds.y + height / 2;
-      //   if (width === 0 || height === 0) return;
-      //   const scale = Number(
-      //     paddingPercent ||
-      //       0.75 / Math.max(width / fullWidth, height / fullHeight),
-      //   );
-      //   const translate = [
-      //     fullWidth / 2 - scale * midX,
-      //     fullHeight / 2 - scale * midY,
-      //   ];
-
-      //   console.trace('zoomFit', translate, scale);
-      //   console.log('bounds: ', bounds);
-      //   console.log('fullSize: ', [fullWidth, fullHeight]);
-      //   d3.select('#canvas')
-      //     .transition()
-      //     .duration(transitionDuration || 0)
-      //     .call(
-      //       zoom.transform,
-      //       d3.zoomIdentity.translate(translate).scale(scale).event,
-      //     );
-      // }
-      // zoomFit(0.95, 500);
     }
   }, [componentAtomTree, rawToggle]);
 
   return (
     <div className="AtomComponentVisual">
       <svg id="canvas"></svg>
-      {/* <button
-        id="zoomFit"
-        style={{
-          color: '#989898',
-        }}>
-        <span>Fit</span>
-      </button> */}
       <button
         id="fixedButton"
         style={{
