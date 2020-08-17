@@ -274,3 +274,25 @@ body {
 .show {
   display: block;
 }
+
+.AtomLegend {
+  background-color: #9580ff;
+  width: 20px;
+  height: 20px;
+  border: 1px solid #9580ff;
+  border-radius: 20px;
+}
+
+.SelectorLegend {
+  background-color: #ff80bf;
+  width: 20px;
+  height: 20px;
+  border: 1px solid #ff80bf;
+  border-radius: 20px;
+}
+
+.AtomNetworkLegend {
+  display: grid;
+  grid-template-columns: 30px 30px;
+  align-items: center;
+}
