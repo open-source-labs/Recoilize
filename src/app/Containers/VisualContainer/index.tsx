@@ -13,6 +13,10 @@ interface VisualContainerProps {
   previousSnapshot: stateSnapshot;
   // snapshot at index [curRender]
   currentSnapshot: stateSnapshot;
+  // ! passing through snapshot history
+  snapshotHistory: stateSnapshot[];
+  selected: any;
+  setSelected: any;
 }
 
 type navTypes = {
@@ -23,6 +27,9 @@ type navTypes = {
 const VisualContainer: React.FC<VisualContainerProps> = ({
   previousSnapshot,
   currentSnapshot,
+  snapshotHistory,
+  selected,
+  setSelected,
 }) => {
   // state for checkmark in persist state in settings
   const [checked, setChecked] = useState(false);
@@ -59,7 +66,16 @@ const VisualContainer: React.FC<VisualContainerProps> = ({
         filteredCurSnap={filteredCurSnap}
       />
     ),
-    Settings: <Settings checked={checked} setChecked={setChecked} />,
+    // settings tab that doesn't want to be in quotes because too cool for school
+    Settings: (
+      <Settings
+        snapshotHistory={snapshotHistory}
+        selected={selected}
+        setSelected={setSelected}
+        checked={checked}
+        setChecked={setChecked}
+      />
+    ),
   };
   // array of all nav obj keys
   const tabsList = Object.keys(nav);

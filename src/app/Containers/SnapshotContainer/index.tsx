@@ -9,12 +9,16 @@ interface SnapshotsContainerProps {
   snapshotHistoryLength: number;
   // setState functionality to update curRender
   setRenderIndex: React.Dispatch<React.SetStateAction<number>>;
+  selected: any;
+  filter: any;
 }
 
 const SnapshotsContainer: React.FC<SnapshotsContainerProps> = ({
   renderIndex,
   snapshotHistoryLength,
   setRenderIndex,
+  selected,
+  filter,
 }) => {
   // functionality to postMessage the selected snapshot index to background.js
   const timeTravelFunc = (index: number) => {
@@ -35,6 +39,8 @@ const SnapshotsContainer: React.FC<SnapshotsContainerProps> = ({
         snapshotHistoryLength={snapshotHistoryLength}
         setRenderIndex={setRenderIndex}
         timeTravelFunc={timeTravelFunc}
+        selected={selected}
+        filter={filter}
       />
     </div>
   );

@@ -11,18 +11,54 @@ interface SnapshotsListProps {
   setRenderIndex: React.Dispatch<React.SetStateAction<number>>;
   // functionality to postMessage the selected snapshot index to background.js
   timeTravelFunc: (index: number) => void;
+  selected: any;
+  filter: any;
 }
+
+let filterArray: any[] = [];
 
 const SnapshotsList: React.FC<SnapshotsListProps> = ({
   renderIndex,
   snapshotHistoryLength,
   setRenderIndex,
   timeTravelFunc,
+  selected,
+  filter,
 }) => {
+  // ! probably need to prop drill down something else as well to get this filter to work
+  // console.log('this is selected inside SnapshotList ', selected);
+  // console.log('this is the filter inside of snapshotlist ', filter); // this filter is not resetting on reset
   // array of divs proportional to the length of snapshotHistory
   const snapshotDivs: JSX.Element[] = [];
+
   // iterate the same length of our snapshotHistory
   for (let i = 0; i < snapshotHistoryLength; i++) {
+    // ! function to filter
+    const filterFunc = () => {
+      // don't use the counter for this, not reliable
+      if (i === 0) {
+        return true;
+      }
+      // checks if is in the selected array
+      if (filter[i]) {
+        for (let key in filter[i].filteredSnapshot) {
+          for (let j = 0; j < selected.length; j++) {
+            if (key === selected[j].name) {
+              return true;
+            }
+          }
+        }
+      }
+      return false;
+    };
+
+    let x = filterFunc();
+
+    // see the iteration if x is false
+    if (x === false) {
+      continue;
+    }
+
     snapshotDivs.push(
       <div
         className="individualSnapshot"
@@ -46,8 +82,15 @@ const SnapshotsList: React.FC<SnapshotsListProps> = ({
       </div>,
     );
   }
+  /*
+  Filter snapshotDivs to show only the snapshots that have
+   an atom/selector from the Atom and Selector Filter in the Settings tab
+  */
+
   // render the array of snapshots divs generated above
   return <div className="SnapshotsList">{snapshotDivs}</div>;
 };
 
 export default SnapshotsList;
+export {filterArray};
+//document.getElementById('root')._reactRootContainer._internalRoot.current.child.memoizedState.next.next.memoizedState.current.currentTree.atomValues
