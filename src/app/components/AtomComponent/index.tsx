@@ -475,13 +475,13 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
   return (
     <div className="AtomComponentVisual">
       <svg id="canvas"></svg>
-      <button
+      {/* <button
         id="zoomFit"
         style={{
           color: '#989898',
         }}>
         <span>Fit</span>
-      </button>
+      </button> */}
       <button
         id="fixedButton"
         style={{
