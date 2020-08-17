@@ -432,36 +432,36 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
     // const gBoundBox = makeHTMLBox(boundBox);
     // document.querySelector('.AtomComponentVisual').appendChild(gBoundBox);
 
-    function zoomFit(paddingPercent?: Number, transitionDuration?: Number) {
-      const bounds = d3.select('#canvas').node().getBBox();
-      const parent = d3.select('#canvas').node().parentElement;
-      const fullWidth = parent.clientWidth;
-      const fullHeight = parent.clientHeight;
-      const width = bounds.width;
-      const height = bounds.height;
-      const midX = bounds.x + width / 2;
-      const midY = bounds.y + height / 2;
-      if (width === 0 || height === 0) return;
-      const scale = Number(
-        paddingPercent ||
-          0.75 / Math.max(width / fullWidth, height / fullHeight),
-      );
-      const translate = [
-        fullWidth / 2 - scale * midX,
-        fullHeight / 2 - scale * midY,
-      ];
+    // function zoomFit(paddingPercent?: Number, transitionDuration?: Number) {
+    //   const bounds = d3.select('#canvas').node().getBBox();
+    //   const parent = d3.select('#canvas').node().parentElement;
+    //   const fullWidth = parent.clientWidth;
+    //   const fullHeight = parent.clientHeight;
+    //   const width = bounds.width;
+    //   const height = bounds.height;
+    //   const midX = bounds.x + width / 2;
+    //   const midY = bounds.y + height / 2;
+    //   if (width === 0 || height === 0) return;
+    //   const scale = Number(
+    //     paddingPercent ||
+    //       0.75 / Math.max(width / fullWidth, height / fullHeight),
+    //   );
+    //   const translate = [
+    //     fullWidth / 2 - scale * midX,
+    //     fullHeight / 2 - scale * midY,
+    //   ];
 
-      console.trace('zoomFit', translate, scale);
-      console.log('bounds: ', bounds);
-      console.log('fullSize: ', [fullWidth, fullHeight]);
-      d3.select('#canvas')
-        .transition()
-        .duration(transitionDuration || 0);
-      // .call(
-      //   zoom.transform,
-      //   d3.zoomIdentity.translate(translate).scale(scale).event,
-      // );
-    }
+    //   console.trace('zoomFit', translate, scale);
+    //   console.log('bounds: ', bounds);
+    //   console.log('fullSize: ', [fullWidth, fullHeight]);
+    //   d3.select('#canvas')
+    //     .transition()
+    //     .duration(transitionDuration || 0)
+    //     .call(
+    //       zoom.transform,
+    //       d3.zoomIdentity.translate(translate).scale(scale).event,
+    //     );
+    // }
     // zoomFit(0.95, 500);
   }, [componentAtomTree, rawToggle]);
 
