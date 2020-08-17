@@ -16,6 +16,12 @@ const AtomSettings: React.FC<AtomSettingsProps> = ({
 }) => {
   // https://github.com/srigar/multiselect-react-dropdown
 
+  // Create a useeffect to set the selected
+  useEffect(() => {
+    console.log('we here');
+    setSelected(selected);
+  }, [snapshotHistory]);
+
   // Make filterArray into array of objects, we want to get the most recent so that we have all possible options
   let options = [];
   for (let key in snapshotHistory[snapshotHistory.length - 1] // filling the options with the most recent

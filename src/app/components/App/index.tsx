@@ -69,7 +69,6 @@ const App: React.FC = () => {
           }
           setSelected(arr);
         } else {
-          console.log('selected inside the app,', selected);
         }
         // ! Else, if not the first time, we want to setSelected to everything, with potential minuses?
 
