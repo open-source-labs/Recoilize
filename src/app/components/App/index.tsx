@@ -19,6 +19,34 @@ const App: React.FC = () => {
   // todo: Create algo that will clean up the big setsnapshothistory object, now and before
   let [filter, setFilter] = useState([]);
 
+  // ! Setting up the selected
+  useEffect(() => {
+    let last;
+    if (snapshotHistory[snapshotHistory.length - 1]) {
+      last = snapshotHistory[snapshotHistory.length - 1].filteredSnapshot;
+    }
+    // we must compare with the original
+    for (let key in last) {
+      if (!snapshotHistory[0].filteredSnapshot[key]) {
+        // only push if the name doesn't already exist
+        const check = () => {
+          for (let i = 0; i < selected.length; i++) {
+            // break if it exists
+            if (selected[i].name === key) {
+              return true;
+            }
+          }
+          // does not exist
+          return false;
+        };
+        if (!check()) {
+          selected.push({name: key});
+        }
+      }
+    }
+    // setSelected(selected);
+  }, [snapshotHistory]); // Only re-run the effect if count changes
+
   // use effect for snapshotHistory
   useEffect(() => {
     // SETUP connection to bg script
@@ -40,6 +68,8 @@ const App: React.FC = () => {
             arr.push({name: key});
           }
           setSelected(arr);
+        } else {
+          console.log('selected inside the app,', selected);
         }
         // ! Else, if not the first time, we want to setSelected to everything, with potential minuses?
 

@@ -24,11 +24,6 @@ const AtomSettings: React.FC<AtomSettingsProps> = ({
     options.push(obj);
   }
 
-  // use a useeffect that will add in new shit on snapshotchange -- however it only hits when it is open
-  // useEffect(() => {
-  //   console.log('we are here ', selected);
-  // }, [snapshotHistory]); // Only re-run the effect if count changes
-
   // ! Selected is prop drilled down from app -> maincontainer -> visualcontainer -> settings -> atom settings
 
   // Todo: Create a conditional that will update the selected options onchange of the array -- updates if they are not equal, will add in NEW ADDITIONS
