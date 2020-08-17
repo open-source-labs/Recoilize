@@ -24,14 +24,11 @@ const AtomSettings: React.FC<AtomSettingsProps> = ({
     options.push(obj);
   }
 
-  // Create a useeffect to set the selected
-  useEffect(() => {
-    console.log('we here');
-    setSelected(selected);
-    console.log('selected in atomsettings ', selected);
-  }, [snapshotHistory]);
-
-  // ! Selected is prop drilled down from app -> maincontainer -> visualcontainer -> settings -> atom settings
+  // setting up the selected options
+  let selected2 = [];
+  for (let i = 0; i < selected.length; i++) {
+    selected2.push({name: selected[i].name});
+  }
 
   // Todo: Create a conditional that will update the selected options onchange of the array -- updates if they are not equal, will add in NEW ADDITIONS
   // onSelect & onRemove functions for when selecting & removing atoms/selectors from the filter
@@ -50,7 +47,7 @@ const AtomSettings: React.FC<AtomSettingsProps> = ({
       <h2>Atom and Selector Filter</h2>
       <Multiselect
         options={options}
-        selectedValues={selected}
+        selectedValues={selected2}
         onSelect={onSelect}
         onRemove={onRemove}
         displayValue="name"
