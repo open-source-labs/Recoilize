@@ -32,7 +32,7 @@ const App: React.FC = () => {
     // LISTEN for messages FROM bg script
     backgroundConnection.onMessage.addListener(msg => {
       if (msg.action === 'recordSnapshot') {
-        // ! creating algo to make sure selected array is correct -- make sure selected is always correct
+        // ! creating algo -- sets to the intial length first
         if (!msg.payload[1] || filter.length === 0) {
           // ensures we only set initially
           const arr = [];
@@ -41,16 +41,6 @@ const App: React.FC = () => {
           }
           setSelected(arr);
         }
-        // else {
-        //   // todo: We need to add if there are new keys inside of the obj, we need to know what is inside the list
-        //   const arr = [];
-        //   // adds to the most recent everything -- how can we be more selective
-        //   for (let key in msg.payload[msg.payload.length - 1]
-        //     .filteredSnapshot) {
-        //     arr.push({name: key});
-        //   }
-        //   setSelected(arr);
-        // }
 
         // ! Set the snapshot history state
         setSnapshotHistory(msg.payload);
