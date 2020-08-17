@@ -10,6 +10,7 @@ interface NetworkProps {
 const Network: React.FC<NetworkProps> = ({filteredCurSnap}) => {
   const [{x, y, k}, setZoomState] = useState({x: 0, y: 0, k: 0});
 
+  console.log('This is filteredCurSnap: ', filteredCurSnap);
   useEffect(() => {
     setZoomState(d3.zoomTransform(d3.select('#networkCanvas').node()));
   }, [filteredCurSnap]);
@@ -17,7 +18,7 @@ const Network: React.FC<NetworkProps> = ({filteredCurSnap}) => {
   useEffect(() => {
     document.getElementById('networkCanvas').innerHTML = '';
 
-    let link: any;
+    let link: any; // line between nodes
     let node: any;
     let edgepaths: any;
     let edgelabels: any;
