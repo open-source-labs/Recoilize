@@ -15,6 +15,7 @@ body {
 /* CONTAINERS */
 
 .MainContainer {
+  height: 100%;
   display: flex;
 }
 
@@ -43,6 +44,11 @@ body {
   height: 100%;
   width: 100%;
 } */
+
+#htmlBox {
+  position: fixed;
+  display: inline-block;
+}
 
 .AtomComponentVisual {
   height: 100%;
@@ -147,6 +153,16 @@ body {
   background-color: #212121;
 }
 
+#zoomFit {
+  position: fixed;
+  bottom: 0px;
+  right: 70px;
+  width: 65px;
+  height: 50px;
+  background: transparent;
+  border: none !important;
+}
+
 #fixedButton {
   position: fixed;
   bottom: 0px;
@@ -160,7 +176,7 @@ body {
 
 .rawToggle {
   background: none;
-  border: none;
+  border: none !important;
   outline: none;
 }
 

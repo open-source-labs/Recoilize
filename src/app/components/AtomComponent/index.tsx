@@ -32,10 +32,11 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
   const [rawToggle, setRawToggle] = useState(false);
 
   useEffect(() => {
-    setZoomState(d3.zoomTransform(d3.select('#canvas').node())); // <------------------ LOOK INTO THIS TO SEE HOW TO GET IT TO STOP RE EXPANDING
+    setZoomState(d3.zoomTransform(d3.select('#canvas').node()));
   }, [componentAtomTree, selectedRecoilValue]);
 
   //! clean the componentatomtree to only have the data that we want
+  console.log('tree: ', componentAtomTree);
   const cleanComponentAtomTree = (inputObj: any) => {
     const obj = {} as any;
     let counter = 0;
@@ -95,7 +96,8 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
     // creating a pseudo-class for reusability
     const g = svgContainer
       .append('g')
-      .attr('transform', `translate(${x}, ${y}), scale(${k})`);
+      .attr('transform', `translate(${x}, ${y}), scale(${k})`)
+      .attr('id', 'componentGraph');
 
     let i = 0;
     let duration: Number = 750; //change to 1 so its super fast and looks like no re render
@@ -287,9 +289,6 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
           setLegend(false);
           for (let x = 0; x < d.data.recoilNodes.length; x++) {
             setStr(formatAtomSelectorText(d.data.recoilNodes[x]));
-            legendStr = formatAtomSelectorText(
-              d.data.recoilNodes[x],
-            ).toString();
           }
         }
       }
@@ -307,14 +306,11 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
     let zoom = d3.zoom().on('zoom', zoomed);
 
     // allows the canvas to be zoom-able
+
     svgContainer.call(
       d3
         .zoom()
-        // .extent([
-        //   [0, 0],
-        //   [width, height],
-        // ])
-        .scaleExtent([0.4, 0.9])
+        .scaleExtent([0.05, 0.9]) // [zoomOut, zoomIn]
         .on('zoom', zoomed),
       // .on('zoom.multiple', () => d3.event.preventDefault()),
     );
@@ -327,16 +323,19 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
 
     // helper functions that help with dragging functionality
     function dragStarted() {
+      console.log('drag start');
       // d3.select(this).g.attr('cursor', 'grabbing');
     }
 
     function dragged(d: any) {
+      console.log('dragging');
       // d3.select(this)
       //   .attr('dx', (d.x = d3.event.x))
       //   .attr('dy', (d.y = d3.event.y));
     }
 
     function dragEnded() {
+      console.log('drag end');
       // g.attr('cursor', 'grab');
     }
 
@@ -407,12 +406,75 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
 
       return 'gray';
     }
+
+    /* The bounding box only covers the first node (421 and 422) so the box is tiny
+     * Gotta figure out how to properly get the entire bounding box for the whole graph
+     */
+
+    // const element = document.getElementById('componentGraph');
+    // // Only getting the box for the first node, aka the first path
+    // const boundBox = element.getBoundingClientRect();
+    // console.log('boundBox: ', boundBox);
+    // // Makes an HTML div element that represents the bounding box
+    // const makeHTMLBox = (el: any) => {
+    //   const htmlBox = document.createElement('div');
+    //   htmlBox.id = 'htmlBox';
+    //   htmlBox.style.bottom = `${el.bottom}px`;
+    //   htmlBox.style.height = `${el.height}px`;
+    //   htmlBox.style.width = `${el.width}px`;
+    //   htmlBox.style.left = `${el.left}px`;
+    //   htmlBox.style.right = `${el.right}px`;
+    //   htmlBox.style.top = `${el.top}px`;
+    //   htmlBox.style.backgroundColor = 'white';
+    //   htmlBox.style.zIndex = '5';
+    //   return htmlBox;
+    // };
+    // const gBoundBox = makeHTMLBox(boundBox);
+    // document.querySelector('.AtomComponentVisual').appendChild(gBoundBox);
+
+    function zoomFit(paddingPercent?: Number, transitionDuration?: Number) {
+      const bounds = d3.select('#canvas').node().getBBox();
+      const parent = d3.select('#canvas').node().parentElement;
+      const fullWidth = parent.clientWidth;
+      const fullHeight = parent.clientHeight;
+      const width = bounds.width;
+      const height = bounds.height;
+      const midX = bounds.x + width / 2;
+      const midY = bounds.y + height / 2;
+      if (width === 0 || height === 0) return;
+      const scale = Number(
+        paddingPercent ||
+          0.75 / Math.max(width / fullWidth, height / fullHeight),
+      );
+      const translate = [
+        fullWidth / 2 - scale * midX,
+        fullHeight / 2 - scale * midY,
+      ];
+
+      console.trace('zoomFit', translate, scale);
+      console.log('bounds: ', bounds);
+      console.log('fullSize: ', [fullWidth, fullHeight]);
+      d3.select('#canvas')
+        .transition()
+        .duration(transitionDuration || 0);
+      // .call(
+      //   zoom.transform,
+      //   d3.zoomIdentity.translate(translate).scale(scale).event,
+      // );
+    }
+    // zoomFit(0.95, 500);
   }, [componentAtomTree, rawToggle]);
 
   return (
     <div className="AtomComponentVisual">
-      <div className="test">{legendStr}</div>
       <svg id="canvas"></svg>
+      <button
+        id="zoomFit"
+        style={{
+          color: '#989898',
+        }}>
+        <span>Fit</span>
+      </button>
       <button
         id="fixedButton"
         style={{
