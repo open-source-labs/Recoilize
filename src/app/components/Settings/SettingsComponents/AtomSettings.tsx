@@ -28,6 +28,7 @@ const AtomSettings: React.FC<AtomSettingsProps> = ({
   useEffect(() => {
     console.log('we here');
     setSelected(selected);
+    console.log('selected in atomsettings ', selected);
   }, [snapshotHistory]);
 
   // ! Selected is prop drilled down from app -> maincontainer -> visualcontainer -> settings -> atom settings
