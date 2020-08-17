@@ -67,7 +67,6 @@ const App: React.FC = () => {
             arr.push({name: key});
           }
           setSelected(arr);
-        } else {
         }
 
         // ! Set the snapshot history state
