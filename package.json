@@ -54,7 +54,8 @@
     "react-dom": "^16.13.1",
     "react-html-parser": "^2.0.2",
     "react-json-tree": "^0.11.2",
-    "react-router-dom": "^5.2.0"
+    "react-router-dom": "^5.2.0",
+    "recoil": "0.0.10"
   },
   "engines": {
     "node": "^10.12.0 || >=12.0.0"
