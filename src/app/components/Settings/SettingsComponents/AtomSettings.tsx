@@ -24,7 +24,7 @@ const AtomSettings: React.FC<AtomSettingsProps> = ({
     options.push(obj);
   }
 
-  // setting up the selected options
+  // ! setting up the selected options
   let selected2 = [];
   for (let i = 0; i < selected.length; i++) {
     selected2.push({name: selected[i].name});

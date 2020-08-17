@@ -72,9 +72,6 @@ const App: React.FC = () => {
         }
         // ! Else, if not the first time, we want to setSelected to everything, with potential minuses?
 
-        // else, we need to set selected to what we got before -- this won't work becuase will just add everything
-        // add everything THAT WAS NOT IN the original, we definitely want to add then, but then we don't know we closed out
-
         // ! Set the snapshot history state
         setSnapshotHistory(msg.payload);
 
