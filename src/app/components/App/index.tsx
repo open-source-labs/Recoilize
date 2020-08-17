@@ -9,7 +9,7 @@ const LOGO_URL = `https://public.bl.files.1drv.com/y4mFC_icIYGiJ2zg4zuUUlrZjGfCu
 const App: React.FC = () => {
   // useState hook to update the snapshotHistory array
   const [snapshotHistory, setSnapshotHistory] = useState<stateSnapshot[]>([]);
-  console.log('this is the snapshotHistory ', snapshotHistory);
+  // console.log('this is the snapshotHistory ', snapshotHistory);
 
   // todo: created selected to update array
   const [selected, setSelected] = useState([]);
@@ -33,20 +33,25 @@ const App: React.FC = () => {
     backgroundConnection.onMessage.addListener(msg => {
       if (msg.action === 'recordSnapshot') {
         // ! creating algo to make sure selected array is correct -- make sure selected is always correct
-        if (selected.length === 0) {
+        console.log('this is the selected ', selected);
+        if (!msg.payload[1] || filter.length === 0) {
+          // ensures we only set initially
           const arr = [];
           for (let key in msg.payload[0].filteredSnapshot) {
             arr.push({name: key});
           }
+          console.log('we are here');
           setSelected(arr);
         }
+
+        // else we want to hit the Delta Array
 
         // ! Set the snapshot history state
         setSnapshotHistory(msg.payload);
 
-        // todo: Getting FILTER array to push properly
+        // ! Getting FILTER array to push properly
         if (!msg.payload[1] || filter.length === 0) {
-          // ! currently the filter does not work if recoilize is not open, we must change msg.payload to incorporate delta function in the backend
+          // todo: currently the filter does not work if recoilize is not open, we must change msg.payload to incorporate delta function in the backend
           filter = msg.payload;
           setFilter(msg.payload);
         } else if (filter.length === 0) {
