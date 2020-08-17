@@ -5,13 +5,14 @@ interface AtomSelectorLegendProps {
   atoms: object;
   selectors: object;
   selectedRecoilValue: any[];
+  str: any;
 }
-
 const AtomSelectorLegend: React.FC<AtomSelectorLegendProps> = ({
   setSelectedRecoilValue,
   atoms,
   selectors,
   selectedRecoilValue,
+  str,
 }) => {
   const selectorList: JSX.Element[] = [];
   const atomList: JSX.Element[] = [];
@@ -45,19 +46,35 @@ const AtomSelectorLegend: React.FC<AtomSelectorLegendProps> = ({
       </div>,
     );
   });
-
-  return (
-    <div className="AtomSelectorLegend">
+  const legendTextArray: any = [];
+  str.forEach((element: any) => {
+    legendTextArray.push(
       <div>
-        <h4>Atoms</h4>
-        {atomList}
+        {element}
+        <br />
+      </div>,
+    );
+  });
+  if (str.length !== 0) {
+    return (
+      <div className="AtomSelectorLegend">
+        <div>{legendTextArray}</div>
       </div>
-      <div>
-        <h4>Selectors</h4>
-        {selectorList}
+    );
+  } else {
+    return (
+      <div className="AtomSelectorLegend">
+        <div>
+          <h4>Atoms</h4>
+          {atomList}
+        </div>
+        <div>
+          <h4>Selectors</h4>
+          {selectorList}
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 };
 
 export default AtomSelectorLegend;
