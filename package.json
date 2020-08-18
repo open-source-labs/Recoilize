@@ -43,19 +43,25 @@
     "webpack-cli": "^3.3.12"
   },
   "dependencies": {
+    "@angular/cli": "^10.0.5",
+    "@angular/core": "^10.0.8",
+    "@popperjs/core": "^2.4.4",
     "@types/chrome": "0.0.117",
     "@types/react-html-parser": "^2.0.1",
     "@types/react-json-tree": "^0.6.11",
     "babel-eslint": "^10.1.0",
     "d3": "^5.16.0",
     "jsondiffpatch": "^0.4.1",
+    "multiselect-react-dropdown": "^1.5.7",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-html-parser": "^2.0.2",
     "react-json-tree": "^0.11.2",
+    "react-multi-select-component": "^3.0.1",
     "react-router-dom": "^5.2.0",
-    "recoil": "0.0.10"
+    "rxjs": "^6.6.2",
+    "semantic-ui-react": "^1.1.1"
   },
   "engines": {
     "node": "^10.12.0 || >=12.0.0"

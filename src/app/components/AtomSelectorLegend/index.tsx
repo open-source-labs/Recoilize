@@ -7,7 +7,6 @@ interface AtomSelectorLegendProps {
   selectedRecoilValue: any[];
   str: any;
 }
-
 const AtomSelectorLegend: React.FC<AtomSelectorLegendProps> = ({
   setSelectedRecoilValue,
   atoms,
@@ -47,8 +46,6 @@ const AtomSelectorLegend: React.FC<AtomSelectorLegendProps> = ({
       </div>,
     );
   });
-
-  console.log('strType: ', typeof str);
   const legendTextArray: any = [];
   str.forEach((element: any) => {
     legendTextArray.push(

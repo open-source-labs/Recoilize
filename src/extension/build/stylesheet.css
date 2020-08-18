@@ -40,15 +40,6 @@ body {
 }
 
 /* COMPONENTS */
-/* .Component {
-  height: 100%;
-  width: 100%;
-} */
-
-#htmlBox {
-  position: fixed;
-  display: inline-block;
-}
 
 .AtomComponentVisual {
   height: 100%;
@@ -315,4 +306,26 @@ body {
 /* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
 .show {
   display: block;
+}
+
+.AtomLegend {
+  background-color: #9580ff;
+  width: 20px;
+  height: 20px;
+  border: 1px solid #9580ff;
+  border-radius: 20px;
+}
+
+.SelectorLegend {
+  background-color: #ff80bf;
+  width: 20px;
+  height: 20px;
+  border: 1px solid #ff80bf;
+  border-radius: 20px;
+}
+
+.AtomNetworkLegend {
+  display: grid;
+  grid-template-columns: 30px 30px;
+  align-items: center;
 }

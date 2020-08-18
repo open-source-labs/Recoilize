@@ -57,15 +57,11 @@ export default function RecoilizeDebugger(props) {
   // Traverse all atoms and selector state nodes and get value
   nodes.forEach((node, index) => {
     const type = node.__proto__.constructor.name;
-    console.log('type ', type);
     const contents = snapshot.getLoadable(node).contents;
-    console.log('contents ', contents);
     const nodeDeps = currentTree.nodeDeps.get(node.key);
-    console.log('nodeDeps ', nodeDeps);
     const nodeToNodeSubscriptions = currentTree.nodeToNodeSubscriptions.get(
       node.key,
     );
-    console.log('n2nSub ', nodeToNodeSubscriptions);
 
     // Construct node data structure for dev tool to consume
     filteredSnapshot[node.key] = {

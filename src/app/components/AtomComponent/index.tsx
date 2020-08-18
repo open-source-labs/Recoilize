@@ -27,7 +27,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
   // useState hook to update the toggle of showing diff components
   const [rawToggle, setRawToggle] = useState(false);
 
-  // clean the componentatomtree to only have the data that we want
+  // Possibly filter some more unimportant nodes
   const cleanComponentAtomTree = (inputObj: any) => {
     const obj = {} as any;
     let counter = 0;
@@ -104,12 +104,14 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
         return d.children;
       });
     }
+
+    // Node distance from each other
     root.x0 = 10;
     root.y0 = width / 2;
 
     update(root);
 
-    // zoom functionality
+    // d3 zoom functionality
     let zoom = d3.zoom().on('zoom', zoomed);
 
     svgContainer.call(
@@ -131,6 +133,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
       g.attr('transform', d3.event.transform);
     }
 
+    // Update function
     function update(source: any) {
       treeMap(root);
 
@@ -144,10 +147,11 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
           return d.id || (d.id = ++i);
         });
 
-      // this tells node where to be placed and go to
-      // adding a mouseOver event handler to each node
-      // display the data in the node on hover
-      // add mouseOut event handler that removes the popup text
+      /* this tells node where to be placed and go to
+       * adding a mouseOver event handler to each node
+       * display the data in the node on hover
+       * add mouseOut event handler that removes the popup text
+       */
       let nodeEnter = node
         .enter()
         .append('g')
@@ -161,6 +165,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
           const atsel: any = [];
           if (d.data.recoilNodes) {
             for (let x = 0; x < d.data.recoilNodes.length; x++) {
+              // pushing all the atoms and selectors for the node into 'atsel'
               atsel.push(d.data.recoilNodes[x]);
             }
             d3.select(this)
@@ -168,6 +173,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
               .text(formatAtomSelectorText(atsel))
               .style('fill', 'white')
               .attr('x', formatMouseoverXValue(d.data.recoilNodes[x]))
+              // How far the text is below the node
               .attr('y', 225 + x * 55)
               .style('font-size', '3.5rem')
               .attr('id', `popup${i}${x}`);
@@ -333,10 +339,13 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
       function determineSize(d: any) {
         if (d.data.recoilNodes && d.data.recoilNodes.length) {
           if (d.data.recoilNodes.includes(selectedRecoilValue[0])) {
+            // Size when the atom/selector is clicked on from legend
             return 150;
           }
+          // Size of atoms and selectors
           return 100;
         }
+        // Size of regular nodes
         return 50;
       }
 
@@ -344,6 +353,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
         // if component node contains recoil atoms or selectors, make it orange red or yellow, otherwise keep node gray
         if (d.data.recoilNodes && d.data.recoilNodes.length) {
           if (d.data.recoilNodes.includes(selectedRecoilValue[0])) {
+            // Color of atom or selector when clicked on in legend
             return 'white';
           }
 
@@ -357,7 +367,6 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
               hasSelector = true;
             }
           }
-
           if (hasAtom && hasSelector) {
             return 'orange';
           }
@@ -367,7 +376,6 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
             return 'yellow';
           }
         }
-
         return 'gray';
       }
     }
