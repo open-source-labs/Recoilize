@@ -9,7 +9,7 @@ interface NetworkProps {
 const Network: React.FC<NetworkProps> = ({filteredCurSnap}) => {
   const [{x, y, k}, setZoomState] = useState({x: 0, y: 0, k: 0});
   const [searchValue, setSearchValue] = useState('');
-  const [searchFilter, setSearchFilter] = useState(filteredCurSnap);
+
   const handleChange = (e: any) => {
     setSearchValue(e.target.value);
   };
