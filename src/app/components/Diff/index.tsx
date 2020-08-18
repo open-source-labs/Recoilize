@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {diff, formatters} from 'jsondiffpatch';
 import ReactHtmlParser from 'react-html-parser';
 import {filteredSnapshot} from '../../../types';
@@ -23,8 +23,6 @@ const Diff: React.FC<DiffProps> = ({filteredPrevSnap, filteredCurSnap}) => {
   // conditionally render changes or not based on rawToggle bool
   formatters.html.showUnchanged(rawToggle);
 
-  //
-  //
   return (
     <div className="Diff">
       <div className="toggleDiv">

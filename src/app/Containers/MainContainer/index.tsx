@@ -27,6 +27,7 @@ const MainContainer: React.FC<MainContainerProps> = ({
   useEffect(() => {
     setRenderIndex(snapshotHistory.length - 1);
   }, [snapshotHistory]);
+
   // render containers passing necessary props
   return (
     <div className="MainContainer">

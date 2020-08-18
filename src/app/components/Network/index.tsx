@@ -2,19 +2,57 @@ import React, {useEffect, useState} from 'react';
 import * as d3 from 'd3';
 import makeRelationshipLinks from '../../utils/makeRelationshipLinks';
 import {filteredSnapshot} from '../../../types';
-
 interface NetworkProps {
   filteredCurSnap: filteredSnapshot;
 }
 
 const Network: React.FC<NetworkProps> = ({filteredCurSnap}) => {
   const [{x, y, k}, setZoomState] = useState({x: 0, y: 0, k: 0});
+  const [searchValue, setSearchValue] = useState('');
+  const [searchFilter, setSearchFilter] = useState(filteredCurSnap);
+  const handleChange = (e: any) => {
+    setSearchValue(e.target.value);
+  };
 
   useEffect(() => {
     setZoomState(d3.zoomTransform(d3.select('#networkCanvas').node()));
   }, [filteredCurSnap]);
 
   useEffect(() => {
+    const newFilteredCurSnap: any = {};
+    const filter = (filteredCurSnap: filteredSnapshot) => {
+      for (let key in filteredCurSnap) {
+        if (key.toLowerCase().includes(searchValue.toLowerCase())) {
+          newFilteredCurSnap[key] = filteredCurSnap[key];
+          grabNodeToNodeSubscriptions(newFilteredCurSnap[key]);
+          grabNodeDeps(newFilteredCurSnap[key]);
+        }
+      }
+    };
+
+    const grabNodeToNodeSubscriptions = (node: any) => {
+      let nodeSubscriptionLength = node.nodeToNodeSubscriptions.length;
+      if (nodeSubscriptionLength > 0) {
+        for (let i = 0; i < nodeSubscriptionLength; i += 1) {
+          let currSN = node.nodeToNodeSubscriptions[i];
+          newFilteredCurSnap[currSN] = filteredCurSnap[currSN];
+          grabNodeToNodeSubscriptions(filteredCurSnap[currSN]);
+        }
+      }
+    };
+    const grabNodeDeps = (node: any) => {
+      let nodeDepsLength = node.nodeDeps.length;
+      if (nodeDepsLength > 0) {
+        for (let i = 0; i < nodeDepsLength; i += 1) {
+          let currDepNode = node.nodeDeps[i];
+          newFilteredCurSnap[currDepNode] = filteredCurSnap[currDepNode];
+          grabNodeDeps(filteredCurSnap[currDepNode]);
+        }
+      }
+    };
+
+    filter(filteredCurSnap);
+
     document.getElementById('networkCanvas').innerHTML = '';
 
     let link: any;
@@ -25,7 +63,6 @@ const Network: React.FC<NetworkProps> = ({filteredCurSnap}) => {
     const networkContainer = document.querySelector('.networkContainer');
     const width = networkContainer.clientWidth;
     const height = networkContainer.clientHeight;
-
     const svg = d3.select('#networkCanvas');
 
     const g = svg
@@ -63,12 +100,14 @@ const Network: React.FC<NetworkProps> = ({filteredCurSnap}) => {
       .force('charge', d3.forceManyBody())
       .force('center', d3.forceCenter(width / 2, height / 2));
 
-    // TRANSFORM DATA INTO D3 SUPPORTED FORMAT FOR NETWORK GRAPH
-    const networkData: any = makeRelationshipLinks(filteredCurSnap);
+    let snap;
+    if (searchValue === '') snap = filteredCurSnap;
+    else snap = newFilteredCurSnap;
 
+    // TRANSFORM DATA INTO D3 SUPPORTED FORMAT FOR NETWORK GRAPH
+    const networkData: any = makeRelationshipLinks(snap);
     // MAIN UPDATE CALL
     update(networkData.links, networkData.nodes);
-
     // HELPER FUNCTIONS BELOW FOR D3
     function update(links: any, nodes: any) {
       link = g
@@ -78,11 +117,9 @@ const Network: React.FC<NetworkProps> = ({filteredCurSnap}) => {
         .append('line')
         .attr('class', 'link')
         .attr('marker-end', 'url(#arrowhead)');
-
       link.append('title').text(function (d: any) {
         return d.type;
       });
-
       edgepaths = g
         .selectAll('.edgepath')
         .data(links)
@@ -98,7 +135,6 @@ const Network: React.FC<NetworkProps> = ({filteredCurSnap}) => {
         .style('fill', '#474747')
         .style('stroke', '#474747')
         .style('stroke-width', '1px');
-
       edgelabels = g
         .selectAll('.edgelabel')
         .data(links)
@@ -110,7 +146,6 @@ const Network: React.FC<NetworkProps> = ({filteredCurSnap}) => {
           return 'edgelabel' + i;
         })
         .attr('font-size', 10);
-
       edgelabels
         .append('textPath')
         .attr('xlink:href', function (d: any, i: any) {
@@ -122,7 +157,6 @@ const Network: React.FC<NetworkProps> = ({filteredCurSnap}) => {
         .text(function (d: any) {
           return d.type;
         });
-
       node = g
         .selectAll('.node')
         .data(nodes)
@@ -136,32 +170,26 @@ const Network: React.FC<NetworkProps> = ({filteredCurSnap}) => {
             .on('drag', dragged)
             .on('end', dragended),
         );
-
       node
         .append('circle')
         .attr('r', 5)
         .style('fill', function (d: any, i: any) {
           return d.name === 'Atom' ? '#9580FF' : '#FF80BF';
         });
-
       node.append('title').text(function (d: any) {
         return d.id;
       });
-
       node
         .append('text')
         .attr('dy', -3)
         .text(function (d: any) {
-          return d.name + ':' + d.label;
+          return d.label;
         })
         .attr('fill', '#646464')
         .attr('stroke', 'none');
-
       simulation.nodes(nodes).on('tick', ticked);
-
       simulation.force('link').links(links);
     }
-
     function ticked() {
       link
         .attr('x1', function (d: any) {
@@ -176,11 +204,9 @@ const Network: React.FC<NetworkProps> = ({filteredCurSnap}) => {
         .attr('y2', function (d: any) {
           return d.target.y;
         });
-
       node.attr('transform', function (d: any) {
         return 'translate(' + d.x + ', ' + d.y + ')';
       });
-
       edgepaths.attr('d', function (d: any) {
         return (
           'M ' +
@@ -193,11 +219,9 @@ const Network: React.FC<NetworkProps> = ({filteredCurSnap}) => {
           d.target.y
         );
       });
-
       edgelabels.attr('transform', function (d: any) {
         if (d.target.x < d.source.x) {
           var bbox = this.getBBox();
-
           let rx = bbox.x + bbox.width / 2;
           let ry = bbox.y + bbox.height / 2;
           return 'rotate(180 ' + rx + ' ' + ry + ')';
@@ -206,24 +230,20 @@ const Network: React.FC<NetworkProps> = ({filteredCurSnap}) => {
         }
       });
     }
-
     function dragstarted(d: any) {
       if (!d3.event.active) simulation.alphaTarget(0.3).restart();
       d.fx = d.x;
       d.fy = d.y;
     }
-
     function dragged(d: any) {
       d.fx = d3.event.x;
       d.fy = d3.event.y;
     }
-
     function dragended(d: any) {
       if (!d3.event.active) simulation.alphaTarget(0);
       d.fx = undefined;
       d.fy = undefined;
     }
-
     // allows the canvas to be draggable
     g.call(
       d3
@@ -232,7 +252,6 @@ const Network: React.FC<NetworkProps> = ({filteredCurSnap}) => {
         .on('drag', draggedCanvas)
         .on('end', dragEnded),
     );
-
     // allows the canvas to be zoomable
     svg.call(
       d3
@@ -244,31 +263,38 @@ const Network: React.FC<NetworkProps> = ({filteredCurSnap}) => {
         .scaleExtent([0, 8])
         .on('zoom', zoomed),
     );
-
     // helper functions that help with dragging functionality
     function dragStarted() {
       d3.select(this).raise();
       g.attr('cursor', 'grabbing');
     }
-
     function draggedCanvas(d: any) {
       d3.select(this)
         .attr('dx', (d.x = d3.event.x))
         .attr('dy', (d.y = d3.event.y));
     }
-
     function dragEnded() {
       g.attr('cursor', 'grab');
     }
-
     // helper function that allows for zooming
     function zoomed() {
       g.attr('transform', d3.event.transform);
     }
   });
-
   return (
     <div className="networkContainer">
+      <input
+        type="text"
+        placeholder="search for atoms..."
+        value={searchValue}
+        onChange={handleChange}
+      />
+      <div className="AtomNetworkLegend">
+        <div className="AtomLegend" />
+        <p>ATOM</p>
+        <div className="SelectorLegend"></div>
+        <p>SELECTOR</p>
+      </div>
       <div className="Network">
         <svg data-testid="networkCanvas" id="networkCanvas"></svg>
       </div>
