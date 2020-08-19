@@ -192,7 +192,6 @@ export default function RecoilizeDebugger(props) {
     const now = new Date().getTime();
     // if we get a series of 5 in a row called super fast, then we want to turn the throttle on
     if (now - throttleTimer < throttleLimit) {
-      console.log('too quick');
       isRestoredState = true;
     } else {
       throttleTimer = now;
