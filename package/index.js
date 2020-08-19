@@ -14,7 +14,7 @@ let isRestoredState = false;
 
 // throttle is an object that keeps track of the throttle settings made by the user
 let throttleTimer = 0;
-let throttleLimit = 0;
+let throttleLimit = 70;
 
 // persistedSnapshots initially null
 // let persistedSnapshots = null;
