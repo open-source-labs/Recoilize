@@ -20,18 +20,6 @@ let throttleLimit = 70;
 // let persistedSnapshots = null;
 
 export default function RecoilizeDebugger(props) {
-  // ! the props can go here, a message can be made to edit the global object for throttling
-  const throttle = () => {
-    const now = new Date().getTime();
-    // if we get a series of 5 in a row called super fast, then we want to turn the throttle on
-    if (now - throttleTimer < throttleLimit) {
-      isRestoredState = true;
-    } else {
-      throttleTimer = now;
-    }
-  };
-  throttle();
-
   // We should ask for Array of atoms and selectors.
   // Captures all atoms that were defined to get the initial state
 
@@ -201,6 +189,14 @@ export default function RecoilizeDebugger(props) {
 
   // FOR TIME TRAVEL: Recoil hook to fire a callback on every snapshot change
   useRecoilTransactionObserver_UNSTABLE(({snapshot}) => {
+    const now = new Date().getTime();
+    // if we get a series of 5 in a row called super fast, then we want to turn the throttle on
+    if (now - throttleTimer < throttleLimit) {
+      console.log('too quick');
+      isRestoredState = true;
+    } else {
+      throttleTimer = now;
+    }
     if (!isRestoredState) {
       setSnapshots([...snapshots, snapshot]);
     }
