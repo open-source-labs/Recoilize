@@ -26,8 +26,6 @@ const MainContainer: React.FC<MainContainerProps> = ({
   // useEffect for renderIndex
   useEffect(() => {
     const element = document.querySelector('.SnapshotsList');
-    console.log('scroll height: ', element.scrollHeight);
-    console.log('scroll top: ', element.scrollTop);
     element.scrollTop = element.scrollHeight;
     setRenderIndex(snapshotHistory.length - 1);
     element.scrollTop = element.scrollHeight;
