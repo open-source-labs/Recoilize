@@ -33,7 +33,15 @@ const SnapshotsContainer: React.FC<SnapshotsContainerProps> = ({
   };
   return (
     <div className="SnapshotsContainer">
-      <h3>Snapshots</h3>
+      <span
+        style={{
+          fontSize: '14px',
+          fontWeight: 'bold',
+          marginTop: '10px',
+          marginBottom: '10px',
+        }}>
+        Snapshots
+      </span>
       <SnapshotsList
         renderIndex={renderIndex}
         snapshotHistoryLength={snapshotHistoryLength}

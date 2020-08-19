@@ -17,7 +17,9 @@ const Tree: React.FC<TreeProps> = ({filteredCurSnap}) => {
           theme={{tree: () => ({className: 'json-tree'})}}
           shouldExpandNode={() => true}
           labelRenderer={raw =>
-            typeof raw[0] !== 'number' ? <span>{raw[0]}</span> : null
+            typeof raw[0] !== 'number' ? (
+              <span style={{fontSize: '14px'}}>{raw[0]}</span>
+            ) : null
           }
         />
       )}
