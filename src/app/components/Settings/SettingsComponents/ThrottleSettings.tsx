@@ -9,12 +9,19 @@ const ThrottleSettings: React.FC<ThrottlesettingsProps> = ({
   throttleDisplay,
   setThrottleDisplay,
 }) => {
-  // const [buttonClicked, setButtonClicked] = useState(null);
+  const [buttonClicked, setButtonClicked] = useState(null);
   const [throttleNum, setThrottleNum] = useState('');
 
-  //onChange function to set throttleNum
+  // onChange function to set throttleNum
   const onChange = (e: any) => {
     setThrottleNum(e.target.value);
+  };
+
+  // onClick function for reset button
+  const onClick = () => {
+    setButtonClicked(2);
+    setThrottleDisplay('70');
+    setThrottleNum('70');
   };
 
   // Creating function to tie to get to the backend
@@ -45,9 +52,9 @@ const ThrottleSettings: React.FC<ThrottlesettingsProps> = ({
         <span style={{fontSize: '14px'}}>milliseconds</span>
         <div>
           <button type="submit">Enter</button>
-          {/* <button onClick={() => setButtonClicked(2)} type="submit">
+          <button onClick={onClick} type="submit">
             Reset
-          </button> */}
+          </button>
         </div>
       </form>
       <span>
