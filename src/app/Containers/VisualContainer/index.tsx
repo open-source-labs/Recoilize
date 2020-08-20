@@ -35,7 +35,7 @@ const VisualContainer: React.FC<VisualContainerProps> = ({
   const [checked, setChecked] = useState(false);
 
   // variables to store/reference connection
-  const [throttleDisplay, setThrottleDisplay] = useState('');
+  const [throttleDisplay, setThrottleDisplay] = useState('70');
 
   // conditional render of filtered snaps/ based on non-filtered snaps
   const filteredCurSnap = currentSnapshot

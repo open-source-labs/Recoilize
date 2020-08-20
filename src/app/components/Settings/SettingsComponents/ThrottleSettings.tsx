@@ -9,8 +9,9 @@ const ThrottleSettings: React.FC<ThrottlesettingsProps> = ({
   throttleDisplay,
   setThrottleDisplay,
 }) => {
-  const [buttonClicked, setButtonClicked] = useState(null);
+  // const [buttonClicked, setButtonClicked] = useState(null);
   const [throttleNum, setThrottleNum] = useState('');
+
   //onChange function to set throttleNum
   const onChange = (e: any) => {
     setThrottleNum(e.target.value);
@@ -19,7 +20,7 @@ const ThrottleSettings: React.FC<ThrottlesettingsProps> = ({
   // Creating function to tie to get to the backend
   const throttleFunc = (e: any) => {
     e.preventDefault();
-    if (buttonClicked === 2) setThrottleNum('0');
+
     const backgroundConnection = chrome.runtime.connect();
     // post the message with index in payload to the connection
     backgroundConnection.postMessage({
@@ -27,9 +28,11 @@ const ThrottleSettings: React.FC<ThrottlesettingsProps> = ({
       tabId: chrome.devtools.inspectedWindow.tabId,
       payload: {value: throttleNum}, // edit this value to some other number
     });
+
     setThrottleDisplay(throttleNum);
     setThrottleNum('');
   };
+
   return (
     <div>
       <h2>Enter Throttle</h2>
@@ -41,15 +44,19 @@ const ThrottleSettings: React.FC<ThrottlesettingsProps> = ({
         />{' '}
         <span style={{fontSize: '14px'}}>milliseconds</span>
         <div>
-          <button onClick={() => setButtonClicked(1)} type="submit">
-            Enter
-          </button>
-          <button onClick={() => setButtonClicked(2)} type="submit">
+          <button type="submit">Enter</button>
+          {/* <button onClick={() => setButtonClicked(2)} type="submit">
             Reset
-          </button>
+          </button> */}
         </div>
       </form>
-      <span>Current throttle is {throttleDisplay} ms</span>
+      <span>
+        Current throttle is{' '}
+        {throttleDisplay === '70'
+          ? `${throttleDisplay} (default)`
+          : throttleDisplay}{' '}
+        ms
+      </span>
     </div>
   );
 };
