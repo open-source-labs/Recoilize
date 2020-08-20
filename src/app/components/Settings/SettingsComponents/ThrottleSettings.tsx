@@ -9,7 +9,6 @@ const ThrottleSettings: React.FC<ThrottlesettingsProps> = ({
   throttleDisplay,
   setThrottleDisplay,
 }) => {
-  const [buttonClicked, setButtonClicked] = useState(null);
   const [throttleNum, setThrottleNum] = useState('');
 
   // onChange function to set throttleNum
@@ -17,9 +16,8 @@ const ThrottleSettings: React.FC<ThrottlesettingsProps> = ({
     setThrottleNum(e.target.value);
   };
 
-  // onClick function for reset button
+  // onClick function for reset button. 70ms is the default throttle
   const onClick = () => {
-    setButtonClicked(2);
     setThrottleDisplay('70');
     setThrottleNum('70');
   };
