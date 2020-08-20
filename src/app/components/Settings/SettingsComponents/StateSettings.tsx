@@ -21,11 +21,17 @@ const StateSettings: React.FC<StateSettingsProps> = ({checked, setChecked}) => {
   return (
     <div>
       <h2>Persist State</h2>
-      <input
-        type="checkbox"
-        checked={checked}
-        onChange={persistStateFunc}></input>{' '}
-      <span style={{fontSize: '14px'}}>Checkmark to Save State</span>
+      <div className="persistContainer">
+        <label className="switch" htmlFor="checkbox">
+          <input
+            id="checkbox"
+            type="checkbox"
+            checked={checked}
+            onChange={persistStateFunc}></input>
+          <div className="slider round" />{' '}
+        </label>
+        <span className="persistText">Slide to Toggle Persist Mode</span>
+      </div>
     </div>
   );
 };
