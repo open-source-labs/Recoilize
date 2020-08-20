@@ -290,7 +290,11 @@ const Network: React.FC<NetworkProps> = ({filteredCurSnap}) => {
   });
   return (
     <div className="networkContainer">
+      <div className="Network">
+        <svg data-testid="networkCanvas" id="networkCanvas"></svg>
+      </div>
       <input
+        id="networkSearch"
         type="text"
         placeholder="search for atoms..."
         value={searchValue}
@@ -301,9 +305,6 @@ const Network: React.FC<NetworkProps> = ({filteredCurSnap}) => {
         <p>ATOM</p>
         <div className="SelectorLegend"></div>
         <p>SELECTOR</p>
-      </div>
-      <div className="Network">
-        <svg data-testid="networkCanvas" id="networkCanvas"></svg>
       </div>
     </div>
   );
