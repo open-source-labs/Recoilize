@@ -13,13 +13,10 @@ interface SettingsProps {
   snapshotHistory: stateSnapshot[];
   selected: any;
   setSelected: any;
-  checked: any;
-  setChecked: any;
-}
-
-interface StateSettingsProps {
   checked: boolean;
   setChecked: React.Dispatch<React.SetStateAction<boolean>>;
+  throttleDisplay: string;
+  setThrottleDisplay: React.Dispatch<React.SetStateAction<string>>;
 }
 
 // renders the difference between the most recent state change and the previous
@@ -28,8 +25,9 @@ const Settings: React.FC<SettingsProps> = ({
   selected,
   setSelected,
   checked,
-
   setChecked,
+  throttleDisplay,
+  setThrottleDisplay,
 }) => {
   return (
     <div className="Settings">
@@ -39,7 +37,10 @@ const Settings: React.FC<SettingsProps> = ({
         setSelected={setSelected}
       />
       <StateSettings checked={checked} setChecked={setChecked} />
-      <ThrottleSettings />
+      <ThrottleSettings
+        throttleDisplay={throttleDisplay}
+        setThrottleDisplay={setThrottleDisplay}
+      />
     </div>
   );
 };
