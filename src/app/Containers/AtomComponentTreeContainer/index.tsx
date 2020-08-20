@@ -28,7 +28,7 @@ const AtomComponentVisualContainer: React.FC<AtomComponentVisualContainerProps> 
     for (let [recoilValueName, object] of Object.entries<any>(
       filteredCurSnap,
     )) {
-      if (object.type === 'RecoilState') {
+      if (!object.nodeDeps.length) {
         atoms[recoilValueName] = object.contents;
       } else {
         selectors[recoilValueName] = object.contents;

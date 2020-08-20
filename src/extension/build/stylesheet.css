@@ -374,6 +374,16 @@ body {
   margin: 0px;
 }
 
+.bothLegend {
+  display: inline-block;
+  background-color: springgreen;
+  width: 20px;
+  height: 20px;
+  border: 1px solid springgreen;
+  border-radius: 20px;
+  margin: 0px;
+}
+
 .AtomNetworkLegend {
   position: fixed;
   top: 58px;
