@@ -25,7 +25,7 @@ const StateSettings: React.FC<StateSettingsProps> = ({checked, setChecked}) => {
         type="checkbox"
         checked={checked}
         onChange={persistStateFunc}></input>{' '}
-      Checkmark to Save State
+      <span style={{fontSize: '14px'}}>Checkmark to Save State</span>
     </div>
   );
 };

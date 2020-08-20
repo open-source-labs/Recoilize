@@ -28,7 +28,7 @@ const AtomComponentVisualContainer: React.FC<AtomComponentVisualContainerProps> 
     for (let [recoilValueName, object] of Object.entries<any>(
       filteredCurSnap,
     )) {
-      if (object.type === 'RecoilState') {
+      if (!object.nodeDeps.length) {
         atoms[recoilValueName] = object.contents;
       } else {
         selectors[recoilValueName] = object.contents;
@@ -45,13 +45,15 @@ const AtomComponentVisualContainer: React.FC<AtomComponentVisualContainerProps> 
         selectors={selectors}
         setStr={setStr}
       />
-      <AtomSelectorLegend
-        selectedRecoilValue={selectedRecoilValue}
-        setSelectedRecoilValue={setSelectedRecoilValue}
-        atoms={atoms}
-        selectors={selectors}
-        str={str}
-      />
+      <div id="legendFlexContainer">
+        <AtomSelectorLegend
+          selectedRecoilValue={selectedRecoilValue}
+          setSelectedRecoilValue={setSelectedRecoilValue}
+          atoms={atoms}
+          selectors={selectors}
+          str={str}
+        />
+      </div>
     </div>
   );
 };

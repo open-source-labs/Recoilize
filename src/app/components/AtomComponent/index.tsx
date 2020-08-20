@@ -368,12 +368,12 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
             }
           }
           if (hasAtom && hasSelector) {
-            return 'orange';
+            return 'springgreen';
           }
           if (hasAtom) {
-            return 'red';
+            return '#9580ff';
           } else {
-            return 'yellow';
+            return '#ff80bf';
           }
         }
         return 'gray';
@@ -394,6 +394,14 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
         }}>
         <span>{rawToggle ? 'Collapse' : 'Expand'}</span>
       </button>
+      <div className="AtomNetworkLegend">
+        <div className="AtomLegend" />
+        <p>ATOM</p>
+        <div className="SelectorLegend"></div>
+        <p>SELECTOR</p>
+        <div className="bothLegend"></div>
+        <p>BOTH</p>
+      </div>
     </div>
   );
 };

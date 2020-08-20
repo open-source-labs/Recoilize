@@ -8,8 +8,11 @@ interface NetworkProps {
 
 const Network: React.FC<NetworkProps> = ({filteredCurSnap}) => {
   const [{x, y, k}, setZoomState] = useState({x: 0, y: 0, k: 0});
+
+  // state hook for search value for atom network
   const [searchValue, setSearchValue] = useState('');
-  const [searchFilter, setSearchFilter] = useState(filteredCurSnap);
+
+  // function to handle change in search bar. Sets searchValue state
   const handleChange = (e: any) => {
     setSearchValue(e.target.value);
   };
@@ -19,7 +22,10 @@ const Network: React.FC<NetworkProps> = ({filteredCurSnap}) => {
   }, [filteredCurSnap]);
 
   useEffect(() => {
+    // new filtered snap object to be constructed with search value
     const newFilteredCurSnap: any = {};
+
+    // filters filteredCurSnap object with atoms and selectors that includes are search value
     const filter = (filteredCurSnap: filteredSnapshot) => {
       for (let key in filteredCurSnap) {
         if (key.toLowerCase().includes(searchValue.toLowerCase())) {
@@ -30,6 +36,7 @@ const Network: React.FC<NetworkProps> = ({filteredCurSnap}) => {
       }
     };
 
+    // helper functions to recursively include searched atoms/selectors' subscriptions
     const grabNodeToNodeSubscriptions = (node: any) => {
       let nodeSubscriptionLength = node.nodeToNodeSubscriptions.length;
       if (nodeSubscriptionLength > 0) {
@@ -51,6 +58,7 @@ const Network: React.FC<NetworkProps> = ({filteredCurSnap}) => {
       }
     };
 
+    // invoke filter to populate newFilteredCurSnap
     filter(filteredCurSnap);
 
     document.getElementById('networkCanvas').innerHTML = '';
@@ -100,9 +108,8 @@ const Network: React.FC<NetworkProps> = ({filteredCurSnap}) => {
       .force('charge', d3.forceManyBody())
       .force('center', d3.forceCenter(width / 2, height / 2));
 
-    let snap;
-    if (searchValue === '') snap = filteredCurSnap;
-    else snap = newFilteredCurSnap;
+    // snap will be newFilteredCurSnap if searchValue exists, if not original
+    let snap: any = searchValue ? newFilteredCurSnap : filteredCurSnap;
 
     // TRANSFORM DATA INTO D3 SUPPORTED FORMAT FOR NETWORK GRAPH
     const networkData: any = makeRelationshipLinks(snap);
@@ -283,7 +290,11 @@ const Network: React.FC<NetworkProps> = ({filteredCurSnap}) => {
   });
   return (
     <div className="networkContainer">
+      <div className="Network">
+        <svg data-testid="networkCanvas" id="networkCanvas"></svg>
+      </div>
       <input
+        id="networkSearch"
         type="text"
         placeholder="search for atoms..."
         value={searchValue}
@@ -294,9 +305,6 @@ const Network: React.FC<NetworkProps> = ({filteredCurSnap}) => {
         <p>ATOM</p>
         <div className="SelectorLegend"></div>
         <p>SELECTOR</p>
-      </div>
-      <div className="Network">
-        <svg data-testid="networkCanvas" id="networkCanvas"></svg>
       </div>
     </div>
   );

@@ -9,8 +9,8 @@ interface VisualizerProps {
 
 const Visualizer: React.FC<VisualizerProps> = ({filteredCurSnap}) => {
   // set the heights and width of the tree to be passed into treeMap function
-  const width: number = 600;
-  const height: number = 1100;
+  let width = 0;
+  let height = 0;
 
   // this state allows the canvas to stay at the zoom level on multiple re-renders
   const [{x, y, k}, setZoomState]: any = useState({x: 0, y: 0, k: 0});
@@ -21,6 +21,8 @@ const Visualizer: React.FC<VisualizerProps> = ({filteredCurSnap}) => {
 
   // this only clears the canvas if Visualizer is already rendered on the extension
   useEffect(() => {
+    height = document.querySelector('.Visualizer').clientHeight;
+    width = document.querySelector('.Visualizer').clientWidth;
     document.getElementById('canvas').innerHTML = '';
 
     // creating the main svg container for d3 elements
@@ -98,7 +100,7 @@ const Visualizer: React.FC<VisualizerProps> = ({filteredCurSnap}) => {
       .attr('x', (d: any) => (d.children ? -75 : 75))
       .attr('text-anchor', (d: any) => (d.children ? 'end' : 'start'))
       .text((d: any) => d.data.name)
-      .style('font-size', `2rem`)
+      .style('font-size', `3.5rem`)
       .style('fill', 'white')
       .clone(true)
       .lower()
@@ -116,7 +118,7 @@ const Visualizer: React.FC<VisualizerProps> = ({filteredCurSnap}) => {
           .style('fill', 'white')
           .attr('x', 75)
           .attr('y', 60)
-          .style('font-size', '3rem')
+          .style('font-size', '4rem')
           .attr('stroke', '#646464')
           .attr('id', `popup${i}`);
       }
@@ -136,18 +138,6 @@ const Visualizer: React.FC<VisualizerProps> = ({filteredCurSnap}) => {
         .on('end', dragEnded),
     );
 
-    // allows the canvas to be zoom-able
-    svgContainer.call(
-      d3
-        .zoom()
-        .extent([
-          [0, 0],
-          [width, height],
-        ])
-        .scaleExtent([0, 8])
-        .on('zoom', zoomed),
-    );
-
     // helper functions that help with dragging functionality
     function dragStarted(): any {
       d3.select(this).raise();
@@ -164,6 +154,23 @@ const Visualizer: React.FC<VisualizerProps> = ({filteredCurSnap}) => {
       g.attr('cursor', 'grab');
     }
 
+    // d3 zoom functionality
+    let zoom = d3.zoom().on('zoom', zoomed);
+
+    svgContainer.call(
+      zoom.transform,
+      // Changes the initial view, (left, top)
+      d3.zoomIdentity.translate(150, 300).scale(0.3),
+    );
+
+    // allows the canvas to be zoom-able
+    svgContainer.call(
+      d3
+        .zoom()
+        .scaleExtent([0.05, 0.9]) // [zoomOut, zoomIn]
+        .on('zoom', zoomed),
+    );
+
     // helper function that allows for zooming
     function zoomed(): any {
       g.attr('transform', d3.event.transform);
@@ -171,7 +178,7 @@ const Visualizer: React.FC<VisualizerProps> = ({filteredCurSnap}) => {
   });
 
   return (
-    <div data-testid="canvas">
+    <div data-testid="canvas" id="stateGraphContainer">
       <div className="Visualizer">
         <svg id="canvas"></svg>
       </div>

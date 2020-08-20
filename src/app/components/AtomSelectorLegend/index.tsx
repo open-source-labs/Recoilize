@@ -65,11 +65,17 @@ const AtomSelectorLegend: React.FC<AtomSelectorLegendProps> = ({
     return (
       <div className="AtomSelectorLegend">
         <div>
-          <h4>Atoms</h4>
+          <span
+            style={{fontSize: '14px', fontWeight: 'bold', marginTop: '10px'}}>
+            Atoms
+          </span>
           {atomList}
         </div>
         <div>
-          <h4>Selectors</h4>
+          <span
+            style={{fontSize: '14px', fontWeight: 'bold', marginTop: '10px'}}>
+            Selectors
+          </span>
           {selectorList}
         </div>
       </div>
