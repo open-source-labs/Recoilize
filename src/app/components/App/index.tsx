@@ -41,6 +41,7 @@ const App: React.FC = () => {
     }
   }, [snapshotHistory]); // Only re-run the effect if snapshot history changes -- react hooks
   // use effect for snapshotHistory
+  console.log('snapshothistory:', snapshotHistory);
   useEffect(() => {
     // SETUP connection to bg script
     const backgroundConnection = chrome.runtime.connect();

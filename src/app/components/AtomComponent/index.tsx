@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import * as d3 from 'd3';
 import {componentAtomTree, atom, selector} from '../../../types';
-import {string} from 'prop-types';
 
 interface AtomComponentVisualProps {
   componentAtomTree: componentAtomTree;
@@ -202,7 +201,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
           return d.children || d._children ? 'middle' : 'middle';
         })
         .text((d: any) => d.data.name)
-        .style('font-size', `4.5rem`)
+        .style('font-size', `7.5rem`)
         .style('fill', 'white');
 
       let nodeUpdate = nodeEnter.merge(node);
@@ -355,7 +354,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
         if (d.data.recoilNodes && d.data.recoilNodes.length) {
           if (d.data.recoilNodes.includes(selectedRecoilValue[0])) {
             // Color of atom or selector when clicked on in legend
-            return 'white';
+            return 'yellow';
           }
 
           let hasAtom = false;
@@ -380,7 +379,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
         return 'gray';
       }
     }
-  }, [componentAtomTree, rawToggle]);
+  }, [componentAtomTree, rawToggle, selectedRecoilValue]);
 
   return (
     <div className="AtomComponentVisual">

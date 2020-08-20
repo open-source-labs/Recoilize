@@ -64,19 +64,29 @@ const AtomSelectorLegend: React.FC<AtomSelectorLegendProps> = ({
   } else {
     return (
       <div className="AtomSelectorLegend">
-        <div>
-          <span
-            style={{fontSize: '14px', fontWeight: 'bold', marginTop: '10px'}}>
-            Atoms
-          </span>
-          {atomList}
-        </div>
-        <div>
-          <span
-            style={{fontSize: '14px', fontWeight: 'bold', marginTop: '10px'}}>
-            Selectors
-          </span>
-          {selectorList}
+        <button
+          onClick={() => {
+            const menu = document.querySelector('#hidden');
+            menu.classList.toggle('minimize');
+          }}
+          className="minimizeButton">
+          Visibility
+        </button>
+        <div id="hidden">
+          <div>
+            <span
+              style={{fontSize: '14px', fontWeight: 'bold', marginTop: '10px'}}>
+              Atoms
+            </span>
+            {atomList}
+          </div>
+          <div>
+            <span
+              style={{fontSize: '14px', fontWeight: 'bold', marginTop: '10px'}}>
+              Selectors
+            </span>
+            {selectorList}
+          </div>
         </div>
       </div>
     );
