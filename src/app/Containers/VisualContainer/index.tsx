@@ -34,6 +34,9 @@ const VisualContainer: React.FC<VisualContainerProps> = ({
   // state for checkmark in persist state in settings
   const [checked, setChecked] = useState(false);
 
+  // variables to store/reference connection
+  const [throttleDisplay, setThrottleDisplay] = useState('');
+
   // conditional render of filtered snaps/ based on non-filtered snaps
   const filteredCurSnap = currentSnapshot
     ? currentSnapshot.filteredSnapshot
@@ -74,6 +77,8 @@ const VisualContainer: React.FC<VisualContainerProps> = ({
         setSelected={setSelected}
         checked={checked}
         setChecked={setChecked}
+        throttleDisplay={throttleDisplay}
+        setThrottleDisplay={setThrottleDisplay}
       />
     ),
   };

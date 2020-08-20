@@ -1,11 +1,16 @@
 import React, {useState} from 'react';
 
-const ThrottleSettings: React.FC = () => {
-  // variables to store/reference connection
-  const [throttleNum, setThrottleNum] = useState('');
-  const [buttonClicked, setButtonClicked] = useState(null);
-  let throttleNumVar = '';
+interface ThrottlesettingsProps {
+  throttleDisplay: string;
+  setThrottleDisplay: React.Dispatch<React.SetStateAction<string>>;
+}
 
+const ThrottleSettings: React.FC<ThrottlesettingsProps> = ({
+  throttleDisplay,
+  setThrottleDisplay,
+}) => {
+  const [buttonClicked, setButtonClicked] = useState(null);
+  const [throttleNum, setThrottleNum] = useState('');
   //onChange function to set throttleNum
   const onChange = (e: any) => {
     setThrottleNum(e.target.value);
@@ -22,7 +27,7 @@ const ThrottleSettings: React.FC = () => {
       tabId: chrome.devtools.inspectedWindow.tabId,
       payload: {value: throttleNum}, // edit this value to some other number
     });
-    throttleNumVar = throttleNum;
+    setThrottleDisplay(throttleNum);
     setThrottleNum('');
   };
   return (
@@ -44,7 +49,7 @@ const ThrottleSettings: React.FC = () => {
           </button>
         </div>
       </form>
-      <span>Current throttle is {throttleNumVar} ms</span>
+      <span>Current throttle is {throttleDisplay} ms</span>
     </div>
   );
 };
