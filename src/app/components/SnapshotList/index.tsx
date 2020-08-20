@@ -22,19 +22,16 @@ const SnapshotsList: React.FC<SnapshotsListProps> = ({
   selected,
   filter,
 }) => {
+  // useRef for a dummy div at the bottom of the scroll
   const snapshotEndRef = useRef(null);
 
+  // useEffect to scroll bottom whenever snapshot history changes
   useEffect(() => {
     scrollToBottom();
   }, [snapshotHistoryLength]);
 
+  // using scrollInToView makes a smoother scroll
   const scrollToBottom = () => {
-    // const scrollHeight = snapshotEndRef.current.scrollHeight;
-    // const height = snapshotEndRef.current.clientHeight;
-    // console.log('element.scrollHeight from snapshotlist', scrollHeight);
-    // const maxScrollTop = scrollHeight - height;
-    // console.log('element.scrollTop', height);
-    // snapshotEndRef.current.scrollTop = maxScrollTop > 0 ? maxScrollTop : 0;
     snapshotEndRef.current.scrollIntoView({behavior: 'smooth'});
   };
   // ! probably need to prop drill down something else as well to get this filter to work
