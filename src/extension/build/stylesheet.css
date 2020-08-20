@@ -399,7 +399,6 @@ body {
   padding-top: 5px;
 }
 
-<<<<<<< HEAD
 .minimizeButton {
   margin: 5px;
   background-color: #9580ff;
@@ -410,7 +409,8 @@ body {
   cursor: pointer;
   color: hsl(258, 68%, 28%);
   font-weight: bold;
-=======
+}
+
 .switch {
   display: inline-block;
   height: 24px;
@@ -469,5 +469,4 @@ input:checked + .slider:before {
   vertical-align: middle;
   font-size: 14px;
   padding-left: 10px;
->>>>>>> master
 }
