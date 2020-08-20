@@ -1,5 +1,5 @@
 // renders a list of all of the snapshots that were taking
-import React from 'react';
+import React, {useEffect, useRef} from 'react';
 import {stateSnapshot} from '../../../types';
 interface SnapshotsListProps {
   // index of current snapshot rendered in devtool
@@ -22,6 +22,21 @@ const SnapshotsList: React.FC<SnapshotsListProps> = ({
   selected,
   filter,
 }) => {
+  const snapshotEndRef = useRef(null);
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [snapshotHistoryLength]);
+
+  const scrollToBottom = () => {
+    // const scrollHeight = snapshotEndRef.current.scrollHeight;
+    // const height = snapshotEndRef.current.clientHeight;
+    // console.log('element.scrollHeight from snapshotlist', scrollHeight);
+    // const maxScrollTop = scrollHeight - height;
+    // console.log('element.scrollTop', height);
+    // snapshotEndRef.current.scrollTop = maxScrollTop > 0 ? maxScrollTop : 0;
+    snapshotEndRef.current.scrollIntoView({behavior: 'smooth'});
+  };
   // ! probably need to prop drill down something else as well to get this filter to work
   // console.log('this is selected inside SnapshotList ', selected);
   // console.log('this is the filter inside of snapshotlist ', filter); // this filter is not resetting on reset
@@ -80,7 +95,12 @@ const SnapshotsList: React.FC<SnapshotsListProps> = ({
    an atom/selector from the Atom and Selector Filter in the Settings tab
   */
   // render the array of snapshots divs generated above
-  return <div className="SnapshotsList">{snapshotDivs}</div>;
+  return (
+    <div className="SnapshotsList">
+      <div>{snapshotDivs}</div>
+      <div ref={snapshotEndRef} />
+    </div>
+  );
 };
 export default SnapshotsList;
 export {filterArray};
