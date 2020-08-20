@@ -20,11 +20,11 @@ body {
 }
 
 .SnapshotsContainer {
+  height: 100%;
   display: flex;
   flex-direction: column;
   flex-shrink: 1;
   min-width: 170px;
-  border-bottom: 2px solid #484848;
   background-color: #2d2d2d;
   text-align: center;
   color: #e6e6e6;
@@ -34,9 +34,10 @@ body {
   display: flex;
   flex-grow: 8;
   flex-direction: column;
-  border-bottom: 2px solid #484848;
   border-left: 2px solid #484848;
   color: #e6e6e6;
+  height: 100%;
+  width: 100%;
 }
 
 /* COMPONENTS */
@@ -47,13 +48,13 @@ body {
 }
 
 .SnapshotsList {
-  height: 85vh;
+  height: 100%;
   overflow-y: auto;
   border-style: none;
 }
 
 .Diff {
-  height: 82vh;
+  height: 100%;
   overflow: auto;
   border-style: none;
   display: flex;
@@ -62,8 +63,19 @@ body {
   padding-bottom: 20px;
 }
 
+.networkContainer {
+  height: 100%;
+  width: 100%;
+}
+
+.Network {
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+
 .Settings {
-  height: 80vh;
+  height: calc(100% - 33);
   overflow: auto;
   border-style: none;
   display: flex;
@@ -78,6 +90,7 @@ body {
 }
 
 .NavBar {
+  width: 100%;
   display: flex;
   flex-grow: 0;
   flex-direction: row;
@@ -108,6 +121,7 @@ body {
 
 .Tree {
   padding: 10px;
+  overflow-y: auto;
 }
 
 /* BUTTONS */
@@ -172,14 +186,15 @@ body {
 }
 
 /* D3 */
-#canvas {
+#canvas,
+.Visualizer {
   height: 100%;
   width: 100%;
 }
 
-.Visualizer {
-  height: calc(100vh - 40px);
-  width: calc(100vw - 250px);
+#stateGraphContainer {
+  height: calc(100% - 33px); /* 33px is height of navbar */
+  width: 100%;
 }
 
 .node-text {
@@ -217,12 +232,20 @@ body {
 }
 
 #networkCanvas {
-  height: calc(100vh - 40px);
-  width: calc(100vw - 250px);
+  position: relative;
+  height: 100%;
+  width: 100%;
 }
 
+/* #legendFlexContainer {
+  width: 100px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+} */
+
 .AtomSelectorLegend {
-  background-color: rgba(45, 45, 45, 0.95);
+  background-color: rgba(45, 45, 45, 0.65);
   z-index: 1;
   position: fixed;
   right: 0;
@@ -230,27 +253,44 @@ body {
   top: 2.5rem;
   width: 250px;
   height: 400px;
-  overflow-y: scroll;
+  overflow-y: auto;
   text-align: center;
   margin-right: 5px;
 }
 
+/* Doesn't really do anything because other elements stack on top of it,
+ * but scrollbar is broken without it
+ */
 ::-webkit-scrollbar {
-  width: 0px; /* Remove scrollbar space */
-  background: transparent; /* Optional: just make scrollbar invisible */
+  background-color: transparent;
 }
 
+/* Color of the scrollbar track behind the thumb */
+::-webkit-scrollbar-track {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Color of the thing we click and drag to scroll */
+::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.15);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 7px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255, 255, 255, 0.25);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+}
 .atomLi,
 .selectorLi {
   list-style-type: none;
-  display: flex;
-  flex-grow: 1;
   padding: 10px;
   padding-left: 20px;
   padding-right: 20px;
   border: none;
   outline: none;
-  justify-content: space-between;
+  word-wrap: break-word;
+  font-size: 14px;
 }
 
 .atomLi:hover,
@@ -308,24 +348,49 @@ body {
   display: block;
 }
 
+#networkSearch {
+  position: fixed;
+  top: 41px;
+  left: 179px;
+}
+
 .AtomLegend {
+  display: inline-block;
   background-color: #9580ff;
   width: 20px;
   height: 20px;
   border: 1px solid #9580ff;
   border-radius: 20px;
+  margin: 0px;
 }
 
 .SelectorLegend {
+  display: inline-block;
   background-color: #ff80bf;
   width: 20px;
   height: 20px;
   border: 1px solid #ff80bf;
   border-radius: 20px;
+  margin: 0px;
+}
+
+.bothLegend {
+  display: inline-block;
+  background-color: springgreen;
+  width: 20px;
+  height: 20px;
+  border: 1px solid springgreen;
+  border-radius: 20px;
+  margin: 0px;
 }
 
 .AtomNetworkLegend {
+  position: fixed;
+  top: 58px;
+  left: 179px;
   display: grid;
   grid-template-columns: 30px 30px;
   align-items: center;
+  padding-left: 5px;
+  padding-top: 5px;
 }

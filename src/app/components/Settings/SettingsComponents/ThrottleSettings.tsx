@@ -19,7 +19,11 @@ const ThrottleSettings: React.FC = () => {
   return (
     <div>
       <h2>Enter Throttle</h2>
-      <input onChange={e => onChange(e.target.value)} /> milliseconds
+      <input
+        style={{marginBottom: '10px'}}
+        onChange={e => onChange(e.target.value)}
+      />{' '}
+      <span style={{fontSize: '14px'}}>milliseconds</span>
       <div>
         <button
           onClick={() => {
