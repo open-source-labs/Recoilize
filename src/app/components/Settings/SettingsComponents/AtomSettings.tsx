@@ -1,5 +1,4 @@
 import React from 'react';
-import {filterArray} from '../../SnapshotList/index'; // array of atoms/selectors
 const {Multiselect} = require('multiselect-react-dropdown');
 import {stateSnapshot, selectedTypes} from '../../../../types';
 interface AtomSettingsProps {
