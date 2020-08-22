@@ -40,3 +40,7 @@ export type atom = {
 export type selector = {
   [name: string]: any;
 };
+
+export type selectedTypes = {
+  [name: string]: string;
+};
