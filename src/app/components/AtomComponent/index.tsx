@@ -4,10 +4,16 @@ import {componentAtomTree, atom, selector} from '../../../types';
 
 interface AtomComponentVisualProps {
   componentAtomTree: componentAtomTree;
-  selectedRecoilValue: any[];
+  selectedRecoilValue: string[];
   atoms: atom;
   selectors: selector;
-  setStr: any;
+  setStr: React.Dispatch<React.SetStateAction<string[]>>;
+}
+
+interface ZoomState {
+  x: number;
+  y: number;
+  k: number;
 }
 
 const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
@@ -17,22 +23,25 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
   selectors,
   setStr,
 }) => {
+  console.log('componentAtomTree', componentAtomTree);
   // set the heights and width of the tree to be passed into treeMap function
-  let width = 0;
-  let height = 0;
+  let width: number = 0;
+  let height: number = 0;
 
   // this state allows the canvas to stay at the zoom level on multiple re-renders
-  const [{x, y, k}, setZoomState] = useState({x: 0, y: 0, k: 0});
+  const [{x, y, k}, setZoomState] = useState<ZoomState>({x: 0, y: 0, k: 0});
 
   // useState hook to update the toggle of showing diff components
-  const [rawToggle, setRawToggle] = useState(false);
+  const [rawToggle, setRawToggle] = useState<boolean>(false);
 
   // Possibly filter some more unimportant nodes
-  const cleanComponentAtomTree = (inputObj: any) => {
-    const obj = {} as any;
+  const cleanComponentAtomTree = (
+    inputObj: componentAtomTree,
+  ): componentAtomTree => {
+    const obj = {} as componentAtomTree;
     let counter = 0;
     // Create a recursive function that will run through the component atom tree, change the children to what we want
-    const innerClean = (inputObj: any, outputObj: any, counter = 0) => {
+    const innerClean = (inputObj: any, outputObj: any, counter: number = 0) => {
       if (
         inputObj.tag === 0 &&
         inputObj.name !== 'RecoilRoot' &&
@@ -50,7 +59,9 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
         }
         // create another conditional
         else {
-          const deepCopy = JSON.parse(JSON.stringify(inputObj));
+          const deepCopy: componentAtomTree = JSON.parse(
+            JSON.stringify(inputObj),
+          );
           deepCopy.children = [];
           outputObj.push(deepCopy);
           if (outputObj.length > 1) {
@@ -70,7 +81,10 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
     // returning the new object that we create
     return obj;
   };
-  let rawComponentAtomTree = cleanComponentAtomTree(componentAtomTree);
+
+  const rawComponentAtomTree: componentAtomTree = cleanComponentAtomTree(
+    componentAtomTree,
+  );
 
   useEffect(() => {
     height = document.querySelector('.Component').clientHeight;

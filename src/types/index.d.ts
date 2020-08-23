@@ -25,6 +25,7 @@ export type componentAtomTree = {
   children: object[];
   name: string;
   tag: number;
+  recoilNodes: string[];
 };
 
 //////////////////////////
