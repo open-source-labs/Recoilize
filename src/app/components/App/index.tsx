@@ -67,7 +67,6 @@ const App: React.FC = () => {
           filter = msg.payload;
           setFilter(msg.payload);
         } else if (filter.length === 0) {
-          console.log('we are in the push');
           filter.push(msg.payload[0]);
           setFilter(filter);
         } else {

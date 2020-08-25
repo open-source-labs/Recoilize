@@ -23,7 +23,6 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
   selectors,
   setStr,
 }) => {
-  console.log('componentAtomTree', componentAtomTree);
   // set the heights and width of the tree to be passed into treeMap function
   let width: number = 0;
   let height: number = 0;
