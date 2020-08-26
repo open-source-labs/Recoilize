@@ -5,7 +5,7 @@ import Visualizer from '../components/StateGraph/Visualizer';
 import Tree from '../components/StateTree/Tree';
 import Network from '../components/AtomNetwork/AtomNetwork';
 import AtomComponentVisualContainer from '../components/ComponentGraph/AtomComponentContainer';
-import Settings from '../components/Settings';
+import Settings from '../components/Settings/SettingsContainer';
 import {stateSnapshot, selectedTypes} from '../../types';
 
 interface VisualContainerProps {
