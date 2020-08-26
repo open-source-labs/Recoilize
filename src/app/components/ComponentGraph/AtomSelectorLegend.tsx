@@ -1,5 +1,5 @@
 import React from 'react';
-import {atom, selector} from '../../types';
+import {atom, selector} from '../../../types';
 
 interface AtomSelectorLegendProps {
   setSelectedRecoilValue: React.Dispatch<React.SetStateAction<any[]>>;

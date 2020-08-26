@@ -1,12 +1,12 @@
 import React, {useState} from 'react';
-import Diff from '../../components/Diff';
-import NavBar from '../../components/NavBar';
-import Visualizer from '../../components/Visualizer';
-import Tree from '../../components/Tree';
-import Network from '../../components/Network';
-import AtomComponentVisualContainer from '../AtomComponentTreeContainer';
-import Settings from '../../components/Settings';
-import {stateSnapshot, selectedTypes} from '../../../types';
+import Diff from '../components/Diff/Diff';
+import NavBar from '../components/NavBar/NavBar';
+import Visualizer from '../components/StateGraph/Visualizer';
+import Tree from '../components/StateTree/Tree';
+import Network from '../components/AtomNetwork/Network';
+import AtomComponentVisualContainer from '../components/ComponentGraph/AtomComponentTreeContainer';
+import Settings from '../components/Settings';
+import {stateSnapshot, selectedTypes} from '../../types';
 
 interface VisualContainerProps {
   // snapshot at index [curRender -1]

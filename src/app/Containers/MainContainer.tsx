@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
-import SnapshotsContainer from '../SnapshotContainer';
-import VisualContainer from '../VisualContainer';
-import {stateSnapshot, selectedTypes} from '../../../types/';
+import SnapshotsContainer from './SnapshotContainer';
+import VisualContainer from './VisualContainer';
+import {stateSnapshot, selectedTypes} from '../../types';
 
 interface MainContainerProps {
   // snapshotHistory is an array of stateSnapshots

@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
-import AtomComponentVisual from '../../components/AtomComponentVisual';
-import AtomSelectorLegend from '../../components/AtomSelectorLegend';
+import AtomComponentVisual from './AtomComponentVisual';
+import AtomSelectorLegend from './AtomSelectorLegend';
 import {
   componentAtomTree,
   filteredSnapshot,

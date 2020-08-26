@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {diff, formatters} from 'jsondiffpatch';
 import ReactHtmlParser from 'react-html-parser';
-import {filteredSnapshot} from '../../types';
+import {filteredSnapshot} from '../../../types';
 
 interface DiffProps {
   // snapshot at index [curRender -1]
