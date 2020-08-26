@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
-import Diff from '../components/Diff/Diff';
+import Diff from '../components/StateDiff/Diff';
 import NavBar from '../components/NavBar/NavBar';
 import Visualizer from '../components/StateGraph/Visualizer';
 import Tree from '../components/StateTree/Tree';
-import Network from '../components/AtomNetwork/Network';
-import AtomComponentVisualContainer from '../components/ComponentGraph/AtomComponentTreeContainer';
+import Network from '../components/AtomNetwork/AtomNetwork';
+import AtomComponentVisualContainer from '../components/ComponentGraph/AtomComponentContainer';
 import Settings from '../components/Settings';
 import {stateSnapshot, selectedTypes} from '../../types';
 
