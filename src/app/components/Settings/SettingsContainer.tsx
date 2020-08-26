@@ -2,9 +2,9 @@ import React from 'react';
 import {stateSnapshot, selectedTypes} from '../../../types';
 
 // Importing various settings components
-import StateSettings from './SettingsComponents/StateSettings';
-import ThrottleSettings from './SettingsComponents/ThrottleSettings';
-import AtomSettings from './SettingsComponents/AtomSettings';
+import StateSettings from './StateSettings';
+import ThrottleSettings from './ThrottleSettings';
+import AtomSettings from './AtomSettings';
 
 interface SettingsProps {
   snapshotHistory: stateSnapshot[];
