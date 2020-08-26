@@ -19,7 +19,7 @@ const StateSettings: React.FC<StateSettingsProps> = ({checked, setChecked}) => {
     });
   };
   return (
-    <div>
+    <div data-testid="stateSettings">
       <h2>Persist State</h2>
       <div className="persistContainer">
         <label className="switch" htmlFor="checkbox">
