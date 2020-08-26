@@ -9,21 +9,16 @@ const ThrottleSettings: React.FC<ThrottlesettingsProps> = ({
   throttleDisplay,
   setThrottleDisplay,
 }) => {
-  const [throttleNum, setThrottleNum] = useState('');
-
-  // onChange function to set throttleNum
-  const onChange = (e: any) => {
-    setThrottleNum(e.target.value);
-  };
+  const [throttleNum, setThrottleNum] = useState<string>('');
 
   // onClick function for reset button. 70ms is the default throttle
-  const onClick = () => {
+  const onClick = (): void => {
     setThrottleDisplay('70');
     setThrottleNum('70');
   };
 
   // Creating function to tie to get to the backend
-  const throttleFunc = (e: any) => {
+  const throttleFunc = (e: React.FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
 
     const backgroundConnection = chrome.runtime.connect();
@@ -43,8 +38,9 @@ const ThrottleSettings: React.FC<ThrottlesettingsProps> = ({
       <h2>Enter Throttle</h2>
       <form onSubmit={throttleFunc}>
         <input
+          type="text"
           style={{marginBottom: '10px'}}
-          onChange={onChange}
+          onChange={e => setThrottleNum(e.target.value)}
           value={throttleNum}
         />{' '}
         <span style={{fontSize: '14px'}}>milliseconds</span>

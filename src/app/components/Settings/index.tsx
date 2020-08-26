@@ -1,8 +1,5 @@
-import React, {useState} from 'react';
-import {diff, formatters} from 'jsondiffpatch';
-import ReactHtmlParser from 'react-html-parser';
-import {filteredSnapshot} from '../../../types';
-import {stateSnapshot} from '../../../types';
+import React from 'react';
+import {stateSnapshot, selectedTypes} from '../../../types';
 
 // Importing various settings components
 import StateSettings from './SettingsComponents/StateSettings';
@@ -11,8 +8,8 @@ import AtomSettings from './SettingsComponents/AtomSettings';
 
 interface SettingsProps {
   snapshotHistory: stateSnapshot[];
-  selected: any;
-  setSelected: any;
+  selected: selectedTypes[];
+  setSelected: React.Dispatch<React.SetStateAction<selectedTypes[]>>;
   checked: boolean;
   setChecked: React.Dispatch<React.SetStateAction<boolean>>;
   throttleDisplay: string;

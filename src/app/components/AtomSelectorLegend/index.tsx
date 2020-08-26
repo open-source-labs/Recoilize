@@ -1,11 +1,12 @@
 import React from 'react';
+import {atom, selector} from '../../../types';
 
 interface AtomSelectorLegendProps {
   setSelectedRecoilValue: React.Dispatch<React.SetStateAction<any[]>>;
-  atoms: object;
-  selectors: object;
-  selectedRecoilValue: any[];
-  str: any;
+  atoms: atom;
+  selectors: selector;
+  selectedRecoilValue: string[];
+  str: string[];
 }
 const AtomSelectorLegend: React.FC<AtomSelectorLegendProps> = ({
   setSelectedRecoilValue,
@@ -46,8 +47,8 @@ const AtomSelectorLegend: React.FC<AtomSelectorLegendProps> = ({
       </div>,
     );
   });
-  const legendTextArray: any = [];
-  str.forEach((element: any) => {
+  const legendTextArray: JSX.Element[] = [];
+  str.forEach((element: string) => {
     legendTextArray.push(
       <div>
         {element}
@@ -55,42 +56,47 @@ const AtomSelectorLegend: React.FC<AtomSelectorLegendProps> = ({
       </div>,
     );
   });
-  if (str.length !== 0) {
-    return (
-      <div className="AtomSelectorLegend">
-        <div>{legendTextArray}</div>
-      </div>
-    );
-  } else {
-    return (
-      <div className="AtomSelectorLegend">
-        <button
-          onClick={() => {
-            const menu = document.querySelector('#hidden');
-            menu.classList.toggle('minimize');
-          }}
-          className="minimizeButton">
-          Visibility
-        </button>
-        <div id="hidden">
-          <div>
-            <span
-              style={{fontSize: '14px', fontWeight: 'bold', marginTop: '10px'}}>
-              Atoms
-            </span>
-            {atomList}
-          </div>
-          <div>
-            <span
-              style={{fontSize: '14px', fontWeight: 'bold', marginTop: '10px'}}>
-              Selectors
-            </span>
-            {selectorList}
-          </div>
+
+  // legend when a component is clicked on. state pertaining to that component
+  const specificLegend: JSX.Element = (
+    <div className="AtomSelectorLegend">
+      <div>{legendTextArray}</div>
+    </div>
+  );
+
+  // general legend that shows everything
+  const generalLegend: JSX.Element = (
+    <div className="AtomSelectorLegend">
+      <button
+        onClick={() => {
+          const menu = document.querySelector('#hidden');
+          menu.classList.toggle('minimize');
+        }}
+        className="minimizeButton">
+        Visibility
+      </button>
+      <div id="hidden">
+        <div>
+          <span
+            style={{fontSize: '14px', fontWeight: 'bold', marginTop: '10px'}}>
+            Atoms
+          </span>
+          {atomList}
+        </div>
+        <div>
+          <span
+            style={{fontSize: '14px', fontWeight: 'bold', marginTop: '10px'}}>
+            Selectors
+          </span>
+          {selectorList}
         </div>
       </div>
-    );
-  }
+    </div>
+  );
+
+  /* a component is clicked? then render specific legend pertaining to that component.
+     if not, render general legend */
+  return <>{str.length ? specificLegend : generalLegend}</>;
 };
 
 export default AtomSelectorLegend;

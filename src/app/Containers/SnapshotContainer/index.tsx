@@ -1,6 +1,6 @@
 import React from 'react';
 import SnapshotsList from '../../components/SnapshotList';
-import {stateSnapshot} from '../../../types';
+import {stateSnapshot, selectedTypes} from '../../../types';
 
 interface SnapshotsContainerProps {
   // index of current snapshot rendered in devtool
@@ -9,8 +9,8 @@ interface SnapshotsContainerProps {
   snapshotHistoryLength: number;
   // setState functionality to update curRender
   setRenderIndex: React.Dispatch<React.SetStateAction<number>>;
-  selected: any;
-  filter: any;
+  selected: selectedTypes[];
+  filter: stateSnapshot[];
 }
 
 const SnapshotsContainer: React.FC<SnapshotsContainerProps> = ({

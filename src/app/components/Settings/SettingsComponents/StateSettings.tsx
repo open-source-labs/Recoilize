@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 
 interface StateSettingsProps {
   checked: boolean;
@@ -7,7 +7,7 @@ interface StateSettingsProps {
 
 const StateSettings: React.FC<StateSettingsProps> = ({checked, setChecked}) => {
   // functionality to postMessage the selected snapshot index to background.js
-  const persistStateFunc = () => {
+  const persistStateFunc = (): void => {
     // setChecked as true or false
     checked ? setChecked(false) : setChecked(true);
     // variable to store/reference connection

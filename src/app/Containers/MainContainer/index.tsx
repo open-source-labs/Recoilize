@@ -1,14 +1,14 @@
 import React, {useState, useEffect} from 'react';
 import SnapshotsContainer from '../SnapshotContainer';
 import VisualContainer from '../VisualContainer';
-import {stateSnapshot} from '../../../types/';
+import {stateSnapshot, selectedTypes} from '../../../types/';
 
 interface MainContainerProps {
   // snapshotHistory is an array of stateSnapshots
   snapshotHistory: stateSnapshot[];
-  selected: any;
-  setSelected: any;
-  filter: any;
+  selected: selectedTypes[];
+  setSelected: React.Dispatch<React.SetStateAction<selectedTypes[]>>;
+  filter: stateSnapshot[];
 }
 
 // wraps entire application
@@ -19,7 +19,9 @@ const MainContainer: React.FC<MainContainerProps> = ({
   filter,
 }) => {
   // useState hook to update the index of current snapshot rendered in devtool
-  const [renderIndex, setRenderIndex] = useState(snapshotHistory.length - 1);
+  const [renderIndex, setRenderIndex] = useState<number>(
+    snapshotHistory.length - 1,
+  );
 
   // Todo: usestate hook to update an array with all of the delta snapshots
 

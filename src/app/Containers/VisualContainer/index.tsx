@@ -6,7 +6,7 @@ import Tree from '../../components/Tree';
 import Network from '../../components/Network';
 import AtomComponentVisualContainer from '../AtomComponentTreeContainer';
 import Settings from '../../components/Settings';
-import {stateSnapshot} from '../../../types';
+import {stateSnapshot, selectedTypes} from '../../../types';
 
 interface VisualContainerProps {
   // snapshot at index [curRender -1]
@@ -15,8 +15,8 @@ interface VisualContainerProps {
   currentSnapshot: stateSnapshot;
   // ! passing through snapshot history
   snapshotHistory: stateSnapshot[];
-  selected: any;
-  setSelected: any;
+  selected: selectedTypes[];
+  setSelected: React.Dispatch<React.SetStateAction<selectedTypes[]>>;
 }
 
 type navTypes = {
@@ -32,10 +32,10 @@ const VisualContainer: React.FC<VisualContainerProps> = ({
   setSelected,
 }) => {
   // state for checkmark in persist state in settings
-  const [checked, setChecked] = useState(false);
+  const [checked, setChecked] = useState<boolean>(false);
 
   // variables to store/reference connection
-  const [throttleDisplay, setThrottleDisplay] = useState('70');
+  const [throttleDisplay, setThrottleDisplay] = useState<string>('70');
 
   // conditional render of filtered snaps/ based on non-filtered snaps
   const filteredCurSnap = currentSnapshot
@@ -83,9 +83,9 @@ const VisualContainer: React.FC<VisualContainerProps> = ({
     ),
   };
   // array of all nav obj keys
-  const tabsList = Object.keys(nav);
+  const tabsList: string[] = Object.keys(nav);
   // useState hook to update which component to render in the VisualContainer
-  const [tab, setTab] = useState('State Diff');
+  const [tab, setTab] = useState<string>('State Diff');
   // conditionally render based on value of nav[tab]
   return (
     <div className="VisualContainer">
