@@ -17,22 +17,26 @@ const AtomSelectorLegend: React.FC<AtomSelectorLegendProps> = ({
 }) => {
   const selectorList: JSX.Element[] = [];
   const atomList: JSX.Element[] = [];
-  Object.entries(selectors).forEach(([selectorName, value], i) => {
-    selectorList.push(
-      <div
-        style={
-          selectorName === selectedRecoilValue[0]
-            ? {color: '#E6E6E6', backgroundColor: '#212121'}
-            : {color: '#989898'}
-        }
-        className="atomLi"
-        onClick={() => setSelectedRecoilValue([selectorName, 'selector'])}
-        key={`${selectorName}${i}`}>
-        {selectorName}: {JSON.stringify(value)}
-      </div>,
-    );
-  });
-  Object.entries(atoms).forEach(([atomName, value], i) => {
+  Object.entries(selectors).forEach(
+    ([selectorName, value]: any, i: number): void => {
+      selectorList.push(
+        <div
+          style={
+            selectorName === selectedRecoilValue[0]
+              ? {color: '#E6E6E6', backgroundColor: '#212121'}
+              : {color: '#989898'}
+          }
+          className="atomLi"
+          onClick={(): void =>
+            setSelectedRecoilValue([selectorName, 'selector'])
+          }
+          key={`${selectorName}${i}`}>
+          {selectorName}: {JSON.stringify(value)}
+        </div>,
+      );
+    },
+  );
+  Object.entries(atoms).forEach(([atomName, value]: any, i: number): void => {
     atomList.push(
       <div
         style={
@@ -41,14 +45,14 @@ const AtomSelectorLegend: React.FC<AtomSelectorLegendProps> = ({
             : {color: '#989898'}
         }
         className="selectorLi"
-        onClick={() => setSelectedRecoilValue([atomName, 'atom'])}
+        onClick={(): void => setSelectedRecoilValue([atomName, 'atom'])}
         key={`${atomName}${i}`}>
         {atomName}: {JSON.stringify(value)}
       </div>,
     );
   });
   const legendTextArray: JSX.Element[] = [];
-  str.forEach((element: string) => {
+  str.forEach((element: string): void => {
     legendTextArray.push(
       <div>
         {element}
@@ -68,7 +72,7 @@ const AtomSelectorLegend: React.FC<AtomSelectorLegendProps> = ({
   const generalLegend: JSX.Element = (
     <div className="AtomSelectorLegend">
       <button
-        onClick={() => {
+        onClick={(): void => {
           const menu = document.querySelector('#hidden');
           menu.classList.toggle('minimize');
         }}

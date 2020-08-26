@@ -1,6 +1,6 @@
 import React from 'react';
 const {Multiselect} = require('multiselect-react-dropdown');
-import {stateSnapshot, selectedTypes} from '../../../../types';
+import {stateSnapshot, selectedTypes} from '../../../types';
 interface AtomSettingsProps {
   snapshotHistory: stateSnapshot[];
   selected: selectedTypes[];
