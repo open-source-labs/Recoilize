@@ -1,6 +1,6 @@
 // renders a list of all of the snapshots that were taking
 import React, {useEffect, useRef} from 'react';
-import {stateSnapshot} from '../../../types';
+import {stateSnapshot, selectedTypes} from '../../../types';
 interface SnapshotsListProps {
   // index of current snapshot rendered in devtool
   renderIndex: number;
@@ -10,10 +10,10 @@ interface SnapshotsListProps {
   setRenderIndex: React.Dispatch<React.SetStateAction<number>>;
   // functionality to postMessage the selected snapshot index to background.js
   timeTravelFunc: (index: number) => void;
-  selected: any;
-  filter: any;
+  selected: selectedTypes[];
+  filter: stateSnapshot[];
 }
-let filterArray: any[] = [];
+
 const SnapshotsList: React.FC<SnapshotsListProps> = ({
   renderIndex,
   snapshotHistoryLength,
@@ -23,7 +23,7 @@ const SnapshotsList: React.FC<SnapshotsListProps> = ({
   filter,
 }) => {
   // useRef for a dummy div at the bottom of the scroll
-  const snapshotEndRef = useRef(null);
+  const snapshotEndRef = useRef<HTMLDivElement>(null);
 
   // useEffect to scroll bottom whenever snapshot history changes
   useEffect(() => {
@@ -31,7 +31,7 @@ const SnapshotsList: React.FC<SnapshotsListProps> = ({
   }, [snapshotHistoryLength]);
 
   // using scrollInToView makes a smoother scroll
-  const scrollToBottom = () => {
+  const scrollToBottom = (): void => {
     snapshotEndRef.current.scrollIntoView({behavior: 'smooth'});
   };
   // ! probably need to prop drill down something else as well to get this filter to work
@@ -42,7 +42,7 @@ const SnapshotsList: React.FC<SnapshotsListProps> = ({
   // iterate the same length of our snapshotHistory
   for (let i = 0; i < snapshotHistoryLength; i++) {
     // ! function to filter
-    const filterFunc = () => {
+    const filterFunc = (): boolean => {
       // don't use the counter for this, not reliable
       if (i === 0) {
         return true;
@@ -59,7 +59,7 @@ const SnapshotsList: React.FC<SnapshotsListProps> = ({
       }
       return false;
     };
-    let x = filterFunc();
+    const x: boolean = filterFunc();
     // see the iteration if x is false
     if (x === false) {
       continue;
@@ -100,5 +100,4 @@ const SnapshotsList: React.FC<SnapshotsListProps> = ({
   );
 };
 export default SnapshotsList;
-export {filterArray};
 //document.getElementById('root')._reactRootContainer._internalRoot.current.child.memoizedState.next.next.memoizedState.current.currentTree.atomValues
