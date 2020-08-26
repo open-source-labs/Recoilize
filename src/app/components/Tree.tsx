@@ -1,6 +1,6 @@
 import React from 'react';
 import JSONTree from 'react-json-tree';
-import {filteredSnapshot} from '../../../types';
+import {filteredSnapshot} from '../../types';
 
 interface TreeProps {
   // snapshot at index [curRender]

@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import * as d3 from 'd3';
-import {componentAtomTree, atom, selector} from '../../../types';
+import {componentAtomTree, atom, selector} from '../../types';
 
 interface AtomComponentVisualProps {
   componentAtomTree: componentAtomTree;

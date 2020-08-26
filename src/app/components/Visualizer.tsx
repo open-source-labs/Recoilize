@@ -1,7 +1,7 @@
 import React, {useRef, useState, useEffect} from 'react';
 import * as d3 from 'd3';
-import makeTree from '../../utils/makeTreeConversion';
-import {filteredSnapshot} from '../../../types';
+import makeTree from '../utils/makeTreeConversion';
+import {filteredSnapshot} from '../../types';
 
 interface VisualizerProps {
   filteredCurSnap: filteredSnapshot;

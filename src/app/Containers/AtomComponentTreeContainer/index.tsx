@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import AtomComponentVisual from '../../components/AtomComponent';
+import AtomComponentVisual from '../../components/AtomComponentVisual';
 import AtomSelectorLegend from '../../components/AtomSelectorLegend';
 import {
   componentAtomTree,

@@ -1,6 +1,6 @@
 // renders a list of all of the snapshots that were taking
 import React, {useEffect, useRef} from 'react';
-import {stateSnapshot, selectedTypes} from '../../../types';
+import {stateSnapshot, selectedTypes} from '../../types';
 interface SnapshotsListProps {
   // index of current snapshot rendered in devtool
   renderIndex: number;
