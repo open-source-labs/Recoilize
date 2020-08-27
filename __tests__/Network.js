@@ -1,5 +1,5 @@
 import React from 'react';
-import Network from '../src/app/components/Network';
+import Network from '../src/app/components/AtomNetwork/AtomNetwork';
 import {
   render,
   fireEvent,

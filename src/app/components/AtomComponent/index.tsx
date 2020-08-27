@@ -28,11 +28,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
   let height: number = 0;
 
   // this state allows the canvas to stay at the zoom level on multiple re-renders
-  const [{x, y, k}, setZoomState] = useState<ZoomState>({
-    x: 50,
-    y: 380,
-    k: 0.07,
-  });
+  const [{x, y, k}, setZoomState] = useState<ZoomState>({x: 0, y: 0, k: 0});
 
   // useState hook to update the toggle of showing diff components
   const [rawToggle, setRawToggle] = useState<boolean>(false);
@@ -136,7 +132,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
     svgContainer.call(
       zoom.transform,
       // Changes the initial view, (left, top)
-      d3.zoomIdentity.translate(x, y).scale(k),
+      d3.zoomIdentity.translate(50, 380).scale(0.07),
     );
 
     // allows the canvas to be zoom-able
@@ -149,10 +145,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
 
     // helper function that allows for zooming
     function zoomed() {
-      g.attr('transform', d3.event.transform).on(
-        'mouseup',
-        setZoomState(d3.zoomTransform(d3.select('#canvas').node())),
-      );
+      g.attr('transform', d3.event.transform);
     }
 
     // Update function

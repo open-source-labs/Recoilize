@@ -1,5 +1,5 @@
 import React from 'react';
-import AtomComponentVisualContainer from '../src/app/Containers/AtomComponentTreeContainer';
+import AtomComponentVisualContainer from '../src/app/components/ComponentGraph/AtomComponentContainer';
 import {
   render,
   fireEvent,

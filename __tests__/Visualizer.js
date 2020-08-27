@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Visualizer from '../src/app/components/Visualizer';
+import Visualizer from '../src/app/components/StateGraph/Visualizer';
 import {filteredCurSnapMock} from '../mock/snapshot.js';
 import {
   render,
