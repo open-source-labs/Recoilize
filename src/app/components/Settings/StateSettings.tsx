@@ -24,6 +24,7 @@ const StateSettings: React.FC<StateSettingsProps> = ({checked, setChecked}) => {
       <div className="persistContainer">
         <label className="switch" htmlFor="checkbox">
           <input
+            data-testid="stateSettingsToggle"
             id="checkbox"
             type="checkbox"
             checked={checked}
