@@ -1,0 +1,313 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should match snapshot when no props are passed in 1`] = `
+<DocumentFragment>
+  <div
+    class="Diff"
+  >
+    <div
+      class="toggleDiv"
+    >
+      <button
+        class="rawToggle"
+        style="color: rgb(152, 152, 152);"
+      >
+        Raw
+      </button>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`should match snapshot when props are passed in 1`] = `
+<DocumentFragment>
+  <div
+    class="Diff"
+  >
+    <div
+      class="toggleDiv"
+    >
+      <button
+        class="rawToggle"
+        style="color: rgb(152, 152, 152);"
+      >
+        Raw
+      </button>
+    </div>
+    <div
+      class="jsondiffpatch-delta jsondiffpatch-node jsondiffpatch-child-node-type-object"
+    >
+      <ul
+        class="jsondiffpatch-node jsondiffpatch-node-type-object"
+      >
+        <li
+          class="jsondiffpatch-unchanged"
+          data-key="dummyAtom1"
+        >
+          <div
+            class="jsondiffpatch-property-name"
+          >
+            dummyAtom1
+          </div>
+          <div
+            class="jsondiffpatch-value"
+          >
+            <pre>
+              {
+  "contents": {
+    "hello": [],
+    "hi": []
+  },
+  "nodeDeps": [],
+  "nodeToNodeSubscriptions": [],
+  "type": "RecoilState"
+}
+            </pre>
+          </div>
+        </li>
+        <li
+          class="jsondiffpatch-unchanged"
+          data-key="listState"
+        >
+          <div
+            class="jsondiffpatch-property-name"
+          >
+            listState
+          </div>
+          <div
+            class="jsondiffpatch-value"
+          >
+            <pre>
+              {
+  "contents": [
+    {
+      "text": "list item"
+    },
+    {
+      "text": "list item"
+    },
+    {
+      "text": "list item"
+    }
+  ],
+  "nodeDeps": [],
+  "nodeToNodeSubscriptions": [
+    "selectorTest",
+    "stateLengths"
+  ],
+  "type": "RecoilState"
+}
+            </pre>
+          </div>
+        </li>
+        <li
+          class="jsondiffpatch-node jsondiffpatch-child-node-type-object"
+          data-key="listState2"
+        >
+          <div
+            class="jsondiffpatch-property-name"
+          >
+            listState2
+          </div>
+          <ul
+            class="jsondiffpatch-node jsondiffpatch-node-type-object"
+          >
+            <li
+              class="jsondiffpatch-node jsondiffpatch-child-node-type-array"
+              data-key="contents"
+            >
+              <div
+                class="jsondiffpatch-property-name"
+              >
+                contents
+              </div>
+              <ul
+                class="jsondiffpatch-node jsondiffpatch-node-type-array"
+              >
+                <li
+                  class="jsondiffpatch-unchanged"
+                  data-key="0"
+                >
+                  <div
+                    class="jsondiffpatch-property-name"
+                  >
+                    0
+                  </div>
+                  <div
+                    class="jsondiffpatch-value"
+                  >
+                    <pre>
+                      {
+  "text": "list item"
+}
+                    </pre>
+                  </div>
+                </li>
+                <li
+                  class="jsondiffpatch-unchanged"
+                  data-key="1"
+                >
+                  <div
+                    class="jsondiffpatch-property-name"
+                  >
+                    1
+                  </div>
+                  <div
+                    class="jsondiffpatch-value"
+                  >
+                    <pre>
+                      {
+  "text": "list item"
+}
+                    </pre>
+                  </div>
+                </li>
+                <li
+                  class="jsondiffpatch-unchanged"
+                  data-key="2"
+                >
+                  <div
+                    class="jsondiffpatch-property-name"
+                  >
+                    2
+                  </div>
+                  <div
+                    class="jsondiffpatch-value"
+                  >
+                    <pre>
+                      {
+  "text": "list item"
+}
+                    </pre>
+                  </div>
+                </li>
+                <li
+                  class="jsondiffpatch-deleted"
+                  data-key="3"
+                >
+                  <div
+                    class="jsondiffpatch-property-name"
+                  >
+                    3
+                  </div>
+                  <div
+                    class="jsondiffpatch-value"
+                  >
+                    <pre>
+                      {
+  "text": "list item"
+}
+                    </pre>
+                  </div>
+                </li>
+              </ul>
+            </li>
+            <li
+              class="jsondiffpatch-unchanged"
+              data-key="nodeDeps"
+            >
+              <div
+                class="jsondiffpatch-property-name"
+              >
+                nodeDeps
+              </div>
+              <div
+                class="jsondiffpatch-value"
+              >
+                <pre>
+                  []
+                </pre>
+              </div>
+            </li>
+            <li
+              class="jsondiffpatch-unchanged"
+              data-key="nodeToNodeSubscriptions"
+            >
+              <div
+                class="jsondiffpatch-property-name"
+              >
+                nodeToNodeSubscriptions
+              </div>
+              <div
+                class="jsondiffpatch-value"
+              >
+                <pre>
+                  [
+  "stateLengths"
+]
+                </pre>
+              </div>
+            </li>
+            <li
+              class="jsondiffpatch-unchanged"
+              data-key="type"
+            >
+              <div
+                class="jsondiffpatch-property-name"
+              >
+                type
+              </div>
+              <div
+                class="jsondiffpatch-value"
+              >
+                <pre>
+                  "RecoilState"
+                </pre>
+              </div>
+            </li>
+          </ul>
+        </li>
+        <li
+          class="jsondiffpatch-unchanged"
+          data-key="selectorTest"
+        >
+          <div
+            class="jsondiffpatch-property-name"
+          >
+            selectorTest
+          </div>
+          <div
+            class="jsondiffpatch-value"
+          >
+            <pre>
+              {
+  "contents": "test",
+  "nodeDeps": [
+    "listState"
+  ],
+  "nodeToNodeSubscriptions": [],
+  "type": "RecoilValueReadOnly"
+}
+            </pre>
+          </div>
+        </li>
+        <li
+          class="jsondiffpatch-unchanged"
+          data-key="stateLengths"
+        >
+          <div
+            class="jsondiffpatch-property-name"
+          >
+            stateLengths
+          </div>
+          <div
+            class="jsondiffpatch-value"
+          >
+            <pre>
+              {
+  "contents": 6,
+  "nodeDeps": [
+    "listState",
+    "listState2"
+  ],
+  "nodeToNodeSubscriptions": [],
+  "type": "RecoilValueReadOnly"
+}
+            </pre>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</DocumentFragment>
+`;
