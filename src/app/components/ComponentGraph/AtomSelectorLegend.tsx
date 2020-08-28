@@ -82,20 +82,22 @@ const AtomSelectorLegend: React.FC<AtomSelectorLegendProps> = ({
         className="minimizeButton">
         Show All
       </button> */}
-      <div id="hidden">{legendTextArray}</div>
-      <span>
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />
-        <br />* Click on any gray node to show all atoms/selectors again
-      </span>
+      <div id="hidden">
+        {legendTextArray}
+        <span>
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />* Click on any gray node to show all atoms/selectors again
+        </span>
+      </div>
     </div>
   );
 
