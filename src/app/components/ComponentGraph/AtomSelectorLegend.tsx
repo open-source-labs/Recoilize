@@ -7,6 +7,7 @@ interface AtomSelectorLegendProps {
   selectors: selector;
   selectedRecoilValue: string[];
   str: string[];
+  setStr: React.Dispatch<React.SetStateAction<string[]>>;
 }
 const AtomSelectorLegend: React.FC<AtomSelectorLegendProps> = ({
   setSelectedRecoilValue,
@@ -14,6 +15,7 @@ const AtomSelectorLegend: React.FC<AtomSelectorLegendProps> = ({
   selectors,
   selectedRecoilValue,
   str,
+  setStr,
 }) => {
   const selectorList: JSX.Element[] = [];
   const atomList: JSX.Element[] = [];
@@ -64,7 +66,36 @@ const AtomSelectorLegend: React.FC<AtomSelectorLegendProps> = ({
   // legend when a component is clicked on. state pertaining to that component
   const specificLegend: JSX.Element = (
     <div className="AtomSelectorLegend">
-      <div>{legendTextArray}</div>
+      <button
+        onClick={(): void => {
+          const menu = document.querySelector('#hidden');
+          menu.classList.toggle('minimize');
+        }}
+        className="minimizeButton">
+        Visibility
+      </button>
+      {/* Not sure on how to revert the legend text back to all the atoms and selectors yet
+      <button
+        onClick={(): void => {
+          setStr(['how do I get the old text back?']);
+        }}
+        className="minimizeButton">
+        Show All
+      </button> */}
+      <div id="hidden">{legendTextArray}</div>
+      <span>
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />* Click on any gray node to show all atoms/selectors again
+      </span>
     </div>
   );
 
