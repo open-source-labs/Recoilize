@@ -13,22 +13,22 @@ import {filteredCurSnapMock} from '../mock/snapshot.js';
 
 afterEach(cleanup);
 
-xit('renders & matches snapshot', () => {
+it('renders & matches snapshot', () => {
   const {asFragment} = render(<Network />);
   expect(asFragment()).toMatchSnapshot();
 });
 
-xit('loads and displays Network component', () => {
+it('loads and displays Network component', () => {
   const {getByTestId} = render(<Network />);
   expect(getByTestId('networkCanvas')).toBeTruthy();
 });
 
-xit('if empty object props is passed into Network', () => {
+it('if empty object props is passed into Network', () => {
   const {asFragment} = render(<Network filteredCurSnap={{}} />);
   expect(asFragment()).toMatchSnapshot();
 });
 
-xit('if mock data object prop is passed into Network', () => {
+it('if mock data object prop is passed into Network', () => {
   const {asFragment} = render(
     <Network filteredCurSnap={filteredCurSnapMock} />,
   );
