@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`renders & matches snapshot 1`] = `
+<DocumentFragment>
+  <div>
+    <form>
+      <label>
+        <h2>
+          Enter Throttle
+        </h2>
+        <input
+          style="margin-bottom: 10px;"
+          type="text"
+          value=""
+        />
+         
+      </label>
+      <span
+        style="font-size: 14px;"
+      >
+        milliseconds
+      </span>
+      <div>
+        <button
+          type="submit"
+        >
+          Enter
+        </button>
+        <button
+          type="submit"
+        >
+          Reset
+        </button>
+      </div>
+    </form>
+    <span>
+      Current throttle is  ms
+    </span>
+  </div>
+</DocumentFragment>
+`;
