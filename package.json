@@ -1,5 +1,10 @@
 {
   "name": "recoilize",
+  "jest": {
+    "setupFiles": [
+      "jest-webextension-mock"
+    ]
+  },
   "version": "0.0.1",
   "description": "A Chrome extension that helps debug Recoil applications by memorizing the state of components with every render.",
   "main": "index.js",
@@ -51,6 +56,7 @@
     "@types/react-json-tree": "^0.6.11",
     "babel-eslint": "^10.1.0",
     "d3": "^5.16.0",
+    "jest-webextension-mock": "^3.6.1",
     "jsondiffpatch": "^0.4.1",
     "multiselect-react-dropdown": "^1.5.7",
     "prop-types": "^15.7.2",
