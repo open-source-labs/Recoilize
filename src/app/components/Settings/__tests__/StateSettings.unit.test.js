@@ -44,7 +44,7 @@ describe('input checkbox', () => {
     const {getByTestId} = render(<StateSettings {...mockProps} />);
     const toggle = getByTestId('stateSettingsToggle');
     chrome.runtime.connect = function () {
-      return {postMessage: function () {}};
+      return {postMessage: jest.fn()};
     };
     chrome.devtools = {inspectedWindow: {}};
     fireEvent.change(toggle, {target: {checked: true}});
