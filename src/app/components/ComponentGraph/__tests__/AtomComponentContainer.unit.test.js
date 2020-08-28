@@ -1,10 +1,15 @@
-import {cleanup} from '@testing-library/react';
+import React from 'react';
+import AtomComponentVisualContainer from '../AtomComponentContainer';
+import {cleanup, render} from '@testing-library/react';
+
 afterEach(cleanup);
 
-it('does one plus one equal two?', () => {
-  expect(1 + 1).toBe(2);
-});
-
-it('testing a first test for this component', () => {
-  expect(2 + 2).toBe(4);
+it('testing to see if the component is properly rendered', () => {
+  // This test gets 'TypeError: Cannot read property 'baseVal' of undefined
+  // because Jest doesn't fully support testing SVGs yet
+  const atomTree = {children: []};
+  const {component, debug} = render(
+    <AtomComponentVisualContainer componentAtomTree={atomTree} />,
+  );
+  debug();
 });
