@@ -40,6 +40,7 @@
     "eslint-plugin-prettier": "^3.1.4",
     "eslint-plugin-react": "^7.20.3",
     "jest": "^26.1.0",
+    "jest-webextension-mock": "^3.6.1",
     "prettier": "^2.0.5",
     "ts-loader": "^7.0.5",
     "typescript": "^3.9.6",
@@ -51,6 +52,7 @@
     "@angular/cli": "^10.0.5",
     "@angular/core": "^10.0.8",
     "@popperjs/core": "^2.4.4",
+    "@testing-library/react-hooks": "^3.4.1",
     "@types/chrome": "0.0.117",
     "@types/react-html-parser": "^2.0.1",
     "@types/react-json-tree": "^0.6.11",
@@ -66,6 +68,7 @@
     "react-json-tree": "^0.11.2",
     "react-multi-select-component": "^3.0.1",
     "react-router-dom": "^5.2.0",
+    "react-testing-library": "^8.0.1",
     "rxjs": "^6.6.2",
     "semantic-ui-react": "^1.1.1"
   },

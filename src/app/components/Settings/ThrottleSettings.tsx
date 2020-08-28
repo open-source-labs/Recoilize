@@ -42,6 +42,7 @@ const ThrottleSettings: React.FC<ThrottlesettingsProps> = ({
           style={{marginBottom: '10px'}}
           onChange={e => setThrottleNum(e.target.value)}
           value={throttleNum}
+          placeholder="enter in milliseconds"
         />{' '}
         <span style={{fontSize: '14px'}}>milliseconds</span>
         <div>
