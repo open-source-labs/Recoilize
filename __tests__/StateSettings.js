@@ -39,6 +39,8 @@ describe('input checkbox', () => {
     const toggle = getByTestId('stateSettingsToggle');
     expect(toggle).toHaveProperty('checked', false);
   });
+
+  // ToDo: possibly add a test for onChange function
 });
 
 it('should match snapshot when no props are passed in', () => {
