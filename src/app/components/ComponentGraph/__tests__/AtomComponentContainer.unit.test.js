@@ -1,7 +1,6 @@
 import React from 'react';
 import AtomComponentVisualContainer from '../AtomComponentContainer';
 import {cleanup, render} from '@testing-library/react';
-import * as d3 from 'd3';
 
 afterEach(cleanup);
 
