@@ -32,13 +32,12 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
   // useState hook to update the toggle of showing diff components
   const [rawToggle, setRawToggle] = useState<boolean>(false);
 
-  // Possibly filter some more unimportant nodes
+  // Recursive function that will run through componentatomtree, filter out unecessary nodes, and create the new object appropriately
   const cleanComponentAtomTree = (
     inputObj: componentAtomTree,
   ): componentAtomTree => {
     const obj = {} as componentAtomTree;
     let counter = 0;
-    // Create a recursive function that will run through the component atom tree, change the children to what we want
     const innerClean = (inputObj: any, outputObj: any, counter: number = 0) => {
       if (
         inputObj.tag === 0 &&
@@ -69,7 +68,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
           }
         }
       }
-      // ! recursive call running through the whole component atom tree -- understand this better
+      // recursive call running through the whole component atom tree -- understand this better
       for (let i = 0; i < inputObj.children.length; i++) {
         innerClean(inputObj.children[i], outputObj, counter);
       }
