@@ -1,15 +1,9 @@
 import React from 'react';
-import Network from '../src/app/components/AtomNetwork/AtomNetwork';
-import {
-  render,
-  fireEvent,
-  waitFor,
-  screen,
-  cleanup,
-} from '@testing-library/react';
+import Network from '../AtomNetwork';
+import {render, cleanup} from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import '@babel/polyfill';
-import {filteredCurSnapMock} from '../mock/snapshot.js';
+import {filteredCurSnapMock} from '../../../../../mock/snapshot.js';
 
 afterEach(cleanup);
 

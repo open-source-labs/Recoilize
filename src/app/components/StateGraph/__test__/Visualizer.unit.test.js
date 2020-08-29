@@ -1,15 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Visualizer from '../src/app/components/StateGraph/Visualizer';
-import {filteredCurSnapMock} from '../mock/snapshot.js';
-import {
-  render,
-  fireEvent,
-  cleanup,
-  waitFor,
-  screen,
-  findByTestId,
-} from '@testing-library/react';
+import Visualizer from '../Visualizer';
+import {filteredCurSnapMock} from '../../../../../mock/snapshot.js';
+import {render, cleanup, findByTestId} from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import '@babel/polyfill';
 
