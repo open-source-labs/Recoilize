@@ -36,6 +36,28 @@ exports[`if empty object props is passed into Network 1`] = `
         </g>
       </svg>
     </div>
+    <input
+      id="networkSearch"
+      placeholder="search for atoms..."
+      type="text"
+      value=""
+    />
+    <div
+      class="AtomNetworkLegend"
+    >
+      <div
+        class="AtomLegend"
+      />
+      <p>
+        ATOM
+      </p>
+      <div
+        class="SelectorLegend"
+      />
+      <p>
+        SELECTOR
+      </p>
+    </div>
   </div>
 </DocumentFragment>
 `;
@@ -163,7 +185,7 @@ exports[`if mock data object prop is passed into Network 1`] = `
               fill="#646464"
               stroke="none"
             >
-              Atom:dummyAtom1
+              dummyAtom1
             </text>
           </g>
           <g
@@ -181,7 +203,7 @@ exports[`if mock data object prop is passed into Network 1`] = `
               fill="#646464"
               stroke="none"
             >
-              Atom:listState
+              listState
             </text>
           </g>
           <g
@@ -199,7 +221,7 @@ exports[`if mock data object prop is passed into Network 1`] = `
               fill="#646464"
               stroke="none"
             >
-              Atom:listState2
+              listState2
             </text>
           </g>
           <g
@@ -217,7 +239,7 @@ exports[`if mock data object prop is passed into Network 1`] = `
               fill="#646464"
               stroke="none"
             >
-              Selector:selectorTest
+              selectorTest
             </text>
           </g>
           <g
@@ -235,11 +257,33 @@ exports[`if mock data object prop is passed into Network 1`] = `
               fill="#646464"
               stroke="none"
             >
-              Selector:stateLengths
+              stateLengths
             </text>
           </g>
         </g>
       </svg>
+    </div>
+    <input
+      id="networkSearch"
+      placeholder="search for atoms..."
+      type="text"
+      value=""
+    />
+    <div
+      class="AtomNetworkLegend"
+    >
+      <div
+        class="AtomLegend"
+      />
+      <p>
+        ATOM
+      </p>
+      <div
+        class="SelectorLegend"
+      />
+      <p>
+        SELECTOR
+      </p>
     </div>
   </div>
 </DocumentFragment>
@@ -280,6 +324,28 @@ exports[`renders & matches snapshot 1`] = `
           </defs>
         </g>
       </svg>
+    </div>
+    <input
+      id="networkSearch"
+      placeholder="search for atoms..."
+      type="text"
+      value=""
+    />
+    <div
+      class="AtomNetworkLegend"
+    >
+      <div
+        class="AtomLegend"
+      />
+      <p>
+        ATOM
+      </p>
+      <div
+        class="SelectorLegend"
+      />
+      <p>
+        SELECTOR
+      </p>
     </div>
   </div>
 </DocumentFragment>

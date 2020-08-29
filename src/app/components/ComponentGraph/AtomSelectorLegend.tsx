@@ -74,30 +74,10 @@ const AtomSelectorLegend: React.FC<AtomSelectorLegendProps> = ({
         className="minimizeButton">
         Visibility
       </button>
-      {/* Not sure on how to revert the legend text back to all the atoms and selectors yet
-      <button
-        onClick={(): void => {
-          setStr(['how do I get the old text back?']);
-        }}
-        className="minimizeButton">
-        Show All
-      </button> */}
-      <div id="hidden">
+      <div id="hidden" style={{marginBottom: '10em'}}>
         {legendTextArray}
-        <span>
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />* Click on any gray node to show all atoms/selectors again
-        </span>
       </div>
+      <span>*Click on any gray node to show all atoms/selectors again</span>
     </div>
   );
 
