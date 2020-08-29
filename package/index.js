@@ -12,7 +12,7 @@ let isPersistedState = sessionStorage.getItem('isPersistedState');
 // isRestored state disables snapshots from being recorded
 let isRestoredState = false;
 
-// throttle timer
+// set default throttle to 70, throttle timer changes with every snapshot
 let throttleTimer = 0;
 let throttleLimit = 70;
 
@@ -105,8 +105,7 @@ export default function RecoilizeDebugger(props) {
         break;
       // Implementing the throttle change
       case 'throttleEdit':
-        let throttleVal = parseInt(msg.data.payload.value);
-        throttleLimit = throttleVal;
+        throttleLimit = parseInt(msg.data.payload.value);
         break;
 
       default:
@@ -187,7 +186,7 @@ export default function RecoilizeDebugger(props) {
     await gotoSnapshot(snapshots[msg.data.payload.snapshotIndex]);
   };
 
-  // FOR TIME TRAVEL: Recoil hook to fire a callback on every snapshot change
+  // FOR TIME TRAVEL: Recoil hook to fire a callback on every atom/selector change -- research Throttle
   useRecoilTransactionObserver_UNSTABLE(({snapshot}) => {
     const now = new Date().getTime();
     if (now - throttleTimer < throttleLimit) {
@@ -195,6 +194,7 @@ export default function RecoilizeDebugger(props) {
     } else {
       throttleTimer = now;
     }
+
     if (!isRestoredState) {
       setSnapshots([...snapshots, snapshot]);
     }

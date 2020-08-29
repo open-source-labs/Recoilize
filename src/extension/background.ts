@@ -50,7 +50,6 @@ chrome.runtime.onConnect.addListener(port => {
           chrome.tabs.sendMessage(Number(tabId), msg);
         }
         break;
-      // todo: Create this case for throttle edit, and need to do a post to the window
       case 'throttleEdit':
         if (tabId) {
           chrome.tabs.sendMessage(Number(tabId), msg);
