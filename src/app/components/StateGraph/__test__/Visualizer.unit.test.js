@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom';
 import Visualizer from '../Visualizer';
 import {filteredCurSnapMock} from '../../../../../mock/snapshot.js';
 import {render, cleanup, findByTestId} from '@testing-library/react';
-import '@testing-library/jest-dom/extend-expect';
-import '@babel/polyfill';
+import '../../AtomNetwork/__tests__/node_modules/@testing-library/jest-dom/extend-expect';
+import '../../AtomNetwork/__tests__/node_modules/@babel/polyfill';
 
 afterEach(cleanup);
 
