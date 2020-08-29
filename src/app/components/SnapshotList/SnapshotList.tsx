@@ -34,14 +34,11 @@ const SnapshotsList: React.FC<SnapshotsListProps> = ({
   const scrollToBottom = (): void => {
     snapshotEndRef.current.scrollIntoView({behavior: 'smooth'});
   };
-  // ! probably need to prop drill down something else as well to get this filter to work
-  // console.log('this is selected inside SnapshotList ', selected);
-  // console.log('this is the filter inside of snapshotlist ', filter); // this filter is not resetting on reset
-  // array of divs proportional to the length of snapshotHistory
+
   const snapshotDivs: JSX.Element[] = [];
   // iterate the same length of our snapshotHistory
   for (let i = 0; i < snapshotHistoryLength; i++) {
-    // ! function to filter
+    // filter function
     const filterFunc = (): boolean => {
       // don't use the counter for this, not reliable
       if (i === 0) {
