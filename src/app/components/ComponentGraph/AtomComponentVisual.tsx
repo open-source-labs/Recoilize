@@ -8,12 +8,10 @@ interface AtomComponentVisualProps {
   atoms: atom;
   selectors: selector;
   setStr: React.Dispatch<React.SetStateAction<string[]>>;
-}
-
-interface ZoomState {
   x: number;
   y: number;
   k: number;
+  setZoomState: any;
 }
 
 const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
@@ -22,13 +20,14 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
   atoms,
   selectors,
   setStr,
+  x,
+  y,
+  k,
+  setZoomState,
 }) => {
   // set the heights and width of the tree to be passed into treeMap function
   let width: number = 0;
   let height: number = 0;
-
-  // this state allows the canvas to stay at the zoom level on multiple re-renders
-  const [{x, y, k}, setZoomState] = useState<ZoomState>({x: 0, y: 0, k: 0});
 
   // useState hook to update the toggle of showing diff components
   const [rawToggle, setRawToggle] = useState<boolean>(false);
@@ -132,7 +131,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
     svgContainer.call(
       zoom.transform,
       // Changes the initial view, (left, top)
-      d3.zoomIdentity.translate(50, 380).scale(0.07),
+      d3.zoomIdentity.translate(x, y).scale(k),
     );
 
     // allows the canvas to be zoom-able
@@ -145,7 +144,10 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
 
     // helper function that allows for zooming
     function zoomed() {
-      g.attr('transform', d3.event.transform);
+      g.attr('transform', d3.event.transform).on(
+        'mouseup',
+        setZoomState(d3.zoomTransform(d3.select('#canvas').node())),
+      );
     }
 
     // Update function
@@ -177,7 +179,6 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
         .on('click', click)
         .on('mouseover', function (d: any, i: number): void {
           // atsel is an array of all the atoms and selectors
-
           const atsel: any = [];
           if (d.data.recoilNodes) {
             for (let x = 0; x < d.data.recoilNodes.length; x++) {
@@ -190,14 +191,14 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
               .style('fill', 'white')
               .attr('x', formatMouseoverXValue(d.data.recoilNodes[x]))
               // How far the text is below the node
-              .attr('y', 225 + x * 55)
+              .attr('y', 225)
               .style('font-size', '3.5rem')
-              .attr('id', `popup${i}${x}`);
+              .attr('id', `x`);
           }
         })
         .on('mouseout', function (d: any, i: number): void {
           for (let x = 0; x < d.data.recoilNodes.length; x++) {
-            d3.select(`#popup${i}${x}`).remove();
+            d3.selectAll(`#x`).remove();
           }
         });
 

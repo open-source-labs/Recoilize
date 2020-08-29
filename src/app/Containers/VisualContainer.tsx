@@ -19,6 +19,12 @@ interface VisualContainerProps {
   setSelected: React.Dispatch<React.SetStateAction<selectedTypes[]>>;
 }
 
+interface ZoomState {
+  x: number;
+  y: number;
+  k: number;
+}
+
 type navTypes = {
   [tabName: string]: JSX.Element;
 };
@@ -36,6 +42,13 @@ const VisualContainer: React.FC<VisualContainerProps> = ({
 
   // variables to store/reference connection
   const [throttleDisplay, setThrottleDisplay] = useState<string>('70');
+
+  // this state allows the canvas to stay at the zoom level on multiple re-renders
+  const [{x, y, k}, setZoomState] = useState<ZoomState>({
+    x: 50,
+    y: 380,
+    k: 0.07,
+  });
 
   // conditional render of filtered snaps/ based on non-filtered snaps
   const filteredCurSnap = currentSnapshot
@@ -67,6 +80,10 @@ const VisualContainer: React.FC<VisualContainerProps> = ({
       <AtomComponentVisualContainer
         componentAtomTree={componentAtomTree}
         filteredCurSnap={filteredCurSnap}
+        x={x}
+        y={y}
+        k={k}
+        setZoomState={setZoomState}
       />
     ),
     // settings tab that doesn't want to be in quotes because too cool for school
