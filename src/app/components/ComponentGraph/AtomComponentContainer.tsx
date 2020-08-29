@@ -36,7 +36,7 @@ const AtomComponentVisualContainer: React.FC<AtomComponentVisualContainerProps> 
   }
 
   return (
-    <div className="Component" style={{height: '100%', width: '100%'}}>
+    <div className="Component">
       <AtomComponentVisual
         componentAtomTree={componentAtomTree}
         selectedRecoilValue={selectedRecoilValue}
@@ -51,6 +51,7 @@ const AtomComponentVisualContainer: React.FC<AtomComponentVisualContainerProps> 
           atoms={atoms}
           selectors={selectors}
           str={str}
+          setStr={setStr}
         />
       </div>
     </div>
