@@ -1,5 +1,6 @@
 import React from 'react';
 import AtomComponentVisualContainer from '../AtomComponentContainer';
+import AtomComponentVisual from '../AtomComponentVisual';
 import {render, cleanup} from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
 import '@babel/polyfill';
@@ -11,6 +12,10 @@ import {
 afterEach(cleanup);
 
 xit('testing to see if the component is properly rendered', () => {
+  // Now that we have the componentClassDiv appended, we get the same svg error as AtomComponentContainer test
+  const componentClassDiv = document.createElement('div');
+  componentClassDiv.className = 'Component';
+  document.body.appendChild(componentClassDiv);
   // This test fails because it cannot find the element with class 'Component'
   const atomTree = {children: []};
   const {component, debug} = render(
@@ -20,6 +25,7 @@ xit('testing to see if the component is properly rendered', () => {
       atoms={[]}
       componentAtomTree={atomTree}
     />,
+    componentClassDiv,
   );
   debug();
 });
