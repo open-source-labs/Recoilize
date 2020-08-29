@@ -8,5 +8,4 @@ it('testing to see if the component is properly rendered', () => {
     // possibly test 'selectedRecoilValue', 'setSelectedRecoilValue', 'setStr' props
     <AtomSelectorLegend selectors={[]} atoms={[]} str={[]} />,
   );
-  debug();
 });

@@ -71,10 +71,6 @@ const VisualContainer: React.FC<VisualContainerProps> = ({
     ),
     // render JSON tree of snapshot
     'State Tree': <Tree filteredCurSnap={filteredCurSnap} />,
-    // individual snapshot visualizer
-    'State Graph': <Visualizer filteredCurSnap={filteredCurSnap} />,
-    // atom and selector subscription relationship
-    'Atom Network': <Network filteredCurSnap={filteredCurSnap} />,
     // tree visualizer of components showing atom/selector relationships
     'Component Graph': (
       <AtomComponentVisualContainer
@@ -86,6 +82,13 @@ const VisualContainer: React.FC<VisualContainerProps> = ({
         setZoomState={setZoomState}
       />
     ),
+
+    // atom and selector subscription relationship
+    'Atom Network': <Network filteredCurSnap={filteredCurSnap} />,
+
+    // individual snapshot visualizer
+    'State Graph': <Visualizer filteredCurSnap={filteredCurSnap} />,
+
     // settings tab that doesn't want to be in quotes because too cool for school
     Settings: (
       <Settings

@@ -12,7 +12,7 @@ let isPersistedState = sessionStorage.getItem('isPersistedState');
 // isRestored state disables snapshots from being recorded
 let isRestoredState = false;
 
-// throttle is an object that keeps track of the throttle settings made by the user
+// set default throttle to 70, throttle timer changes with every snapshot
 let throttleTimer = 0;
 let throttleLimit = 70;
 
@@ -103,10 +103,9 @@ export default function RecoilizeDebugger(props) {
       case 'persistState':
         switchPersistMode();
         break;
-      // Todo: Implementing the throttle change
+      // Implementing the throttle change
       case 'throttleEdit':
-        let throttleVal = parseInt(msg.data.payload.value);
-        throttleLimit = throttleVal;
+        throttleLimit = parseInt(msg.data.payload.value);
         break;
 
       default:
@@ -187,15 +186,15 @@ export default function RecoilizeDebugger(props) {
     await gotoSnapshot(snapshots[msg.data.payload.snapshotIndex]);
   };
 
-  // FOR TIME TRAVEL: Recoil hook to fire a callback on every snapshot change
+  // FOR TIME TRAVEL: Recoil hook to fire a callback on every atom/selector change -- research Throttle
   useRecoilTransactionObserver_UNSTABLE(({snapshot}) => {
     const now = new Date().getTime();
-    // if we get a series of 5 in a row called super fast, then we want to turn the throttle on
     if (now - throttleTimer < throttleLimit) {
       isRestoredState = true;
     } else {
       throttleTimer = now;
     }
+
     if (!isRestoredState) {
       setSnapshots([...snapshots, snapshot]);
     }
