@@ -10,7 +10,9 @@
 </h1>
 
 # [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/oslabs-beta/Recoilize/blob/staging/LICENSE) [![npm version](https://img.shields.io/npm/v/recoilize)](https://www.npmjs.com/package/recoilize) ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)
-[Korean README](README_KO.md)
+
+[Korean README 한국어](README_KO.md)
+
 <h1> About</h1>
 <p>
 Recoilize is a Chrome Dev Tool meant for debugging applications built with the experimental Recoil.js state management library.
