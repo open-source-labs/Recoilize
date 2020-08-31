@@ -54,7 +54,7 @@ import RecoilizeDebugger from 'recoilize';
 const root = document.getElementById('root');
 ```
 
-#### You must import all Atoms and Selectors and pass them into the Recoilize component as shown above
+#### You must import all Atoms and Selectors and pass them into the RecoilizeDebugger component as shown below
 
 ```js
 import * as nodes from './store';
