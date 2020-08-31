@@ -10,7 +10,7 @@
 </h1>
 
 # [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/oslabs-beta/Recoilize/blob/staging/LICENSE) [![npm version](https://img.shields.io/npm/v/recoilize)](https://www.npmjs.com/package/recoilize) ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)
-
+[영어 README](README.md)
 <h1>Recoilize 에 대해서</h1>
 <p>
 Recoilize 는 Recoil 상태 관리 라이브러리를 사용하여 만들어진 애플리케이션을 디버깅 할수있는 크롬 데브 툴입니다.
