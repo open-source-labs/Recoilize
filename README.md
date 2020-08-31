@@ -28,7 +28,7 @@ Get Recoilize on the <a href='https://chrome.google.com/webstore/detail/recoiliz
 ** STILL IN BETA **
 </h2>
 
-<p>Please note that Recoilize is in BETA. We will continue to make improvements and implement fixes but if you find any issues, please dont hesitate to report them in the issues tab or submit a PR and we'll happily take a look.</p><br></br>
+<p>Please note that Recoilize is in BETA. We will continue to make improvements and implement fixes but if you find any issues, please dont hesitate to report them in the issues tab or submit a PR and we'll happily take a look.</p>
 
 <h1>
 Installation
@@ -87,6 +87,10 @@ ReactDOM.render(
 <h1>Features</h1>
 <h3>Visualizations</h3>
 <p>Users are able to view visualizations for their application's state by clicking individual snapshots. Recoilize provides component trees and graphs, as well as the state trees in JSON format.<p>
+
+<p align='center'> 
+<img src='./src/extension/build/assets/visualize.gif' width=600 height=300/>
+</p>
 
 <h3>Time Travel</h3>
 <p>As one of the key features of Recoilize, the tool enables users to jump to any previous snapshots. Pressing the jump button next to each of the snapshots will change the DOM by setting the state to that snapshot.<p>
