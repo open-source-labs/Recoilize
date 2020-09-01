@@ -1,0 +1,71 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`should match snapshot when no props are passed in 1`] = `
+<DocumentFragment>
+  <div
+    data-testid="stateSettings"
+  >
+    <h2>
+      Persist State
+    </h2>
+    <div
+      class="persistContainer"
+    >
+      <label
+        class="switch"
+        for="checkbox"
+      >
+        <input
+          data-testid="stateSettingsToggle"
+          id="checkbox"
+          type="checkbox"
+        />
+        <div
+          class="slider round"
+        />
+         
+      </label>
+      <span
+        class="persistText"
+      >
+        Slide to Toggle Persist Mode
+      </span>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`should match snapshot when props are passed in 1`] = `
+<DocumentFragment>
+  <div
+    data-testid="stateSettings"
+  >
+    <h2>
+      Persist State
+    </h2>
+    <div
+      class="persistContainer"
+    >
+      <label
+        class="switch"
+        for="checkbox"
+      >
+        <input
+          data-testid="stateSettingsToggle"
+          id="checkbox"
+          type="checkbox"
+        />
+        <div
+          class="slider round"
+        />
+         
+      </label>
+      <span
+        class="persistText"
+      >
+        Slide to Toggle Persist Mode
+      </span>
+    </div>
+  </div>
+</DocumentFragment>
+`;
