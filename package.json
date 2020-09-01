@@ -5,7 +5,7 @@
       "jest-webextension-mock"
     ]
   },
-  "version": "0.0.1",
+  "version": "0.8.0",
   "description": "A Chrome extension that helps debug Recoil applications by memorizing the state of components with every render.",
   "main": "index.js",
   "scripts": {
@@ -14,7 +14,7 @@
     "test": "jest --verbose",
     "lint": "eslint '**/*.tsx' '**/*.ts' '**/*.js' --ignore-path .gitignore"
   },
-  "author": "Bren Yamaguchi, Saejin Kang, Jonathan Escamilla, Sean Smith",
+  "author": "Bren Yamaguchi, Saejin Kang, Jonathan Escamilla, Sean Smith, Justin Choo, Anthony Lin, Spenser Schwartz, Steven Nguyen, Henry Taing, Seungho Baek",
   "license": "MIT",
   "devDependencies": {
     "@babel/core": "^7.10.3",
