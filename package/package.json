@@ -1,11 +1,11 @@
 {
   "name": "recoilize",
-  "version": "0.1.0",
+  "version": "0.8.0",
   "description": "",
   "main": "index.ts",
   "repository": {
     "type": "git",
-    "url": "https://github.com/oslabs-beta/Recoilize"
+    "url": "https://github.com/open-source-labs/Recoilize"
   },
   "peerDependencies": {
     "react": "^16.13.1",
@@ -16,7 +16,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepublish": "tsc ./*.ts"
   },
-  "author": "Bren Yamaguchi Saejin Kang Jonathan Escamilla Sean Smith",
+  "author": "Bren Yamaguchi, Saejin Kang, Jonathan Escamilla, Sean Smith, Justin Choo, Anthony Lin, Spenser Schwartz, Steven Nguyen, Henry Taing, Seungho Baek",
   "license": "MIT",
   "devDependencies": {
     "typescript": "^3.9.6"
