@@ -8,7 +8,7 @@
   "icons": {
     "16": "assets/Recoilize.png",
     "48": "assets/Recoilize.png",
-    "128": "assets/covalent-recoil-logo.jpg"
+    "128": "assets/Recoilize.png"
   },
   "permissions": ["storage"],
   "background": {
