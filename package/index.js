@@ -24,42 +24,60 @@ export default function RecoilizeDebugger(props) {
   // We should ask for Array of atoms and selectors.
   // Captures all atoms that were defined to get the initial state
 
-  const {root} = props;
-
-  let nodes = null;
-
-  if (typeof props.nodes === 'object' && !Array.isArray(props.nodes)) {
-    nodes = Object.values(props.nodes);
-  } else if (Array.isArray(props.nodes)) {
-    nodes = props.nodes;
+  // Check if a root was passed to props.
+  if (props.root) {
+    const {root} = props;
+  } else {
+    const root = document.getElementById('root');
   }
 
   const snapshot = useRecoilSnapshot();
+
+  // getNodes_UNSTABLE will return an iterable that contains atom and selector objects.
+  const nodes = [...snapshot.getNodes_UNSTABLE()];
+
   // Local state of all previous snapshots to use for time traveling when requested by dev tools.
   const [snapshots, setSnapshots] = useState([snapshot]);
   // const [isRestoredState, setRestoredState] = useState(false);
   const gotoSnapshot = useGotoRecoilSnapshot();
 
   const filteredSnapshot = {};
-  const currentTree = snapshot._store.getState().currentTree;
+  
+  /*
+  A nodeDeps object is constructed using getDeps_UNSTABLE. 
+  This object will then be used to construct a nodeSubscriptions object. 
+  After continuous testing, getSubscriptions_UNSTABLE was deemed too unreliable. 
+  */
+
+  const nodeDeps = {};
+  const nodeSubscriptions = {};
+
+  nodes.forEach((node) => {
+    const getDeps = [...snapshot.getDeps_UNSTABLE(node)];
+    nodeDeps[node.key] = getDeps.map(dep => dep.key);
+  });
+
+  for (let key in nodeDeps) {
+    nodeDeps[key].forEach(node => {
+      if(nodeSubscriptions[node]){
+        nodeSubscriptions[node].push(key);
+      } else {
+        nodeSubscriptions[node] = [key];
+      }
+    });
+  };
 
   // Traverse all atoms and selector state nodes and get value
   nodes.forEach((node, index) => {
     const type = node.__proto__.constructor.name;
     const contents = snapshot.getLoadable(node).contents;
-    const nodeDeps = currentTree.nodeDeps.get(node.key);
-    const nodeToNodeSubscriptions = currentTree.nodeToNodeSubscriptions.get(
-      node.key,
-    );
 
     // Construct node data structure for dev tool to consume
     filteredSnapshot[node.key] = {
       type,
       contents,
-      nodeDeps: nodeDeps ? Array.from(nodeDeps) : [],
-      nodeToNodeSubscriptions: nodeToNodeSubscriptions
-        ? Array.from(nodeToNodeSubscriptions)
-        : [],
+      nodeDeps: nodeDeps[node.key],
+      nodeToNodeSubscriptions: nodeSubscriptions[node.key] ? nodeSubscriptions[node.key] : []
     };
   });
 
