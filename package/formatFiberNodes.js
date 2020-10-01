@@ -72,10 +72,9 @@ const assignName = node => {
   if (node.tag === 5) return `${node.type}`;
   // Tag 3 === HostRoot
   if (node.tag === 3) return 'HR';
-  // Tag 3 === HostText
-  if (node.tag === 6) {
-    return node.memoizedProps;
-  }
+  // Tag 6 === HostText
+  if (node.tag === 6) return node.memoizedProps;
+  // Tag 7 === Fragment
   if (node.tag === 7) return 'Fragment';
 };
 

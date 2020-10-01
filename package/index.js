@@ -10,6 +10,7 @@ import {formatFiberNodes} from './formatFiberNodes';
 let isPersistedState = sessionStorage.getItem('isPersistedState');
 
 // isRestored state disables snapshots from being recorded
+// when we jump backwards
 let isRestoredState = false;
 
 // set default throttle to 70, throttle timer changes with every snapshot
