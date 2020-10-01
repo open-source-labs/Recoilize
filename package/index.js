@@ -50,7 +50,6 @@ export default function RecoilizeDebugger(props) {
     const nodeToNodeSubscriptions = currentTree.nodeToNodeSubscriptions.get(
       node.key,
     );
-
     // Construct node data structure for dev tool to consume
     filteredSnapshot[node.key] = {
       type,
