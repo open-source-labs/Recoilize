@@ -1,10 +1,10 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   useRecoilTransactionObserver_UNSTABLE,
   useRecoilSnapshot,
   useGotoRecoilSnapshot,
 } from 'recoil';
-import {formatFiberNodes} from './formatFiberNodes';
+import { formatFiberNodes } from './formatFiberNodes';
 
 // grabs isPersistedState from sessionStorage
 let isPersistedState = sessionStorage.getItem('isPersistedState');
@@ -26,7 +26,7 @@ export default function RecoilizeDebugger(props) {
 
   // Check if a root was passed to props.
   if (props.root) {
-    const {root} = props;
+    const { root } = props;
   } else {
     const root = document.getElementById('root');
   }
@@ -42,7 +42,7 @@ export default function RecoilizeDebugger(props) {
   const gotoSnapshot = useGotoRecoilSnapshot();
 
   const filteredSnapshot = {};
-  
+
   /*
   A nodeDeps object is constructed using getDeps_UNSTABLE. 
   This object will then be used to construct a nodeSubscriptions object. 
@@ -52,20 +52,20 @@ export default function RecoilizeDebugger(props) {
   const nodeDeps = {};
   const nodeSubscriptions = {};
 
-  nodes.forEach((node) => {
+  nodes.forEach(node => {
     const getDeps = [...snapshot.getDeps_UNSTABLE(node)];
     nodeDeps[node.key] = getDeps.map(dep => dep.key);
   });
 
   for (let key in nodeDeps) {
     nodeDeps[key].forEach(node => {
-      if(nodeSubscriptions[node]){
+      if (nodeSubscriptions[node]) {
         nodeSubscriptions[node].push(key);
       } else {
         nodeSubscriptions[node] = [key];
       }
     });
-  };
+  }
 
   // Traverse all atoms and selector state nodes and get value
   nodes.forEach((node, index) => {
@@ -77,7 +77,9 @@ export default function RecoilizeDebugger(props) {
       type,
       contents,
       nodeDeps: nodeDeps[node.key],
-      nodeToNodeSubscriptions: nodeSubscriptions[node.key] ? nodeSubscriptions[node.key] : []
+      nodeToNodeSubscriptions: nodeSubscriptions[node.key]
+        ? nodeSubscriptions[node.key]
+        : [],
     };
   });
 
@@ -206,7 +208,7 @@ export default function RecoilizeDebugger(props) {
   };
 
   // FOR TIME TRAVEL: Recoil hook to fire a callback on every atom/selector change -- research Throttle
-  useRecoilTransactionObserver_UNSTABLE(({snapshot}) => {
+  useRecoilTransactionObserver_UNSTABLE(({ snapshot }) => {
     const now = new Date().getTime();
     if (now - throttleTimer < throttleLimit) {
       isRestoredState = true;
