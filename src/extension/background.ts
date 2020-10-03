@@ -143,7 +143,7 @@ chrome.runtime.onMessage.addListener((msg, sender) => {
     case 'persistSnapshots':
       // getting the array of filtered snapshots that exists on locoal storage
       chrome.storage.local.get(tabId, function (result) {
-        console.log('storage values', result[tabId]);
+        
         connections[tabId].postMessage({
           action: 'recordSnapshot',
           payload: result[tabId],

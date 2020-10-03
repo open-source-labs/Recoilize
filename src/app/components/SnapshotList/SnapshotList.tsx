@@ -74,6 +74,7 @@ const SnapshotsList: React.FC<SnapshotsListProps> = ({
           setRenderIndex(i);
         }}>
         <li>{i}</li>
+        <span>{snapshotHistoryLength}</span>
         <button
           className="timeTravelButton"
           onClick={() => {

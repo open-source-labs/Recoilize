@@ -24,6 +24,7 @@ const SnapshotsContainer: React.FC<SnapshotsContainerProps> = ({
   const timeTravelFunc = (index: number) => {
     // variable to store/reference connection
     const backgroundConnection = chrome.runtime.connect();
+    const test = chrome.extension.getBackgroundPage();
     // post the message with index in payload to the connection
     backgroundConnection.postMessage({
       action: 'snapshotTimeTravel',
