@@ -89,8 +89,13 @@ const App: React.FC = () => {
     <MainContainer
       // array of snapshots
       snapshotHistory={snapshotHistory}
+
+      // selected will be an array with objects containing filteredSnapshot key names.
+      // ex: [{name: 'type'}, {name: 'contents'}, {name: 'nodeDeps'}, {name: 'nodeToNodeSubscriptions'}]
       selected={selected}
       setSelected={setSelected}
+
+      // Filter is an array of objects containing differences between snapshots.
       filter={filter}
     />
   );

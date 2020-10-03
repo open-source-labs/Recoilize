@@ -87,7 +87,7 @@ const VisualContainer: React.FC<VisualContainerProps> = ({
     'Atom Network': <Network filteredCurSnap={filteredCurSnap} />,
 
     // individual snapshot visualizer
-    'State Graph': <Visualizer filteredCurSnap={filteredCurSnap} />,
+    'Metrics': <Visualizer componentAtomTree={componentAtomTree} />,
 
     // settings tab that doesn't want to be in quotes because too cool for school
     Settings: (
