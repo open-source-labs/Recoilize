@@ -26,6 +26,7 @@ export type componentAtomTree = {
   name: string;
   tag: number;
   recoilNodes: string[];
+  actualDuration: number;
 };
 
 //////////////////////////
