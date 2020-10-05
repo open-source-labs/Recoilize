@@ -110,7 +110,13 @@ export default function RecoilizeDebugger(props) {
           const initialFilteredSnapshot = formatAtomSelectorRelationship(
             filteredSnapshot,
           );
-          const devToolData = createDevToolDataObject(initialFilteredSnapshot);
+          
+          //creating a indexDiff variable
+          //only created on initial creation of devToolData
+          //determines difference in length of backend snapshots array and frontend snapshotHistoryLength to avoid off by one error
+          const indexDiff = snapshots.length - 1;
+
+          const devToolData = createDevToolDataObject(initialFilteredSnapshot, indexDiff);
           sendWindowMessage('moduleInitialized', devToolData);
         } else {
           setProperIndexForPersistedState();
@@ -204,6 +210,7 @@ export default function RecoilizeDebugger(props) {
     // await setRestoredState(false);
 
     isRestoredState = true;
+    
     await gotoSnapshot(snapshots[msg.data.payload.snapshotIndex]);
   };
 

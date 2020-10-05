@@ -39,7 +39,6 @@ const VisualContainer: React.FC<VisualContainerProps> = ({
 }) => {
   // state for checkmark in persist state in settings
   const [checked, setChecked] = useState<boolean>(false);
-
   // variables to store/reference connection
   const [throttleDisplay, setThrottleDisplay] = useState<string>('70');
 
