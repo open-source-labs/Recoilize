@@ -11,7 +11,8 @@ interface SnapshotsListProps {
   // functionality to postMessage the selected snapshot index to background.js
   timeTravelFunc: (index: number) => void;
   selected: selectedTypes[];
-  filter: stateSnapshot[];
+  filter: any[];
+  currentSnapshot: stateSnapshot;
 }
 
 const SnapshotsList: React.FC<SnapshotsListProps> = ({
@@ -21,6 +22,7 @@ const SnapshotsList: React.FC<SnapshotsListProps> = ({
   timeTravelFunc,
   selected,
   filter,
+  currentSnapshot,
 }) => {
   // useRef for a dummy div at the bottom of the scroll
   const snapshotEndRef = useRef<HTMLDivElement>(null);
@@ -38,13 +40,15 @@ const SnapshotsList: React.FC<SnapshotsListProps> = ({
   const snapshotDivs: JSX.Element[] = [];
   // iterate the same length of our snapshotHistory
   for (let i = 0; i < snapshotHistoryLength; i++) {
-    // filter function
+    
+    // filterFunc will return false if there is no change to state
     const filterFunc = (): boolean => {
+    
       // don't use the counter for this, not reliable
       if (i === 0) {
         return true;
       }
-      // checks if is in the selected array
+      // checks if the filterteredSnapshot object at index i has a key (atom or selector) found in the selected array. This would indicate that there was a change to that state/selector because filter is an array of objects containing differences between snapshots.
       if (filter[i]) {
         for (let key in filter[i].filteredSnapshot) {
           for (let j = 0; j < selected.length; j++) {
@@ -57,10 +61,24 @@ const SnapshotsList: React.FC<SnapshotsListProps> = ({
       return false;
     };
     const x: boolean = filterFunc();
-    // see the iteration if x is false
+    
     if (x === false) {
       continue;
     }
+
+    let renderTime: number;
+    //Checks to see if the actualDuration within filter is an array. If it is an array then the 2nd value in the array is the new actualDuration.
+    if(i === 0) {
+      renderTime = currentSnapshot.componentAtomTree.actualDuration;
+    } 
+    else if (Array.isArray(filter[i].componentAtomTree.actualDuration)) {
+      renderTime = filter[i].componentAtomTree.actualDuration[1];
+    } else {
+      renderTime = filter[i].componentAtomTree.actualDuration;
+    }
+
+    // Push a div container to snapshotDivs array only if there was a change to state. 
+    // The div container will contain renderTimes evaluated above.
     snapshotDivs.push(
       <div
         className="individualSnapshot"
@@ -74,6 +92,7 @@ const SnapshotsList: React.FC<SnapshotsListProps> = ({
           setRenderIndex(i);
         }}>
         <li>{i}</li>
+        <li>{`${Math.round(renderTime*100)/100}ms`}</li>
         <button
           className="timeTravelButton"
           onClick={() => {

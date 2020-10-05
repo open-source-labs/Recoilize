@@ -43,6 +43,7 @@ const MainContainer: React.FC<MainContainerProps> = ({
         // ! passing through selected
         selected={selected}
         filter={filter}
+        currentSnapshot={snapshotHistory[renderIndex]}
       />
       <VisualContainer
         // snapshot at index [renderIndex -1]
