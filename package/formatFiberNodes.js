@@ -8,6 +8,7 @@ const formatFiberNodes = node => {
     tag: node.tag,
     children: [],
     recoilNodes: createAtomsSelectorArray(node),
+    actualDuration: node.actualDuration,
   };
 
   // loop through and recursively call all nodes to format their 'sibling' and 'child' properties to our desired tree shape
@@ -79,7 +80,7 @@ const assignName = node => {
   if (node.tag === 7) return 'Fragment';
 };
 
-module.exports = {formatFiberNodes};
+module.exports = { formatFiberNodes };
 
 // if testing this function on the browser, use line below to log the formatted tree in the console
 //let formattedFiberNodes = formatFiberNodes(document.getElementById('root')._reactRootContainer._internalRoot.current)
