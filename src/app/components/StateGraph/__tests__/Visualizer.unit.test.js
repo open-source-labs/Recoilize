@@ -8,21 +8,17 @@ import {render, cleanup, findByTestId} from '@testing-library/react';
 afterEach(cleanup);
 describe('Metrics tab testing', () => {
   describe('props beings passed into Visualizer component', () => {
-    //create dummy object to match it against
-    const node = {
-      tag: 1, 
-      name: 'string',
-      children: [],
-      actualDuration: 5,
-      recoilNodes: []
-    };
-    //toMatchObject OR toHaveProperty
-    expect(/*incoming object*/).toMatchObject(node);
-
-    // it('argument being passed in to Visualizer should be an object', () => {
-    //   const 
-    // })
-    // it('shape of argument being passed in should be the same shape as node')
+    xit('shape of argument being passed in should be the same shape as node', () => {  
+      //create dummy object to match it against
+      const node = {
+        tag: 1, 
+        name: 'string',
+        children: [],
+        actualDuration: 5,
+        recoilNodes: []
+      };
+      expect(/*incoming object*/).toMatchObject(node);
+    })
     xit('should match snapshot when props are passed into Visualizer', () => {
       const {asFragment} = render(
         <Visualizer filteredCurSnap={filteredCurSnapMock} />,
