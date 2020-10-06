@@ -15,6 +15,9 @@ const Visualizer: React.FC<VisualizerProps> = ({componentAtomTree}) => {
   // this state allows the canvas to stay at the zoom level on multiple re-renders
   const [{x, y, k}, setZoomState]: any = useState({x: 0, y: 0, k: 0});
 
+  // data for bar graph render
+  const [data, setData] = useState([25, 160, 50, 80, 100, 65, 75, 100]);
+
   useEffect(() => {
     setZoomState(d3.zoomTransform(d3.select('#canvas').node()));
   }, [componentAtomTree]);
@@ -23,15 +26,58 @@ const Visualizer: React.FC<VisualizerProps> = ({componentAtomTree}) => {
   useEffect(() => {
     height = document.querySelector('.Visualizer').clientHeight;
     width = document.querySelector('.Visualizer').clientWidth;
-    document.getElementById('canvas').innerHTML = '';
+    // document.getElementById('canvas').innerHTML = '';
+
+    // testing bar graph horizontal
     
+
+    // testing bar graph vertical
+    const margin = {top: 20, left: 50}
+
+    const svg = d3.select('#canvas');
+    const xScale = d3.scaleBand()
+      .domain(data.map((value, index) => index))
+      .range([0, 300])
+      .padding(0.2);
+
+    const yScale = d3.scaleLinear()
+      .domain([0, 150])
+      .range([150, 0]);
+
+    // x-axis label
+    const xAxis = d3.axisBottom(xScale).ticks(data.length);
+    svg
+      .select('.x-axis')
+      .attr('transform', `translate(${margin.left},${margin.top})`)
+      .style('transform', 'translateY(150px)')
+      .call(xAxis);
+    // y-axis label
+    const yAxis = d3.axisRight(yScale);
+    svg
+      .select('.y-axis')
+      .attr('transform', `translate(${margin.left},${margin.top})`)
+      .style('transform', 'translateX(0px)')
+      .call(yAxis);
+    // create the bars for the graph
+    svg
+      .selectAll('.bar')
+      .data(data)
+      .join('rect')
+      .attr('class', 'bar')
+      .style('transform', 'scale(1, -1)')
+      .attr('x', (value: any, index:any) => xScale(index))
+      .attr('y', -150)
+      .attr('width', xScale.bandwidth())
+      .transition()
+      .attr('fill', '#4682b4')
+      .attr('height', (value: any) => 150 - yScale(value));
 
     const namesAndDurations = (node: any) => {
       // const tagCheck = 0 | 1 | 13;
       if(node.tag === 0 || node.tag === 1 || node.tag === 13){
         console.log('Name: ', node.name, 'Actual Duration: ', node.actualDuration)
       }
-      if(!node.children.length) return console.log("No children");
+      if(!node.children.length) return console.log('No children');
       node.children.forEach((child: any) => namesAndDurations(child))
       return console.log('Done going through children.')
     }
@@ -40,15 +86,15 @@ const Visualizer: React.FC<VisualizerProps> = ({componentAtomTree}) => {
 
 
     // creating the main svg container for d3 elements
-    const svgContainer: any = d3
-      .select('#canvas')
-      .attr('width', width)
-      .attr('height', height);
+    // const svgContainer: any = d3
+    //   .select('#canvas')
+    //   .attr('width', width)
+    //   .attr('height', height);
 
-    // creating a pseudo-class for reusability
-    const g: any = svgContainer
-      .append('g')
-      .attr('transform', `translate(${x}, ${y}), scale(${k})`); // sets the canvas to the saved zoomState
+    // // creating a pseudo-class for reusability
+    // const g: any = svgContainer
+    //   .append('g')
+    //   .attr('transform', `translate(${x}, ${y}), scale(${k})`); // sets the canvas to the saved zoomState
 
     // atomState is the object that is passed into d3.hierarchy
     // const atomState: any = {
@@ -59,7 +105,7 @@ const Visualizer: React.FC<VisualizerProps> = ({componentAtomTree}) => {
     // };
 
     // creating the tree map
-    const treeMap: any = d3.tree().nodeSize([width, height]);
+    // const treeMap: any = d3.tree().nodeSize([width, height]);
 
     // creating the nodes of the tree
     // pass
@@ -143,8 +189,8 @@ const Visualizer: React.FC<VisualizerProps> = ({componentAtomTree}) => {
     //   d3.select(`#popup${i}`).remove();
     // });
 
-    // // allows the canvas to be draggable
-    // node.call(
+    // allows the canvas to be draggable
+    // svg.call(
     //   d3
     //     .drag()
     //     .on('start', dragStarted)
@@ -152,49 +198,53 @@ const Visualizer: React.FC<VisualizerProps> = ({componentAtomTree}) => {
     //     .on('end', dragEnded),
     // );
 
-    // helper functions that help with dragging functionality
-    function dragStarted(): any {
-      d3.select(this).raise();
-      g.attr('cursor', 'grabbing');
-    }
+    // // helper functions that help with dragging functionality
+    // function dragStarted(): any {
+    //   d3.select(this).raise();
+    //   g.attr('cursor', 'grabbing');
+    // }
 
-    function dragged(d: any): any {
-      d3.select(this)
-        .attr('dx', (d.x = d3.event.x))
-        .attr('dy', (d.y = d3.event.y));
-    }
+    // function dragged(d: any): any {
+    //   d3.select(this)
+    //     .attr('dx', (d.x = d3.event.x))
+    //     .attr('dy', (d.y = d3.event.y));
+    // }
 
-    function dragEnded(): any {
-      g.attr('cursor', 'grab');
-    }
+    // function dragEnded(): any {
+    //   g.attr('cursor', 'grab');
+    // }
 
-    // d3 zoom functionality
-    let zoom = d3.zoom().on('zoom', zoomed);
+    // // d3 zoom functionality
+    // let zoom = d3.zoom().on('zoom', zoomed);
 
-    svgContainer.call(
-      zoom.transform,
-      // Changes the initial view, (left, top)
-      d3.zoomIdentity.translate(150, 300).scale(0.3),
-    );
+    // svgContainer.call(
+    //   zoom.transform,
+    //   // Changes the initial view, (left, top)
+    //   d3.zoomIdentity.translate(150, 300).scale(0.3),
+    // );
 
-    // allows the canvas to be zoom-able
-    svgContainer.call(
-      d3
-        .zoom()
-        .scaleExtent([0.05, 0.9]) // [zoomOut, zoomIn]
-        .on('zoom', zoomed),
-    );
+    // // allows the canvas to be zoom-able
+    // svgContainer.call(
+    //   d3
+    //     .zoom()
+    //     .scaleExtent([0.05, 0.9]) // [zoomOut, zoomIn]
+    //     .on('zoom', zoomed),
+    // );
 
-    // helper function that allows for zooming
-    function zoomed(): any {
-      g.attr('transform', d3.event.transform);
-    }
-  });
-
+    // // helper function that allows for zooming
+    // function zoomed(): any {
+    //   g.attr('transform', d3.event.transform);
+    // }
+  },[data]);
+  
   return (
-    <div data-testid="canvas" id="stateGraphContainer">
-      <div className="Visualizer">
-        <svg id="canvas"></svg>
+    <div data-testid='canvas' id='stateGraphContainer'>
+      <div className='Visualizer'>
+        {/* <svg id='canvas'></svg> */}
+        <svg id='canvas' className='metrics'>
+        <g className='x-axis' />
+        <g className='y-axis' />
+      </svg>
       </div>
     </div>
   );
