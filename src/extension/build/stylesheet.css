@@ -95,7 +95,8 @@ body {
 }
 
 .timeTravelButton {
-  border: none;
+  border: #989898;
+  border-radius: 15px;
   color: #989898;
   background: none;
   outline: none;
