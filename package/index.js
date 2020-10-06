@@ -171,13 +171,25 @@ export default function RecoilizeDebugger(props) {
     );
   };
 
-  const createDevToolDataObject = filteredSnapshot => {
-    return {
-      filteredSnapshot: filteredSnapshot,
-      componentAtomTree: formatFiberNodes(
-        root._reactRootContainer._internalRoot.current,
-      ),
-    };
+  const createDevToolDataObject = (filteredSnapshot, diff) => {
+    if(diff === undefined){
+      return {
+        filteredSnapshot: filteredSnapshot,
+        componentAtomTree: formatFiberNodes(
+          root._reactRootContainer._internalRoot.current,
+        ),
+      };
+    }
+    else{
+      console.log('logging diff from create Dev tool data:', diff);
+      return {
+        filteredSnapshot: filteredSnapshot,
+        componentAtomTree: formatFiberNodes(
+          root._reactRootContainer._internalRoot.current,
+        ),
+        indexDiff: diff,
+      };
+    }
   };
 
   const formatAtomSelectorRelationship = filteredSnapshot => {
