@@ -2,6 +2,7 @@
 export type stateSnapshot = {
   filteredSnapshot: filteredSnapshot;
   componentAtomTree: componentAtomTree;
+  indexDiff?: number;
 };
 
 export type filteredSnapshot = {
