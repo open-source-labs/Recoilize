@@ -70,7 +70,6 @@ export default function RecoilizeDebugger(props) {
   nodes.forEach((node, index) => {
     const type = node.__proto__.constructor.name;
     const contents = snapshot.getLoadable(node).contents;
-
     // Construct node data structure for dev tool to consume
     filteredSnapshot[node.key] = {
       type,

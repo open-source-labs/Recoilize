@@ -27,7 +27,6 @@ chrome.runtime.onConnect.addListener(port => {
     switch (action) {
       case 'devToolInitialized':
         connections[tabId] = port;
-
         // read and send back to dev tool current local storage for corresponding tabId & port
         chrome.storage.local.get(null, function (result) {
           connections[tabId].postMessage({
