@@ -1,6 +1,6 @@
 import React from 'react';
 import SnapshotsList from '../components/SnapshotList/SnapshotList';
-import {stateSnapshot, selectedTypes} from '../../types';
+import {stateSnapshot, selectedTypes, stateSnapshotDiff} from '../../types';
 import { number } from 'prop-types';
 
 interface SnapshotsContainerProps {
@@ -11,7 +11,7 @@ interface SnapshotsContainerProps {
   // setState functionality to update curRender
   setRenderIndex: React.Dispatch<React.SetStateAction<number>>;
   selected: selectedTypes[];
-  filter: stateSnapshot[];
+  filter: stateSnapshotDiff[];
   currentSnapshot: stateSnapshot;
 }
 
