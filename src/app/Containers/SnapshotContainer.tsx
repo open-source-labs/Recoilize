@@ -11,6 +11,7 @@ interface SnapshotsContainerProps {
   setRenderIndex: React.Dispatch<React.SetStateAction<number>>;
   selected: selectedTypes[];
   filter: stateSnapshot[];
+  currentSnapshot: stateSnapshot;
 }
 
 const SnapshotsContainer: React.FC<SnapshotsContainerProps> = ({
@@ -19,6 +20,7 @@ const SnapshotsContainer: React.FC<SnapshotsContainerProps> = ({
   setRenderIndex,
   selected,
   filter,
+  currentSnapshot,
 }) => {
   // functionality to postMessage the selected snapshot index to background.js
   const timeTravelFunc = (index: number) => {
@@ -49,6 +51,7 @@ const SnapshotsContainer: React.FC<SnapshotsContainerProps> = ({
         timeTravelFunc={timeTravelFunc}
         selected={selected}
         filter={filter}
+        currentSnapshot={currentSnapshot}
       />
     </div>
   );

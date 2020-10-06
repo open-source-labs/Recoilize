@@ -90,8 +90,8 @@ const App: React.FC = () => {
       // array of snapshots
       snapshotHistory={snapshotHistory}
 
-      // selected will be an array with objects containing filteredSnapshot key names.
-      // ex: [{name: 'type'}, {name: 'contents'}, {name: 'nodeDeps'}, {name: 'nodeToNodeSubscriptions'}]
+      // selected will be an array with objects containing filteredSnapshot key names (the atoms and selectors)
+      // ex: [{name: 'Atom1'}, {name: 'Atom2'}, {name: 'Selector1'}, ...]
       selected={selected}
       setSelected={setSelected}
 
