@@ -12,7 +12,7 @@ interface SnapshotsContainerProps {
   setRenderIndex: React.Dispatch<React.SetStateAction<number>>;
   selected: selectedTypes[];
   filter: stateSnapshotDiff[];
-  currentSnapshot: stateSnapshot;
+  snapshotHistory: stateSnapshot[];
 }
 
 const SnapshotsContainer: React.FC<SnapshotsContainerProps> = ({
@@ -21,7 +21,7 @@ const SnapshotsContainer: React.FC<SnapshotsContainerProps> = ({
   setRenderIndex,
   selected,
   filter,
-  currentSnapshot,
+  snapshotHistory,
 }) => {
   //indexDiff is used to ensure the index of filter matches the index of the snapshots array in the backend
   let indexDiff: number = 0;
@@ -59,7 +59,7 @@ const SnapshotsContainer: React.FC<SnapshotsContainerProps> = ({
         timeTravelFunc={timeTravelFunc}
         selected={selected}
         filter={filter}
-        currentSnapshot={currentSnapshot}
+        snapshotHistory={snapshotHistory}
       />
     </div>
   );

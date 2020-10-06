@@ -22,6 +22,9 @@ const MainContainer: React.FC<MainContainerProps> = ({
   const [renderIndex, setRenderIndex] = useState<number>(
     snapshotHistory.length - 1,
   );
+  // Will snapshot History ever be a length of 0?
+  console.log('renderIndex in MainContainer: ', renderIndex);
+  console.log('snapshotHistory in MainContainer: ',snapshotHistory)
 
   // Todo: usestate hook to update an array with all of the delta snapshots
 
@@ -43,7 +46,7 @@ const MainContainer: React.FC<MainContainerProps> = ({
         // ! passing through selected
         selected={selected}
         filter={filter}
-        currentSnapshot={snapshotHistory[renderIndex]}
+        snapshotHistory={snapshotHistory}
       />
       <VisualContainer
         // snapshot at index [renderIndex -1]
