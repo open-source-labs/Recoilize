@@ -1,7 +1,6 @@
 import React from 'react';
 import SnapshotsList from '../components/SnapshotList/SnapshotList';
 import {stateSnapshot, selectedTypes} from '../../types';
-import { number } from 'prop-types';
 
 interface SnapshotsContainerProps {
   // index of current snapshot rendered in devtool
