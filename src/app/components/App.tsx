@@ -81,8 +81,6 @@ const App: React.FC = () => {
             setFilter(filter);
           }
         }
-        // Console log to inspect filter. Remove <code>
-        console.log('filter from App: ', filter)
       }
     });
   }, []);
