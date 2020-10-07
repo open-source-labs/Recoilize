@@ -7,7 +7,7 @@ interface VisualizerProps {
   componentAtomTree: componentAtomTree;
 }
 
-const Visualizer: React.FC<VisualizerProps> = ({componentAtomTree}) => {
+const Visualizer: any = async ({componentAtomTree}: any) => {
   // set the heights and width of the tree to be passed into treeMap function
   let width = 0;
   let height = 0;
@@ -16,7 +16,8 @@ const Visualizer: React.FC<VisualizerProps> = ({componentAtomTree}) => {
   const [{x, y, k}, setZoomState]: any = useState({x: 0, y: 0, k: 0});
 
   // data for bar graph render
-  const [data, setData] = useState([25, 160, 50, 80, 100, 65, 75, 100]);
+  // const [data, setData] = useState([25, 160, 50, 80, 100, 65, 75, 100]);
+  const data = [{name:"E",value:0.12702},{name:"T",value:0.09056}]
 
   useEffect(() => {
     setZoomState(d3.zoomTransform(d3.select('#canvas').node()));
@@ -24,53 +25,113 @@ const Visualizer: React.FC<VisualizerProps> = ({componentAtomTree}) => {
 
   // this only clears the canvas if Visualizer is already rendered on the extension
   useEffect(() => {
-    height = document.querySelector('.Visualizer').clientHeight;
-    width = document.querySelector('.Visualizer').clientWidth;
+    // height = document.querySelector('.Visualizer').clientHeight;
+    // width = document.querySelector('.Visualizer').clientWidth;
     // document.getElementById('canvas').innerHTML = '';
-
     // testing bar graph horizontal
+    const margin = ({top: 30, right: 0, bottom: 10, left: 30})
+    const barHeight = 25
+    height = Math.ceil((data.length + 0.1) * barHeight) + margin.top + margin.bottom
     
+    const x = d3.scaleLinear()
+    .domain([0, d3.max(data, (d:any) => d.value)])
+    .range([margin.left, width - margin.right])
+    
+    const y = d3.scaleBand()
+    .domain(d3.range(data.length))
+    .rangeRound([margin.top, height - margin.bottom])
+    .padding(0.1)
+    
+    const format = x.tickFormat(20, data)
+
+    const xAxis = (g:any) => g
+    .attr("transform", `translate(0,${margin.top})`)
+    .call(d3.axisTop(x).ticks(width / 80, data))
+    .call((g: any) => g.select(".domain").remove())
+
+    const yAxis = (g:any) => g
+    .attr("transform", `translate(${margin.left},0)`)
+    .call(d3.axisLeft(y).tickFormat((i:any) => data[i].name).tickSizeOuter(0))
+
+    const svg = d3.create("svg")
+    .attr("viewBox", [0, 0, width, height]);
+
+    svg.append("g")
+        .attr("fill", "steelblue")
+      .selectAll("rect")
+      .data(data)
+      .join("rect")
+        .attr("x", x(0))
+        .attr("y", (d: any, i: any) => y(i))
+        .attr("width", (d: any) => x(d.value) - x(0))
+        .attr("height", y.bandwidth());
+
+    svg.append("g")
+        .attr("fill", "white")
+        .attr("text-anchor", "end")
+        .attr("font-family", "sans-serif")
+        .attr("font-size", 12)
+      .selectAll("text")
+      .data(data)
+      .join("text")
+        .attr("x", (d: any) => x(d.value))
+        .attr("y", (d: any, i: any) => y(i) + y.bandwidth() / 2)
+        .attr("dy", "0.35em")
+        .attr("dx", -4)
+        .text((d: any) => format(d.value))
+      .call((text: any) => text.filter((d: any) => x(d.value) - x(0) < 20) // short bars
+        .attr("dx", +4)
+        .attr("fill", "black")
+        .attr("text-anchor", "start"));
+
+    svg.append("g")
+        .call(xAxis);
+
+    svg.append("g")
+        .call(yAxis);
+    
+    return svg.node();     
 
     // testing bar graph vertical
-    const margin = {top: 20, left: 50}
+    // const margin = {top: 20, left: 50}
 
-    const svg = d3.select('#canvas');
-    const xScale = d3.scaleBand()
-      .domain(data.map((value, index) => index))
-      .range([0, 300])
-      .padding(0.2);
+    // const svg = d3.select('#canvas');
+    // const xScale = d3.scaleBand()
+    //   .domain(data.map((value, index) => index))
+    //   .range([0, 300])
+    //   .padding(0.2);
 
-    const yScale = d3.scaleLinear()
-      .domain([0, 150])
-      .range([150, 0]);
+    // const yScale = d3.scaleLinear()
+    //   .domain([0, 150])
+    //   .range([150, 0]);
 
-    // x-axis label
-    const xAxis = d3.axisBottom(xScale).ticks(data.length);
-    svg
-      .select('.x-axis')
-      .attr('transform', `translate(${margin.left},${margin.top})`)
-      .style('transform', 'translateY(150px)')
-      .call(xAxis);
-    // y-axis label
-    const yAxis = d3.axisRight(yScale);
-    svg
-      .select('.y-axis')
-      .attr('transform', `translate(${margin.left},${margin.top})`)
-      .style('transform', 'translateX(0px)')
-      .call(yAxis);
-    // create the bars for the graph
-    svg
-      .selectAll('.bar')
-      .data(data)
-      .join('rect')
-      .attr('class', 'bar')
-      .style('transform', 'scale(1, -1)')
-      .attr('x', (value: any, index:any) => xScale(index))
-      .attr('y', -150)
-      .attr('width', xScale.bandwidth())
-      .transition()
-      .attr('fill', '#4682b4')
-      .attr('height', (value: any) => 150 - yScale(value));
+    // // x-axis label
+    // const xAxis = d3.axisBottom(xScale).ticks(data.length);
+    // svg
+    //   .select('.x-axis')
+    //   .attr('transform', `translate(${margin.left},${margin.top})`)
+    //   .style('transform', 'translateY(150px)')
+    //   .call(xAxis);
+    // // y-axis label
+    // const yAxis = d3.axisRight(yScale);
+    // svg
+    //   .select('.y-axis')
+    //   .attr('transform', `translate(${margin.left},${margin.top})`)
+    //   .style('transform', 'translateX(0px)')
+    //   .call(yAxis);
+    // // create the bars for the graph
+    // svg
+    //   .selectAll('.bar')
+    //   .data(data)
+    //   .join('rect')
+    //   .attr('class', 'bar')
+    //   .style('transform', 'scale(1, -1)')
+    //   .attr('x', (value: any, index:any) => xScale(index))
+    //   .attr('y', -150)
+    //   .attr('width', xScale.bandwidth())
+    //   .transition()
+    //   .attr('fill', '#4682b4')
+    //   .attr('height', (value: any) => 150 - yScale(value));
 
     const namesAndDurations = (node: any) => {
       // const tagCheck = 0 | 1 | 13;
@@ -235,16 +296,16 @@ const Visualizer: React.FC<VisualizerProps> = ({componentAtomTree}) => {
     // function zoomed(): any {
     //   g.attr('transform', d3.event.transform);
     // }
-  },[data]);
+  });
   
   return (
     <div data-testid='canvas' id='stateGraphContainer'>
       <div className='Visualizer'>
-        {/* <svg id='canvas'></svg> */}
-        <svg id='canvas' className='metrics'>
+        <svg id='canvas'></svg>
+        {/* <svg id='canvas' className='metrics'>
         <g className='x-axis' />
-        <g className='y-axis' />
-      </svg>
+        <g className='y-axis' /> */}
+      {/* </svg> */}
       </div>
     </div>
   );
