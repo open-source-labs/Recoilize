@@ -1,6 +1,7 @@
 import React from 'react';
 import SnapshotsList from '../components/SnapshotList/SnapshotList';
-import {stateSnapshot, selectedTypes} from '../../types';
+
+import {stateSnapshot, selectedTypes, stateSnapshotDiff} from '../../types';
 
 interface SnapshotsContainerProps {
   // index of current snapshot rendered in devtool
@@ -10,8 +11,8 @@ interface SnapshotsContainerProps {
   // setState functionality to update curRender
   setRenderIndex: React.Dispatch<React.SetStateAction<number>>;
   selected: selectedTypes[];
-  filter: stateSnapshot[];
-  currentSnapshot: stateSnapshot;
+  filter: stateSnapshotDiff[];
+  snapshotHistory: stateSnapshot[];
 }
 
 const SnapshotsContainer: React.FC<SnapshotsContainerProps> = ({
@@ -20,7 +21,7 @@ const SnapshotsContainer: React.FC<SnapshotsContainerProps> = ({
   setRenderIndex,
   selected,
   filter,
-  currentSnapshot,
+  snapshotHistory,
 }) => {
   //indexDiff is used to ensure the index of filter matches the index of the snapshots array in the backend
   let indexDiff: number = 0;
@@ -58,7 +59,7 @@ const SnapshotsContainer: React.FC<SnapshotsContainerProps> = ({
         timeTravelFunc={timeTravelFunc}
         selected={selected}
         filter={filter}
-        currentSnapshot={currentSnapshot}
+        snapshotHistory={snapshotHistory}
       />
     </div>
   );

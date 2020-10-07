@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import MainContainer from '../Containers/MainContainer';
-import {stateSnapshot, selectedTypes} from '../../types';
+import {stateSnapshot, selectedTypes, stateSnapshotDiff} from '../../types';
 // importing the diff to find difference
 import {diff} from 'jsondiffpatch';
 const LOGO_URL = './assets/Recoilize.png';
@@ -11,7 +11,7 @@ const App: React.FC = () => {
   const [selected, setSelected] = useState<selectedTypes[]>([]);
 
   // todo: Create algo that will clean up the big setsnapshothistory object, now and before
-  let [filter, setFilter] = useState([]);
+  let [filter, setFilter] = useState<stateSnapshotDiff[]>([]);
   // ! Setting up the selected
   useEffect(() => {
     let last;

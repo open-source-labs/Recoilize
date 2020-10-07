@@ -5,10 +5,21 @@ export type stateSnapshot = {
   indexDiff?: number;
 };
 
+// used for the filter state hook
+export type stateSnapshotDiff = {
+  filteredSnapshot?: filteredSnapshotDiff;
+  componentAtomTree?: componentAtomTreeDiff;
+  indexDiff?: number;
+}
+
 export type filteredSnapshot = {
   // key of atom name with the value of an atom
   [atomName: string]: node;
 };
+
+export type filteredSnapshotDiff = {
+  [atomName: string]: nodeDiff;
+}
 
 // object of either atom or selector
 export type node = {
@@ -22,6 +33,13 @@ export type node = {
   nodeToNodeSubscription: string[];
 };
 
+export type nodeDiff = {
+  string?: string | string[];
+  contents?: any;
+  nodeDeps?: string[] | string[][];
+  nodeToNodeSubscription?: string[] | string [][];
+}
+
 export type componentAtomTree = {
   children: object[];
   name: string;
@@ -29,6 +47,14 @@ export type componentAtomTree = {
   recoilNodes: string[];
   actualDuration: number;
 };
+
+export type componentAtomTreeDiff = {
+  children: object[] | object[][];
+  name: string | string[];
+  tag: number | number[];
+  recoilNodes: string[] | string[][];
+  actualDuration: number | number [];
+}
 
 //////////////////////////
 // TODO BE BETTER TYPED //
