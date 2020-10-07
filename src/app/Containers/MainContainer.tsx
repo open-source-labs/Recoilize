@@ -1,14 +1,14 @@
 import React, {useState, useEffect} from 'react';
 import SnapshotsContainer from './SnapshotContainer';
 import VisualContainer from './VisualContainer';
-import {stateSnapshot, selectedTypes} from '../../types';
+import {stateSnapshot, selectedTypes, stateSnapshotDiff} from '../../types';
 
 interface MainContainerProps {
   // snapshotHistory is an array of stateSnapshots
   snapshotHistory: stateSnapshot[];
   selected: selectedTypes[];
   setSelected: React.Dispatch<React.SetStateAction<selectedTypes[]>>;
-  filter: stateSnapshot[];
+  filter: stateSnapshotDiff[];
 }
 
 // wraps entire application
