@@ -415,6 +415,7 @@ body {
 .dropdown {
   position: relative;
   display: inline-block;
+  color: white;
 }
 
 /* Dropdown Content (Hidden by Default) */
