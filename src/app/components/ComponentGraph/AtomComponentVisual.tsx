@@ -83,6 +83,9 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
     componentAtomTree,
   );
 
+  const rawJson = JSON.stringify(rawComponentAtomTree);
+  console.log('rawComponentAtomTree', rawJson);
+
   useEffect(() => {
     height = document.querySelector('.Component').clientHeight;
     width = document.querySelector('.Component').clientWidth;

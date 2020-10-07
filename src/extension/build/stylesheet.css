@@ -514,3 +514,12 @@ input:checked + .slider:before {
 /* Doesn't really do anything because other elements stack on top of it,
  * but scrollbar is broken without it
  */
+
+ /* Code added for verticle icicle graph */
+
+ .path {
+  will-change: d;
+}
+.path:hover {
+  cursor: pointer;
+}
