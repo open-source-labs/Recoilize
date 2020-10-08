@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { ReactElement, useState } from 'react';
 import { hierarchy } from 'd3-hierarchy';
 import { ParentSize } from '@vx/responsive';
 import {componentAtomTree} from '../../../types';
 import IcicleVertical from './IcicleVertical';
+import Visualizer from './Visualizer';
 
 interface MetricsProps {
   componentAtomTree: componentAtomTree;
@@ -68,8 +69,44 @@ const cleanComponentAtomTree = (
 };
 
 
+
+
+
 const Metrics: React.FC<MetricsProps> = ({componentAtomTree}) => {
+  //create state for the graph type toggle
+  const [graphType, setGraphType] = useState<boolean>(true);
+
   const cleanedTree: any = cleanComponentAtomTree(componentAtomTree);
+
+  const toggleGraphFunc = (): void => {
+    graphType ? setGraphType(false) : setGraphType(true);
+  };
+
+
+  let sum = (x: number, y: number): number => {
+    return x + y;
+  }
+
+  const determineRender: any = () => {
+    if(graphType){
+      return(
+        <ParentSize>
+          {size =>
+            size.ref &&
+            <IcicleVertical root={root} width={size.width} height={600} />
+          }
+        </ParentSize>
+      );
+    }
+    else{
+      return(
+        //return the bar graph component
+        <Visualizer componentAtomTree={componentAtomTree}/>
+      );
+    }
+  }
+
+  const graph: any = determineRender();
 
   const root: any = hierarchy(cleanedTree)
   .eachBefore(
@@ -80,12 +117,19 @@ const Metrics: React.FC<MetricsProps> = ({componentAtomTree}) => {
 
   return (
     <div>
-      <ParentSize>
-        {size =>
-          size.ref &&
-          <IcicleVertical root={root} width={size.width} height={600} />
-        }
-      </ParentSize>
+      <div className="persistContainer">
+        <label className="switch" htmlFor="checkbox">
+          <input
+            data-testid="stateSettingsToggle"
+            id="checkbox"
+            type="checkbox"
+            checked={graphType}
+            onChange={toggleGraphFunc}></input>
+          <div className="slider round" />{' '}
+        </label>
+        <span className="persistText">Slide to Toggle Graph Type</span>
+      </div>
+      {graph}
     </div>
   );
 }
