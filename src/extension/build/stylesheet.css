@@ -132,10 +132,6 @@ body {
   height: 100%;
   width: 100%;
 }
-.bar { 
-  fill: #9580ff; 
-}
-
 /* NAVBAR COMPONENT */
 .NavBar {
   width: 100%;
@@ -200,11 +196,28 @@ body {
 #canvas {
   height: 100%;
   width: 100%;
+  overflow: hidden;
 }
-
 #stateGraphContainer {
   height: calc(100% - 33px); /* 33px is height of navbar */
   width: 100%;
+}
+.bar { 
+  fill: #9580ff; 
+}
+.svg-container {
+  display: inline-block;
+  position: relative;
+  width: 100%;
+  padding-bottom: 50%; /* aspect ratio */
+  vertical-align: top;
+  overflow: hidden;
+}
+.svg-content-responsive {
+  display: inline-block;
+  position: absolute;
+  top: 10px;
+  left: 0;
 }
 
 /* NETWORK COMPONENT */
