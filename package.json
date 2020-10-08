@@ -74,7 +74,7 @@
     "react-multi-select-component": "^3.0.1",
     "react-router-dom": "^5.2.0",
     "react-testing-library": "^8.0.1",
-    "react-spring": "8.0.27",
+    "react-spring": "v9.0.0-beta.34",
     "rxjs": "^6.6.2",
     "semantic-ui-react": "^1.1.1",
     "@vx/group": "0.0.196",

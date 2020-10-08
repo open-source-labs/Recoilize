@@ -7,6 +7,16 @@ import { Group } from '@vx/group';
 import { Partition } from '@vx/hierarchy';
 import { useSpring, animated } from 'react-spring';
 
+interface IcicleProps {
+  root: any;
+  width: number;
+  height: number;
+}
+
+interface OnFrameParam {
+  t: any;
+}
+
 // const color = scaleOrdinal().range([
 //   "#FE938C",
 //   "#E6B89C",
@@ -17,19 +27,18 @@ import { useSpring, animated } from 'react-spring';
 // const color = scaleOrdinal(schemeCategory20c);
 const format = d3format(',d');
 
-function IcicleVertical(props) {
+const IcicleVertical: React.FC<IcicleProps> = (props) => {
   const {
     root,
     width,
     height,
-    margin = { top: 0, left: 0, right: 0, bottom: 0 }
   } = props;
+
+  const margin: any = { top: 0, left: 0, right: 0, bottom: 0 }
 
   const color = scaleOrdinal(
     quantize(interpolateRainbow, root.children.length + 1)
   );
-
-  console.log({ root });
 
   const [state, setState] = useState({
     xDomain: [0, props.width],
@@ -37,8 +46,6 @@ function IcicleVertical(props) {
     yDomain: [0, props.height],
     yRange: [0, props.height]
   });
-
-  // console.log({ props });
 
   const xScale = useRef(
     scaleLinear()
@@ -83,9 +90,9 @@ function IcicleVertical(props) {
       friction: 100,
       precision: 0.00001
     },
-    onFrame: ({ t }) => {
-      xScale.current.domain(xd(t));
-      yScale.current.domain(yd(t)).range(yr(t));
+    onFrame: (Param: OnFrameParam) => {
+      xScale.current.domain(xd(Param.t));
+      yScale.current.domain(yd(Param.t)).range(yr(Param.t));
     }
   });
 
@@ -101,7 +108,7 @@ function IcicleVertical(props) {
       >
         {data => (
           <Group>
-            {data.descendants().map((node, i) => (
+            {data.descendants().map((node: any, i) => (
               <animated.g
                 // top={yScale.current(node.y0)}
                 // left={xScale.current(node.x0)}
@@ -114,8 +121,6 @@ function IcicleVertical(props) {
                 )}
                 key={`node-${i}`}
                 onClick={() => {
-                  console.log({ node });
-
                   if (
                     node.y0 === state.xDomain[0] &&
                     node.x0 === state.yDomain[0] &&

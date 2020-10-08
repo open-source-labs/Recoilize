@@ -79,12 +79,10 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
     return obj;
   };
 
+  //cleaning the component tree to only contain the react components
   const rawComponentAtomTree: componentAtomTree = cleanComponentAtomTree(
     componentAtomTree,
   );
-
-  const rawJson = JSON.stringify(rawComponentAtomTree);
-  console.log('rawComponentAtomTree', rawJson);
 
   useEffect(() => {
     height = document.querySelector('.Component').clientHeight;
