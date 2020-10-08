@@ -99,7 +99,7 @@ const SnapshotsList: React.FC<SnapshotsListProps> = ({
           style={
           renderIndex === i
             ? {color: '#E6E6E6', backgroundColor: '#212121'}
-            : {color: '#989898'}
+            : {}
           }
           onClick={() => {
             timeTravelFunc(i);
