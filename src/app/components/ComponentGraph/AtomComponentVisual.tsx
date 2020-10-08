@@ -190,7 +190,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
               .style('fill', 'white')
               .attr('x', formatMouseoverXValue(d.data.recoilNodes[x]))
               // How far the text is below the node
-              .attr('y', 225)
+              .attr('y', -150)
               .style('font-size', '3.5rem')
               .attr('id', `x`);
           }
@@ -332,9 +332,9 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
 
       function formatMouseoverXValue(recoilValue: string): number {
         if (atoms.hasOwnProperty(recoilValue)) {
-          return -300;
+          return -30;
         }
-        return -425;
+        return -150;
       }
 
       function formatAtomSelectorText(atomOrSelector: string[]): string[] {
@@ -342,13 +342,13 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
         for (let i = 0; i < atomOrSelector.length; i++) {
           if (atoms.hasOwnProperty(atomOrSelector[i])) {
             strings.push(
-              `ATOM ${atomOrSelector[i]}: ${JSON.stringify(
+              ` ATOM ${atomOrSelector[i]}: ${JSON.stringify(
                 atoms[atomOrSelector[i]],
               )}`,
             );
           } else if (selectors.hasOwnProperty(atomOrSelector[i])) {
             strings.push(
-              `SELECTOR ${atomOrSelector[i]}: ${JSON.stringify(
+              ` SELECTOR ${atomOrSelector[i]}: ${JSON.stringify(
                 selectors[atomOrSelector[i]],
               )}`,
             );
