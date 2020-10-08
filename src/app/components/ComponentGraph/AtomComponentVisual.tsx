@@ -40,7 +40,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
     let counter = 0;
     const innerClean = (inputObj: any, outputObj: any, counter: number = 0) => {
       if (
-        (inputObj.tag === 0 || inputObj.tag === 13) &&
+        (inputObj.tag === 0) &&
         inputObj.name !== 'RecoilRoot' &&
         inputObj.name !== 'Batcher' &&
         inputObj.name !== 'RecoilizeDebugger' &&
@@ -81,7 +81,8 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
   };
 
   const rawComponentAtomTree: componentAtomTree = cleanComponentAtomTree(componentAtomTree);
-
+  console.log('componentAtomTree prior to cleanup',componentAtomTree);
+  console.log('componentAtomTree after cleanup: ', rawComponentAtomTree);
   useEffect(() => {
     height = document.querySelector('.Component').clientHeight;
     width = document.querySelector('.Component').clientWidth;
@@ -205,7 +206,9 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
         .append('circle')
         .attr('class', 'node')
         .attr('r', determineSize)
-        .attr('fill', colorComponents);
+        .attr('fill', colorComponents)
+        .style('stroke', borderColor)
+        .style('stroke-width', 15);
       // TO DO: Add attribute for border if it is a suspense component
 
       // for each node that got created, append a text element that displays the name of the node
@@ -235,7 +238,9 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
         .select('circle.node')
         .attr('r', determineSize)
         .attr('fill', colorComponents)
-        .attr('cursor', 'pointer');
+        .attr('cursor', 'pointer')
+        .style('stroke', borderColor)
+        .style('stroke-width', 15);
 
       let nodeExit = node
         .exit()
@@ -365,14 +370,19 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
         return 50;
       }
 
+      function borderColor(d:any): string {
+        return d.data.wasSuspended ? '#FF0000' : 'none';
+      }
+
       function colorComponents(d: any): string {
         // if component node contains recoil atoms or selectors, make it orange red or yellow, otherwise keep node gray
+      
         if (d.data.recoilNodes && d.data.recoilNodes.length) {
+    
           if (d.data.recoilNodes.includes(selectedRecoilValue[0])) {
             // Color of atom or selector when clicked on in legend
             return 'yellow';
           }
-          if(d.data.tag === 13) return 'red';
 
           let hasAtom = false;
           let hasSelector = false;

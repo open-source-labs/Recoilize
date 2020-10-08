@@ -8,6 +8,7 @@ type node = {
   child: any;
   sibling: any;
   actualDuration: number;
+  return: any;
 };
 
 type formattedNode = {
@@ -17,6 +18,7 @@ type formattedNode = {
   recoilNodes: any[];
   // adding in render time for fiber node
   actualDuration: number;
+  wasSuspended: boolean;
 };
 
 const formatFiberNodes = (node: node) => {
@@ -27,6 +29,7 @@ const formatFiberNodes = (node: node) => {
     tag: node.tag,
     children: [],
     recoilNodes: createAtomsSelectorArray(node),
+    wasSuspended: (node.return && node.return.tag === 13) ? true : false,
   };
 
   // loop through and recursively call all nodes to format their 'sibling' and 'child' properties to our desired tree shape
