@@ -387,8 +387,10 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
             return 'springgreen';
           }
           if (hasAtom) {
+            //purple
             return '#9580ff';
           } else {
+            //pink
             return '#ff80bf';
           }
         }
