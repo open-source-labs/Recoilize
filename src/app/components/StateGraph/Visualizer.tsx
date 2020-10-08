@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import * as d3 from 'd3';
 import {componentAtomTree} from '../../../types';
 
@@ -61,9 +61,6 @@ const Visualizer: React.FC<VisualizerProps> = ({componentAtomTree}: any) => {
   const namesAndDurations = (node: any) => {
     // const tagCheck = 0 | 1 | 13;
     if(node.tag === 0 || node.tag === 1 || node.tag === 13){
-      if(node.name) {
-        console.log('Name:', node.name +' , '+ 'Actual Duration:', node.actualDuration)
-      }
       if (node.name && node.actualDuration) {
         const obj: any = {}
         obj["name"] = node.name;
@@ -74,10 +71,10 @@ const Visualizer: React.FC<VisualizerProps> = ({componentAtomTree}: any) => {
     node.children.forEach((child: any) => namesAndDurations(child))
   }
   namesAndDurations(rawComponentAtomTree);
-  console.log(dataArray);
 
-  const [data, setData] = useState(dataArray);
+  const data = dataArray;
 
+  const svgRef = useRef();
   useEffect(() => {
     document.getElementById('canvas').innerHTML = '';
     // set the dimensions and margins of the graph
@@ -94,7 +91,7 @@ const Visualizer: React.FC<VisualizerProps> = ({componentAtomTree}: any) => {
     // append the svg object to the body of the page
     // append a 'group' element to 'svg'
     // moves the 'group' element to the top left margin
-    const svg = d3.select("#canvas").append("svg")
+    const svg = d3.select(svgRef.current)
       .attr("width", width + margin.left + margin.right)
       .attr("height", height + margin.top + margin.bottom)
       .append("g")
@@ -125,7 +122,7 @@ const Visualizer: React.FC<VisualizerProps> = ({componentAtomTree}: any) => {
   return (
     <div data-testid='canvas' id='stateGraphContainer'>
       <div className='Visualizer'>
-        <svg id='canvas'></svg>
+        <svg id='canvas' ref={svgRef}></svg>
       </div>
     </div>
   );
