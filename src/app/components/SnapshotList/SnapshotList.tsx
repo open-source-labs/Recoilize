@@ -12,7 +12,7 @@ interface SnapshotsListProps {
   timeTravelFunc: (index: number) => void;
   selected: selectedTypes[];
   filter: any[];
-  currentSnapshot: stateSnapshot;
+  snapshotHistory: stateSnapshot[];
 }
 
 const SnapshotsList: React.FC<SnapshotsListProps> = ({
@@ -22,7 +22,7 @@ const SnapshotsList: React.FC<SnapshotsListProps> = ({
   timeTravelFunc,
   selected,
   filter,
-  currentSnapshot,
+  snapshotHistory,
 }) => {
   // useRef for a dummy div at the bottom of the scroll
   const snapshotEndRef = useRef<HTMLDivElement>(null);
@@ -65,16 +65,17 @@ const SnapshotsList: React.FC<SnapshotsListProps> = ({
     if (x === false) {
       continue;
     }
-
+    
+    // renderTime is set equal to the actualDuration. If i is zero then we are obtaining actualDuration from the very first snapshot in snapshotHistory. This is to avoid having undefined filter elements since there will be no difference between snapshot at the first instance. 
     let renderTime: number;
-    //Checks to see if the actualDuration within filter is an array. If it is an array then the 2nd value in the array is the new actualDuration.
     if(i === 0) {
-      renderTime = currentSnapshot.componentAtomTree.actualDuration;
+      renderTime = snapshotHistory[0].componentAtomTree.treeBaseDuration;
     } 
+    //Checks to see if the actualDuration within filter is an array. If it is an array then the 2nd value in the array is the new actualDuration.
     else if (Array.isArray(filter[i].componentAtomTree.actualDuration)) {
-      renderTime = filter[i].componentAtomTree.actualDuration[1];
+      renderTime = filter[i].componentAtomTree.treeBaseDuration[1];
     } else {
-      renderTime = filter[i].componentAtomTree.actualDuration;
+      renderTime = filter[i].componentAtomTree.treeBaseDuration;
     }
 
     // Push a div container to snapshotDivs array only if there was a change to state. 
@@ -95,6 +96,11 @@ const SnapshotsList: React.FC<SnapshotsListProps> = ({
         <li>{`${Math.round(renderTime*100)/100}ms`}</li>
         <button
           className="timeTravelButton"
+          style={
+          renderIndex === i
+            ? {color: '#E6E6E6', backgroundColor: '#212121'}
+            : {}
+          }
           onClick={() => {
             timeTravelFunc(i);
           }}>

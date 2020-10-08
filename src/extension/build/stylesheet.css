@@ -94,18 +94,21 @@ body {
   background-color: #212121;
 }
 
+.individualSnapshot .timeTravelButton:hover{
+  color: #e6e6e6;
+  border: 1px solid white;
+  background-color: #212121;
+  text-emphasis: bold;
+}
+
 .timeTravelButton {
-  border: #989898;
-  border-radius: 15px;
+  border: 1px solid #989898;
+  border-radius: 5px;
   color: #989898;
   background: none;
   outline: none;
 }
-.timeTravelButton:hover {
-  color: #e6e6e6;
-  background-color: #212121;
-  text-emphasis: bold;
-}
+
 .timeTravelButton:focus {
   color: #e6e6e6;
   background-color: #212121;
@@ -129,7 +132,6 @@ body {
   height: 100%;
   width: 100%;
 }
-
 /* NAVBAR COMPONENT */
 .NavBar {
   width: 100%;
@@ -194,11 +196,28 @@ body {
 #canvas {
   height: 100%;
   width: 100%;
+  overflow: hidden;
 }
-
 #stateGraphContainer {
   height: calc(100% - 33px); /* 33px is height of navbar */
   width: 100%;
+}
+.bar { 
+  fill: #9580ff; 
+}
+.svg-container {
+  display: inline-block;
+  position: relative;
+  width: 100%;
+  padding-bottom: 50%; /* aspect ratio */
+  vertical-align: top;
+  overflow: hidden;
+}
+.svg-content-responsive {
+  display: inline-block;
+  position: absolute;
+  top: 10px;
+  left: 0;
 }
 
 /* NETWORK COMPONENT */
@@ -516,3 +535,12 @@ input:checked + .slider:before {
 /* Doesn't really do anything because other elements stack on top of it,
  * but scrollbar is broken without it
  */
+
+ /* Code added for verticle icicle graph */
+
+ .path {
+  will-change: d;
+}
+.path:hover {
+  cursor: pointer;
+}
