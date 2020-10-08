@@ -40,12 +40,13 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
     let counter = 0;
     const innerClean = (inputObj: any, outputObj: any, counter: number = 0) => {
       if (
-        inputObj.tag === 0 &&
+        (inputObj.tag === 0 || inputObj.tag === 13) &&
         inputObj.name !== 'RecoilRoot' &&
         inputObj.name !== 'Batcher' &&
         inputObj.name !== 'RecoilizeDebugger' &&
         inputObj.name !== 'CssBaseline'
       ) {
+     
         // if the obj is empty, we do this
         if (Object.keys(obj).length === 0) {
           outputObj.children = [];
@@ -79,9 +80,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
     return obj;
   };
 
-  const rawComponentAtomTree: componentAtomTree = cleanComponentAtomTree(
-    componentAtomTree,
-  );
+  const rawComponentAtomTree: componentAtomTree = cleanComponentAtomTree(componentAtomTree);
 
   useEffect(() => {
     height = document.querySelector('.Component').clientHeight;
@@ -207,6 +206,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
         .attr('class', 'node')
         .attr('r', determineSize)
         .attr('fill', colorComponents);
+      // TO DO: Add attribute for border if it is a suspense component
 
       // for each node that got created, append a text element that displays the name of the node
       nodeEnter
@@ -372,6 +372,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
             // Color of atom or selector when clicked on in legend
             return 'yellow';
           }
+          if(d.data.tag === 13) return 'red';
 
           let hasAtom = false;
           let hasSelector = false;
