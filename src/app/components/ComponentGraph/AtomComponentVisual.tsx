@@ -81,8 +81,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
   };
 
   const rawComponentAtomTree: componentAtomTree = cleanComponentAtomTree(componentAtomTree);
-  console.log('componentAtomTree prior to cleanup',componentAtomTree);
-  console.log('componentAtomTree after cleanup: ', rawComponentAtomTree);
+
   useEffect(() => {
     height = document.querySelector('.Component').clientHeight;
     width = document.querySelector('.Component').clientWidth;
