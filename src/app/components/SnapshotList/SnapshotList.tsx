@@ -96,6 +96,11 @@ const SnapshotsList: React.FC<SnapshotsListProps> = ({
         <li>{`${Math.round(renderTime*100)/100}ms`}</li>
         <button
           className="timeTravelButton"
+          style={
+          renderIndex === i
+            ? {color: '#E6E6E6', backgroundColor: '#212121'}
+            : {color: '#989898'}
+          }
           onClick={() => {
             timeTravelFunc(i);
           }}>
