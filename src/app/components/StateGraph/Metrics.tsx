@@ -2,7 +2,7 @@ import React, { ReactElement, useState } from 'react';
 import { hierarchy } from 'd3-hierarchy';
 import { ParentSize } from '@vx/responsive';
 import {componentAtomTree} from '../../../types';
-import IcicleVertical from './IcicleVertical';
+import IcicleVertical from './IcicleVertical.js';
 import Visualizer from './Visualizer';
 
 interface MetricsProps {

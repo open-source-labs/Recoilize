@@ -56,6 +56,9 @@
     "@types/chrome": "0.0.117",
     "@types/react-html-parser": "^2.0.1",
     "@types/react-json-tree": "^0.6.11",
+    "@vx/group": "0.0.196",
+    "@vx/hierarchy": "0.0.196",
+    "@vx/responsive": "0.0.196",
     "babel-eslint": "^10.1.0",
     "d3": "^5.16.0",
     "d3-hierarchy": "1.1.9",
@@ -73,13 +76,10 @@
     "react-json-tree": "^0.11.2",
     "react-multi-select-component": "^3.0.1",
     "react-router-dom": "^5.2.0",
+    "react-spring": "^8.0.27",
     "react-testing-library": "^8.0.1",
-    "react-spring": "v9.0.0-beta.34",
     "rxjs": "^6.6.2",
-    "semantic-ui-react": "^1.1.1",
-    "@vx/group": "0.0.196",
-    "@vx/hierarchy": "0.0.196",
-    "@vx/responsive": "0.0.196"
+    "semantic-ui-react": "^1.1.1"
   },
   "engines": {
     "node": "^10.12.0 || >=12.0.0"
