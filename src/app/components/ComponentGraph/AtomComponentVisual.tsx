@@ -79,6 +79,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
     return obj;
   };
 
+  //cleaning the component tree to only contain the react components
   const rawComponentAtomTree: componentAtomTree = cleanComponentAtomTree(
     componentAtomTree,
   );

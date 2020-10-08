@@ -1,12 +1,13 @@
 import React, {useState} from 'react';
 import Diff from '../components/StateDiff/Diff';
 import NavBar from '../components/NavBar/NavBar';
-import Visualizer from '../components/StateGraph/Visualizer';
+import Metrics from '../components/StateGraph/Metrics';
 import Tree from '../components/StateTree/Tree';
 import Network from '../components/AtomNetwork/AtomNetwork';
 import AtomComponentVisualContainer from '../components/ComponentGraph/AtomComponentContainer';
 import Settings from '../components/Settings/SettingsContainer';
 import {stateSnapshot, selectedTypes} from '../../types';
+// import Metrics from "../components/StateGraph/metrics";
 
 interface VisualContainerProps {
   // snapshot at index [curRender -1]
@@ -59,6 +60,7 @@ const VisualContainer: React.FC<VisualContainerProps> = ({
   const componentAtomTree = currentSnapshot
     ? currentSnapshot.componentAtomTree
     : undefined;
+
   // object containing all conditional renders based on navBar
   const nav: navTypes = {
     // compare the diff of filteredPrevSnap and filteredCurSnap
@@ -86,7 +88,7 @@ const VisualContainer: React.FC<VisualContainerProps> = ({
     'Atom Network': <Network filteredCurSnap={filteredCurSnap} />,
 
     // individual snapshot visualizer
-    'Metrics': <Visualizer componentAtomTree={componentAtomTree} />,
+    'Metrics': <Metrics componentAtomTree={componentAtomTree} />,
 
     // settings tab that doesn't want to be in quotes because too cool for school
     Settings: (
