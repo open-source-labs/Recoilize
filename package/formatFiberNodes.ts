@@ -8,6 +8,7 @@ type node = {
   child: any;
   sibling: any;
   actualDuration: number;
+  treeBaseDuration: number;
   return: any;
 };
 
@@ -18,12 +19,14 @@ type formattedNode = {
   recoilNodes: any[];
   // adding in render time for fiber node
   actualDuration: number;
+  treeBaseDuration: number;
   wasSuspended: boolean;
 };
 
 const formatFiberNodes = (node: node) => {
   const formattedNode: formattedNode = {
     actualDuration: node.actualDuration,
+    treeBaseDuration: node.treeBaseDuration,
     // this function grabs a 'name' based on the tag of the node
     name: assignName(node),
     tag: node.tag,
