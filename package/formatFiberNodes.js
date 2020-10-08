@@ -9,6 +9,7 @@ const formatFiberNodes = node => {
     children: [],
     recoilNodes: createAtomsSelectorArray(node),
     actualDuration: node.actualDuration,
+    treeBaseDuration: node.treeBaseDuration,
     wasSuspended: (node.return && node.return.tag === 13) ? true : false,
   };
 
