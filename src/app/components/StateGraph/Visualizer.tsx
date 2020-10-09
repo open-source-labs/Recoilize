@@ -76,11 +76,13 @@ const Visualizer: React.FC<VisualizerProps> = ({componentAtomTree}: any) => {
 
   const svgRef = useRef();
   useEffect(() => {
+    const widthx = document.querySelector('.Visualizer').clientWidth;
+    // let heightx = document.querySelector('.Visualizer').clientHeight;
     document.getElementById('canvas').innerHTML = '';
     // set the dimensions and margins of the graph
     const margin = {top: 20, right: 20, bottom: 30, left: 80},
-        width = 500 - margin.left - margin.right,
-        height = 300 - margin.top - margin.bottom;
+        width = widthx - margin.left - margin.right,
+        height = 340 - margin.top - margin.bottom;
     // set range for y scale
     const y = d3.scaleBand()
       .range([height, 0])
@@ -92,13 +94,17 @@ const Visualizer: React.FC<VisualizerProps> = ({componentAtomTree}: any) => {
     // append a 'group' element to 'svg'
     // moves the 'group' element to the top left margin
     const svg = d3.select(svgRef.current)
-      .attr("width", width + margin.left + margin.right)
-      .attr("height", height + margin.top + margin.bottom)
+      .classed("svg-container", true)
+      .append('svg')
+      .attr('class', 'chart')
+      .attr("viewBox", "0 0 600 490")
+      .attr("preserveAspectRatio", "xMinYMin meet")
+      .classed("svg-content-responsive", true)
       .append("g")
       .attr("transform", 
             "translate(" + margin.left + "," + margin.top + ")");
     // Scale the range of the data in the domains
-    x.domain([0, d3.max(data, function(d: any){ return d.actualDuration; })])
+    x.domain([0, d3.max(data, function(d: any){ return d.actualDuration; }) + 0.2])
     // Scale the range of he data across the y-axis
     y.domain(data.map(function(d: any) { return d.name; }));
     // append the rectangles for the bar chart

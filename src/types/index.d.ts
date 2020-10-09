@@ -46,6 +46,7 @@ export type componentAtomTree = {
   tag: number;
   recoilNodes: string[];
   actualDuration: number;
+  treeBaseDuration: number;
   wasSuspended: boolean;
 };
 
@@ -55,6 +56,7 @@ export type componentAtomTreeDiff = {
   tag: number | number[];
   recoilNodes: string[] | string[][];
   actualDuration: number | number [];
+  treeBaseDuration: number | number[];
   wasSuspended: boolean | boolean [];
 }
 
