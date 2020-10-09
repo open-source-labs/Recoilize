@@ -82,8 +82,8 @@ const Metrics: React.FC<MetricsProps> = ({componentAtomTree}) => {
     return x + y;
   }
 
-  const toggleGraphFunc = (flame:boolean): void => {
-    flame ? setGraphType(false) : setGraphType(true);
+  const toggleGraphFunc = (ranked:boolean): void => {
+    ranked ? setGraphType(false) : setGraphType(true);
   };
 
   const determineRender: any = () => {
@@ -142,14 +142,14 @@ const Metrics: React.FC<MetricsProps> = ({componentAtomTree}) => {
         <button
           className="timeTravelButton"
           onClick={() => {
-            toggleGraphFunc(true);
+            toggleGraphFunc(false);
           }}>
           Flame Graph
         </button>
         <button
           className="timeTravelButton"
           onClick={() => {
-            toggleGraphFunc(false);
+            toggleGraphFunc(true);
           }}>
           Ranked Graph
         </button>
