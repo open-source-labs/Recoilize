@@ -88,14 +88,12 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
   useEffect(() => {
     height = document.querySelector('.Component').clientHeight;
     width = document.querySelector('.Component').clientWidth;
-    // Set the hasSuspense hook to false
-    // If there is a suspense component, this will be set to true in colorComponents function
-    // setHasSuspense(false);
+  
     document.getElementById('canvas').innerHTML = '';
 
     // reset hasSuspense to false. This will get updated to true if the red borders are rendered on the component graph.
     setHasSuspense(false);
-    
+
     // creating the main svg container for d3 elements
     const svgContainer = d3.select('#canvas');
 
