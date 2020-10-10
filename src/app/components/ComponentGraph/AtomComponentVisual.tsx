@@ -35,15 +35,17 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
   const [rawToggle, setRawToggle] = useState<boolean>(false);
 
   // useState hook to update whether a suspense component will be shown on the component graph
-  // const [hasSuspense, setHasSuspense] = useState<boolean>(false);
+  const [hasSuspense, setHasSuspense] = useState<boolean>(false);
+
 
   useEffect(() => {
     height = document.querySelector('.Component').clientHeight;
     width = document.querySelector('.Component').clientWidth;
-    // Set the hasSuspense hook to false
-    // If there is a suspense component, this will be set to true in colorComponents function
-    // setHasSuspense(false);
+  
     document.getElementById('canvas').innerHTML = '';
+
+    // reset hasSuspense to false. This will get updated to true if the red borders are rendered on the component graph.
+    setHasSuspense(false);
 
     // creating the main svg container for d3 elements
     const svgContainer = d3.select('#canvas');
@@ -327,7 +329,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
       }
 
       function borderColor(d:any): string {
-        
+        if(d.data.wasSuspended) setHasSuspense(true);
         return d.data.wasSuspended ? '#FF0000' : 'none';
       }
 
@@ -386,8 +388,8 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
         <p>SELECTOR</p>
         <div className="bothLegend"></div>
         <p>BOTH</p>
-        <div className="suspenseLegend"></div>
-        <p>SUSPENSE</p>
+        <div className={hasSuspense ? "suspenseLegend" : ''}></div>
+        <p>{hasSuspense?'SUSPENSE': ''}</p>
       </div>
     </div>
   );
