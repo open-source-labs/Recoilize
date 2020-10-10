@@ -32,6 +32,9 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
   // useState hook to update the toggle of showing diff components
   const [rawToggle, setRawToggle] = useState<boolean>(false);
 
+  // useState hook to update whether a suspense component will be shown on the component graph
+  // const [hasSuspense, setHasSuspense] = useState<boolean>(false);
+ 
   // Recursive function that will run through componentatomtree, filter out unecessary nodes, and create the new object appropriately
   const cleanComponentAtomTree = (
     inputObj: componentAtomTree,
@@ -85,7 +88,9 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
   useEffect(() => {
     height = document.querySelector('.Component').clientHeight;
     width = document.querySelector('.Component').clientWidth;
-
+    // Set the hasSuspense hook to false
+    // If there is a suspense component, this will be set to true in colorComponents function
+    // setHasSuspense(false);
     document.getElementById('canvas').innerHTML = '';
 
     // creating the main svg container for d3 elements
@@ -370,6 +375,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
       }
 
       function borderColor(d:any): string {
+        
         return d.data.wasSuspended ? '#FF0000' : 'none';
       }
 
@@ -405,6 +411,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
         return 'gray';
       }
     }
+
   }, [componentAtomTree, rawToggle, selectedRecoilValue]);
 
   return (
@@ -427,6 +434,8 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
         <p>SELECTOR</p>
         <div className="bothLegend"></div>
         <p>BOTH</p>
+        <div className="suspenseLegend"></div>
+        <p>SUSPENSE</p>
       </div>
     </div>
   );
