@@ -4,6 +4,7 @@ import {componentAtomTree, atom, selector} from '../../../types';
 
 interface AtomComponentVisualProps {
   componentAtomTree: componentAtomTree;
+  cleanedComponentAtomTree: componentAtomTree;
   selectedRecoilValue: string[];
   atoms: atom;
   selectors: selector;
@@ -16,6 +17,7 @@ interface AtomComponentVisualProps {
 
 const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
   componentAtomTree,
+  cleanedComponentAtomTree,
   selectedRecoilValue,
   atoms,
   selectors,
@@ -29,61 +31,11 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
   let width: number = 0;
   let height: number = 0;
 
-  // useState hook to update the toggle of showing diff components
+  // useState hook to update the toggle of displaying entire tree or cleaned tree
   const [rawToggle, setRawToggle] = useState<boolean>(false);
 
   // useState hook to update whether a suspense component will be shown on the component graph
   // const [hasSuspense, setHasSuspense] = useState<boolean>(false);
- 
-  // Recursive function that will run through componentatomtree, filter out unecessary nodes, and create the new object appropriately
-  const cleanComponentAtomTree = (
-    inputObj: componentAtomTree,
-  ): componentAtomTree => {
-    const obj = {} as componentAtomTree;
-    let counter = 0;
-    const innerClean = (inputObj: any, outputObj: any, counter: number = 0) => {
-      if (
-        (inputObj.tag === 0) &&
-        inputObj.name !== 'RecoilRoot' &&
-        inputObj.name !== 'Batcher' &&
-        inputObj.name !== 'RecoilizeDebugger' &&
-        inputObj.name !== 'CssBaseline'
-      ) {
-     
-        // if the obj is empty, we do this
-        if (Object.keys(obj).length === 0) {
-          outputObj.children = [];
-          outputObj.name = inputObj.name;
-          outputObj.recoilNodes = inputObj.recoilNodes;
-          outputObj.tag = inputObj.tag;
-          outputObj = outputObj.children;
-        }
-        // create another conditional
-        else {
-          const deepCopy: componentAtomTree = JSON.parse(
-            JSON.stringify(inputObj),
-          );
-          deepCopy.children = [];
-          outputObj.push(deepCopy);
-          if (outputObj.length > 1) {
-            outputObj = outputObj[outputObj.length - 1].children;
-          } else {
-            outputObj = outputObj[0].children;
-          }
-        }
-      }
-      // recursive call running through the whole component atom tree -- understand this better
-      for (let i = 0; i < inputObj.children.length; i++) {
-        innerClean(inputObj.children[i], outputObj, counter);
-      }
-      return outputObj;
-    };
-    innerClean(inputObj, obj, counter);
-    // returning the new object that we create
-    return obj;
-  };
-
-  const rawComponentAtomTree: componentAtomTree = cleanComponentAtomTree(componentAtomTree);
 
   useEffect(() => {
     height = document.querySelector('.Component').clientHeight;
@@ -111,7 +63,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
     const treeMap = d3.tree().nodeSize([height, width]);
 
     if (!rawToggle) {
-      root = d3.hierarchy(rawComponentAtomTree, function (
+      root = d3.hierarchy(cleanedComponentAtomTree, function (
         d: componentAtomTree,
       ) {
         return d.children;
