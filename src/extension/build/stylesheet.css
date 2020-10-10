@@ -351,6 +351,16 @@ body {
   margin: 0px;
 }
 
+.suspenseLegend {
+  display: inline-block;
+  background: transparent;
+  width: 20px;
+  height: 20px;
+  border: 3px solid red;
+  border-radius: 20px;
+  margin: 0px;
+}
+
 /* ATOMSELECTORLEGEND COMPONENT */
 .AtomSelectorLegend {
   background-color: rgba(45, 45, 45, 0.65);
