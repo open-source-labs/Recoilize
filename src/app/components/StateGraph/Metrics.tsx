@@ -78,14 +78,13 @@ const Metrics: React.FC<MetricsProps> = ({componentAtomTree}) => {
 
   const cleanedTree: any = cleanComponentAtomTree(componentAtomTree);
 
-  const toggleGraphFunc = (): void => {
-    graphType ? setGraphType(false) : setGraphType(true);
-  };
-
-
   let sum = (x: number, y: number): number => {
     return x + y;
   }
+
+  const toggleGraphFunc = (ranked:boolean): void => {
+    ranked ? setGraphType(false) : setGraphType(true);
+  };
 
   const determineRender: any = () => {
     if(graphType){
@@ -105,6 +104,18 @@ const Metrics: React.FC<MetricsProps> = ({componentAtomTree}) => {
       );
     }
   }
+  // const determineText: any = () => {
+  //   if(graphType){
+  //     return(
+  //       <div>"Displaying render times of components + children"</div>
+  //     );
+  //   }
+  //   else{
+  //     return(
+  //       <div>"Displaying render times of individual components"</div>
+  //     );
+  //   }
+  // }
 
   const graph: any = determineRender();
 
@@ -118,7 +129,7 @@ const Metrics: React.FC<MetricsProps> = ({componentAtomTree}) => {
   return (
     <div>
       <div className="persistContainer">
-        <label className="switch" htmlFor="checkbox">
+        {/* <label className="switch" htmlFor="checkbox">
           <input
             data-testid="stateSettingsToggle"
             id="checkbox"
@@ -127,9 +138,23 @@ const Metrics: React.FC<MetricsProps> = ({componentAtomTree}) => {
             onChange={toggleGraphFunc}></input>
           <div className="slider round" />{' '}
         </label>
-        <span className="persistText">Slide to Toggle Graph Type</span>
+        <span className="persistText">Toggle Graph Type</span> */}
+        <button
+          className="timeTravelButton"
+          onClick={() => {
+            toggleGraphFunc(false);
+          }}>
+          Flame Graph
+        </button>
+        <button
+          className="timeTravelButton"
+          onClick={() => {
+            toggleGraphFunc(true);
+          }}>
+          Ranked Graph
+        </button>
       </div>
-      {graph}
+      {determineRender()}
     </div>
   );
 }
