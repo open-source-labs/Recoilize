@@ -3,6 +3,7 @@ import { scaleLinear, scaleOrdinal } from 'd3-scale';
 import { interpolate as d3interpolate, quantize } from 'd3-interpolate';
 import { interpolateRainbow } from 'd3-scale-chromatic';
 import { format as d3format } from 'd3-format';
+import { hierarchy } from 'd3-hierarchy';
 import { Group } from '@vx/group';
 import { Partition } from '@vx/hierarchy';
 import { useSpring, animated } from 'react-spring';
@@ -19,11 +20,19 @@ import { useSpring, animated } from 'react-spring';
 const format = d3format('.2f');
 
 const IcicleVertical = (props) => {
+
   const {
-    root,
+    cleanedComponentAtomTree,
     width,
     height,
   } = props;
+
+  const root = hierarchy(cleanedComponentAtomTree)
+  .eachBefore(
+    d => (d.data.id = (d.parent ? d.parent.data.id + '.' : '') + d.data.name)
+  )
+  .sum(d => d.actualDuration)
+  .sort((a, b) => b.value - a.value);
 
   const margin = { top: 0, left: 0, right: 0, bottom: 0 }
 
@@ -48,23 +57,6 @@ const IcicleVertical = (props) => {
       .domain(state.yDomain)
       .range(state.yRange)
   );
-
-  // useEffect(() => {
-  //   setState(state => ({
-  //     ...state,
-  //     yRange: [state.yRange[0], props.width / 2]
-  //   }));
-  // }, [props.width]);
-
-  // useEffect(() => {
-  //   setState((state) => ({
-  //     ...state,
-  //     xDomain: [0, props.width],
-  //     xRange: [0, props.width],
-  //     yDomain: [0, props.height],
-  //     yRange: [0, props.height],
-  //   }));
-  // }, [props.width, props.height]);
 
   const xd = d3interpolate(xScale.current.domain(), state.xDomain);
   const yd = d3interpolate(yScale.current.domain(), state.yDomain);
