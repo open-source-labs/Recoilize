@@ -11,6 +11,7 @@ import {
 interface AtomComponentVisualContainerProps {
   filteredCurSnap: filteredSnapshot;
   componentAtomTree: componentAtomTree;
+  cleanedComponentAtomTree: componentAtomTree;
   x: number;
   y: number;
   k: number;
@@ -20,6 +21,7 @@ interface AtomComponentVisualContainerProps {
 const AtomComponentVisualContainer: React.FC<AtomComponentVisualContainerProps> = ({
   filteredCurSnap,
   componentAtomTree,
+  cleanedComponentAtomTree,
   setZoomState,
   x,
   y,
@@ -47,6 +49,7 @@ const AtomComponentVisualContainer: React.FC<AtomComponentVisualContainerProps> 
     <div className="Component">
       <AtomComponentVisual
         componentAtomTree={componentAtomTree}
+        cleanedComponentAtomTree={cleanedComponentAtomTree}
         selectedRecoilValue={selectedRecoilValue}
         atoms={atoms}
         selectors={selectors}

@@ -202,9 +202,9 @@ body {
   height: calc(100% - 33px); /* 33px is height of navbar */
   width: 100%;
 }
-.bar { 
+/* .bar { 
   fill: #9580ff; 
-}
+} */
 .svg-container {
   display: inline-block;
   position: relative;
