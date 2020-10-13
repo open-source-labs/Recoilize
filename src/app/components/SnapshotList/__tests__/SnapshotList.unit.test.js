@@ -49,13 +49,10 @@ describe('Snapshots List Error Handling', () => {
     }],
   }
 
-  wrapper = shallow(<SnapshotsList {...props}  />)
-
-
   it('Snapshots List renders empty divs when props are invalid.', () => {
 
-    wrapper = shallow(<SnapshotsList {...props}  />)
+    wrapper = shallow(<SnapshotsList {...props}  />);
     expect(wrapper.type()).toEqual('div');
-  })
+  });
 
-})
+});
