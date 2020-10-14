@@ -55,7 +55,7 @@ const Metrics: React.FC<MetricsProps> = ({cleanedComponentAtomTree}) => {
 
   return (
     <div>
-      <div className="persistContainer">
+      <div data-testid="canvas" className="persistContainer">
         <button
           className="timeTravelButton"
           onClick={() => {
