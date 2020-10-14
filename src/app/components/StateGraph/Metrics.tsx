@@ -55,16 +55,17 @@ const Metrics: React.FC<MetricsProps> = ({cleanedComponentAtomTree}) => {
 
   return (
     <div>
-      <div className="persistContainer">
+      <div className="graphContainer">
         <button
-          className="timeTravelButton"
+          className="graphButton"
+          autoFocus={true}
           onClick={() => {
             toggleGraphFunc(false);
           }}>
           Flame Graph
         </button>
         <button
-          className="timeTravelButton"
+          className="graphButton"
           onClick={() => {
             toggleGraphFunc(true);
           }}>
