@@ -5,8 +5,8 @@ import Visualizer from '../Visualizer';
 import {filteredCurSnapMock} from '../../../../../mock/snapshot.js';
 import {render, cleanup, findByTestId} from '@testing-library/react';
 
-afterEach(cleanup);
 describe('Metrics tab testing', () => {
+  afterEach(cleanup);
   describe('props beings passed into Visualizer component', () => {
     xit('shape of props being passed down should be the same shape as testNode', ({componentAtomTree}) => {  
       //create dummy object to match it against
@@ -40,6 +40,7 @@ describe('Metrics tab testing', () => {
       xit('should be of type string', () => {
           //that dom element should render a string
           //is toBe the right assertion?
+          const mockComponent = 
         expect().toBe();
       });
       xit('should display correct name', () => {
