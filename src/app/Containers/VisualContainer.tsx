@@ -30,9 +30,7 @@ type navTypes = {
   [tabName: string]: JSX.Element;
 };
 
-const cleanComponentAtomTree = (
-  inputObj: componentAtomTree,
-): componentAtomTree => {
+const cleanComponentAtomTree = (inputObj: componentAtomTree): componentAtomTree => {
   const obj = {} as componentAtomTree;
   let counter = 0;
   const innerClean = (inputObj: any, outputObj: any, counter: number = 0) => {
@@ -72,6 +70,12 @@ const cleanComponentAtomTree = (
     return outputObj;
   };
   innerClean(inputObj, obj, counter);
+
+  //ensure that the root element's actual duration is inculded in outObj
+  if(inputObj.actualDuration){
+    obj.actualDuration = inputObj.actualDuration;
+  }
+
   // returning the new object that we create
   return obj;
 };
