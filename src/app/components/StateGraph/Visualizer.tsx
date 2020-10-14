@@ -6,44 +6,44 @@ interface VisualizerProps {
   cleanedComponentAtomTree: componentAtomTree;
 }
 
-
 const Visualizer: React.FC<VisualizerProps> = ({cleanedComponentAtomTree}: any) => {
-
   // create an empty array to store objects for property name and actualDuration
-  let dataArray: {}[] = [];
+  const data: {}[] = [];
   // function to traverse through the fiber tree
   const namesAndDurations = (node: any) => {
-    // const tagCheck = 0 | 1 | 13;
-    if(node.tag === 0 || node.tag === 1 || node.tag === 13){
+    console.log(node.name, node.actualDuration)
       if (node.name && node.actualDuration) {
         const obj: any = {}
         obj["name"] = node.name;
         obj["actualDuration"] = node.actualDuration;
-        dataArray.push(obj)
-      } 
+        data.push(obj)
     }
     node.children.forEach((child: any) => namesAndDurations(child))
   }
   namesAndDurations(cleanedComponentAtomTree);
 
-  const data = dataArray;
-
   const svgRef = useRef();
   useEffect(() => {
-    const widthx = document.querySelector('.Visualizer').clientWidth;
-    // let heightx = document.querySelector('.Visualizer').clientHeight;
+    const width = document.querySelector('.Visualizer').clientWidth;
+    const height = 375;
     document.getElementById('canvas').innerHTML = '';
     // set the dimensions and margins of the graph
-    const margin = {top: 20, right: 20, bottom: 30, left: 80},
-        width = widthx - margin.left - margin.right,
-        height = 340 - margin.top - margin.bottom;
-    // set range for y scale
+    const margin = {top: 20, right: 20, bottom: 30, left: 80}
+    // set range for y scale 
     const y = d3.scaleBand()
       .range([height, 0])
       .padding(0.2);
     // set range for x scale
     const x = d3.scaleLinear()
-      .range([0, width]);            
+      .range([0, width]);  
+    // set range for durations      
+    const z = d3.scaleBand()
+      .range([height,0])
+      .padding(0.2)
+
+    const colorScale = d3.scaleLinear()
+      .domain([0.5, 1.5])
+      .range(["green", "red"])
     // append the svg object to the body of the page
     // append a 'group' element to 'svg'
     // moves the 'group' element to the top left margin
@@ -56,27 +56,48 @@ const Visualizer: React.FC<VisualizerProps> = ({cleanedComponentAtomTree}: any) 
       .classed("svg-content-responsive", true)
       .append("g")
       .attr("transform", 
-            "translate(" + margin.left + "," + margin.top + ")");
+            "translate(" + margin.left + "," + margin.top + ")")
     // Scale the range of the data in the domains
-    x.domain([0, d3.max(data, function(d: any){ return d.actualDuration; }) + 0.2])
-    // Scale the range of he data across the y-axis
-    y.domain(data.map(function(d: any) { return d.name; }));
+    x.domain([0, d3.max(data, (d: any) => {
+       return d.actualDuration; 
+      })])
+    // Scale the range of the data across the y-axis
+    y.domain(data.map((d: any, i) => {
+      return d.name + '-' + i;
+      }));
+    // Scale actualDuration with the y-axis
+    z.domain(data.map((d: any) => {
+      return d.actualDuration.toFixed(2) + 'ms';
+    }))
     // append the rectangles for the bar chart
     svg.selectAll(".bar") 
       .data(data)
       .enter()
       .append("rect")
       .attr("class", "bar")
+      .transition()
+      .duration(750)
+      .delay((d: any,i: any) => i * 100)
       .attr("width", function(d: any) {return x(d.actualDuration); } )
-      .attr("y", function(d: any) { return y(d.name); })
-      .attr("height", y.bandwidth());
-    // add the x Axis
+      .attr("fill", function(d:any) {
+        // return "rgb("+ Math.round(d.actualDuration * 120) + ",0," + Math.round(d.actualDuration * 10) + ")";
+        return "rgb("+ "0" + "," + Math.round(d.actualDuration * 130) + "," + Math.round(d.actualDuration * 170) + ")";
+      })
+      .attr("y", function(d: any, i: any) { return y(d.name + '-' + i)})
+      .attr("height", y.bandwidth())
+    // add x axis
     svg.append("g")
       .attr("transform", "translate(0," + height + ")")
       .call(d3.axisBottom(x));
-    // add the y Axis
-    svg.append("g")
-      .call(d3.axisLeft(y));
+    // add y axis to able to have duplicate strings
+    const yAxis = d3.axisLeft(y)
+      .tickFormat(function(d: any) {
+        return d.split("-")[0];
+      });
+    yAxis(svg.append("g"));
+    svg.append('g')
+      .call(d3.axisRight(z));
+
   },[data]);
   
   return (
