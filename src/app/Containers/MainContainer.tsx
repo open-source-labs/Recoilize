@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react';
 import SnapshotsContainer from './SnapshotContainer';
 import VisualContainer from './VisualContainer';
 import {stateSnapshot, selectedTypes, stateSnapshotDiff} from '../../types';
-import { render } from '@testing-library/react';
 
 interface MainContainerProps {
   // snapshotHistory is an array of stateSnapshots
