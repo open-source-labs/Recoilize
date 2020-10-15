@@ -20,5 +20,8 @@ chrome.runtime.onMessage.addListener(msg => {
     case 'throttleEdit':
       window.postMessage(msg, '*');
       break;
+    case 'mouseover':
+      alert('hello')
+      break;
   }
 });

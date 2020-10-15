@@ -83,7 +83,7 @@ const RankedGraph: React.FC<RankedGraphProps> = ({cleanedComponentAtomTree}: any
         return "rgb("+ "0" + "," + Math.round(d.actualDuration * 130) + "," + Math.round(d.actualDuration * 170) + ")";
       })
       .attr("y", function(d: any, i: any) { return y(d.name + '-' + i)})
-      .attr("height", y.bandwidth())
+      .attr("height", y.bandwidth());
     // add x axis
     svg.append("g")
       .attr("transform", "translate(0," + height + ")")
@@ -96,7 +96,16 @@ const RankedGraph: React.FC<RankedGraphProps> = ({cleanedComponentAtomTree}: any
     yAxis(svg.append("g"));
     svg.append('g')
       .call(d3.axisRight(z));
-
+    d3.selectAll(".bar")
+      .on("mouseover", function(){
+        let barName = this.data.name;
+        chrome.runtime.sendMessage("mouseover", barName);
+      });
+    d3.selectAll(".bar")
+      .on("mouseout", function(){
+        let barName = this.data.name;
+        chrome.runtime.sendMessage("mouseout", barName);
+    });
   },[data]);
   
   return (
