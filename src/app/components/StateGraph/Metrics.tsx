@@ -2,7 +2,7 @@ import React, { ReactElement, useState } from 'react';
 import { ParentSize } from '@vx/responsive';
 import {componentAtomTree} from '../../../types';
 import IcicleVertical from './IcicleVertical.js';
-import Visualizer from './Visualizer';
+import RankedGraph from './Visualizer';
 
 interface MetricsProps {
   cleanedComponentAtomTree: componentAtomTree;
@@ -44,7 +44,7 @@ const Metrics: React.FC<MetricsProps> = ({cleanedComponentAtomTree}) => {
     else{
       return(
         //return the bar graph component
-        <Visualizer cleanedComponentAtomTree={cleanedComponentAtomTree}/>
+        <RankedGraph cleanedComponentAtomTree={cleanedComponentAtomTree}/>
       );
     }
   }

@@ -2,16 +2,15 @@ import React, {useState, useEffect, useRef} from 'react';
 import * as d3 from 'd3';
 import {componentAtomTree} from '../../../types';
 
-interface VisualizerProps {
+interface RankedGraphProps {
   cleanedComponentAtomTree: componentAtomTree;
 }
 
-const Visualizer: React.FC<VisualizerProps> = ({cleanedComponentAtomTree}: any) => {
+const RankedGraph: React.FC<RankedGraphProps> = ({cleanedComponentAtomTree}: any) => {
   // create an empty array to store objects for property name and actualDuration
   const data: {}[] = [];
   // function to traverse through the fiber tree
   const namesAndDurations = (node: any) => {
-    console.log(node.name, node.actualDuration)
       if (node.name && node.actualDuration) {
         const obj: any = {}
         obj["name"] = node.name;
@@ -24,7 +23,7 @@ const Visualizer: React.FC<VisualizerProps> = ({cleanedComponentAtomTree}: any) 
 
   const svgRef = useRef();
   useEffect(() => {
-    const width = document.querySelector('.Visualizer').clientWidth;
+    const width = document.querySelector('.RankedGraph').clientWidth;
     const height = 375;
     document.getElementById('canvas').innerHTML = '';
     // set the dimensions and margins of the graph
@@ -102,11 +101,11 @@ const Visualizer: React.FC<VisualizerProps> = ({cleanedComponentAtomTree}: any) 
   
   return (
     <div data-testid='canvas' id='stateGraphContainer'>
-      <div className='Visualizer'>
+      <div className='RankedGraph'>
         <svg id='canvas' ref={svgRef}></svg>
       </div>
     </div>
   );
 };
 
-export default Visualizer;
+export default RankedGraph;
