@@ -220,6 +220,30 @@ body {
   left: 0;
 }
 
+.graphContainer {
+  padding: 10px;
+}
+
+.graphButton {
+  border: 1px solid #989898;
+  border-radius: 5px;
+  color: #989898;
+  background: none;
+  outline: none;
+}
+
+.graphButton:hover{
+  color: #e6e6e6;
+  border: 1px solid white;
+  background-color: #212121;
+  text-emphasis: bold;
+}
+
+.graphButton:focus {
+  color: #e6e6e6;
+  background-color: #212121;
+}
+
 /* NETWORK COMPONENT */
 .networkContainer {
   height: 100%;
