@@ -2,7 +2,7 @@ import React, { ReactElement, useState } from 'react';
 import { ParentSize } from '@vx/responsive';
 import {componentAtomTree} from '../../../types';
 import IcicleVertical from './IcicleVertical.js';
-import RankedGraph from './Visualizer';
+import RankedGraph from './RankedGraph';
 
 interface MetricsProps {
   cleanedComponentAtomTree: componentAtomTree;
