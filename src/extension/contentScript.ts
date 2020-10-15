@@ -21,7 +21,7 @@ chrome.runtime.onMessage.addListener(msg => {
       window.postMessage(msg, '*');
       break;
     case 'mouseover':
-      alert('hello')
+      window.postMessage(msg, '*')
       break;
   }
 });
