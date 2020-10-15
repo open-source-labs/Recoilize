@@ -1,17 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import RankedGraph from '../Visualizer';
-import {componentAtomTree} from '../../../../types';
 import {filteredCurSnapMock} from '../../../../../mock/snapshot.js';
 import {render, cleanup, findByTestId} from '@testing-library/react';
 
-afterEach(cleanup);
-
 describe('Ranked Graph testing', () => {
+  afterEach(cleanup);
+
   describe('props beings passed into RankedGraph component', () => {
-    xit('shape of props being passed down should be the same shape as testNode', ({
-      componentAtomTree,
-    }) => {
+    xit('shape of props being passed down should be the same shape as testNode', () => {
+      const {asFragment} = render(
+        <RankedGraph cleanedComponentAtomTree={cleanedComponentAtomTree} />,
+      );
       //create dummy object to match it against
       const testNode = {
         children: [],
@@ -20,8 +20,9 @@ describe('Ranked Graph testing', () => {
         recoilNodes: [],
         actualDuration: 5,
       };
-      expect(componentAtomTree).toMatchObject(testNode);
+      expect(asFragment()).toMatchObject(testNode);
     });
+
     xit('should match snapshot when props are passed into Visualizer', () => {
       const {asFragment} = render(
         <RankedGraph filteredCurSnap={filteredCurSnapMock} />,
@@ -56,10 +57,10 @@ describe('Ranked Graph testing', () => {
     describe('render time information', () => {
       //a component should display the render time of a component
       //create a mock dom element to check against
-      xit('should be of type number', () => {
+      xit('should be of type number', ({cleanedComponentAtomTree}) => {
+        let duration = cleanedComponentAtomTree.actualDuration;
         //the type of data being rendered should be a number
-        //is this the right assertion?
-        expect().toBe();
+        expect(typeof duration).toBe('number');
       });
 
       xit('should display render time', () => {
@@ -70,13 +71,12 @@ describe('Ranked Graph testing', () => {
     });
   });
   //this test will cover a component being highlighted correctly when hovered upon
-  describe('component highlighting', () => {
-    xit('DOM element should be displayed when hovered over');
-    xit('component should have a hover on effect');
-  });
-
+  // describe('component highlighting', () => {
+  //   xit('DOM element should be displayed when hovered over');
+  //   xit('component should have a hover on effect');
+  // });
   describe('components rendering correctly', () => {
-    xit('it renders without crashing', () => {
+    xit('renders without crashing', () => {
       const {getByTestId} = render(<RankedGraph />);
       expect(getByTestId('canvas')).toBeTruthy();
     });

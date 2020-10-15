@@ -11,7 +11,6 @@ const RankedGraph: React.FC<RankedGraphProps> = ({cleanedComponentAtomTree}: any
   const data: {}[] = [];
   // function to traverse through the fiber tree
   const namesAndDurations = (node: any) => {
-    console.log(node.name, node.actualDuration)
       if (node.name && node.actualDuration) {
         const obj: any = {}
         obj["name"] = node.name;
