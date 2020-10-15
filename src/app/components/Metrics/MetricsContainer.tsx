@@ -1,7 +1,7 @@
 import React, { ReactElement, useState } from 'react';
 import { ParentSize } from '@vx/responsive';
 import {componentAtomTree} from '../../../types';
-import IcicleVertical from './IcicleVertical.js';
+import IcicleVertical from './FlameGraph.js';
 import RankedGraph from './RankedGraph';
 
 interface MetricsProps {

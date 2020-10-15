@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import Diff from '../components/StateDiff/Diff';
 import NavBar from '../components/NavBar/NavBar';
-import Metrics from '../components/StateGraph/Metrics';
+import Metrics from '../components/Metrics/MetricsContainer';
 import Tree from '../components/StateTree/Tree';
 import Network from '../components/AtomNetwork/AtomNetwork';
 import AtomComponentVisualContainer from '../components/ComponentGraph/AtomComponentContainer';
