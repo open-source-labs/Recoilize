@@ -55,7 +55,7 @@ const Metrics: React.FC<MetricsProps> = ({cleanedComponentAtomTree}) => {
 
   return (
     <div>
-      <div className="graphContainer">
+      <div data-testid="canvas" className="graphContainer">
         <button
           className="graphButton"
           autoFocus={true}
