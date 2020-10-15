@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import SnapshotsContainer from './SnapshotContainer';
 import VisualContainer from './VisualContainer';
 import {stateSnapshot, selectedTypes, stateSnapshotDiff} from '../../types';
+import { render } from '@testing-library/react';
 
 interface MainContainerProps {
   // snapshotHistory is an array of stateSnapshots
@@ -27,7 +28,9 @@ const MainContainer: React.FC<MainContainerProps> = ({
 
   // useEffect for renderIndex
   useEffect(() => {
+
     setRenderIndex(snapshotHistory.length - 1);
+
   }, [snapshotHistory]);
 
   // render containers passing necessary props
@@ -49,7 +52,7 @@ const MainContainer: React.FC<MainContainerProps> = ({
         // snapshot at index [renderIndex -1]
         previousSnapshot={snapshotHistory[renderIndex - 1]}
         // snapshot at index [renderIndex]
-        currentSnapshot={snapshotHistory[renderIndex]}
+        currentSnapshot={(snapshotHistory[renderIndex]) ? snapshotHistory[renderIndex] : snapshotHistory[0]}
         // !passing through snapshotHistory
         snapshotHistory={snapshotHistory}
         // !passing through selections
