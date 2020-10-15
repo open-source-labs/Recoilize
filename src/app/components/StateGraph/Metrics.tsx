@@ -26,10 +26,6 @@ const Metrics: React.FC<MetricsProps> = ({cleanedComponentAtomTree}) => {
   //create state for the graph type toggle
   const [graphType, setGraphType] = useState<boolean>(true);
 
-  let sum = (x: number, y: number): number => {
-    return x + y;
-  }
-
   const toggleGraphFunc = (ranked:boolean): void => {
     ranked ? setGraphType(false) : setGraphType(true);
   };
@@ -52,7 +48,7 @@ const Metrics: React.FC<MetricsProps> = ({cleanedComponentAtomTree}) => {
       );
     }
   }
-
+  
   return (
     <div>
       <div data-testid="canvas" className="graphContainer">
