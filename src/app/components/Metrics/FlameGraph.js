@@ -197,4 +197,4 @@ const IcicleVertical = (props) => {
   );
 }
 
-export default IcicleVertical;
+export default FlameGraph;
