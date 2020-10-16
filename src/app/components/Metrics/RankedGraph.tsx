@@ -6,6 +6,7 @@ interface RankedGraphProps {
   cleanedComponentAtomTree: componentAtomTree;
 }
 
+
 const RankedGraph: React.FC<RankedGraphProps> = ({cleanedComponentAtomTree}: any) => {
   // create an empty array to store objects for property name and actualDuration
   const data: {}[] = [];
@@ -71,6 +72,27 @@ const RankedGraph: React.FC<RankedGraphProps> = ({cleanedComponentAtomTree}: any
       .enter()
       .append("rect")
       .attr("class", "bar")
+      .on("mouseover", function() {
+        d3.select(this).attr('opacity', '0.85');
+        console.log('in the ranked graph function')
+        const backgroundConnection = chrome.runtime.connect();
+        const barName = 'hello from barName';
+        const payload = {
+          action: "mouseover",
+          payload: barName
+        }
+        backgroundConnection.postMessage(payload)
+      })
+      .on("mouseout", function(){
+        d3.select(this).attr('opacity', '1');
+        const backgroundConnection = chrome.runtime.connect();
+        let barName = this.name;
+        const payload = {
+          action: "mouseout",
+          payload: barName
+        }
+        backgroundConnection.postMessage(payload)
+      })
       .transition()
       .duration(750)
       .delay((d: any,i: any) => i * 100)
@@ -80,7 +102,7 @@ const RankedGraph: React.FC<RankedGraphProps> = ({cleanedComponentAtomTree}: any
         return "rgb("+ "0" + "," + Math.round(d.actualDuration * 130) + "," + Math.round(d.actualDuration * 170) + ")";
       })
       .attr("y", function(d: any, i: any) { return y(d.name + '-' + i)})
-      .attr("height", y.bandwidth())
+      .attr("height", y.bandwidth());
     // add x axis
     svg.append("g")
       .attr("transform", "translate(0," + height + ")")
@@ -93,7 +115,6 @@ const RankedGraph: React.FC<RankedGraphProps> = ({cleanedComponentAtomTree}: any
     yAxis(svg.append("g"));
     svg.append('g')
       .call(d3.axisRight(z));
-
   },[data]);
   
   return (

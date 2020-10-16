@@ -1,8 +1,8 @@
 // Message Interface
 interface Msg {
   action: string;
-  tabId: string;
-  payload: object;
+  tabId?: string;
+  payload?: object;
 }
 
 interface Connections {
@@ -148,6 +148,8 @@ chrome.runtime.onMessage.addListener((msg, sender) => {
           payload: result[tabId],
         });
       });
+
+      
     default:
       break;
   }
