@@ -55,9 +55,6 @@ chrome.runtime.onConnect.addListener(port => {
         }
         // window.postMessage({action: 'throttleChange'}, throttler);
         break;
-      case 'mouseover':
-        console.log('hello from background');
-        break;
 
       default:
         break;

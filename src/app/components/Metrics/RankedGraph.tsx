@@ -76,7 +76,8 @@ const RankedGraph: React.FC<RankedGraphProps> = ({cleanedComponentAtomTree}: any
       .append("rect")
       .attr("class", "bar")
       .on("mouseover", function() {
-        d3.select(this).attr('stroke', 'red');
+        d3.select(this).attr('opacity', '0.85');
+        console.log('in the ranked graph function')
         const backgroundConnection = chrome.runtime.connect();
         const barName = 'hello from barName';
         const payload = {
@@ -85,16 +86,16 @@ const RankedGraph: React.FC<RankedGraphProps> = ({cleanedComponentAtomTree}: any
         }
         backgroundConnection.postMessage(payload)
       })
-      // .on("mouseout", function(){
-      //   d3.select(this).attr('stroke', 'red');
-      //   const backgroundConnection = chrome.runtime.connect();
-      //   let barName = this.name;
-      //   const payload = {
-      //     action: "mouseout",
-      //     payload: barName
-      //   }
-      //   backgroundConnection.postMessage(payload)
-      // })
+      .on("mouseout", function(){
+        d3.select(this).attr('opacity', '1');
+        const backgroundConnection = chrome.runtime.connect();
+        let barName = this.name;
+        const payload = {
+          action: "mouseout",
+          payload: barName
+        }
+        backgroundConnection.postMessage(payload)
+      })
       .transition()
       .duration(750)
       .delay((d: any,i: any) => i * 100)
