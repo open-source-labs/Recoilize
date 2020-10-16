@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   useRecoilTransactionObserver_UNSTABLE,
   useRecoilSnapshot,
   useGotoRecoilSnapshot,
 } from 'recoil';
-import { formatFiberNodes } from './formatFiberNodes';
+import {formatFiberNodes} from './formatFiberNodes';
 
 // grabs isPersistedState from sessionStorage
 let isPersistedState = sessionStorage.getItem('isPersistedState');
@@ -26,7 +26,7 @@ export default function RecoilizeDebugger(props) {
 
   // Check if a root was passed to props.
   if (props.root) {
-    const { root } = props;
+    const {root} = props;
   } else {
     const root = document.getElementById('root');
   }
@@ -109,13 +109,16 @@ export default function RecoilizeDebugger(props) {
           const initialFilteredSnapshot = formatAtomSelectorRelationship(
             filteredSnapshot,
           );
-          
+
           //creating a indexDiff variable
           //only created on initial creation of devToolData
           //determines difference in length of backend snapshots array and frontend snapshotHistoryLength to avoid off by one error
           const indexDiff = snapshots.length - 1;
 
-          const devToolData = createDevToolDataObject(initialFilteredSnapshot, indexDiff);
+          const devToolData = createDevToolDataObject(
+            initialFilteredSnapshot,
+            indexDiff,
+          );
           sendWindowMessage('moduleInitialized', devToolData);
         } else {
           setProperIndexForPersistedState();
@@ -172,15 +175,14 @@ export default function RecoilizeDebugger(props) {
   };
 
   const createDevToolDataObject = (filteredSnapshot, diff) => {
-    if(diff === undefined){
+    if (diff === undefined) {
       return {
         filteredSnapshot: filteredSnapshot,
         componentAtomTree: formatFiberNodes(
           root._reactRootContainer._internalRoot.current,
         ),
       };
-    }
-    else{
+    } else {
       console.log('logging diff from create Dev tool data:', diff);
       return {
         filteredSnapshot: filteredSnapshot,
@@ -219,14 +221,12 @@ export default function RecoilizeDebugger(props) {
     // await setRestoredState(true);
     // await gotoSnapshot(snapshots[msg.data.payload.snapshotIndex]);
     // await setRestoredState(false);
-
     isRestoredState = true;
-    
     await gotoSnapshot(snapshots[msg.data.payload.snapshotIndex]);
   };
 
   // FOR TIME TRAVEL: Recoil hook to fire a callback on every atom/selector change -- research Throttle
-  useRecoilTransactionObserver_UNSTABLE(({ snapshot }) => {
+  useRecoilTransactionObserver_UNSTABLE(({snapshot}) => {
     const now = new Date().getTime();
     if (now - throttleTimer < throttleLimit) {
       isRestoredState = true;
