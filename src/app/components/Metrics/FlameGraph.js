@@ -1,8 +1,6 @@
 import React, { useState, useRef } from 'react';
-import * as d3 from 'd3';
-import { scaleLinear, scaleOrdinal, scaleSequential } from 'd3-scale';
-import { interpolate as d3interpolate, quantize } from 'd3-interpolate';
-import { interpolateRainbow } from 'd3-scale-chromatic';
+import { scaleLinear } from 'd3-scale';
+import { interpolate } from 'd3-interpolate';
 import { format as d3format } from 'd3-format';
 import { hierarchy } from 'd3-hierarchy';
 import { Group } from '@vx/group';
@@ -10,81 +8,64 @@ import { Partition } from '@vx/hierarchy';
 import { useSpring, animated } from 'react-spring';
 
 
-// const color = scaleOrdinal().range([
-//   "#FE938C",
-//   "#E6B89C",
-//   "#EAD2AC",
-//   "#9CAFB7",
-//   "#4281A4",
-// ]);
-// const color = scaleOrdinal(schemeCategory20c);
+//determining the number of decimal places displayed
 const format = d3format('.2f');
 
-const IcicleVertical = (props) => {
+const FlameGraph = ({ cleanedComponentAtomTree, width, height }) => {
 
-  const {
-    cleanedComponentAtomTree,
-    width,
-    height,
-  } = props;
-
+  //Building a heirarchy for d3 to graph
   const root = hierarchy(cleanedComponentAtomTree)
-  .eachBefore(
-    d => (d.data.id = (d.parent ? d.parent.data.id + '.' : '') + d.data.name)
-  )
+  //determining tree based duration by summing actual duration of children
   .sum(d => d.actualDuration)
+  //sorting children by their tree based duration for graph
   .sort((a, b) => b.value - a.value);
 
-  let totalDuration = 0;
+  //traversing tree to determine number of nodes
+  let totalNodes = 0;
   root.each(() => {
-    totalDuration = totalDuration + 1;
+    totalNodes = totalNodes + 1;
     return;
   });
 
-  // console.log("Number of components", total);
-  // console.log('Total time', root.value);
-  // console.log('Average time', root.value/total);
+  //calculating average actualDuration of nodes in entire tree
+  const averageDiration = root.value/totalNodes;
 
-  const averageDiration = root.value/totalDuration;
-
-
+  //setting margins to fit graphed componets together and fit to container
   const margin = { top: 0, left: 0, right: 0, bottom: 0 }
 
-  // const color = scaleOrdinal(
-  //   quantize(interpolateRainbow, root.children.length + 1)
-  // );
-  console.log(averageDiration);
+  //scaleLinear outputs a funciton
+  //this function is used to determine a graph components color based on actualDuration
   const color = scaleLinear()
-  .domain([averageDiration/2, averageDiration * 2, averageDiration * 3, averageDiration * 4, averageDiration * 5])
-  .range(["#ffffff","#e9c7ff", "#f95cb3", "#ee9f30", "#ff0000"])
-  // const color = scaleLinear()
-  // .domain([0, averageDiration, averageDiration * 2, averageDiration * 4, averageDiration * 6])
-  // .range(["#4281A4","#9CAFB7", "#EAD2AC", "#E6B89C", "#FE938C" ])
-  // var color = scaleSequential(d3.interpolateBlues)
-  //   .domain([0, averageDiration * 5])
+  .domain([averageDiration/2, averageDiration * 3, averageDiration * 6, averageDiration * 8])
+  .range(["#ffffff","#e9c7ff", "#ee9f30", "#ff0000"])
 
-  const [state, setState] = useState({
-    xDomain: [0, props.width],
-    xRange: [0, props.width],
-    yDomain: [0, props.height],
-    yRange: [0, props.height]
+  //initiate graphArea as state variable area, and create setArea funciton
+  const [area, setArea] = useState({
+    xDomain: [0, width],
+    xRange: [0, width],
+    yDomain: [0, height],
+    yRange: [0, height]
   });
 
+  //define horizontal scaling of graph
   const xScale = useRef(
     scaleLinear()
-      .domain(state.xDomain)
-      .range(state.xRange)
+      .domain(area.xDomain)
+      .range(area.xRange)
   );
+  //define vertical scaling of graph
   const yScale = useRef(
     scaleLinear()
-      .domain(state.yDomain)
-      .range(state.yRange)
+      .domain(area.yDomain)
+      .range(area.yRange)
   );
 
-  const xd = d3interpolate(xScale.current.domain(), state.xDomain);
-  const yd = d3interpolate(yScale.current.domain(), state.yDomain);
-  const yr = d3interpolate(yScale.current.range(), state.yRange);
+  //set interpolates to allow individual graph components to resize when entire graph resizes
+  const xd = interpolate(xScale.current.domain(), area.xDomain);
+  const yd = interpolate(yScale.current.domain(), area.yDomain);
+  const yr = interpolate(yScale.current.range(), area.yRange);
 
+  //set parameters for zooming animations
   const { t } = useSpring({
     native: true,
     reset: true,
@@ -102,6 +83,7 @@ const IcicleVertical = (props) => {
     }
   });
 
+  //return an svg to render the FlameGraph
   return (
     <svg width={width} height={height}>
       <Partition
@@ -125,23 +107,24 @@ const IcicleVertical = (props) => {
                 key={`node-${i}`}
                 onClick={() => {
                   if (
-                    node.y0 === state.xDomain[0] &&
-                    node.x0 === state.yDomain[0] &&
+                    node.y0 === area.xDomain[0] &&
+                    node.x0 === area.yDomain[0] &&
                     node.parent
                   ) {
-                    // Already selected, use parent
-                    setState({
-                      ...state,
-                      xDomain: [node.parent.y0, props.width],
+                    // If the clicked graph component is already the selected componet, select parent
+                    setArea({
+                      ...area,
+                      xDomain: [node.parent.y0, width],
                       yDomain: [node.parent.x0, node.parent.x1],
-                      yRange: [0, props.height]
+                      yRange: [0, height]
                     });
+                    // Otherwise select clicked
                   } else {
-                    setState({
-                      ...state,
-                      xDomain: [node.y0, props.width],
+                    setArea({
+                      ...area,
+                      xDomain: [node.y0, width],
                       yDomain: [node.x0, node.x1],
-                      yRange: [0, props.height]
+                      yRange: [0, height]
                     });
                   }
                 }}
@@ -155,10 +138,6 @@ const IcicleVertical = (props) => {
                     () => yScale.current(node.x1) - yScale.current(node.x0)
                   )}
                   fill={
-                    // node.children
-                    //   ? '#ddd'
-                    //   : color(node.data.id.split('.').slice(0, 2))
-                    // node.data.actualDuration > 2 ? '#ddd' : '#A51CA4'
                     color(node.data.actualDuration)
                   }
                   fillOpacity={1}
