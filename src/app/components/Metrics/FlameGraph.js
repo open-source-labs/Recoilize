@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
-import { scaleLinear, scaleOrdinal } from 'd3-scale';
+import * as d3 from 'd3';
+import { scaleLinear, scaleOrdinal, scaleSequential } from 'd3-scale';
 import { interpolate as d3interpolate, quantize } from 'd3-interpolate';
 import { interpolateRainbow } from 'd3-scale-chromatic';
 import { format as d3format } from 'd3-format';
@@ -34,11 +35,33 @@ const IcicleVertical = (props) => {
   .sum(d => d.actualDuration)
   .sort((a, b) => b.value - a.value);
 
+  let totalDuration = 0;
+  root.each(() => {
+    totalDuration = totalDuration + 1;
+    return;
+  });
+
+  // console.log("Number of components", total);
+  // console.log('Total time', root.value);
+  // console.log('Average time', root.value/total);
+
+  const averageDiration = root.value/totalDuration;
+
+
   const margin = { top: 0, left: 0, right: 0, bottom: 0 }
 
-  const color = scaleOrdinal(
-    quantize(interpolateRainbow, root.children.length + 1)
-  );
+  // const color = scaleOrdinal(
+  //   quantize(interpolateRainbow, root.children.length + 1)
+  // );
+  console.log(averageDiration);
+  const color = scaleLinear()
+  .domain([averageDiration/2, averageDiration * 2, averageDiration * 3, averageDiration * 4, averageDiration * 5])
+  .range(["#ffffff","#e9c7ff", "#f95cb3", "#ee9f30", "#ff0000"])
+  // const color = scaleLinear()
+  // .domain([0, averageDiration, averageDiration * 2, averageDiration * 4, averageDiration * 6])
+  // .range(["#4281A4","#9CAFB7", "#EAD2AC", "#E6B89C", "#FE938C" ])
+  // var color = scaleSequential(d3.interpolateBlues)
+  //   .domain([0, averageDiration * 5])
 
   const [state, setState] = useState({
     xDomain: [0, props.width],
@@ -93,9 +116,6 @@ const IcicleVertical = (props) => {
           <Group>
             {data.descendants().map((node, i) => (
               <animated.g
-                // top={yScale.current(node.y0)}
-                // left={xScale.current(node.x0)}
-                //transform={`translate(${xScale.current(node.x0)}, ${yScale.current(node.y0)})`}
                 transform={t.interpolate(
                   () =>
                     `translate(${xScale.current(node.y0)}, ${yScale.current(
@@ -135,11 +155,13 @@ const IcicleVertical = (props) => {
                     () => yScale.current(node.x1) - yScale.current(node.x0)
                   )}
                   fill={
-                    node.children
-                      ? '#ddd'
-                      : color(node.data.id.split('.').slice(0, 2))
+                    // node.children
+                    //   ? '#ddd'
+                    //   : color(node.data.id.split('.').slice(0, 2))
+                    // node.data.actualDuration > 2 ? '#ddd' : '#A51CA4'
+                    color(node.data.actualDuration)
                   }
-                  fillOpacity={node.children ? 1 : 0.6}
+                  fillOpacity={1}
                 />
 
                 <clipPath id={`clip-${i}`}>
