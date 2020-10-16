@@ -21,7 +21,6 @@ chrome.runtime.onMessage.addListener(msg => {
       window.postMessage(msg, '*');
       break;
     case 'mouseover':
-      window.console.log('msg received content script')
       window.postMessage(msg, '*')
       break;
   }

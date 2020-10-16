@@ -138,7 +138,8 @@ export default function RecoilizeDebugger(props) {
         break;
       // Hover effect payload handling
       case 'mouseover':
-        let hoverComponent = 
+        let hoverComponent = msg.data,action;
+        activateHover(msg.data);
       default:
         break;
     }
@@ -217,6 +218,13 @@ export default function RecoilizeDebugger(props) {
     }
     return filteredSnapshot;
   };
+
+  // Will add hover effect over highlighted component
+  // Takes an argument of msg.data which contains name and payload
+  const activateHover = (payload) => {
+    let name = payload.name;
+    console.log('hello from index.js');
+  }
 
   // FOR TIME TRAVEL: time travels to a given snapshot, re renders application.
   const timeTravelToSnapshot = async msg => {
