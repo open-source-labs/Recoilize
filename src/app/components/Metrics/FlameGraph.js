@@ -53,9 +53,10 @@ const IcicleVertical = (props) => {
   // const color = scaleOrdinal(
   //   quantize(interpolateRainbow, root.children.length + 1)
   // );
+  console.log(averageDiration);
   const color = scaleLinear()
-  .domain([averageDiration/2, averageDiration, averageDiration * 2, averageDiration * 4, averageDiration * 6])
-  .range(["#ffffff","#e9c7ff", "#f95cb3", "#ee9f30", "red"])
+  .domain([averageDiration/2, averageDiration * 2, averageDiration * 3, averageDiration * 4, averageDiration * 5])
+  .range(["#ffffff","#e9c7ff", "#f95cb3", "#ee9f30", "#ff0000"])
   // const color = scaleLinear()
   // .domain([0, averageDiration, averageDiration * 2, averageDiration * 4, averageDiration * 6])
   // .range(["#4281A4","#9CAFB7", "#EAD2AC", "#E6B89C", "#FE938C" ])
