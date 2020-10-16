@@ -27,7 +27,9 @@ const MainContainer: React.FC<MainContainerProps> = ({
 
   // useEffect for renderIndex
   useEffect(() => {
+
     setRenderIndex(snapshotHistory.length - 1);
+
   }, [snapshotHistory]);
 
   // render containers passing necessary props
@@ -49,7 +51,7 @@ const MainContainer: React.FC<MainContainerProps> = ({
         // snapshot at index [renderIndex -1]
         previousSnapshot={snapshotHistory[renderIndex - 1]}
         // snapshot at index [renderIndex]
-        currentSnapshot={snapshotHistory[renderIndex]}
+        currentSnapshot={(snapshotHistory[renderIndex]) ? snapshotHistory[renderIndex] : snapshotHistory[0]}
         // !passing through snapshotHistory
         snapshotHistory={snapshotHistory}
         // !passing through selections

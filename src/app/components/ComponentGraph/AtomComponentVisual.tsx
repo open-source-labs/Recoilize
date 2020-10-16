@@ -63,7 +63,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
 
     // creating the tree map
     const treeMap = d3.tree().nodeSize([height, width]);
-
+ 
     if (!rawToggle) {
       root = d3.hierarchy(cleanedComponentAtomTree, function (
         d: componentAtomTree,
