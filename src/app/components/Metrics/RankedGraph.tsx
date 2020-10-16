@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useEffect, useRef} from 'react';
 import * as d3 from 'd3';
 import {componentAtomTree} from '../../../types';
 
@@ -11,11 +11,12 @@ const RankedGraph: React.FC<RankedGraphProps> = ({cleanedComponentAtomTree}: any
   const data: {}[] = [];
   // function to traverse through the fiber tree
   const namesAndDurations = (node: any) => {
-      if (node.name && node.actualDuration) {
-        const obj: any = {}
-        obj["name"] = node.name;
-        obj["actualDuration"] = node.actualDuration;
-        data.push(obj)
+    if (node === undefined) return;
+    if (node.name && node.actualDuration) {
+      const obj: any = {}
+      obj["name"] = node.name;
+      obj["actualDuration"] = node.actualDuration;
+      data.push(obj)
     }
     node.children.forEach((child: any) => namesAndDurations(child))
   }
@@ -39,10 +40,6 @@ const RankedGraph: React.FC<RankedGraphProps> = ({cleanedComponentAtomTree}: any
     const z = d3.scaleBand()
       .range([height,0])
       .padding(0.2)
-
-    const colorScale = d3.scaleLinear()
-      .domain([0.5, 1.5])
-      .range(["green", "red"])
     // append the svg object to the body of the page
     // append a 'group' element to 'svg'
     // moves the 'group' element to the top left margin
