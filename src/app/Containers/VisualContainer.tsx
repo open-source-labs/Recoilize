@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import Diff from '../components/StateDiff/Diff';
 import NavBar from '../components/NavBar/NavBar';
 import Metrics from '../components/Metrics/MetricsContainer';
