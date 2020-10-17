@@ -57,9 +57,9 @@ const createAtomsSelectorArray = node => {
 // keep an eye on this section as we test bigger and bigger applications SEAN
 const assignName = node => {
   // Returns symbol key if $$typeof is defined. Some components, such as context providers, will have this value.
-  if(node.type && node.type.$$typeof) return Symbol.keyFor(node.type.$$typeof);
-  // Return suspense if tag is equal to 13, which is associated with Suspense components. 
-  if(node.tag === 13) return 'Suspense';
+  if (node.type && node.type.$$typeof) return Symbol.keyFor(node.type.$$typeof);
+  // Return suspense if tag is equal to 13, which is associated with Suspense components.
+  if (node.tag === 13) return 'Suspense';
   // Find name of a class component
   if (node.type && node.type.name) return node.type.name;
   // Tag 5 === HostComponent
