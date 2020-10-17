@@ -35,7 +35,7 @@ const cleanComponentAtomTree = (inputObj: componentAtomTree): componentAtomTree 
   let counter = 0;
   const innerClean = (inputObj: any, outputObj: any, counter: number = 0) => {
     if (
-      inputObj.tag === 0 &&
+      (inputObj.tag === 0 || inputObj.tag === 2) &&
       inputObj.name !== 'RecoilRoot' &&
       inputObj.name !== 'Batcher' &&
       inputObj.name !== 'RecoilizeDebugger' &&
@@ -113,7 +113,6 @@ const VisualContainer: React.FC<VisualContainerProps> = ({
   const cleanedComponentAtomTree = currentSnapshot
     ? cleanComponentAtomTree(currentSnapshot.componentAtomTree)
     : undefined;
-
 
   // object containing all conditional renders based on navBar
   const nav: navTypes = {
