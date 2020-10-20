@@ -79,9 +79,10 @@ const RankedGraph: React.FC<RankedGraphProps> = ({cleanedComponentAtomTree}: any
         const barName = 'hello from barName';
         const payload = {
           action: "mouseover",
+          tabId: chrome.devtools.inspectedWindow.tabId,
           payload: barName
         }
-        backgroundConnection.postMessage(payload)
+        backgroundConnection.postMessage(payload);
       })
       .on("mouseout", function(){
         d3.select(this).attr('opacity', '1');
@@ -89,6 +90,7 @@ const RankedGraph: React.FC<RankedGraphProps> = ({cleanedComponentAtomTree}: any
         let barName = this.name;
         const payload = {
           action: "mouseout",
+          tabId: chrome.devtools.inspectedWindow.tabId,
           payload: barName
         }
         backgroundConnection.postMessage(payload)
@@ -127,3 +129,10 @@ const RankedGraph: React.FC<RankedGraphProps> = ({cleanedComponentAtomTree}: any
 };
 
 export default RankedGraph;
+
+
+chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+  chrome.tabs.sendMessage(tabs[0].id, {greeting: "hello"}, function(response) {
+    console.log(response.farewell);
+  });
+});

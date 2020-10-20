@@ -38,7 +38,9 @@ const SnapshotsContainer: React.FC<SnapshotsContainerProps> = ({
     backgroundConnection.postMessage({
       action: 'snapshotTimeTravel',
       tabId: chrome.devtools.inspectedWindow.tabId,
-      payload: {snapshotIndex: index + indexDiff},
+      payload: {
+        snapshotIndex: index + indexDiff,
+      },
     });
   };
   return (
