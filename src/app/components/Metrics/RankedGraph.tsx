@@ -42,9 +42,9 @@ const RankedGraph: React.FC<RankedGraphProps> = ({cleanedComponentAtomTree}: any
       .padding(0.2)
     // determines the color based on actualDuration
     function colorPicker(data: any) {
-      if(data <= 1 ) return '#4dd2ff';
-      else if(data <= 2) return '#00ace6'
-      else return '#006080';
+      if(data <= 1 ) return '#51a8f0';
+      else if(data <= 2) return '#3a7bb0'
+      else return '#2d608a';
     }
     // append the svg object to the body of the page
     // append a 'group' element to 'svg'
