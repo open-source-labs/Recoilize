@@ -6,7 +6,6 @@ interface RankedGraphProps {
   cleanedComponentAtomTree: componentAtomTree;
 }
 
-
 const RankedGraph: React.FC<RankedGraphProps> = ({cleanedComponentAtomTree}: any) => {
   // create an empty array to store objects for property name and actualDuration
   const data: {}[] = [];
@@ -41,6 +40,12 @@ const RankedGraph: React.FC<RankedGraphProps> = ({cleanedComponentAtomTree}: any
     const z = d3.scaleBand()
       .range([height,0])
       .padding(0.2)
+    // determines the color based on actualDuration
+    function colorPicker(data: any) {
+      if(data <= 1 ) return '#4dd2ff';
+      else if(data <= 2) return '#00ace6'
+      else return '#006080';
+    }
     // append the svg object to the body of the page
     // append a 'group' element to 'svg'
     // moves the 'group' element to the top left margin
@@ -57,7 +62,7 @@ const RankedGraph: React.FC<RankedGraphProps> = ({cleanedComponentAtomTree}: any
       .append("g")
       .attr("transform", 
             "translate(" + margin.left + "," + margin.top + ")")
-    // Scale the range of the data in the domains
+    // Scale the range of the data in the domain
     x.domain([0, d3.max(data, (d: any) => {
        return d.actualDuration; 
       })])
@@ -100,9 +105,8 @@ const RankedGraph: React.FC<RankedGraphProps> = ({cleanedComponentAtomTree}: any
       .duration(750)
       .delay((d: any,i: any) => i * 100)
       .attr("width", function(d: any) {return x(d.actualDuration); } )
-      .attr("fill", function(d:any) {
-        // return "rgb("+ Math.round(d.actualDuration * 120) + ",0," + Math.round(d.actualDuration * 10) + ")";
-        return "rgb("+ "0" + "," + Math.round(d.actualDuration * 130) + "," + Math.round(d.actualDuration * 170) + ")";
+      .attr('fill',function(d:any) {
+        return colorPicker(d.actualDuration)
       })
       .attr("y", function(d: any, i: any) { return y(d.name + '-' + i)})
       .attr("height", y.bandwidth());
