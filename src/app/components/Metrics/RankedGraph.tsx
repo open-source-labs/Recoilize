@@ -51,6 +51,9 @@ const RankedGraph: React.FC<RankedGraphProps> = ({cleanedComponentAtomTree}: any
       .attr("viewBox", "0 0 600 490")
       .attr("preserveAspectRatio", "xMinYMin meet")
       .classed("svg-content-responsive", true)
+      .call(d3.zoom().on("zoom", function () {
+        svg.attr("transform", d3.event.transform)
+     }))
       .append("g")
       .attr("transform", 
             "translate(" + margin.left + "," + margin.top + ")")
