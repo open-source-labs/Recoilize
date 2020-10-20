@@ -31,8 +31,6 @@ const RankedGraph: React.FC<RankedGraphProps> = ({cleanedComponentAtomTree, widt
 
   const svgRef = useRef();
   useEffect(() => {
-    // const width = document.querySelector('.RankedGraph').clientWidth;
-    // const height = 375;
     document.getElementById('canvas').innerHTML = '';
     // set the dimensions and margins of the graph
     let left = 80;
@@ -136,7 +134,9 @@ const RankedGraph: React.FC<RankedGraphProps> = ({cleanedComponentAtomTree, widt
   },[data]);
   
   return (
-    <svg id='canvas' ref={svgRef}></svg>
+    <div data-testid='canvas' id='stateGraphContainer'>
+      <svg id='canvas' ref={svgRef}></svg>
+    </div>
   );
 };
 
