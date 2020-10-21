@@ -3,6 +3,7 @@ interface Msg {
   action: string;
   tabId?: string;
   payload?: object;
+  test?: number;
 }
 
 interface Connections {
@@ -39,6 +40,12 @@ chrome.runtime.onConnect.addListener(port => {
       case 'snapshotTimeTravel':
         if (tabId) {
           // if msg tabId provided, send time travel snapshot history to content-script
+          chrome.tabs.sendMessage(Number(tabId), msg);
+        }
+        break;
+      
+      case 'mouseover':
+        if(tabId) {
           chrome.tabs.sendMessage(Number(tabId), msg);
         }
         break;

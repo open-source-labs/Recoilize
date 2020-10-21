@@ -136,9 +136,6 @@ export default function RecoilizeDebugger(props) {
       case 'throttleEdit':
         throttleLimit = parseInt(msg.data.payload.value);
         break;
-      // Hover effect payload handling
-      case 'mouseover':
-        let hoverComponent = 
       default:
         break;
     }

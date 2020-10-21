@@ -34,14 +34,20 @@ const Metrics: React.FC<MetricsProps> = ({cleanedComponentAtomTree}) => {
     }
     else{
       return(
-        <RankedGraph cleanedComponentAtomTree={cleanedComponentAtomTree}/>
+        <ParentSize>
+          {size =>
+            size.ref &&
+            <RankedGraph cleanedComponentAtomTree={cleanedComponentAtomTree} width={size.width} height={size.height}/>
+          }
+        </ParentSize>
+        
       );
     }
   }
   
   //render the toggle buttons and the appropriate graph based on GraphType state variable
   return (
-    <div>
+    <div id="metricsWrapper">
       <div data-testid="canvas" className="graphContainer">
         <button
           className="graphButton"

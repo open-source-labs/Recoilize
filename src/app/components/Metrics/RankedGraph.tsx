@@ -3,17 +3,24 @@ import * as d3 from 'd3';
 import {componentAtomTree} from '../../../types';
 
 interface RankedGraphProps {
-  cleanedComponentAtomTree: componentAtomTree;
+  cleanedComponentAtomTree: componentAtomTree,
+  width?: number,
+  height?: number, 
 }
 
-const RankedGraph: React.FC<RankedGraphProps> = ({cleanedComponentAtomTree}: any) => {
+const RankedGraph: React.FC<RankedGraphProps> = ({cleanedComponentAtomTree, width, height}: RankedGraphProps) => {
+
   // create an empty array to store objects for property name and actualDuration
   const data: {}[] = [];
+  let length = 0;
   // function to traverse through the fiber tree
   const namesAndDurations = (node: any) => {
     if (node === undefined) return;
     if (node.name && node.actualDuration) {
       const obj: any = {}
+      if(node.name.length > length){
+        length = node.name.length;
+      }
       obj["name"] = node.name;
       obj["actualDuration"] = node.actualDuration;
       data.push(obj)
@@ -24,18 +31,24 @@ const RankedGraph: React.FC<RankedGraphProps> = ({cleanedComponentAtomTree}: any
 
   const svgRef = useRef();
   useEffect(() => {
-    const width = document.querySelector('.RankedGraph').clientWidth;
-    const height = 375;
     document.getElementById('canvas').innerHTML = '';
     // set the dimensions and margins of the graph
-    const margin = {top: 20, right: 20, bottom: 30, left: 80}
+    let left = 80;
+    if(length > 13){
+      left = 100;
+    }
+    if(length > 17){
+      left = 120;
+    }
+    
+    const margin = {top: 20, right: 20, bottom: 30, left}
     // set range for y scale 
     const y = d3.scaleBand()
-      .range([height, 0])
+      .range([(height), 0])
       .padding(0.2);
     // set range for x scale
     const x = d3.scaleLinear()
-      .range([0, width]);  
+      .range([0, (width * 0.8)]);  
     // set range for durations      
     const z = d3.scaleBand()
       .range([height,0])
@@ -82,14 +95,14 @@ const RankedGraph: React.FC<RankedGraphProps> = ({cleanedComponentAtomTree}: any
       .attr("class", "bar")
       .on("mouseover", function() {
         d3.select(this).attr('opacity', '0.85');
-        console.log('in the ranked graph function')
         const backgroundConnection = chrome.runtime.connect();
         const barName = 'hello from barName';
         const payload = {
           action: "mouseover",
+          tabId: chrome.devtools.inspectedWindow.tabId,
           payload: barName
         }
-        backgroundConnection.postMessage(payload)
+        backgroundConnection.postMessage(payload);
       })
       .on("mouseout", function(){
         d3.select(this).attr('opacity', '1');
@@ -97,6 +110,7 @@ const RankedGraph: React.FC<RankedGraphProps> = ({cleanedComponentAtomTree}: any
         let barName = this.name;
         const payload = {
           action: "mouseout",
+          tabId: chrome.devtools.inspectedWindow.tabId,
           payload: barName
         }
         backgroundConnection.postMessage(payload)
@@ -126,9 +140,7 @@ const RankedGraph: React.FC<RankedGraphProps> = ({cleanedComponentAtomTree}: any
   
   return (
     <div data-testid='canvas' id='stateGraphContainer'>
-      <div className='RankedGraph'>
-        <svg id='canvas' ref={svgRef}></svg>
-      </div>
+      <svg id='canvas' ref={svgRef}></svg>
     </div>
   );
 };

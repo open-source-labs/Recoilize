@@ -192,9 +192,14 @@ body {
 }
 
 /* VISUALIZER COMPONENT  */
+#metricsWrapper {
+  height: calc(100% - 33px);
+  width: 100%;
+}
+
 .RankedGraph,
 #canvas {
-  height: 100%;
+  flex-grow: 1;
   width: 100%;
   overflow: hidden;
 }
@@ -209,7 +214,7 @@ body {
   display: inline-block;
   position: relative;
   width: 100%;
-  padding-bottom: 50%; /* aspect ratio */
+  /* padding-bottom: 50%; aspect ratio */
   vertical-align: top;
   overflow: hidden;
 }
