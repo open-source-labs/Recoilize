@@ -1,7 +1,7 @@
 {
   "name": "recoilize",
-  "version": "0.8.0",
-  "description": "",
+  "version": "0.9.0",
+  "description": "Recoil Dev Tool",
   "main": "index.ts",
   "repository": {
     "type": "git",
@@ -10,13 +10,13 @@
   "peerDependencies": {
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "recoil": "^0.0.10"
+    "recoil": "^0.0.13"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepublish": "tsc ./*.ts"
   },
-  "author": "Bren Yamaguchi, Saejin Kang, Jonathan Escamilla, Sean Smith, Justin Choo, Anthony Lin, Spenser Schwartz, Steven Nguyen, Henry Taing, Seungho Baek",
+  "author": "Bren Yamaguchi, Saejin Kang, Jonathan Escamilla, Sean Smith, Justin Choo, Anthony Lin, Spenser Schwartz, Steven Nguyen, Henry Taing, Seungho Baek, Taven Shumaker, Aaron Yang, Jesus Vargas, Davide Molino",
   "license": "MIT",
   "devDependencies": {
     "typescript": "^3.9.6"
