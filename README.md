@@ -5,9 +5,6 @@
 </p>
 
 <h1>Debugger for Recoil Applications</h1>
-<h1 align='center'> 
-<img src='./src/extension/build/assets/demo1.gif' width=600 />
-</h1>
 
 # [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/oslabs-beta/Recoilize/blob/staging/LICENSE) [![npm version](https://img.shields.io/npm/v/recoilize)](https://www.npmjs.com/package/recoilize) ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)
 
@@ -17,11 +14,11 @@
 <p>
 Recoilize is a Chrome Dev Tool meant for debugging applications built with the experimental Recoil.js state management library.
 
-The tool records Recoil state and allows users to easily debug their applications with features such as visualization of the component graph and time traveling to previous states.
-
+The tool records Recoil state and allows users to easily debug their applications with features such as time travel to previous states, visualization of the component graph and display of the atom selector network.
 </p>
+
 <p>
-Get Recoilize on the <a href='https://chrome.google.com/webstore/detail/recoilize/jhfmmdhbinleghabnblahfjfalfgidik'>Chrome Store!</a>
+Download Recoilize from the <a href='https://chrome.google.com/webstore/detail/recoilize/jhfmmdhbinleghabnblahfjfalfgidik'>Chrome Store</a>
 </p>
 
 <p>Demo  <a href='https://github.com/justinchoo93/recoil-paint'>Paint app</a></p>
@@ -50,35 +47,44 @@ npm install recoilize
 import RecoilizeDebugger from 'recoilize';
 ```
 
-#### Recoilize requires you to create a variable that grabs the HTML element where you inject your React application
+<!-- #### Recoilize requires you to create a variable that grabs the HTML element where you inject your React application
 
 ```js
 const root = document.getElementById('root');
-```
+``` -->
 
-#### You must import all Atoms and Selectors and pass them into the RecoilizeDebugger component as shown below
+#### Integrate RecoilizeDebugger as a React component within the recoil root:
 
 ```js
-import * as nodes from './store';
+import RecoilizeDebugger from 'recoilize';
+import RecoilRoot from 'recoil';
 
-<RecoilizeDebugger nodes={nodes} root={root} />;
+ReactDOM.render(
+  <RecoilRoot>
+    <RecoilizeDebugger/>
+    <App />
+  </RecoilRoot>,
+  document.getElementById('root'),
+);
 ```
+
+#### Please note, Recoilize assumes that the HTML element used to inject your React application has an ID of 'root'. If it does not the HTML element must be passed in as an attribute called 'root' to the RecoilizeDebugger component
 
 #### Example:
 
 ```js
 import RecoilizeDebugger from 'recoilize';
 import RecoilRoot from 'recoil';
-import * as nodes from './store';
 
-const root = document.getElementById('root');
+//If your app injects on an element with ID of 'app'
+const app = document.getElementById('app');
 
 ReactDOM.render(
   <RecoilRoot>
-    <RecoilizeDebugger nodes={nodes} root={root} />
+    <RecoilizeDebugger root={app} />
     <App />
   </RecoilRoot>,
-  root,
+  app,
 );
 ```
 
@@ -86,16 +92,39 @@ ReactDOM.render(
 
 ##### (Only supported with React applications using Recoil as state management)
 
+<h1>New Features for Version 0.9.2</h1>
+<h3>Support for Recoil 0.13.0</h3>
+<p>Recoilize now supports the most recent update to the Recoil library.</p>
+
+<h3>Ease of Use</h3>
+<p>Recoilize nolonger requires atoms and selectors or the root HTML element to be passed into the RecoilizeDebugger React component. Simply import RecoilizeDubugger and integrate it within your app's RecoilRoot component.</p>
+
+<h3>Support for Concurrent Mode</h3>
+<p>Additonal functionality has been added for apps that utilize React's Suspense component. If a Suspense component was used to suspend component renderings those components will display with a red border in the component graph. This indicates that a component was suspended during the render of the selected snapshot.</p>
+
+<h3>Performance Metrics</h3>
+<p>A new tab, 'Metrics', has been incorperated into the dev tool. In this tab the user will find two graphs which display component render times.
+
+The flame graph displays the time a component took to render itself, and all of its child components. The bar graph displays the individual render times of each component.<p>
+
+<p align='center'> 
+<img src='./src/extension/build/assets/metrics.gif' width=600 height=300/>
+</p>
+
 <h1>Features</h1>
+<h3>Time Travel</h3>
+<p>As one of the key features of Recoilize, the tool enables users to jump to any previous snapshots. Pressing the jump button next to each of the snapshots will change the DOM by setting the state to that snapshot.<p>
+
+<p align='center'> 
+<img src='./src/extension/build/assets/timeTravel.gif' width=600 height=300/>
+</p>
+
 <h3>Visualizations</h3>
 <p>Users are able to view visualizations for their application's state by clicking individual snapshots. Recoilize provides component trees and graphs, as well as the state trees in JSON format.<p>
 
 <p align='center'> 
-<img src='./src/extension/build/assets/visualize.gif' width=600 height=300/>
+<img src='./src/extension/build/assets/components.gif' width=600 height=300/>
 </p>
-
-<h3>Time Travel</h3>
-<p>As one of the key features of Recoilize, the tool enables users to jump to any previous snapshots. Pressing the jump button next to each of the snapshots will change the DOM by setting the state to that snapshot.<p>
 
 <h3>Throttle</h3>
 <p>In the settings tab, users are able to set throttle (in milliseconds) for large scale applications or any applications that changes state rapidly. The default is set at 70ms.<p>
@@ -135,3 +164,11 @@ ReactDOM.render(
 <h4>Henry Taing <a  href='https://github.com/henrytaing' target="_blank">@github </a><a  href='https://www.linkedin.com/in/henrytaing/' target="_blank">@linkedin</a> </h4>
 
 <h4>Seungho Baek <a  href='https://github.com/hobaek' target="_blank">@github </a><a  href='https://www.linkedin.com/in/s2unghobaek/' target="_blank">@linkedin</a> </h4>
+
+<h4>Aaron Yang <a  href='https://github.com/aaronyang24' target="_blank">@github </a><a  href='https://www.linkedin.com/in/aaronyang24/' target="_blank">@linkedin</a> </h4>
+
+<h4>Jesus Vargas <a  href='https://github.com/jmodestov' target="_blank">@github </a><a  href='https://www.linkedin.com/in/jesus-modesto-vargas/' target="_blank">@linkedin</a> </h4>
+
+<h4>Davide Molino <a  href='https://github.com/davidemmolino' target="_blank">@github </a><a  href='https://www.linkedin.com/in/davide-molino/' target="_blank">@linkedin</a> </h4>
+
+<h4>Taven Shumaker <a  href='https://github.com/TavenShumaker' target="_blank">@github </a><a  href='https://www.linkedin.com/in/Taven-Shumaker/' target="_blank">@linkedin</a> </h4>
