@@ -44,11 +44,11 @@ const RankedGraph: React.FC<RankedGraphProps> = ({cleanedComponentAtomTree, widt
     const margin = {top: 20, right: 20, bottom: 30, left}
     // set range for y scale 
     const y = d3.scaleBand()
-      .range([height, 0])
+      .range([(height), 0])
       .padding(0.2);
     // set range for x scale
     const x = d3.scaleLinear()
-      .range([0, width]);  
+      .range([0, (width * 0.8)]);  
     // set range for durations      
     const z = d3.scaleBand()
       .range([height,0])
