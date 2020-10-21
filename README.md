@@ -108,9 +108,7 @@ ReactDOM.render(
 The flame graph displays the time a component took to render itself, and all of its child components. The bar graph displays the individual render times of each component.<p>
 
 <p align='center'> 
-<video autoplay looped muted width=600 height=300>
-<source type='video/mp4' src='./src/extension/build/assets/metricsVid.mp4'>
-</video>
+<img src='./src/extension/build/assets/metics.gif' width=600 height=300/>
 </p>
 
 <h1>Features</h1>
@@ -118,18 +116,14 @@ The flame graph displays the time a component took to render itself, and all of 
 <p>As one of the key features of Recoilize, the tool enables users to jump to any previous snapshots. Pressing the jump button next to each of the snapshots will change the DOM by setting the state to that snapshot.<p>
 
 <p align='center'> 
-<video autoplay looped muted width=600 height=300>
-<source type='video/mp4' src='./src/extension/build/assets/timeTravelVid.mp4'>
-</video>
+<img src='./src/extension/build/assets/timeTravel.gif' width=600 height=300/>
 </p>
 
 <h3>Visualizations</h3>
 <p>Users are able to view visualizations for their application's state by clicking individual snapshots. Recoilize provides component trees and graphs, as well as the state trees in JSON format.<p>
 
 <p align='center'> 
-<video autoplay looped muted width=600 height=300>
-<source type='video/mp4' src='./src/extension/build/assets/componentVid.mp4'>
-</video>
+<img src='./src/extension/build/assets/component.gif' width=600 height=300/>
 </p>
 
 <h3>Throttle</h3>
