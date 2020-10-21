@@ -94,17 +94,21 @@ body {
   background-color: #212121;
 }
 
+.individualSnapshot .timeTravelButton:hover{
+  color: #e6e6e6;
+  border: 1px solid white;
+  background-color: #212121;
+  text-emphasis: bold;
+}
+
 .timeTravelButton {
-  border: none;
+  border: 1px solid #989898;
+  border-radius: 5px;
   color: #989898;
   background: none;
   outline: none;
 }
-.timeTravelButton:hover {
-  color: #e6e6e6;
-  background-color: #212121;
-  text-emphasis: bold;
-}
+
 .timeTravelButton:focus {
   color: #e6e6e6;
   background-color: #212121;
@@ -128,7 +132,6 @@ body {
   height: 100%;
   width: 100%;
 }
-
 /* NAVBAR COMPONENT */
 .NavBar {
   width: 100%;
@@ -189,15 +192,61 @@ body {
 }
 
 /* VISUALIZER COMPONENT  */
-.Visualizer,
-#canvas {
-  height: 100%;
+#metricsWrapper {
+  height: calc(100% - 33px);
   width: 100%;
 }
 
+.RankedGraph,
+#canvas {
+  flex-grow: 1;
+  width: 100%;
+  overflow: hidden;
+}
 #stateGraphContainer {
   height: calc(100% - 33px); /* 33px is height of navbar */
   width: 100%;
+}
+/* .bar { 
+  fill: #9580ff; 
+} */
+.svg-container {
+  display: inline-block;
+  position: relative;
+  width: 100%;
+  /* padding-bottom: 50%; aspect ratio */
+  vertical-align: top;
+  overflow: hidden;
+}
+.svg-content-responsive {
+  display: inline-block;
+  position: absolute;
+  top: 10px;
+  left: 0;
+}
+
+.graphContainer {
+  padding: 10px;
+}
+
+.graphButton {
+  border: 1px solid #989898;
+  border-radius: 5px;
+  color: #989898;
+  background: none;
+  outline: none;
+}
+
+.graphButton:hover{
+  color: #e6e6e6;
+  border: 1px solid white;
+  background-color: #212121;
+  text-emphasis: bold;
+}
+
+.graphButton:focus {
+  color: #e6e6e6;
+  background-color: #212121;
 }
 
 /* NETWORK COMPONENT */
@@ -331,6 +380,16 @@ body {
   margin: 0px;
 }
 
+.suspenseLegend {
+  display: inline-block;
+  background: transparent;
+  width: 20px;
+  height: 20px;
+  border: 3px solid red;
+  border-radius: 20px;
+  margin: 0px;
+}
+
 /* ATOMSELECTORLEGEND COMPONENT */
 .AtomSelectorLegend {
   background-color: rgba(45, 45, 45, 0.65);
@@ -414,6 +473,7 @@ body {
 .dropdown {
   position: relative;
   display: inline-block;
+  color: white;
 }
 
 /* Dropdown Content (Hidden by Default) */
@@ -427,7 +487,7 @@ body {
 
 /* Links inside the dropdown */
 .dropdown-content a {
-  color: black;
+  color:black;
   padding: 12px 16px;
   text-decoration: none;
   display: block;
@@ -514,3 +574,12 @@ input:checked + .slider:before {
 /* Doesn't really do anything because other elements stack on top of it,
  * but scrollbar is broken without it
  */
+
+ /* Code added for verticle icicle graph */
+
+ .path {
+  will-change: d;
+}
+.path:hover {
+  cursor: pointer;
+}

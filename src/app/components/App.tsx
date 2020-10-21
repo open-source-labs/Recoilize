@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import MainContainer from '../Containers/MainContainer';
-import {stateSnapshot, selectedTypes} from '../../types';
+import {stateSnapshot, selectedTypes, stateSnapshotDiff} from '../../types';
 // importing the diff to find difference
 import {diff} from 'jsondiffpatch';
 const LOGO_URL = './assets/Recoilize.png';
@@ -11,7 +11,7 @@ const App: React.FC = () => {
   const [selected, setSelected] = useState<selectedTypes[]>([]);
 
   // todo: Create algo that will clean up the big setsnapshothistory object, now and before
-  let [filter, setFilter] = useState([]);
+  let [filter, setFilter] = useState<stateSnapshotDiff[]>([]);
   // ! Setting up the selected
   useEffect(() => {
     let last;
@@ -89,8 +89,13 @@ const App: React.FC = () => {
     <MainContainer
       // array of snapshots
       snapshotHistory={snapshotHistory}
+
+      // selected will be an array with objects containing filteredSnapshot key names (the atoms and selectors)
+      // ex: [{name: 'Atom1'}, {name: 'Atom2'}, {name: 'Selector1'}, ...]
       selected={selected}
       setSelected={setSelected}
+
+      // Filter is an array of objects containing differences between snapshots.
       filter={filter}
     />
   );

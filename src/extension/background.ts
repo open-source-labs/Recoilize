@@ -1,8 +1,9 @@
 // Message Interface
 interface Msg {
   action: string;
-  tabId: string;
-  payload: object;
+  tabId?: string;
+  payload?: object;
+  test?: number;
 }
 
 interface Connections {
@@ -27,7 +28,6 @@ chrome.runtime.onConnect.addListener(port => {
     switch (action) {
       case 'devToolInitialized':
         connections[tabId] = port;
-
         // read and send back to dev tool current local storage for corresponding tabId & port
         chrome.storage.local.get(null, function (result) {
           connections[tabId].postMessage({
@@ -40,6 +40,12 @@ chrome.runtime.onConnect.addListener(port => {
       case 'snapshotTimeTravel':
         if (tabId) {
           // if msg tabId provided, send time travel snapshot history to content-script
+          chrome.tabs.sendMessage(Number(tabId), msg);
+        }
+        break;
+      
+      case 'mouseover':
+        if(tabId) {
           chrome.tabs.sendMessage(Number(tabId), msg);
         }
         break;
@@ -143,12 +149,14 @@ chrome.runtime.onMessage.addListener((msg, sender) => {
     case 'persistSnapshots':
       // getting the array of filtered snapshots that exists on locoal storage
       chrome.storage.local.get(tabId, function (result) {
-        console.log('storage values', result[tabId]);
+        
         connections[tabId].postMessage({
           action: 'recordSnapshot',
           payload: result[tabId],
         });
       });
+
+      
     default:
       break;
   }
