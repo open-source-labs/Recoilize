@@ -68,7 +68,7 @@ ReactDOM.render(
 );
 ```
 
-#### Please note: Recoilize assumes that the HTML element where you inject your React application has an ID of 'root', if this is not the case the element must be passed in as a 'root' attribute to the RecoilizeDebugger component
+#### Please note, Recoilize assumes that the HTML element used to inject your React application has an ID of 'root'. If it does not the HTML element must be passed in as an attribute called 'root' to the RecoilizeDebugger component
 
 #### Example:
 
