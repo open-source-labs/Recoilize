@@ -20,5 +20,9 @@ chrome.runtime.onMessage.addListener(msg => {
     case 'throttleEdit':
       window.postMessage(msg, '*');
       break;
+    case 'mouseover':
+      console.log('MSG received content script')
+      window.postMessage(msg, '*')
+      break;
   }
 });

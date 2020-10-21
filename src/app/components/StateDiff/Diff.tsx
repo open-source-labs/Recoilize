@@ -8,6 +8,7 @@ interface DiffProps {
   filteredPrevSnap: filteredSnapshot;
   // snapshot at index [curRender]
   filteredCurSnap: filteredSnapshot;
+  //length of snapshotHistory
 }
 
 // renders the difference between the most recent state change and the previous

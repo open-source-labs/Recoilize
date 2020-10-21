@@ -1,14 +1,14 @@
 import React, {useState, useEffect} from 'react';
 import SnapshotsContainer from './SnapshotContainer';
 import VisualContainer from './VisualContainer';
-import {stateSnapshot, selectedTypes} from '../../types';
+import {stateSnapshot, selectedTypes, stateSnapshotDiff} from '../../types';
 
 interface MainContainerProps {
   // snapshotHistory is an array of stateSnapshots
   snapshotHistory: stateSnapshot[];
   selected: selectedTypes[];
   setSelected: React.Dispatch<React.SetStateAction<selectedTypes[]>>;
-  filter: stateSnapshot[];
+  filter: stateSnapshotDiff[];
 }
 
 // wraps entire application
@@ -27,7 +27,9 @@ const MainContainer: React.FC<MainContainerProps> = ({
 
   // useEffect for renderIndex
   useEffect(() => {
+
     setRenderIndex(snapshotHistory.length - 1);
+
   }, [snapshotHistory]);
 
   // render containers passing necessary props
@@ -43,12 +45,13 @@ const MainContainer: React.FC<MainContainerProps> = ({
         // ! passing through selected
         selected={selected}
         filter={filter}
+        snapshotHistory={snapshotHistory}
       />
       <VisualContainer
         // snapshot at index [renderIndex -1]
         previousSnapshot={snapshotHistory[renderIndex - 1]}
         // snapshot at index [renderIndex]
-        currentSnapshot={snapshotHistory[renderIndex]}
+        currentSnapshot={(snapshotHistory[renderIndex]) ? snapshotHistory[renderIndex] : snapshotHistory[0]}
         // !passing through snapshotHistory
         snapshotHistory={snapshotHistory}
         // !passing through selections
