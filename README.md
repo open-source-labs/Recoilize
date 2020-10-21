@@ -108,7 +108,7 @@ ReactDOM.render(
 The flame graph displays the time a component took to render itself, and all of its child components. The bar graph displays the individual render times of each component.<p>
 
 <p align='center'> 
-<img src='./src/extension/build/assets/metics.gif' width=600 height=300/>
+<img src='./src/extension/build/assets/metrics.gif' width=600 height=300/>
 </p>
 
 <h1>Features</h1>
@@ -123,7 +123,7 @@ The flame graph displays the time a component took to render itself, and all of 
 <p>Users are able to view visualizations for their application's state by clicking individual snapshots. Recoilize provides component trees and graphs, as well as the state trees in JSON format.<p>
 
 <p align='center'> 
-<img src='./src/extension/build/assets/component.gif' width=600 height=300/>
+<img src='./src/extension/build/assets/components.gif' width=600 height=300/>
 </p>
 
 <h3>Throttle</h3>
