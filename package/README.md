@@ -1,17 +1,8 @@
 <meta name='keywords' content='Recoil, Recoil.js, Recoil Dev Tool, Recoilize, Chrome Dev Tool, Recoil Chrome'>
 
-<p align='center'>
-<img src='./src/extension/build/assets/cover-photo-logo-recoilize.jpg' width=100%>
-</p>
-
 <h1>Debugger for Recoil Applications</h1>
-<h1 align='center'> 
-<img src='./src/extension/build/assets/demo1.gif' width=600 />
-</h1>
 
 # [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/oslabs-beta/Recoilize/blob/staging/LICENSE) [![npm version](https://img.shields.io/npm/v/recoilize)](https://www.npmjs.com/package/recoilize) ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)
-
-[Korean README 한국어](README_KO.md)
 
 <h1> About</h1>
 <p>
@@ -24,7 +15,7 @@ The tool records Recoil state and allows users to easily debug their application
 Download Recoilize from the <a href='https://chrome.google.com/webstore/detail/recoilize/jhfmmdhbinleghabnblahfjfalfgidik'>Chrome Store</a>
 </p>
 
-<p>Demo  <a href='https://github.com/justinchoo93/recoil-paint'>Paint app</a></p>
+<p>Demo from the Recoilize <a href='https://github.com/justinchoo93/recoil-paint'>landing page</a></p>
 
 <h2>
 ** STILL IN BETA **
@@ -49,12 +40,6 @@ npm install recoilize
 ```js
 import RecoilizeDebugger from 'recoilize';
 ```
-
-<!-- #### Recoilize requires you to create a variable that grabs the HTML element where you inject your React application
-
-```js
-const root = document.getElementById('root');
-``` -->
 
 #### Integrate RecoilizeDebugger as a React component within the recoil root:
 
@@ -108,30 +93,14 @@ ReactDOM.render(
 
 The flame graph displays the time a component took to render itself, and all of its child components. The bar graph displays the individual render times of each component.<p>
 
-<p align='center'> 
-<video autoplay looped muted width=600 height=300>
-<source type='video/mp4' src='./src/extension/build/assets/metricsVid.mp4'>
-</video>
-</p>
+
 
 <h1>Features</h1>
 <h3>Time Travel</h3>
 <p>As one of the key features of Recoilize, the tool enables users to jump to any previous snapshots. Pressing the jump button next to each of the snapshots will change the DOM by setting the state to that snapshot.<p>
 
-<p align='center'> 
-<video autoplay looped muted width=600 height=300>
-<source type='video/mp4' src='./src/extension/build/assets/timeTravelVid.mp4'>
-</video>
-</p>
-
 <h3>Visualizations</h3>
 <p>Users are able to view visualizations for their application's state by clicking individual snapshots. Recoilize provides component trees and graphs, as well as the state trees in JSON format.<p>
-
-<p align='center'> 
-<video autoplay looped muted width=600 height=300>
-<source type='video/mp4' src='./src/extension/build/assets/componentVid.mp4'>
-</video>
-</p>
 
 <h3>Throttle</h3>
 <p>In the settings tab, users are able to set throttle (in milliseconds) for large scale applications or any applications that changes state rapidly. The default is set at 70ms.<p>
