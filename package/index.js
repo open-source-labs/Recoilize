@@ -24,11 +24,15 @@ export default function RecoilizeDebugger(props) {
   // We should ask for Array of atoms and selectors.
   // Captures all atoms that were defined to get the initial state
 
+  // Define a recoilizeRoot variable which will be assigned based on whether a root is passed in as a prop
+  let recoilizeRoot;
+
   // Check if a root was passed to props.
   if (props.root) {
     const {root} = props;
+    recoilizeRoot = root;
   } else {
-    const root = document.getElementById('root');
+    recoilizeRoot = document.getElementById('root');
   }
 
   const snapshot = useRecoilSnapshot();
@@ -181,7 +185,7 @@ export default function RecoilizeDebugger(props) {
       return {
         filteredSnapshot: filteredSnapshot,
         componentAtomTree: formatFiberNodes(
-          root._reactRootContainer._internalRoot.current,
+          recoilizeRoot._reactRootContainer._internalRoot.current,
         ),
       };
     } else {
@@ -189,7 +193,7 @@ export default function RecoilizeDebugger(props) {
       return {
         filteredSnapshot: filteredSnapshot,
         componentAtomTree: formatFiberNodes(
-          root._reactRootContainer._internalRoot.current,
+          recoilizeRoot._reactRootContainer._internalRoot.current,
         ),
         indexDiff: diff,
       };
