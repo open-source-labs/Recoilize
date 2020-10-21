@@ -5,9 +5,6 @@
 </p>
 
 <h1>Debugger for Recoil Applications</h1>
-<h1 align='center'> 
-<img src='./src/extension/build/assets/demo1.gif' width=600 />
-</h1>
 
 # [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/oslabs-beta/Recoilize/blob/staging/LICENSE) [![npm version](https://img.shields.io/npm/v/recoilize)](https://www.npmjs.com/package/recoilize) ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)
 
@@ -71,7 +68,9 @@ ReactDOM.render(
 );
 ```
 
-### Please note: Recoilize assumes that the HTML element where you inject your React application has an ID of 'root', if this is not the case the element must be passed in as a 'root' attribute to the RecoilizeDebugger component
+#### Please note: Recoilize assumes that the HTML element where you inject your React application has an ID of 'root', if this is not the case the element must be passed in as a 'root' attribute to the RecoilizeDebugger component
+
+#### Example:
 
 ```js
 import RecoilizeDebugger from 'recoilize';
