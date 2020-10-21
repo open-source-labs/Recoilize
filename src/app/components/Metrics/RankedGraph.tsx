@@ -17,6 +17,7 @@ const RankedGraph: React.FC<RankedGraphProps> = ({cleanedComponentAtomTree, widt
   const namesAndDurations = (node: any) => {
     if (node === undefined) return;
     if (node.name && node.actualDuration) {
+      console.log(node.name, node.actualDuration)
       const obj: any = {}
       if(node.name.length > length){
         length = node.name.length;
@@ -84,8 +85,9 @@ const RankedGraph: React.FC<RankedGraphProps> = ({cleanedComponentAtomTree, widt
       return d.name + '-' + i;
       }));
     // Scale actualDuration with the y-axis
-    z.domain(data.map((d: any) => {
-      return d.actualDuration.toFixed(2) + 'ms';
+    z.domain(data.map((d: any, i) => {
+      console.log(d);
+      return d.actualDuration.toFixed(2) + 'ms' + '-' + i;
     }))
     // append the rectangles for the bar chart
     svg.selectAll(".bar") 
@@ -96,7 +98,8 @@ const RankedGraph: React.FC<RankedGraphProps> = ({cleanedComponentAtomTree, widt
       .on("mouseover", function() {
         d3.select(this).attr('opacity', '0.85');
         const backgroundConnection = chrome.runtime.connect();
-        const barName = 'hello from barName';
+        const barName = this.data
+        console.log('name of bars : ', this.getAttribute("rect"))
         const payload = {
           action: "mouseover",
           tabId: chrome.devtools.inspectedWindow.tabId,
@@ -104,19 +107,8 @@ const RankedGraph: React.FC<RankedGraphProps> = ({cleanedComponentAtomTree, widt
         }
         backgroundConnection.postMessage(payload);
       })
-      .on("mouseout", function(){
-        d3.select(this).attr('opacity', '1');
-        const backgroundConnection = chrome.runtime.connect();
-        let barName = this.name;
-        const payload = {
-          action: "mouseout",
-          tabId: chrome.devtools.inspectedWindow.tabId,
-          payload: barName
-        }
-        backgroundConnection.postMessage(payload)
-      })
       .transition()
-      .duration(750)
+      .duration(1300)
       .delay((d: any,i: any) => i * 100)
       .attr("width", function(d: any) {return x(d.actualDuration); } )
       .attr('fill',function(d:any) {
@@ -134,8 +126,14 @@ const RankedGraph: React.FC<RankedGraphProps> = ({cleanedComponentAtomTree, widt
         return d.split("-")[0];
       });
     yAxis(svg.append("g"));
-    svg.append('g')
-      .call(d3.axisRight(z));
+    // add z axis to display all duration times
+    const zAxis = d3.axisRight(z)
+    .tickFormat(function(d: any) {
+      return d.split("-")[0];
+    });
+    zAxis(svg.append("g"));
+    // svg.append('g')
+    //   .call(d3.axisRight(z));
   },[data]);
   
   return (
