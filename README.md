@@ -21,7 +21,7 @@ The tool records Recoil state and allows users to easily debug their application
 Download Recoilize from the <a href='https://chrome.google.com/webstore/detail/recoilize/jhfmmdhbinleghabnblahfjfalfgidik'>Chrome Store</a>
 </p>
 
-<p>Demo  <a href='https://github.com/justinchoo93/recoil-paint'>Paint app</a></p>
+<p>Visit the Recoilize <a href='https://www.recoilize.io/'>landing page</a> to demo</p>
 
 <h2>
 ** STILL IN BETA **
@@ -92,7 +92,7 @@ ReactDOM.render(
 
 ##### (Only supported with React applications using Recoil as state management)
 
-<h1>New Features for Version 0.9.2</h1>
+<h1>New Features for Version 0.9.4</h1>
 <h3>Support for Recoil 0.13.0</h3>
 <p>Recoilize now supports the most recent update to the Recoil library.</p>
 
