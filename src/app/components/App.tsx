@@ -3,6 +3,8 @@ import MainContainer from '../Containers/MainContainer';
 import {stateSnapshot, selectedTypes, stateSnapshotDiff} from '../../types';
 // importing the diff to find difference
 import {diff} from 'jsondiffpatch';
+
+
 const LOGO_URL = './assets/Recoilize.png';
 const App: React.FC = () => {
   // useState hook to update the snapshotHistory array
