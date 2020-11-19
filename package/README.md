@@ -1,22 +1,19 @@
 <meta name='keywords' content='Recoil, Recoil.js, Recoil Dev Tool, Recoilize, Chrome Dev Tool, Recoil Chrome'>
 
-
 <h1>Debugger for Recoil Applications</h1>
 
 # [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/oslabs-beta/Recoilize/blob/staging/LICENSE) [![npm version](https://img.shields.io/npm/v/recoilize)](https://www.npmjs.com/package/recoilize) ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)
-
 
 # [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/oslabs-beta/Recoilize/blob/staging/LICENSE) [![npm version](https://img.shields.io/npm/v/recoilize)](https://www.npmjs.com/package/recoilize) ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)
 
 [Korean README 한국어](README_KO.md)
 
-
 <h1> About</h1>
 <p>
 Recoilize is a Chrome Dev Tool meant for debugging applications built with the experimental Recoil.js state management library.
 
-
 The tool records Recoil state and allows users to easily debug their applications with features such as time travel to previous states, visualization of the component graph and display of the atom selector network.
+
 </p>
 
 <p>
@@ -49,7 +46,6 @@ npm install recoilize
 import RecoilizeDebugger from 'recoilize';
 ```
 
-
 #### Integrate RecoilizeDebugger as a React component within the recoil root:
 
 ```js
@@ -58,7 +54,7 @@ import RecoilRoot from 'recoil';
 
 ReactDOM.render(
   <RecoilRoot>
-    <RecoilizeDebugger/>
+    <RecoilizeDebugger />
     <App />
   </RecoilRoot>,
   document.getElementById('root'),
@@ -89,8 +85,6 @@ ReactDOM.render(
 
 ##### (Only supported with React applications using Recoil as state management)
 
-
-
 <h1>New Features for Version 0.9.4</h1>
 
 <h3>Support for Recoil 0.13.0</h3>
@@ -106,8 +100,6 @@ ReactDOM.render(
 <p>A new tab, 'Metrics', has been incorperated into the dev tool. In this tab the user will find two graphs which display component render times.
 
 The flame graph displays the time a component took to render itself, and all of its child components. The bar graph displays the individual render times of each component.<p>
-
-
 
 <h1>Features</h1>
 <h3>Time Travel</h3>
@@ -163,3 +155,10 @@ The flame graph displays the time a component took to render itself, and all of 
 
 <h4>Taven Shumaker <a  href='https://github.com/TavenShumaker' target="_blank">@github </a><a  href='https://www.linkedin.com/in/Taven-Shumaker/' target="_blank">@linkedin</a> </h4>
 
+<h4>Janis Hernandez <a  href='https://github.com/Janis-H' target="_blank">@github </a><a  href='https://www.linkedin.com/in/janis-hernandez-aguilar/' target="_blank">@linkedin</a> </h4>
+
+<h4>Jaime Baik <a  href='https://github.com/jaimebaik' target="_blank">@github </a><a  href='https://www.linkedin.com/in/jaime-baik/' target="_blank">@linkedin</a> </h4>
+
+<h4>Anthony Magallanes <a  href='https://github.com/amagalla' target="_blank">@github </a><a  href='https://www.linkedin.com/in/anthony-magallanes/' target="_blank">@linkedin</a> </h4>
+
+<h4>Edward Shei <a  href='https://github.com/calibeach' target="_blank">@github </a><a  href='https://www.linkedin.com/in/edwardshei/' target="_blank">@linkedin</a> </h4>
