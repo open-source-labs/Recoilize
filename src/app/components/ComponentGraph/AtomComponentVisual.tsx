@@ -335,9 +335,9 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
 
       function colorComponents(d: any): string {
         // if component node contains recoil atoms or selectors, make it orange red or yellow, otherwise keep node gray
-      
+        
+        // console.log('hello from data! ', d.data)
         if (d.data.recoilNodes && d.data.recoilNodes.length) {
-    
           if (d.data.recoilNodes.includes(selectedRecoilValue[0])) {
             // Color of atom or selector when clicked on in legend
             return 'yellow';
