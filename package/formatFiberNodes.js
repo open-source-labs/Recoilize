@@ -32,25 +32,32 @@ const createAtomsSelectorArray = node => {
 
   // Traverse through the memoizedStates and look for the deps key which holds selectors or state.
   while (currentNode) {
-    // if the memoizedState has a deps key, and that deps key is an array of length 2 then the first value of that array will be an atom or selector
+    // if the memoizedState has a deps key, and that deps key is an array
+    // then the first value of that array will be an atom or selector
     if (
-      currentNode.deps &&
-      Array.isArray(currentNode.deps) &&
-      currentNode.deps.length === 2
+      currentNode.hasOwnProperty('memoizedState') &&
+      typeof currentNode.memoizedState === 'object' &&
+      !Array.isArray(currentNode.memoizedState) &&
+      currentNode.memoizedState.hasOwnProperty('deps')
     ) {
-      // if the atom/selector already exist in the recoilNodes array then break from this while loop. At this point you are traversing through previous atom/selector deps.
-      if (recoilNodes.includes(currentNode.deps[0].key)) break;
-      recoilNodes.push(currentNode.deps[0].key);
-
-      // if an atom/selector was successfully pushed into the recoilNodes array then the pointer should now point to the next key, which will have its own deps key if there is another atom/selector
-      currentNode = currentNode.next;
-    } else {
-      // This is the case where there is no atom/selector in the memoizedState. Look into the memoized state of the next key. If that doesn't exist then break from the while loop because there are no atoms/selectors at this point.
-      if (!currentNode.next) break;
-      if (!currentNode.next.memoizedState) break;
-      currentNode = currentNode.next.memoizedState;
+      if (
+        Array.isArray(currentNode.memoizedState.deps) &&
+        typeof currentNode.memoizedState.deps[0] === 'object'
+      ) {
+        // if recoilNodes (arr) includes the current atom or selector
+        if (recoilNodes.includes(currentNode.memoizedState.deps[0].key)) {
+          // do nothing
+          console.log('has');
+        } else {
+          // otherwise push atom/selector to recoilNodes
+          recoilNodes.push(currentNode.memoizedState.deps[0].key);
+        }
+      }
     }
+    // move onto next node
+    currentNode = currentNode.next;
   }
+  // return atom and selectors array
   return recoilNodes;
 };
 
@@ -72,7 +79,7 @@ const assignName = node => {
   if (node.tag === 7) return 'Fragment';
 };
 
-module.exports = {formatFiberNodes};
+module.exports = { formatFiberNodes };
 
 // if testing this function on the browser, use line below to log the formatted tree in the console
 //let formattedFiberNodes = formatFiberNodes(document.getElementById('root')._reactRootContainer._internalRoot.current)
