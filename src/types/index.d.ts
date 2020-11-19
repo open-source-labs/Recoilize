@@ -60,6 +60,12 @@ export type componentAtomTreeDiff = {
   wasSuspended: boolean | boolean [];
 }
 
+export type dataDuration = {
+  [name: string]: any;
+}
+
+export type dataDurationArr = dataDuration[];
+
 //////////////////////////
 // TODO BE BETTER TYPED //
 //////////////////////////
