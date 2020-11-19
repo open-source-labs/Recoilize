@@ -1,6 +1,11 @@
 {
+<<<<<<< HEAD
   "name": "Recoilize-production",
   "version": "0.9.6",
+=======
+  "name": "Recoilize",
+  "version": "0.9.5",
+>>>>>>> f8a7539b0933dd29ea70797c798567423b70202d
   "devtools_page": "devtools.html",
   "description": "A Chrome extension that helps debug Recoil applications by memorizing the state of components with every render.",
   "manifest_version": 2,
