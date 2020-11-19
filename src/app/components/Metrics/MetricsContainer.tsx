@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import { ParentSize } from '@vx/responsive';
-import {componentAtomTree} from '../../../types';
+import {componentAtomTree, dataDuration, dataDurationArr} from '../../../types';
 import FlameGraph from './FlameGraph.js';
 import RankedGraph from './RankedGraph';
 
 interface MetricsProps {
   cleanedComponentAtomTree: componentAtomTree;
 }
-
 
 const Metrics: React.FC<MetricsProps> = ({cleanedComponentAtomTree}) => {
   
@@ -19,6 +18,25 @@ const Metrics: React.FC<MetricsProps> = ({cleanedComponentAtomTree}) => {
     flame ? setGraphType(false) : setGraphType(true);
   };
 
+  // create an empty array to store objects for property name and actualDuration for rankedGraph
+  const dataDurationArr: dataDurationArr = [];
+  let length = 0;
+  // function to traverse through the fiber tree
+  const namesAndDurations = (node: any) => {
+    if (node === undefined) return;
+    if (node.name && node.actualDuration) {
+      const obj: any = {}
+      if(node.name.length > length){
+        length = node.name.length;
+      }
+      obj["name"] = node.name;
+      obj["actualDuration"] = node.actualDuration;
+      dataDurationArr.push(obj)
+    }
+    node.children.forEach((child: any) => namesAndDurations(child))
+  }
+  namesAndDurations(cleanedComponentAtomTree);
+
   //function that renders either graphComponent based on graphType state variable
   const determineRender: any = () => {
     if(graphType){
@@ -27,7 +45,7 @@ const Metrics: React.FC<MetricsProps> = ({cleanedComponentAtomTree}) => {
         <ParentSize>
           {size =>
             size.ref &&
-            <FlameGraph cleanedComponentAtomTree={cleanedComponentAtomTree} width={size.width} height={600} />
+            <FlameGraph cleanedComponentAtomTree = {cleanedComponentAtomTree} width={size.width} height={600} />
           }
         </ParentSize>
       );
@@ -37,7 +55,7 @@ const Metrics: React.FC<MetricsProps> = ({cleanedComponentAtomTree}) => {
         <ParentSize>
           {size =>
             size.ref &&
-            <RankedGraph cleanedComponentAtomTree={cleanedComponentAtomTree} width={size.width} height={size.height}/>
+            <RankedGraph data = {dataDurationArr} width={size.width} height={size.height}/>
           }
         </ParentSize>
         
