@@ -1,10 +1,10 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   useRecoilTransactionObserver_UNSTABLE,
   useRecoilSnapshot,
   useGotoRecoilSnapshot,
 } from 'recoil';
-import {formatFiberNodes} from './formatFiberNodes';
+import { formatFiberNodes } from './formatFiberNodes';
 
 // grabs isPersistedState from sessionStorage
 let isPersistedState = sessionStorage.getItem('isPersistedState');
@@ -29,7 +29,7 @@ export default function RecoilizeDebugger(props) {
 
   // Check if a root was passed to props.
   if (props.root) {
-    const {root} = props;
+    const { root } = props;
     recoilizeRoot = root;
   } else {
     recoilizeRoot = document.getElementById('root');
@@ -39,7 +39,6 @@ export default function RecoilizeDebugger(props) {
 
   // getNodes_UNSTABLE will return an iterable that contains atom and selector objects.
   const nodes = [...snapshot.getNodes_UNSTABLE()];
-
   // Local state of all previous snapshots to use for time traveling when requested by dev tools.
   const [snapshots, setSnapshots] = useState([snapshot]);
   // const [isRestoredState, setRestoredState] = useState(false);
@@ -236,7 +235,7 @@ export default function RecoilizeDebugger(props) {
   };
 
   // FOR TIME TRAVEL: Recoil hook to fire a callback on every atom/selector change -- research Throttle
-  useRecoilTransactionObserver_UNSTABLE(({snapshot}) => {
+  useRecoilTransactionObserver_UNSTABLE(({ snapshot }) => {
     const now = new Date().getTime();
     if (now - throttleTimer < throttleLimit) {
       isRestoredState = true;
