@@ -1,34 +1,36 @@
 import React, {useEffect, useRef} from 'react';
 import * as d3 from 'd3';
-import {componentAtomTree} from '../../../types';
+import {dataDurationArr} from '../../../types';
 
 interface RankedGraphProps {
-  cleanedComponentAtomTree: componentAtomTree,
+  data: dataDurationArr,
   width?: number,
   height?: number, 
 }
 
-const RankedGraph: React.FC<RankedGraphProps> = ({cleanedComponentAtomTree, width, height}: RankedGraphProps) => {
+const RankedGraph: React.FC<RankedGraphProps> = ({data, width, height}: RankedGraphProps) => {
 
   // create an empty array to store objects for property name and actualDuration
-  const data: {}[] = [];
-  let length = 0;
-  // function to traverse through the fiber tree
-  const namesAndDurations = (node: any) => {
-    if (node === undefined) return;
-    if (node.name && node.actualDuration) {
-      console.log(node.name, node.actualDuration)
-      const obj: any = {}
-      if(node.name.length > length){
-        length = node.name.length;
-      }
-      obj["name"] = node.name;
-      obj["actualDuration"] = node.actualDuration;
-      data.push(obj)
-    }
-    node.children.forEach((child: any) => namesAndDurations(child))
-  }
-  namesAndDurations(cleanedComponentAtomTree);
+  // const data: {}[] = [];
+  // let length = 0;
+  // // function to traverse through the fiber tree
+  // const namesAndDurations = (node: any) => {
+  //   if (node === undefined) return;
+  //   if (node.name && node.actualDuration) {
+  //     console.log(node.name, node.actualDuration)
+  //     const obj: any = {}
+  //     if(node.name.length > length){
+  //       length = node.name.length;
+  //     }
+  //     obj["name"] = node.name;
+  //     obj["actualDuration"] = node.actualDuration;
+  //     data.push(obj)
+  //   }
+  //   node.children.forEach((child: any) => namesAndDurations(child))
+  // }
+  // namesAndDurations(dataDurationArr);
+
+  console.log("RankedGraph.tsx - dataDurationArr ", data);
 
   const svgRef = useRef();
   useEffect(() => {
