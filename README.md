@@ -15,6 +15,7 @@
 Recoilize is a Chrome Dev Tool meant for debugging applications built with the experimental Recoil.js state management library.
 
 The tool records Recoil state and allows users to easily debug their applications with features such as time travel to previous states, visualization of the component graph and display of the atom selector network.
+
 </p>
 
 <p>
@@ -61,7 +62,7 @@ import RecoilRoot from 'recoil';
 
 ReactDOM.render(
   <RecoilRoot>
-    <RecoilizeDebugger/>
+    <RecoilizeDebugger />
     <App />
   </RecoilRoot>,
   document.getElementById('root'),
@@ -93,7 +94,7 @@ ReactDOM.render(
 ##### (Only supported with React applications using Recoil as state management)
 
 <h1>New Features for Version 0.9.4</h1>
-<h3>Support for Recoil 0.13.0</h3>
+<h3>Support for Recoil 0.1.2</h3>
 <p>Recoilize now supports the most recent update to the Recoil library.</p>
 
 <h3>Ease of Use</h3>
@@ -172,3 +173,11 @@ The flame graph displays the time a component took to render itself, and all of 
 <h4>Davide Molino <a  href='https://github.com/davidemmolino' target="_blank">@github </a><a  href='https://www.linkedin.com/in/davide-molino/' target="_blank">@linkedin</a> </h4>
 
 <h4>Taven Shumaker <a  href='https://github.com/TavenShumaker' target="_blank">@github </a><a  href='https://www.linkedin.com/in/Taven-Shumaker/' target="_blank">@linkedin</a> </h4>
+
+<h4>Janis Hernandez <a  href='https://github.com/Janis-H' target="_blank">@github </a><a  href='https://www.linkedin.com/in/janis-hernandez-aguilar/' target="_blank">@linkedin</a> </h4>
+
+<h4>Jaime Baik <a  href='https://github.com/jaimebaik' target="_blank">@github </a><a  href='https://www.linkedin.com/in/jaime-baik/' target="_blank">@linkedin</a> </h4>
+
+<h4>Anthony Magallanes <a  href='https://github.com/amagalla' target="_blank">@github </a><a  href='https://www.linkedin.com/in/anthony-magallanes/' target="_blank">@linkedin</a> </h4>
+
+<h4>Edward Shei <a  href='https://github.com/calibeach' target="_blank">@github </a><a  href='https://www.linkedin.com/in/edwardshei/' target="_blank">@linkedin</a> </h4>
