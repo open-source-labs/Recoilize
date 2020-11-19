@@ -85,9 +85,9 @@ ReactDOM.render(
 
 ##### (Only supported with React applications using Recoil as state management)
 
-<h1>New Features for Version 0.9.4</h1>
+<h1>New Features for Version 0.9.6</h1>
 
-<h3>Support for Recoil 0.13.0</h3>
+<h3>Support for Recoil 0.1.2</h3>
 <p>Recoilize now supports the most recent update to the Recoil library.</p>
 
 <h3>Ease of Use</h3>
