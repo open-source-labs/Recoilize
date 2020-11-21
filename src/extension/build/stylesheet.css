@@ -94,7 +94,7 @@ body {
   background-color: #212121;
 }
 
-.individualSnapshot .timeTravelButton:hover{
+.individualSnapshot .timeTravelButton:hover {
   color: #e6e6e6;
   border: 1px solid white;
   background-color: #212121;
@@ -203,13 +203,12 @@ body {
   width: 100%;
   overflow: hidden;
 }
+
 #stateGraphContainer {
   height: calc(100% - 33px); /* 33px is height of navbar */
   width: 100%;
 }
-/* .bar { 
-  fill: #9580ff; 
-} */
+
 .svg-container {
   display: inline-block;
   position: relative;
@@ -237,7 +236,7 @@ body {
   outline: none;
 }
 
-.graphButton:hover{
+.graphButton:hover {
   color: #e6e6e6;
   border: 1px solid white;
   background-color: #212121;
@@ -268,20 +267,52 @@ body {
 }
 
 #networkSearch {
-  position: fixed;
-  top: 41px;
-  left: 179px;
+  width: 135px;
+  grid-row: 1;
 }
 
+.LegendContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-items: flex-start;
+}
 .AtomNetworkLegend {
+  border: 0.2em solid white;
   position: fixed;
   top: 58px;
   left: 179px;
   display: grid;
-  grid-template-columns: 30px 30px;
+  grid-template-rows: 30px 30px 30px 1fr;
   align-items: center;
   padding-left: 5px;
   padding-top: 5px;
+}
+.AtomDiv {
+  display: grid;
+  grid-row: 2;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 1em;
+}
+
+.SelectorDiv {
+  display: grid;
+  grid-row: 3;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 1em;
+}
+
+.AtomDiv:hover,
+.SelectorDiv:hover {
+  opacity: 70%;
+  cursor: pointer;
+}
+
+.AtomDiv:active,
+.SelectorDiv:active {
+  opacity: 50%;
 }
 
 .AtomLegend {
@@ -292,6 +323,7 @@ body {
   border: 1px solid #9580ff;
   border-radius: 20px;
   margin: 0px;
+  flex-grow: 1;
 }
 
 .SelectorLegend {
@@ -302,6 +334,29 @@ body {
   border: 1px solid #ff80bf;
   border-radius: 20px;
   margin: 0px;
+  flex-grow: 1;
+}
+.AtomDropdown {
+  display: grid;
+  grid-row: 4;
+  border: 0.1em solid rgb(43, 34, 34);
+}
+
+.SelectorDropdown {
+  display: grid;
+  grid-row: 4;
+  align-items: center;
+}
+
+.SelectorDropdown p:hover,
+.AtomDropdown p:hover {
+  opacity: 90%;
+  cursor: pointer;
+}
+
+.SelectorDropdown p:active,
+.AtomDropdown p:active {
+  opacity: 80%;
 }
 
 /* ATOMCOMPONENTVISUAL CONTAINER ->
@@ -487,7 +542,7 @@ body {
 
 /* Links inside the dropdown */
 .dropdown-content a {
-  color:black;
+  color: black;
   padding: 12px 16px;
   text-decoration: none;
   display: block;
@@ -575,9 +630,9 @@ input:checked + .slider:before {
  * but scrollbar is broken without it
  */
 
- /* Code added for verticle icicle graph */
+/* Code added for verticle icicle graph */
 
- .path {
+.path {
   will-change: d;
 }
 .path:hover {
