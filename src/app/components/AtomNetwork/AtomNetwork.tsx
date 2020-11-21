@@ -112,7 +112,7 @@ const Network: React.FC<NetworkProps> = ({filteredCurSnap}) => {
           .distance(100)
           .strength(1),
       )
-      //make the nodes repel each other
+      //make the nodes repel each other by assigning negative charge
       .force('charge', d3.forceManyBody().strength(-30))
       // .force('charge', d3.forceManyBody())
       .force('center', d3.forceCenter(width / 2, height / 2))
@@ -299,17 +299,27 @@ const Network: React.FC<NetworkProps> = ({filteredCurSnap}) => {
       g.attr('transform', d3.event.transform);
     }
     console.log(g);
-  });
+  });//end of useEffect
 
+  // handles clicking on Selector and Atom buttom to bring down
+  // list of atoms or selects
   function openDropdown(e:any) {
+    // if user clicks on atom list button
     if(e.target.className === 'AtomP') {
+      // check if selector list was previously open, if it is, close it
       if(showSelectorMenu) setShowSelectorMenu(false);
+      // open atom list
       setShowAtomMenu(!showAtomMenu);
+      // empty search box
       setSearchValue('');
     }
+    // if user clicks on selector list button
     else if(e.target.className === 'SelectorP') {
+      // check if atom list was previously open, if it is, close it
       if(showAtomMenu) setShowAtomMenu(false);
+      // show Selector list
       setShowSelectorMenu(!showSelectorMenu);
+      // empty search box
       setSearchValue('');
     }
   }
@@ -334,24 +344,22 @@ const Network: React.FC<NetworkProps> = ({filteredCurSnap}) => {
           <div className="AtomDiv" onClick={openDropdown}>
             <div className="AtomLegend" />
             <p className="AtomP">ATOM</p>
-            
-            {/* <div>{atomLists}</div> */}
           </div>
           <div className="SelectorDiv" onClick={openDropdown}>
           <div className="SelectorLegend"></div>
           <p className="SelectorP">SELECTOR</p>
           </div> 
 
-          {showAtomMenu && <div className="AtomDropdown">{atomList.map(([atom, atomObj], i)=> {
-            console.log('inside the dropdown of atom',atom);
-            return (<p key={i} onClick={(e: any) => {
-              setSearchValue(e.target.innerHTML);
+          {showAtomMenu &&
+            <div className="AtomDropdown">{atomList.map(([atom, atomObj], i)=> {
+              return (<p key={i} onClick={(e: any) => {
+                setSearchValue(e.target.innerHTML);
             }}>{atom}</p>)
           })}</div>}
-          {showSelectorMenu && <div className="SelectorDropdown">{selectorList.map(([selector, selectorObj], i) => {
-            console.log('inside the dropdown of selector',selector);
-            return (<p key={i} onClick={(e: any) => {
-              setSearchValue(e.target.innerHTML);
+          {showSelectorMenu &&
+            <div className="SelectorDropdown">{selectorList.map(([selector, selectorObj], i) => {
+              return (<p key={i} onClick={(e: any) => {
+                setSearchValue(e.target.innerHTML);
             }}>{selector}</p>)
           })}</div>}
         </div>
