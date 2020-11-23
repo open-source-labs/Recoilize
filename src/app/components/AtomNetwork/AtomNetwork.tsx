@@ -66,7 +66,6 @@ const Network: React.FC<NetworkProps> = ({filteredCurSnap}) => {
 
     // invoke filter to populate newFilteredCurSnap
     filter(filteredCurSnap);
-    console.log('in atom network, trying to see new filtered curSnap',newFilteredCurSnap);
     document.getElementById('networkCanvas').innerHTML = '';
 
     let link: any;
@@ -83,7 +82,6 @@ const Network: React.FC<NetworkProps> = ({filteredCurSnap}) => {
       .append('g')
       .attr('transform', `translate(${x}, ${y}), scale(${k})`); // sets the canvas to the saved zoomState
 
-    // console.log(g);
     const markers = g
       .append('defs')
       .append('marker')
@@ -298,7 +296,6 @@ const Network: React.FC<NetworkProps> = ({filteredCurSnap}) => {
     function zoomed() {
       g.attr('transform', d3.event.transform);
     }
-    console.log(g);
   });//end of useEffect
 
   // handles clicking on Selector and Atom buttom to bring down
@@ -323,9 +320,6 @@ const Network: React.FC<NetworkProps> = ({filteredCurSnap}) => {
       setSearchValue('');
     }
   }
-  console.log('filteredCurSnap: ', filteredCurSnap);
-  console.log('atomList: ',atomList);
-  console.log('atoms: ', atomList.map(atom => atom));
 
   return (
     <div className="networkContainer">
@@ -337,28 +331,48 @@ const Network: React.FC<NetworkProps> = ({filteredCurSnap}) => {
           <input
             id="networkSearch"
             type="text"
-            placeholder="search for atoms..."
-            value={searchValue}
+            placeholder="search for state"
+            //check the input value to render corresponding and related nodes
             onChange={handleChange}
           />
-          <div className="AtomDiv" onClick={openDropdown}>
+          <div className="AtomDiv" 
+            //change the visibility of the div depending the value of the state
+            style={showSelectorMenu ? {opacity: '30%'} : {opacity: '100%'}} 
+            onClick={openDropdown}>
             <div className="AtomLegend" />
             <p className="AtomP">ATOM</p>
           </div>
-          <div className="SelectorDiv" onClick={openDropdown}>
-          <div className="SelectorLegend"></div>
-          <p className="SelectorP">SELECTOR</p>
+
+          <div className="SelectorDiv"
+            //change the visibility of the div depending the value of the state
+            style={showAtomMenu ? {opacity: '30%'} : {opacity: '100%'}} 
+            onClick={openDropdown}>
+            <div className="SelectorLegend"></div>
+            <p className="SelectorP">SELECTOR</p>
           </div> 
 
+          {/* conditional rendering of dropdowns depending on the value of the state */}
           {showAtomMenu &&
             <div className="AtomDropdown">{atomList.map(([atom, atomObj], i)=> {
-              return (<p key={i} onClick={(e: any) => {
+              return (<p key={i} id={`Atom${i}`} className='AtomListItem' style={{opacity: '30%'}} onClick={(e: any) => {
+                //set the opacity to 30%, unless spefic element is clicked then changes it to 100%
+                document.querySelector(`#Atom${i}`).setAttribute('style', 'opacity: 100%;');
+                document.querySelectorAll('.AtomListItem').forEach(item => {
+                  if(item.id !== `Atom${i}`) item.setAttribute('style', 'opacity: 30%;')
+                });
+                //set the search value to the name of the paragraph element to render only corresponding and related nodes
                 setSearchValue(e.target.innerHTML);
             }}>{atom}</p>)
           })}</div>}
           {showSelectorMenu &&
             <div className="SelectorDropdown">{selectorList.map(([selector, selectorObj], i) => {
-              return (<p key={i} onClick={(e: any) => {
+              return (<p key={i} id={`Selector${i}`} className='SelectorListItem' style={{opacity: '30%'}} onClick={(e: any) => {
+                //set the opacity to 30%, unless spefic element is clicked then changes it to 100%
+                document.querySelector(`#Selector${i}`).setAttribute('style', 'opacity: 100%;');
+                document.querySelectorAll('.SelectorListItem').forEach(item => {
+                  if(item.id !== `Selector${i}`) item.setAttribute('style', 'opacity: 30%;')
+                });
+                //set the search value to the name of the paragraph element to render only corresponding and related nodes
                 setSearchValue(e.target.innerHTML);
             }}>{selector}</p>)
           })}</div>}

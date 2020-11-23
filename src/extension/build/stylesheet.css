@@ -269,6 +269,7 @@ body {
 #networkSearch {
   width: 135px;
   grid-row: 1;
+  outline: none;
 }
 
 .LegendContainer {
@@ -278,7 +279,6 @@ body {
   justify-items: flex-start;
 }
 .AtomNetworkLegend {
-  /* border: 0.2em solid white; */
   position: fixed;
   top: 58px;
   left: 179px;
