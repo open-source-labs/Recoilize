@@ -326,10 +326,6 @@ const Network: React.FC<NetworkProps> = ({filteredCurSnap}) => {
     }
   }
 
-  // console.log('filteredCurSnap: ', filteredCurSnap);
-  // console.log('atomList: ',atomList);
-  // console.log('atoms: ', atomList.map(atom => atom));
-
   return (
     <div className="networkContainer">
       <div className="Network">
@@ -360,16 +356,22 @@ const Network: React.FC<NetworkProps> = ({filteredCurSnap}) => {
 
           {showAtomMenu &&
             <div className="AtomDropdown">{atomList.map(([atom, atomObj], i)=> {
-              return (<p key={i} onClick={(e: any) => {
+              return (<p key={i} id={`Atom${i}`} className='AtomListItem' style={{opacity: '30%'}} onClick={(e: any) => {
+                document.querySelector(`#Atom${i}`).setAttribute('style', 'opacity: 100%;');
+                document.querySelectorAll('.AtomListItem').forEach(item => {
+                  if(item.id !== `Atom${i}`) item.setAttribute('style', 'opacity: 30%;')
+                });
                 setSearchValue(e.target.innerHTML);
-                // document.querySelector('#networkSearch').setAttribute('style', 'color: white;');
             }}>{atom}</p>)
           })}</div>}
           {showSelectorMenu &&
             <div className="SelectorDropdown">{selectorList.map(([selector, selectorObj], i) => {
-              return (<p key={i} onClick={(e: any) => {
+              return (<p key={i} id={`Selector${i}`} className='SelectorListItem' style={{opacity: '30%'}} onClick={(e: any) => {
+                document.querySelector(`#Selector${i}`).setAttribute('style', 'opacity: 100%;');
+                document.querySelectorAll('.SelectorListItem').forEach(item => {
+                  if(item.id !== `Selector${i}`) item.setAttribute('style', 'opacity: 30%;')
+                });
                 setSearchValue(e.target.innerHTML);
-                // document.querySelector('#networkSearch').setAttribute('style', 'color: white;');
             }}>{selector}</p>)
           })}</div>}
         </div>
