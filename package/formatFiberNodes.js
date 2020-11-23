@@ -45,10 +45,7 @@ const createAtomsSelectorArray = node => {
         typeof currentNode.memoizedState.deps[0] === 'object'
       ) {
         // if recoilNodes (arr) includes the current atom or selector
-        if (recoilNodes.includes(currentNode.memoizedState.deps[0].key)) {
-          // do nothing
-          console.log('has');
-        } else {
+        if (!recoilNodes.includes(currentNode.memoizedState.deps[0].key)) {
           // otherwise push atom/selector to recoilNodes
           recoilNodes.push(currentNode.memoizedState.deps[0].key);
         }
