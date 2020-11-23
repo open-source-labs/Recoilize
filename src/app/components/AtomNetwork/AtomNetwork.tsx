@@ -310,6 +310,8 @@ const Network: React.FC<NetworkProps> = ({filteredCurSnap}) => {
       if(showSelectorMenu) setShowSelectorMenu(false);
       // open atom list
       setShowAtomMenu(!showAtomMenu);
+      // let selectorOP = document.getElementById('sd');
+      // selectorOP.style.opacity = '50%';
       // empty search box
       setSearchValue('');
     }
@@ -323,9 +325,10 @@ const Network: React.FC<NetworkProps> = ({filteredCurSnap}) => {
       setSearchValue('');
     }
   }
-  console.log('filteredCurSnap: ', filteredCurSnap);
-  console.log('atomList: ',atomList);
-  console.log('atoms: ', atomList.map(atom => atom));
+
+  // console.log('filteredCurSnap: ', filteredCurSnap);
+  // console.log('atomList: ',atomList);
+  // console.log('atoms: ', atomList.map(atom => atom));
 
   return (
     <div className="networkContainer">
@@ -338,28 +341,35 @@ const Network: React.FC<NetworkProps> = ({filteredCurSnap}) => {
             id="networkSearch"
             type="text"
             placeholder="search for atoms..."
-            value={searchValue}
+            // value={searchValue}
             onChange={handleChange}
           />
-          <div className="AtomDiv" onClick={openDropdown}>
+          <div className="AtomDiv" 
+            style={showSelectorMenu ? {opacity: '30%'} : {opacity: '100%'}} 
+            onClick={openDropdown}>
             <div className="AtomLegend" />
             <p className="AtomP">ATOM</p>
           </div>
-          <div className="SelectorDiv" onClick={openDropdown}>
-          <div className="SelectorLegend"></div>
-          <p className="SelectorP">SELECTOR</p>
+
+          <div className="SelectorDiv" id='sd'
+            style={showAtomMenu ? {opacity: '30%'} : {opacity: '100%'}} 
+            onClick={openDropdown}>
+            <div className="SelectorLegend"></div>
+            <p className="SelectorP">SELECTOR</p>
           </div> 
 
           {showAtomMenu &&
             <div className="AtomDropdown">{atomList.map(([atom, atomObj], i)=> {
               return (<p key={i} onClick={(e: any) => {
                 setSearchValue(e.target.innerHTML);
+                // document.querySelector('#networkSearch').setAttribute('style', 'color: white;');
             }}>{atom}</p>)
           })}</div>}
           {showSelectorMenu &&
             <div className="SelectorDropdown">{selectorList.map(([selector, selectorObj], i) => {
               return (<p key={i} onClick={(e: any) => {
                 setSearchValue(e.target.innerHTML);
+                // document.querySelector('#networkSearch').setAttribute('style', 'color: white;');
             }}>{selector}</p>)
           })}</div>}
         </div>

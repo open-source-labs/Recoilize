@@ -269,6 +269,7 @@ body {
 #networkSearch {
   width: 135px;
   grid-row: 1;
+  outline: none;
 }
 
 .LegendContainer {
@@ -347,6 +348,13 @@ body {
   grid-row: 4;
   align-items: center;
 }
+
+/* .SelectorDropdown::before {
+  content: 'selectors';
+  font-weight: bold;
+  text-align: center;
+  text-decoration: underline;
+} */
 
 .SelectorDropdown p:hover,
 .AtomDropdown p:hover {
