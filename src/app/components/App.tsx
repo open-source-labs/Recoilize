@@ -1,9 +1,14 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, createContext} from 'react';
 import MainContainer from '../Containers/MainContainer';
 import {stateSnapshot, selectedTypes, stateSnapshotDiff} from '../../types';
 // importing the diff to find difference
 import {diff} from 'jsondiffpatch';
 
+// contexts created for our state values to later reference in child components
+// purpose is to eliminate prop drilling in later child components
+export const snapshotHistoryContext = createContext<Partial<stateSnapshot[]>>(null);
+export const selectedContext = createContext<Partial<selectedTypes[]>>(null);
+export const filter = createContext<Partial<stateSnapshotDiff[]>>(null);
 
 const LOGO_URL = './assets/Recoilize.png';
 const App: React.FC = () => {
