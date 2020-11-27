@@ -32,10 +32,13 @@ const MainContainer: React.FC<MainContainerProps> = () => {
   // render containers passing necessary props
   return (
     <div className="MainContainer">
+    <renderIndexContext.Provider value={{renderIndex, setRenderIndex}}>
       <SnapshotsContainer
         // length of snapshotHistory array
         snapshotHistoryLength={snapshotHistory.length}
       />
+      </renderIndexContext.Provider>
+
       <VisualContainer
         // snapshot at index [renderIndex -1]
         previousSnapshot={snapshotHistory[renderIndex - 1]}
