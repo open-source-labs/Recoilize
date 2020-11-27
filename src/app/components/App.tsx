@@ -1,14 +1,29 @@
-import React, {useState, useEffect, createContext} from 'react';
+import React, {useState, useEffect, createContext, SetStateAction} from 'react';
 import MainContainer from '../Containers/MainContainer';
 import {stateSnapshot, selectedTypes, stateSnapshotDiff} from '../../types';
 // importing the diff to find difference
 import {diff} from 'jsondiffpatch';
 
+interface SnapshotHistoryContext {
+  snapshotHistory: Partial<stateSnapshot[]>;
+  setSnapshotHistory: React.Dispatch<React.SetStateAction<stateSnapshot[]>>;
+};
+
+interface SelectedContext {
+  selected: selectedTypes[];
+  setSelected: React.Dispatch<React.SetStateAction<selectedTypes[]>>;
+}
+
+interface FilterContext {
+  filter: stateSnapshotDiff[];
+  setFilter: React.Dispatch<React.SetStateAction<stateSnapshotDiff[]>>;
+}
+
 // contexts created for our state values to later reference in child components
 // purpose is to eliminate prop drilling
-export const snapshotHistoryContext = createContext<Partial<stateSnapshot[]>>(null);
-export const selectedContext = createContext<Partial<selectedTypes[]>>(null);
-export const filter = createContext<Partial<stateSnapshotDiff[]>>(null);
+export const snapshotHistoryContext = createContext<SnapshotHistoryContext>(null);
+export const selectedContext = createContext<SelectedContext>(null);
+export const filterContext = createContext<FilterContext>(null);
 
 const LOGO_URL = './assets/Recoilize.png';
 const App: React.FC = () => {
@@ -18,7 +33,7 @@ const App: React.FC = () => {
   // selected will be an array with objects containing filteredSnapshot key names (the atoms and selectors)
       // ex: [{name: 'Atom1'}, {name: 'Atom2'}, {name: 'Selector1'}, ...]
   const [selected, setSelected] = useState<selectedTypes[]>([]);
-  // todo: Create algo that will clean up the big setsnapshothistory object, now and before
+  // todo: Create algo that will clean up the big setSnapshothistory object, now and before
   // Filter is an array of objects containing differences between snapshots
   let [filter, setFilter] = useState<stateSnapshotDiff[]>([]);
   // ! Setting up the selected
@@ -96,7 +111,13 @@ const App: React.FC = () => {
   }, []);
   // Render main container if we have detected a recoil app with the recoilize module passing data
   const renderMainContainer: JSX.Element = (
-    <MainContainer/>
+    <filterContext.Provider value={{filter, setFilter}}>
+      <selectedContext.Provider value={{selected, setSelected}}>
+        <snapshotHistoryContext.Provider value={{snapshotHistory, setSnapshotHistory}}>
+          <MainContainer />
+        </snapshotHistoryContext.Provider>
+      </selectedContext.Provider>
+    </filterContext.Provider>
   );
   // Render module not found message if snapHistory is null, this means we have not detected a recoil app with recoilize module installed properly
   const renderModuleNotFoundContainer: JSX.Element = (
