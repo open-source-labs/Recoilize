@@ -5,7 +5,7 @@ import {stateSnapshot, selectedTypes, stateSnapshotDiff} from '../../types';
 import {diff} from 'jsondiffpatch';
 
 // contexts created for our state values to later reference in child components
-// purpose is to eliminate prop drilling in later child components
+// purpose is to eliminate prop drilling
 export const snapshotHistoryContext = createContext<Partial<stateSnapshot[]>>(null);
 export const selectedContext = createContext<Partial<selectedTypes[]>>(null);
 export const filter = createContext<Partial<stateSnapshotDiff[]>>(null);
@@ -13,13 +13,16 @@ export const filter = createContext<Partial<stateSnapshotDiff[]>>(null);
 const LOGO_URL = './assets/Recoilize.png';
 const App: React.FC = () => {
   // useState hook to update the snapshotHistory array
+  // array of snapshots
   const [snapshotHistory, setSnapshotHistory] = useState<stateSnapshot[]>([]);
-  // todo: created selected to update array
+  // selected will be an array with objects containing filteredSnapshot key names (the atoms and selectors)
+      // ex: [{name: 'Atom1'}, {name: 'Atom2'}, {name: 'Selector1'}, ...]
   const [selected, setSelected] = useState<selectedTypes[]>([]);
-
   // todo: Create algo that will clean up the big setsnapshothistory object, now and before
+  // Filter is an array of objects containing differences between snapshots
   let [filter, setFilter] = useState<stateSnapshotDiff[]>([]);
   // ! Setting up the selected
+  // Whenever snapshotHistory changes, useEffect will run, and selected will be updated
   useEffect(() => {
     let last;
     if (snapshotHistory[snapshotHistory.length - 1]) {
@@ -45,7 +48,7 @@ const App: React.FC = () => {
       }
     }
   }, [snapshotHistory]); // Only re-run the effect if snapshot history changes -- react hooks
-  // use effect for snapshotHistory
+  // useEffect for snapshotHistory
   useEffect(() => {
     // SETUP connection to bg script
     const backgroundConnection = chrome.runtime.connect();
@@ -93,18 +96,7 @@ const App: React.FC = () => {
   }, []);
   // Render main container if we have detected a recoil app with the recoilize module passing data
   const renderMainContainer: JSX.Element = (
-    <MainContainer
-      // array of snapshots
-      snapshotHistory={snapshotHistory}
-
-      // selected will be an array with objects containing filteredSnapshot key names (the atoms and selectors)
-      // ex: [{name: 'Atom1'}, {name: 'Atom2'}, {name: 'Selector1'}, ...]
-      selected={selected}
-      setSelected={setSelected}
-
-      // Filter is an array of objects containing differences between snapshots.
-      filter={filter}
-    />
+    <MainContainer/>
   );
   // Render module not found message if snapHistory is null, this means we have not detected a recoil app with recoilize module installed properly
   const renderModuleNotFoundContainer: JSX.Element = (
