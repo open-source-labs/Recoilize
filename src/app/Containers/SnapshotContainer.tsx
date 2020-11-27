@@ -2,7 +2,6 @@ import React, {useContext} from 'react';
 import SnapshotsList from '../components/SnapshotList/SnapshotList';
 
 import {filterContext} from '../components/App';
-import {stateSnapshot, selectedTypes, stateSnapshotDiff} from '../../types';
 
 interface SnapshotsContainerProps {
   // length of snapshotHistory array

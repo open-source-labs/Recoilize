@@ -1,6 +1,5 @@
 // renders a list of all of the snapshots that were taking
 import React, {useEffect, useRef, useContext} from 'react';
-import {stateSnapshot, selectedTypes} from '../../../types';
 import {snapshotHistoryContext, filterContext, selectedContext} from '../App';
 import {renderIndexContext} from '../../Containers/MainContainer';
 interface SnapshotsListProps {
