@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import Diff from '../components/StateDiff/Diff';
 import NavBar from '../components/NavBar/NavBar';
 import Metrics from '../components/Metrics/MetricsContainer';
@@ -6,18 +6,14 @@ import Tree from '../components/StateTree/Tree';
 import Network from '../components/AtomNetwork/AtomNetwork';
 import AtomComponentVisualContainer from '../components/ComponentGraph/AtomComponentContainer';
 import Settings from '../components/Settings/SettingsContainer';
-import {stateSnapshot, selectedTypes, componentAtomTree} from '../../types';
-// import Metrics from "../components/StateGraph/metrics";
+import {stateSnapshot, componentAtomTree} from '../../types';
+// import Metrics from "../cosmponents/StateGraph/metrics";
 
 interface VisualContainerProps {
   // snapshot at index [curRender -1]
   previousSnapshot: stateSnapshot;
   // snapshot at index [curRender]
   currentSnapshot: stateSnapshot;
-  // ! passing through snapshot history
-  snapshotHistory: stateSnapshot[];
-  selected: selectedTypes[];
-  setSelected: React.Dispatch<React.SetStateAction<selectedTypes[]>>;
 }
 
 interface ZoomState {
@@ -71,7 +67,7 @@ const cleanComponentAtomTree = (inputObj: componentAtomTree): componentAtomTree 
   };
   innerClean(inputObj, obj, counter);
 
-  //ensure that the root element's actual duration is inculded in outObj
+  //ensure that the root element's actual duration is included in outObj
   if(inputObj.actualDuration){
     obj.actualDuration = inputObj.actualDuration;
   }
@@ -84,9 +80,6 @@ const cleanComponentAtomTree = (inputObj: componentAtomTree): componentAtomTree 
 const VisualContainer: React.FC<VisualContainerProps> = ({
   previousSnapshot,
   currentSnapshot,
-  snapshotHistory,
-  selected,
-  setSelected,
 }) => {
   // state for checkmark in persist state in settings
   const [checked, setChecked] = useState<boolean>(false);
@@ -147,9 +140,6 @@ const VisualContainer: React.FC<VisualContainerProps> = ({
     // settings tab that doesn't want to be in quotes because too cool for school
     Settings: (
       <Settings
-        snapshotHistory={snapshotHistory}
-        selected={selected}
-        setSelected={setSelected}
         checked={checked}
         setChecked={setChecked}
         throttleDisplay={throttleDisplay}
