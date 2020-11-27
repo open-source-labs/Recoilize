@@ -1,7 +1,7 @@
 import React, {useContext} from 'react';
 import SnapshotsList from '../components/SnapshotList/SnapshotList';
 
-import {filter} from '../components/App';
+import {filterContext} from '../components/App';
 import {stateSnapshot, selectedTypes, stateSnapshotDiff} from '../../types';
 
 interface SnapshotsContainerProps {
@@ -12,6 +12,7 @@ interface SnapshotsContainerProps {
 const SnapshotsContainer: React.FC<SnapshotsContainerProps> = ({
   snapshotHistoryLength,
 }) => {
+  const {filter} = useContext(filterContext);
   //indexDiff is used to ensure the index of filter matches the index of the snapshots array in the backend
   let indexDiff: number = 0;
   if (filter[0] && filter[0].indexDiff) {
