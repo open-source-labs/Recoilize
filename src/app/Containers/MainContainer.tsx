@@ -12,7 +12,7 @@ interface RenderIndexContext {
 export const renderIndexContext = createContext<RenderIndexContext>(null);
 
 // wraps entire application
-const MainContainer: React.FC<MainContainerProps> = () => {
+const MainContainer: React.FC = () => {
   const {snapshotHistory} = useContext(snapshotHistoryContext);
   // index of current snapshot rendered in devtool
   const [renderIndex, setRenderIndex] = useState<number>(
