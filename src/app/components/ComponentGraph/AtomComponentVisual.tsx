@@ -1,6 +1,7 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import * as d3 from 'd3';
 import {componentAtomTree, atom, selector} from '../../../types';
+import { zoomStateContext } from '../../Containers/VisualContainer';
 
 interface AtomComponentVisualProps {
   componentAtomTree: componentAtomTree;
@@ -9,10 +10,6 @@ interface AtomComponentVisualProps {
   atoms: atom;
   selectors: selector;
   setStr: React.Dispatch<React.SetStateAction<string[]>>;
-  x: number;
-  y: number;
-  k: number;
-  setZoomState: any;
 }
 
 const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
@@ -22,11 +19,9 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
   atoms,
   selectors,
   setStr,
-  x,
-  y,
-  k,
-  setZoomState,
 }) => {
+  const {zoomState, setZoomState} = useContext(zoomStateContext);
+  const {x, y, k} = zoomState;
   // set the heights and width of the tree to be passed into treeMap function
   let width: number = 0;
   let height: number = 0;

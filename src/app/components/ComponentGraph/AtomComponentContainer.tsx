@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {createContext, useContext, useState} from 'react';
 import AtomComponentVisual from './AtomComponentVisual';
 import AtomSelectorLegend from './AtomSelectorLegend';
 import {
@@ -12,20 +12,12 @@ interface AtomComponentVisualContainerProps {
   filteredCurSnap: filteredSnapshot;
   componentAtomTree: componentAtomTree;
   cleanedComponentAtomTree: componentAtomTree;
-  x: number;
-  y: number;
-  k: number;
-  setZoomState: any;
 }
 
 const AtomComponentVisualContainer: React.FC<AtomComponentVisualContainerProps> = ({
   filteredCurSnap,
   componentAtomTree,
   cleanedComponentAtomTree,
-  setZoomState,
-  x,
-  y,
-  k,
 }) => {
   // this will be the atom or selector from the AtomSelectorLegend that the user clicked on.  an array with the ele at index 0 as the name of the atom/selector, and ele at index 1 will be 'atom' or 'selector'
   // Why was selectedRecoilValue formatted as an array? why not an object?
@@ -54,10 +46,6 @@ const AtomComponentVisualContainer: React.FC<AtomComponentVisualContainerProps> 
         atoms={atoms}
         selectors={selectors}
         setStr={setStr}
-        setZoomState={setZoomState}
-        x={x}
-        y={y}
-        k={k}
       />
       <div id="legendFlexContainer">
         <AtomSelectorLegend
