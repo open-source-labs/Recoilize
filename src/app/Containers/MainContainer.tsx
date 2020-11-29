@@ -1,8 +1,7 @@
 import React, {useState, useEffect, useContext, createContext} from 'react';
 import SnapshotsContainer from './SnapshotContainer';
 import VisualContainer from './VisualContainer';
-import {snapshotHistoryContext, selectedContext, filterContext} from '../components/App';
-import {stateSnapshot, selectedTypes, stateSnapshotDiff} from '../../types';
+import {snapshotHistoryContext} from '../components/App';
 
 interface RenderIndexContext {
   renderIndex: number;

@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {diff, formatters} from 'jsondiffpatch';
 import ReactHtmlParser from 'react-html-parser';
 import {filteredSnapshot} from '../../../types';
