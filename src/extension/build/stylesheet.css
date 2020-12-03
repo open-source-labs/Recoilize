@@ -341,7 +341,7 @@ button:hover {
 
 .AtomDiv:hover,
 .SelectorDiv:hover {
-  opacity: 70%;
+  opacity: 90%;
   cursor: pointer;
 }
 
@@ -371,21 +371,29 @@ button:hover {
   margin: 0px;
   flex-grow: 1;
 }
-.AtomDropdown {
+.AtomDropdown,
+.SelectorDropdown {
   display: grid;
   grid-row: 4;
   border: 0.1em solid rgb(43, 34, 34);
 }
-
-.SelectorDropdown {
+#atomDrop,
+#selectorDrop {
+  display: grid;
+  grid-row: 4;
+  border: 0.1em solid rgb(43, 34, 34);
+}
+/* .SelectorDropdown {
   display: grid;
   grid-row: 4;
   align-items: center;
-}
+} */
 
 .SelectorDropdown p:hover,
-.AtomDropdown p:hover {
-  opacity: 90%;
+.AtomDropdown p:hover,
+#atomDrop p:hover,
+#selectorDrop p:hover {
+  opacity: 70%;
   cursor: pointer;
 }
 
@@ -435,6 +443,7 @@ button:hover {
   left: 179px;
   display: grid;
   grid-template-columns: 30px 30px;
+  grid-template-rows: 30px 30px 30px 1fr;
   align-items: center;
   padding-left: 5px;
   padding-top: 5px;
