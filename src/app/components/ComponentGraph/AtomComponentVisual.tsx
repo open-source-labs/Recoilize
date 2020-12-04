@@ -37,7 +37,12 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
   // useState hook to update whether a suspense component will be shown on the component graph
   const [hasSuspense, setHasSuspense] = useState<boolean>(false);
 
-
+  //declare hooks to render lists of atoms or selectors
+  const [atomList, setAtomList] = useState(Object.keys(atoms));
+  const [selectorList, setSelectorList] = useState(Object.keys(selectors));
+  // need to create a hook for toggling
+  const [showAtomMenu, setShowAtomMenu] = useState(false)
+  const [showSelectorMenu, setShowSelectorMenu] = useState(false)
   useEffect(() => {
     height = document.querySelector('.Component').clientHeight;
     width = document.querySelector('.Component').clientWidth;
@@ -366,6 +371,19 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
 
   }, [componentAtomTree, rawToggle, selectedRecoilValue]);
 
+  function openDropdown (e: React.MouseEvent) {
+    const target = e.target as Element;
+    if (target.className === "AtomP") {
+      setShowAtomMenu(!showAtomMenu);
+      setShowSelectorMenu(false);
+      console.log(showAtomMenu);
+    }
+    else {
+      setShowSelectorMenu(!showSelectorMenu);
+      setShowAtomMenu(false);
+      console.log(showSelectorMenu);
+    }
+  }
   return (
     <div className="AtomComponentVisual">
       <svg id="canvas"></svg>
@@ -377,13 +395,14 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
         onClick={() => {
           setRawToggle(!rawToggle);
         }}>
-        <span>{rawToggle ? 'Collapse' : 'Expand'}</span>
       </button>
       <div className="AtomNetworkLegend">
         <div className="AtomLegend" />
-        <p>ATOM</p>
+        <p onClick={openDropdown} className="AtomP">ATOM</p>
+        {showAtomMenu && <div id="atomDrop" className="AtomDropDown">{atomList.map((atom, i) => <p key={i}>{atom}</p>)}</div>}
         <div className="SelectorLegend"></div>
-        <p>SELECTOR</p>
+        <p onClick={openDropdown} className="SelectorP">SELECTOR</p>
+        {showSelectorMenu && <div id="selectorDrop" className="SelectorDropDown">{selectorList.map((selector, i) => <p key={i}>{selector}</p>)}</div>}
         <div className="bothLegend"></div>
         <p>BOTH</p>
         <div className={hasSuspense ? "suspenseLegend" : ''}></div>
