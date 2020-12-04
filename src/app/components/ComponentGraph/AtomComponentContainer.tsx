@@ -1,4 +1,4 @@
-import React, {createContext, useContext, useState} from 'react';
+import React, {useState} from 'react';
 import AtomComponentVisual from './AtomComponentVisual';
 import AtomSelectorLegend from './AtomSelectorLegend';
 import {
@@ -24,7 +24,8 @@ const AtomComponentVisualContainer: React.FC<AtomComponentVisualContainerProps> 
   const [selectedRecoilValue, setSelectedRecoilValue] = useState<string[]>([]);
   const [str, setStr] = useState<string[]>([]);
 
-  // each property in the atoms or selectors object will be a property whose key is the atom or selector name, and whose value is the value of that atom or selector
+  // each property in the atoms or selectors object will be a property whose key is the atom or selector name,
+  // and whose value is the value of that atom or selector
   const atoms: atom = {};
   const selectors: selector = {};
   if (filteredCurSnap) {
