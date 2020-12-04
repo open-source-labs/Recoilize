@@ -1,29 +1,23 @@
 // renders a list of all of the snapshots that were taking
-import React, {useEffect, useRef} from 'react';
-import {stateSnapshot, selectedTypes} from '../../../types';
+import React, {useEffect, useRef, useContext} from 'react';
+import {snapshotHistoryContext, filterContext, selectedContext} from '../App';
+import {renderIndexContext} from '../../Containers/MainContainer';
+
 interface SnapshotsListProps {
-  // index of current snapshot rendered in devtool
-  renderIndex: number;
   // length of snapshotHistory array
   snapshotHistoryLength: number;
-  // setState functionality to update renderIndex
-  setRenderIndex: React.Dispatch<React.SetStateAction<number>>;
   // functionality to postMessage the selected snapshot index to background.js
   timeTravelFunc: (index: number) => void;
-  selected: selectedTypes[];
-  filter: any[];
-  snapshotHistory: stateSnapshot[];
 }
 
 const SnapshotsList: React.FC<SnapshotsListProps> = ({
-  renderIndex,
   snapshotHistoryLength,
-  setRenderIndex,
   timeTravelFunc,
-  selected,
-  filter,
-  snapshotHistory,
 }) => {
+  const {snapshotHistory} = useContext(snapshotHistoryContext);
+  const {selected} = useContext(selectedContext);
+  const {filter} = useContext(filterContext);
+  const {renderIndex, setRenderIndex} = useContext(renderIndexContext);
   // useRef for a dummy div at the bottom of the scroll
   const snapshotEndRef = useRef<HTMLDivElement>(null);
 
@@ -48,7 +42,7 @@ const SnapshotsList: React.FC<SnapshotsListProps> = ({
       if (i === 0) {
         return true;
       }
-      // checks if the filterteredSnapshot object at index i has a key (atom or selector) found in the selected array. This would indicate that there was a change to that state/selector because filter is an array of objects containing differences between snapshots.
+      // checks if the filteredSnapshot object at index i has a key (atom or selector) found in the selected array. This would indicate that there was a change to that state/selector because filter is an array of objects containing differences between snapshots.
       if (filter[i]) {
         for (let key in filter[i].filteredSnapshot) {
           for (let j = 0; j < selected.length; j++) {
@@ -73,9 +67,9 @@ const SnapshotsList: React.FC<SnapshotsListProps> = ({
     } 
     //Checks to see if the actualDuration within filter is an array. If it is an array then the 2nd value in the array is the new actualDuration.
     else if (Array.isArray(filter[i].componentAtomTree.actualDuration)) {
-      renderTime = filter[i].componentAtomTree.treeBaseDuration[1];
+      renderTime = filter[i].componentAtomTree.treeBaseDuration as number[][1];
     } else {
-      renderTime = filter[i].componentAtomTree.treeBaseDuration;
+      renderTime = filter[i].componentAtomTree.treeBaseDuration as number;
     }
 
     // Push a div container to snapshotDivs array only if there was a change to state. 
@@ -111,7 +105,7 @@ const SnapshotsList: React.FC<SnapshotsListProps> = ({
   }
   /*
   Filter snapshotDivs to show only the snapshots that have
-   an atom/selector from the Atom and Selector Filter in the Settings tab
+  an atom/selector from the Atom and Selector Filter in the Settings tab
   */
   // render the array of snapshots divs generated above
   return (

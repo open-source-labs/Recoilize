@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ParentSize } from '@vx/responsive';
-import {componentAtomTree, dataDuration, dataDurationArr} from '../../../types';
+import {componentAtomTree, dataDurationArr} from '../../../types';
 import FlameGraph from './FlameGraph.js';
 import RankedGraph from './RankedGraph';
 
