@@ -21,7 +21,7 @@ body {
   background-color: rgba(255, 255, 255, 0.25);
   border: 2px solid rgba(255, 255, 255, 0.2);
 }
-/* remove outline in all pages of the app */
+/* remove outlines on input boxes and buttons in all pages of the app */
 input,
 button {
   outline: none;
@@ -340,14 +340,18 @@ button:hover {
 }
 
 .AtomDiv:hover,
-.SelectorDiv:hover {
-  opacity: 90%;
+.SelectorDiv:hover,
+.AtomP:hover,
+.SelectorP:hover {
+  opacity: 90% !important;
   cursor: pointer;
 }
 
 .AtomDiv:active,
-.SelectorDiv:active {
-  opacity: 50%;
+.SelectorDiv:active,
+.AtomP:active,
+.SelectorP:active {
+  opacity: 50% !important;
 }
 
 .AtomLegend {
@@ -377,19 +381,14 @@ button:hover {
   grid-row: 4;
   border: 0.1em solid rgb(43, 34, 34);
 }
-#atomDrop,
-#selectorDrop {
-  display: grid;
-  grid-row: 4;
-  border: 0.1em solid rgb(43, 34, 34);
-}
+
 /* .SelectorDropdown {
   display: grid;
   grid-row: 4;
   align-items: center;
 } */
 
-.SelectorDropdown p:hover,
+/* .SelectorDropdown p:hover,
 .AtomDropdown p:hover,
 #atomDrop p:hover,
 #selectorDrop p:hover,
@@ -397,7 +396,7 @@ button:hover {
 #SelectorP:hover {
   opacity: 70%;
   cursor: pointer;
-}
+} */
 
 .SelectorDropdown p:active,
 .AtomDropdown p:active {
@@ -479,6 +478,13 @@ button:hover {
   border: 1px solid springgreen;
   border-radius: 20px;
   margin: 0px;
+}
+
+#atomDrop,
+#selectorDrop {
+  display: grid;
+  grid-row: 4;
+  border: 0.1em solid rgb(43, 34, 34);
 }
 
 .suspenseLegend {
