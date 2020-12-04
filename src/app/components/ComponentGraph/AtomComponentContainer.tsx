@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import AtomComponentVisual from './AtomComponentVisual';
-import AtomSelectorLegend from './AtomSelectorLegend';
+// import AtomSelectorLegend from './AtomSelectorLegend';
 import {
   componentAtomTree,
   filteredSnapshot,
@@ -60,7 +60,7 @@ const AtomComponentVisualContainer: React.FC<AtomComponentVisualContainerProps> 
         y={y}
         k={k}
       />
-      <div id="legendFlexContainer">
+      {/* <div id="legendFlexContainer">
         <AtomSelectorLegend
           selectedRecoilValue={selectedRecoilValue}
           setSelectedRecoilValue={setSelectedRecoilValue}
@@ -69,7 +69,7 @@ const AtomComponentVisualContainer: React.FC<AtomComponentVisualContainerProps> 
           str={str}
           setStr={setStr}
         />
-      </div>
+      </div> */}
     </div>
   );
 };

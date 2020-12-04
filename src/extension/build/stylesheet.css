@@ -398,6 +398,13 @@ button:hover {
   cursor: pointer;
 } */
 
+.atom-class,
+.selector-class,
+.AtomListItem,
+.SelectorListItem {
+  cursor: pointer;
+}
+
 .SelectorDropdown p:active,
 .AtomDropdown p:active {
   opacity: 80%;

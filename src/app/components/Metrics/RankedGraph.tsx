@@ -109,9 +109,11 @@ const RankedGraph: React.FC<RankedGraphProps> = ({data, width, height}: RankedGr
         }
         backgroundConnection.postMessage(payload);
       })
-      .transition()
+      // ! DONT EVER USE TRANSITION!!! - >:|
+      // .transition()
       // .duration(1300)
-      .delay((d: any,i: any) => i * 100)
+      // .delay((d: any,i: any) => i * 100)
+      // ! DONT UNCOMMENT ABOVE - DANGERZONE ^^^
       .attr("width", function(d: any) {return x(d.actualDuration); } )
       .attr('fill',function(d:any) {
         return colorPicker(d.actualDuration)
