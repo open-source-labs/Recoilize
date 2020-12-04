@@ -51,6 +51,7 @@ const AtomComponentVisualContainer: React.FC<AtomComponentVisualContainerProps> 
         componentAtomTree={componentAtomTree}
         cleanedComponentAtomTree={cleanedComponentAtomTree}
         selectedRecoilValue={selectedRecoilValue}
+        setSelectedRecoilValue={setSelectedRecoilValue}
         atoms={atoms}
         selectors={selectors}
         setStr={setStr}

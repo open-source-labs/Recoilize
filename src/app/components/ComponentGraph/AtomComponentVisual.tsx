@@ -13,6 +13,7 @@ interface AtomComponentVisualProps {
   y: number;
   k: number;
   setZoomState: any;
+  setSelectedRecoilValue: React.Dispatch<React.SetStateAction<any[]>>;
 }
 
 const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
@@ -26,6 +27,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
   y,
   k,
   setZoomState,
+  setSelectedRecoilValue
 }) => {
   // set the heights and width of the tree to be passed into treeMap function
   let width: number = 0;
@@ -190,8 +192,8 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
 
       // transition that makes it slide down to next spot
       nodeUpdate
-        .transition()
-        .duration(duration)
+        // .transition()
+        // .duration(duration)
         .attr('transform', function (d: any): string {
           return `translate(${d.y}, ${d.x})`;
         });
@@ -398,11 +400,27 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
       </button>
       <div className="AtomNetworkLegend">
         <div className="AtomLegend" />
-        <p onClick={openDropdown} className="AtomP">ATOM</p>
-        {showAtomMenu && <div id="atomDrop" className="AtomDropDown">{atomList.map((atom, i) => <p key={i}>{atom}</p>)}</div>}
+        <p onClick={openDropdown} id="AtomP" className="AtomP">ATOM</p>
+      {showAtomMenu && <div id="atomDrop" className="AtomDropDown">
+        {atomList.map((atom, i) => <p id={`atom-drop${i}`} className="atom-class" key={i} style={{opacity: '30%'}} 
+        onClick={() => {
+        document.querySelector(`#atom-drop${i}`).setAttribute('style', 'opacity: 100%;');
+        document.querySelectorAll('.atom-class').forEach(item => {
+          if(item.id !== `atom-drop${i}`) item.setAttribute('style', 'opacity: 30%;')
+        });
+        setSelectedRecoilValue([atom, 'atom'])
+      }}>{atom}</p>)}</div>}
         <div className="SelectorLegend"></div>
-        <p onClick={openDropdown} className="SelectorP">SELECTOR</p>
-        {showSelectorMenu && <div id="selectorDrop" className="SelectorDropDown">{selectorList.map((selector, i) => <p key={i}>{selector}</p>)}</div>}
+        <p onClick={openDropdown} id="SelectorP" className="SelectorP">SELECTOR</p>
+        {showSelectorMenu && <div id="selectorDrop" className="SelectorDropDown">
+          {selectorList.map((selector, i) => <p id={`selector-drop${i}`} className="selector-class" key={i} style={{opacity: '30%'}}
+          onClick={() => {
+            document.querySelector(`#selector-drop${i}`).setAttribute('style', 'opacity: 100%;');
+            document.querySelectorAll('.selector-class').forEach(item => {
+              if(item.id !== `selector-drop${i}`) item.setAttribute('style', 'opacity: 30%;')
+            });
+            setSelectedRecoilValue([selector, 'selector'])
+      }}>{selector}</p>)}</div>}
         <div className="bothLegend"></div>
         <p>BOTH</p>
         <div className={hasSuspense ? "suspenseLegend" : ''}></div>

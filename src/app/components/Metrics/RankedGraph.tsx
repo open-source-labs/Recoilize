@@ -110,7 +110,7 @@ const RankedGraph: React.FC<RankedGraphProps> = ({data, width, height}: RankedGr
         backgroundConnection.postMessage(payload);
       })
       .transition()
-      .duration(1300)
+      // .duration(1300)
       .delay((d: any,i: any) => i * 100)
       .attr("width", function(d: any) {return x(d.actualDuration); } )
       .attr('fill',function(d:any) {
