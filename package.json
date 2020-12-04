@@ -5,7 +5,7 @@
       "jest-webextension-mock"
     ]
   },
-  "version": "0.9.8",
+  "version": "0.9.9",
   "description": "A Chrome extension that helps debug Recoil applications by memorizing the state of components with every render.",
   "main": "index.js",
   "scripts": {
