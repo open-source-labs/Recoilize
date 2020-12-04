@@ -1,16 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 const {Multiselect} = require('multiselect-react-dropdown');
-import {stateSnapshot, selectedTypes} from '../../../types';
-interface AtomSettingsProps {
-  snapshotHistory: stateSnapshot[];
-  selected: selectedTypes[];
-  setSelected: React.Dispatch<React.SetStateAction<selectedTypes[]>>;
-}
-const AtomSettings: React.FC<AtomSettingsProps> = ({
-  snapshotHistory,
-  selected,
-  setSelected,
-}) => {
+import {selectedTypes} from '../../../types';
+import { selectedContext, snapshotHistoryContext } from '../App';
+
+const AtomSettings: React.FC = () => {
+  const {snapshotHistory} = useContext(snapshotHistoryContext);
+  const {selected, setSelected} = useContext(selectedContext);
   // https://github.com/srigar/multiselect-react-dropdown
   // Make filterArray into array of objects, we want to get the most recent so that we have all possible options
   const options: selectedTypes[] = [];

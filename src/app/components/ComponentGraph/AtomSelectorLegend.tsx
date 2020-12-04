@@ -7,7 +7,6 @@ interface AtomSelectorLegendProps {
   selectors: selector;
   selectedRecoilValue: string[];
   str: string[];
-  setStr: React.Dispatch<React.SetStateAction<string[]>>;
 }
 const AtomSelectorLegend: React.FC<AtomSelectorLegendProps> = ({
   setSelectedRecoilValue,
@@ -15,7 +14,6 @@ const AtomSelectorLegend: React.FC<AtomSelectorLegendProps> = ({
   selectors,
   selectedRecoilValue,
   str,
-  setStr,
 }) => {
   const selectorList: JSX.Element[] = [];
   const atomList: JSX.Element[] = [];

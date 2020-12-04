@@ -3,20 +3,28 @@ import * as d3 from 'd3';
 import makeRelationshipLinks from '../../utils/makeRelationshipLinks';
 import {filteredSnapshot} from '../../../types';
 interface NetworkProps {
+  // filteredCurSnap is an object of atom or selector names as keys and 
+  // an object as their value.
   filteredCurSnap: filteredSnapshot;
 }
 
 const Network: React.FC<NetworkProps> = ({filteredCurSnap}) => {
+  // an array of atoms and selector sub
+  const atomAndSelectorArr = Object.entries(filteredCurSnap);
+  // state hook for keeping the zoom consistent despite rerenders
   const [{x, y, k}, setZoomState] = useState({x: 0, y: 0, k: 0});
 
   // state hook for search value for atom network
   const [searchValue, setSearchValue] = useState('');
 
-  //state hook for showing dropdown menu
+  //state hook for showing list of atoms
   const [showAtomMenu, setShowAtomMenu] = useState(false);
+  // state hook for showing list of selectors
   const [showSelectorMenu, setShowSelectorMenu] = useState(false);
-  const [atomList, setAtomList] = useState(Object.entries(filteredCurSnap).filter(([atomOrSelector, obj])=> !obj.nodeDeps.length ? atomOrSelector : null));
-  const [selectorList, setSelectorList] = useState(Object.entries(filteredCurSnap).filter(([atomOrSelector, obj]) => obj.nodeDeps.length ? atomOrSelector : null));
+  // array of atom names (what the drop down showAtomMenu is going to display)
+  const [atomList] = useState(atomAndSelectorArr.filter(([isAtom, obj])=> !obj.nodeDeps.length ? isAtom : null));
+  // array of selectors (what the drop down showSelectorMenu is going to display)
+  const [selectorList] = useState(atomAndSelectorArr.filter(([isSelector, obj]) => obj.nodeDeps.length ? isSelector : null));
 
   // function to handle change in search bar. Sets searchValue state
   const handleChange = (e: any) => {
