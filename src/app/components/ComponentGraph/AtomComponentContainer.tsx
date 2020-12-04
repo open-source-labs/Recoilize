@@ -55,7 +55,6 @@ const AtomComponentVisualContainer: React.FC<AtomComponentVisualContainerProps> 
           atoms={atoms}
           selectors={selectors}
           str={str}
-          setStr={setStr}
         />
       </div>
     </div>
