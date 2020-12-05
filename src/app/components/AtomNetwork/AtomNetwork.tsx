@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {SyntheticEvent, useEffect, useState} from 'react';
 import * as d3 from 'd3';
 import makeRelationshipLinks from '../../utils/makeRelationshipLinks';
 import {filteredSnapshot} from '../../../types';
@@ -300,9 +300,10 @@ const Network: React.FC<NetworkProps> = ({filteredCurSnap}) => {
 
   // handles clicking on Selector and Atom buttom to bring down
   // list of atoms or selects
-  function openDropdown(e:any) {
+  function openDropdown(e: React.MouseEvent) {
     // if user clicks on atom list button
-    if(e.target.className === 'AtomP') {
+    const target = e.target as Element;
+    if(target.className === 'AtomP') {
       // check if selector list was previously open, if it is, close it
       if(showSelectorMenu) setShowSelectorMenu(false);
       // open atom list
@@ -311,7 +312,7 @@ const Network: React.FC<NetworkProps> = ({filteredCurSnap}) => {
       setSearchValue('');
     }
     // if user clicks on selector list button
-    else if(e.target.className === 'SelectorP') {
+    else if(target.className === 'SelectorP') {
       // check if atom list was previously open, if it is, close it
       if(showAtomMenu) setShowAtomMenu(false);
       // show Selector list
@@ -354,26 +355,26 @@ const Network: React.FC<NetworkProps> = ({filteredCurSnap}) => {
           {/* conditional rendering of dropdowns depending on the value of the state */}
           {showAtomMenu &&
             <div className="AtomDropdown">{atomList.map(([atom, atomObj], i)=> {
-              return (<p key={i} id={`Atom${i}`} className='AtomListItem' style={{opacity: '30%'}} onClick={(e: any) => {
+              return (<p key={i} id={`Atom${i}`} className='AtomListItem' style={{opacity: '30%'}} onClick={(e: React.MouseEvent) => {
                 //set the opacity to 30%, unless spefic element is clicked then changes it to 100%
                 document.querySelector(`#Atom${i}`).setAttribute('style', 'opacity: 100%;');
                 document.querySelectorAll('.AtomListItem').forEach(item => {
                   if(item.id !== `Atom${i}`) item.setAttribute('style', 'opacity: 30%;')
                 });
                 //set the search value to the name of the paragraph element to render only corresponding and related nodes
-                setSearchValue(e.target.innerHTML);
+                setSearchValue((e.target as Element).innerHTML);
             }}>{atom}</p>)
           })}</div>}
           {showSelectorMenu &&
             <div className="SelectorDropdown">{selectorList.map(([selector, selectorObj], i) => {
-              return (<p key={i} id={`Selector${i}`} className='SelectorListItem' style={{opacity: '30%'}} onClick={(e: any) => {
+              return (<p key={i} id={`Selector${i}`} className='SelectorListItem' style={{opacity: '30%'}} onClick={(e: React.MouseEvent) => {
                 //set the opacity to 30%, unless spefic element is clicked then changes it to 100%
                 document.querySelector(`#Selector${i}`).setAttribute('style', 'opacity: 100%;');
                 document.querySelectorAll('.SelectorListItem').forEach(item => {
                   if(item.id !== `Selector${i}`) item.setAttribute('style', 'opacity: 30%;')
                 });
                 //set the search value to the name of the paragraph element to render only corresponding and related nodes
-                setSearchValue(e.target.innerHTML);
+                setSearchValue((e.target as Element).innerHTML);
             }}>{selector}</p>)
           })}</div>}
         </div>
