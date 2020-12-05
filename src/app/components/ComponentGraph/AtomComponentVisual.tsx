@@ -145,13 +145,19 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
               atsel.push(d.data.recoilNodes[x]);
             }
             d3.select(this)
-              .append('text')
-              .text(formatAtomSelectorText(atsel))
-              .style('fill', 'white')
-              .attr('x', formatMouseoverXValue(d.data.recoilNodes[x]))
+              // .append('text')
+              // .text(formatAtomSelectorText(atsel))
+              // .style('fill', 'white')
+              .append("foreignObject")
+              .attr("width", 1580)
+              .attr("height", 2000)
+              // .append("xhtml:body")
+              .html(`<h1>${formatAtomSelectorText(atsel)}</h1>`)
+              // .attr('x', formatMouseoverXValue(d.data.recoilNodes[x]))
               // How far the text is below the node
-              .attr('y', -150)
-              .style('font-size', '3.5rem')
+              .attr('y', -550)
+              .attr('x', 300)
+              .style('font-size', '5.5em')
               .attr('id', `x`);
           }
         })
