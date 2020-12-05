@@ -391,10 +391,19 @@ button:hover {
 /* .SelectorDropdown p:hover,
 .AtomDropdown p:hover,
 #atomDrop p:hover,
-#selectorDrop p:hover {
+#selectorDrop p:hover,
+#AtomP:hover,
+#SelectorP:hover {
   opacity: 70%;
   cursor: pointer;
 } */
+
+.atom-class,
+.selector-class,
+.AtomListItem,
+.SelectorListItem {
+  cursor: pointer;
+}
 
 .SelectorDropdown p:active,
 .AtomDropdown p:active {
