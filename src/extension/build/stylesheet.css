@@ -21,6 +21,25 @@ body {
   background-color: rgba(255, 255, 255, 0.25);
   border: 2px solid rgba(255, 255, 255, 0.2);
 }
+/* remove outlines on input boxes and buttons in all pages of the app */
+input,
+button {
+  outline: none;
+}
+/* basic css for the button and button:hover for uniform look */
+button {
+  border: 1px solid #989898;
+  border-radius: 5px;
+  color: #e6e6e6;
+  background: none;
+}
+
+button:hover {
+  color: white;
+  border: 1px solid white;
+  background-color: #212121;
+  text-emphasis: bold;
+}
 
 /* APP -> MAIN CONTAINER */
 .App,
@@ -72,6 +91,35 @@ body {
   color: #e6e6e6;
 }
 
+.removeSnapshot {
+  background-color: transparent;
+  border: none;
+  color: white;
+  /* outline: none; */
+  font-size: 0.7em;
+}
+
+.removeSnapshot:hover {
+  opacity: 50%;
+}
+.removeSnapshot:active {
+  opacity: 50%;
+  background-color: black;
+}
+
+.clear-buttons {
+  display: flex;
+}
+
+#prevClr {
+  width: 5em;
+}
+
+#fwrdClr {
+  width: 5em;
+  margin-left: auto;
+}
+
 /* SNAPSHOTLIST COMPONENT */
 .SnapshotsList {
   height: 100%;
@@ -87,26 +135,26 @@ body {
   padding-left: 20px;
   padding-right: 20px;
   border: none;
-  outline: none;
+  /* outline: none; */
   justify-content: space-between;
 }
 .individualSnapshot:hover {
   background-color: #212121;
 }
 
-.individualSnapshot .timeTravelButton:hover {
+/* .individualSnapshot .timeTravelButton:hover {
   color: #e6e6e6;
   border: 1px solid white;
   background-color: #212121;
   text-emphasis: bold;
-}
+} */
 
 .timeTravelButton {
-  border: 1px solid #989898;
-  border-radius: 5px;
+  /* border: 1px solid #989898;
+  border-radius: 5px; */
   color: #989898;
-  background: none;
-  outline: none;
+  /* background: none; */
+  /* outline: none; */
 }
 
 .timeTravelButton:focus {
@@ -149,13 +197,13 @@ body {
   padding: 8px;
   padding-left: 10px;
   padding-right: 10px;
-  outline: none;
+  /* outline: none; */
 }
 .navBarButtons:hover {
   color: #e6e6e6;
-  background-color: #212121;
+  /* background-color: #212121; */
+  border: none;
 }
-
 /* DIFF COMPONENT */
 .Diff {
   height: 100%;
@@ -175,7 +223,7 @@ body {
 .rawToggle {
   background: none;
   border: none !important;
-  outline: none;
+  /* outline: none; */
 }
 
 /* TREE COMPONENT */
@@ -229,18 +277,18 @@ body {
 }
 
 .graphButton {
-  border: 1px solid #989898;
-  border-radius: 5px;
+  /* border: 1px solid #989898;
+  border-radius: 5px; */
   color: #989898;
-  background: none;
-  outline: none;
+  /* background: none; */
+  /* outline: none; */
 }
 
 .graphButton:hover {
   color: #e6e6e6;
   border: 1px solid white;
-  background-color: #212121;
-  text-emphasis: bold;
+  /* background-color: #212121;
+  text-emphasis: bold; */
 }
 
 .graphButton:focus {
@@ -269,7 +317,7 @@ body {
 #networkSearch {
   width: 135px;
   grid-row: 1;
-  outline: none;
+  /* outline: none; */
 }
 
 .LegendContainer {
@@ -305,14 +353,18 @@ body {
 }
 
 .AtomDiv:hover,
-.SelectorDiv:hover {
-  opacity: 70%;
+.SelectorDiv:hover,
+.AtomP:hover,
+.SelectorP:hover {
+  opacity: 90% !important;
   cursor: pointer;
 }
 
 .AtomDiv:active,
-.SelectorDiv:active {
-  opacity: 50%;
+.SelectorDiv:active,
+.AtomP:active,
+.SelectorP:active {
+  opacity: 50% !important;
 }
 
 .AtomLegend {
@@ -336,21 +388,33 @@ body {
   margin: 0px;
   flex-grow: 1;
 }
-.AtomDropdown {
+.AtomDropdown,
+.SelectorDropdown {
   display: grid;
   grid-row: 4;
   border: 0.1em solid rgb(43, 34, 34);
 }
 
-.SelectorDropdown {
+/* .SelectorDropdown {
   display: grid;
   grid-row: 4;
   align-items: center;
-}
+} */
 
-.SelectorDropdown p:hover,
-.AtomDropdown p:hover {
-  opacity: 90%;
+/* .SelectorDropdown p:hover,
+.AtomDropdown p:hover,
+#atomDrop p:hover,
+#selectorDrop p:hover,
+#AtomP:hover,
+#SelectorP:hover {
+  opacity: 70%;
+  cursor: pointer;
+} */
+
+.atom-class,
+.selector-class,
+.AtomListItem,
+.SelectorListItem {
   cursor: pointer;
 }
 
@@ -400,6 +464,7 @@ body {
   left: 179px;
   display: grid;
   grid-template-columns: 30px 30px;
+  grid-template-rows: 30px 30px 30px 1fr;
   align-items: center;
   padding-left: 5px;
   padding-top: 5px;
@@ -435,6 +500,13 @@ body {
   margin: 0px;
 }
 
+#atomDrop,
+#selectorDrop {
+  display: grid;
+  grid-row: 4;
+  border: 0.1em solid rgb(43, 34, 34);
+}
+
 .suspenseLegend {
   display: inline-block;
   background: transparent;
@@ -467,7 +539,7 @@ body {
   padding-left: 20px;
   padding-right: 20px;
   border: none;
-  outline: none;
+  /* outline: none; */
   word-wrap: break-word;
   font-size: 14px;
 }
@@ -478,13 +550,13 @@ body {
 
 .minimizeButton {
   margin: 5px;
-  background-color: #9580ff;
-  border: #9580ff;
+  /* background-color: #9580ff;
+  border: #9580ff; */
   border-radius: 7px;
   width: 80px;
   height: 22px;
   cursor: pointer;
-  color: hsl(258, 68%, 28%);
+  /* color: hsl(258, 68%, 28%); */
   font-weight: bold;
 }
 

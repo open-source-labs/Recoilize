@@ -4,17 +4,15 @@ import {snapshotHistoryContext, filterContext, selectedContext} from '../App';
 import {renderIndexContext} from '../../Containers/MainContainer';
 
 interface SnapshotsListProps {
-  // length of snapshotHistory array
-  snapshotHistoryLength: number;
   // functionality to postMessage the selected snapshot index to background.js
   timeTravelFunc: (index: number) => void;
 }
 
 const SnapshotsList: React.FC<SnapshotsListProps> = ({
-  snapshotHistoryLength,
   timeTravelFunc,
 }) => {
-  const {snapshotHistory} = useContext(snapshotHistoryContext);
+  const {snapshotHistory, setSnapshotHistory} = useContext(snapshotHistoryContext);
+  let snapshotHistoryLength = snapshotHistory.length
   const {selected} = useContext(selectedContext);
   const {filter} = useContext(filterContext);
   const {renderIndex, setRenderIndex} = useContext(renderIndexContext);
@@ -66,8 +64,8 @@ const SnapshotsList: React.FC<SnapshotsListProps> = ({
       renderTime = snapshotHistory[0].componentAtomTree.treeBaseDuration;
     } 
     //Checks to see if the actualDuration within filter is an array. If it is an array then the 2nd value in the array is the new actualDuration.
-    else if (Array.isArray(filter[i].componentAtomTree.actualDuration)) {
-      renderTime = filter[i].componentAtomTree.treeBaseDuration as number[][1];
+    else if (Array.isArray(filter[i].componentAtomTree.actualDuration)) {      
+      renderTime = (filter[i].componentAtomTree.treeBaseDuration as number[])[1];
     } else {
       renderTime = filter[i].componentAtomTree.treeBaseDuration as number;
     }
@@ -76,6 +74,7 @@ const SnapshotsList: React.FC<SnapshotsListProps> = ({
     // The div container will contain renderTimes evaluated above.
     snapshotDivs.push(
       <div
+        id={`snapshot${i}`}
         className="individualSnapshot"
         key={i}
         style={
@@ -108,6 +107,7 @@ const SnapshotsList: React.FC<SnapshotsListProps> = ({
   an atom/selector from the Atom and Selector Filter in the Settings tab
   */
   // render the array of snapshots divs generated above
+  
   return (
     <div className="SnapshotsList">
       <div>{snapshotDivs}</div>

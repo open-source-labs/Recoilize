@@ -1,16 +1,10 @@
 import React, {useContext} from 'react';
 import SnapshotsList from '../components/SnapshotList/SnapshotList';
-
+import {renderIndexContext} from './MainContainer';
 import {filterContext} from '../components/App';
 
-interface SnapshotsContainerProps {
-  // length of snapshotHistory array
-  snapshotHistoryLength: number;
-}
-
-const SnapshotsContainer: React.FC<SnapshotsContainerProps> = ({
-  snapshotHistoryLength,
-}) => {
+const SnapshotsContainer: React.FC = () => {
+  const {renderIndex} = useContext(renderIndexContext);
   const {filter} = useContext(filterContext);
   //indexDiff is used to ensure the index of filter matches the index of the snapshots array in the backend
   let indexDiff: number = 0;
@@ -32,8 +26,54 @@ const SnapshotsContainer: React.FC<SnapshotsContainerProps> = ({
       },
     });
   };
+
+  function reIndexing () {
+    const snapshotListArr = document.querySelectorAll('.individualSnapshot')
+    
+    snapshotListArr.forEach((element, i) => {
+      (element.childNodes[0] as Element).innerHTML = `${i}`;
+    })
+  }
+
+  function prevClr() {
+    const snapshotListArr = document.querySelectorAll('.individualSnapshot')
+    for (let i = 0; i < snapshotListArr.length; i++) {
+      let index = parseInt(snapshotListArr[i].id.match(/\d+/g)[0]);
+      console.log("this is snapshotListArr[i] ", (snapshotListArr[i].childNodes[0] as Element).innerHTML);
+      
+      if (index < renderIndex) {
+        snapshotListArr[i].parentNode.removeChild(snapshotListArr[i])
+        // setSnapshotHistory((prev) => {
+        //   const newSnapshotHistory = prev.slice();
+        //   newSnapshotHistory.shift();
+        //   return newSnapshotHistory;
+        // })
+      }
+      else break;
+    }
+    reIndexing();
+  }
+
+  function fwrdClr() {
+    const snapshotListArr = document.querySelectorAll('.individualSnapshot')
+
+    for (let i = snapshotListArr.length - 1; i >= 0; i--) {
+      let index = parseInt(snapshotListArr[i].id.match(/\d+/g)[0]);
+      
+      if (index > renderIndex) {
+        snapshotListArr[i].parentNode.removeChild(snapshotListArr[i])
+      }
+      else break;
+    }
+    reIndexing();
+  }
+
   return (
     <div className="SnapshotsContainer">
+      <div className="clear-buttons">
+      <button onClick={prevClr} id='prevClr'>PrevClr</button>
+      <button onClick={fwrdClr} id='fwrdClr'>FwrdClr</button>
+      </div>
       <span
         style={{
           fontSize: '14px',
@@ -44,7 +84,6 @@ const SnapshotsContainer: React.FC<SnapshotsContainerProps> = ({
         Snapshots
       </span>
       <SnapshotsList
-        snapshotHistoryLength={snapshotHistoryLength}
         timeTravelFunc={timeTravelFunc}
       />
     </div>
