@@ -107,6 +107,19 @@ button:hover {
   background-color: black;
 }
 
+.clear-buttons {
+  display: flex;
+}
+
+#prevClr {
+  width: 5em;
+}
+
+#fwrdClr {
+  width: 5em;
+  margin-left: auto;
+}
+
 /* SNAPSHOTLIST COMPONENT */
 .SnapshotsList {
   height: 100%;

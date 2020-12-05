@@ -32,10 +32,7 @@ const MainContainer: React.FC = () => {
   return (
     <div className="MainContainer">
     <renderIndexContext.Provider value={{renderIndex, setRenderIndex}}>
-      <SnapshotsContainer
-        // length of snapshotHistory array
-        snapshotHistoryLength={snapshotHistory.length}
-      />
+      <SnapshotsContainer />
       </renderIndexContext.Provider>
 
       <VisualContainer

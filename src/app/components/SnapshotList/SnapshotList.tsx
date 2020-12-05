@@ -4,17 +4,15 @@ import {snapshotHistoryContext, filterContext, selectedContext} from '../App';
 import {renderIndexContext} from '../../Containers/MainContainer';
 
 interface SnapshotsListProps {
-  // length of snapshotHistory array
-  snapshotHistoryLength: number;
   // functionality to postMessage the selected snapshot index to background.js
   timeTravelFunc: (index: number) => void;
 }
 
 const SnapshotsList: React.FC<SnapshotsListProps> = ({
-  snapshotHistoryLength,
   timeTravelFunc,
 }) => {
-  const {snapshotHistory} = useContext(snapshotHistoryContext);
+  const {snapshotHistory, setSnapshotHistory} = useContext(snapshotHistoryContext);
+  let snapshotHistoryLength = snapshotHistory.length
   const {selected} = useContext(selectedContext);
   const {filter} = useContext(filterContext);
   const {renderIndex, setRenderIndex} = useContext(renderIndexContext);
@@ -79,6 +77,7 @@ const SnapshotsList: React.FC<SnapshotsListProps> = ({
     // The div container will contain renderTimes evaluated above.
     snapshotDivs.push(
       <div
+        id={`snapshot${i}`}
         className="individualSnapshot"
         key={i}
         style={
