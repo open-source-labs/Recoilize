@@ -64,13 +64,10 @@ const SnapshotsList: React.FC<SnapshotsListProps> = ({
       renderTime = snapshotHistory[0].componentAtomTree.treeBaseDuration;
     } 
     //Checks to see if the actualDuration within filter is an array. If it is an array then the 2nd value in the array is the new actualDuration.
-    else if (Array.isArray(filter[i].componentAtomTree.actualDuration)) {
-      console.log("i have 2 element in array");
-      
-      renderTime = filter[i].componentAtomTree.treeBaseDuration[1];
+    else if (Array.isArray(filter[i].componentAtomTree.actualDuration)) {      
+      renderTime = (filter[i].componentAtomTree.treeBaseDuration as number[])[1];
     } else {
-      console.log("i only have one element in array");
-      renderTime = filter[i].componentAtomTree.treeBaseDuration;
+      renderTime = filter[i].componentAtomTree.treeBaseDuration as number;
     }
 
     // Push a div container to snapshotDivs array only if there was a change to state. 
