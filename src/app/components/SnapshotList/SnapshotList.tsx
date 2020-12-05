@@ -108,6 +108,7 @@ const SnapshotsList: React.FC<SnapshotsListProps> = ({
   an atom/selector from the Atom and Selector Filter in the Settings tab
   */
   // render the array of snapshots divs generated above
+  
   return (
     <div className="SnapshotsList">
       <div>{snapshotDivs}</div>
