@@ -39,7 +39,7 @@ const SnapshotsContainer: React.FC = () => {
     const snapshotListArr = document.querySelectorAll('.individualSnapshot')
     for (let i = 0; i < snapshotListArr.length; i++) {
       let index = parseInt(snapshotListArr[i].id.match(/\d+/g)[0]);
-      console.log("this is snapshotListArr[i] ", (snapshotListArr[i].childNodes[0] as Element).innerHTML);
+      // console.log("this is snapshotListArr[i] ", (snapshotListArr[i].childNodes[0] as Element).innerHTML);
       
       if (index < renderIndex) {
         snapshotListArr[i].parentNode.removeChild(snapshotListArr[i])
@@ -51,7 +51,7 @@ const SnapshotsContainer: React.FC = () => {
       }
       else break;
     }
-    reIndexing();
+    // reIndexing();
   }
 
   function fwrdClr() {
@@ -65,7 +65,7 @@ const SnapshotsContainer: React.FC = () => {
       }
       else break;
     }
-    reIndexing();
+    // reIndexing();
   }
 
   return (
