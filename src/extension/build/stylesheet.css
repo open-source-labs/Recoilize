@@ -112,6 +112,12 @@ button:hover {
   margin-top: 1em;
 }
 
+#clear-snapshots-title {
+  margin-top: 0.7em;
+  font-size: 12px;
+  font-weight: bold;
+}
+
 #prevClr {
   margin-left: 0.8em;
   width: 5em;

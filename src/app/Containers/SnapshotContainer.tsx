@@ -70,9 +70,10 @@ const SnapshotsContainer: React.FC = () => {
 
   return (
     <div className="SnapshotsContainer">
+      <div id='clear-snapshots-title'>Clear Snapshots</div>
       <div className="clear-buttons">
-      <button onClick={prevClr} id='prevClr'>PrevClr</button>
-      <button onClick={fwrdClr} id='fwrdClr'>FwrdClr</button>
+      <button onClick={prevClr} id='prevClr'>Previous</button>
+      <button onClick={fwrdClr} id='fwrdClr'>Forward</button>
       </div>
       <span
         style={{
