@@ -85,7 +85,7 @@ const SnapshotsList: React.FC<SnapshotsListProps> = ({
         onClick={() => {
           setRenderIndex(i);
         }}>
-        <li>{i}</li>
+        {/* <li>{i}</li> */}
         <li>{`${Math.round(renderTime*100)/100}ms`}</li>
         <button
           className="timeTravelButton"
