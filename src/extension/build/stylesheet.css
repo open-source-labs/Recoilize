@@ -113,11 +113,13 @@ button:hover {
 }
 
 #prevClr {
+  margin-left: 0.8em;
   width: 5em;
   cursor: pointer;
 }
 
 #fwrdClr {
+  margin-right: 0.8em;
   width: 5em;
   margin-left: auto;
   cursor: pointer;
