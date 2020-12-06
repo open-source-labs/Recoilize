@@ -149,8 +149,8 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
               // .text(formatAtomSelectorText(atsel))
               // .style('fill', 'white')
               .append("foreignObject")
-              .attr("width", 1580)
-              .attr("height", 2000)
+              .attr("width", 5000)
+              .attr("height", 5000)
               // .append("xhtml:body")
               .html(`<h1>${formatAtomSelectorText(atsel)}</h1>`)
               // .attr('x', formatMouseoverXValue(d.data.recoilNodes[x]))
@@ -379,12 +379,10 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
     if (target.className === "AtomP") {
       setShowAtomMenu(!showAtomMenu);
       setShowSelectorMenu(false);
-      console.log(showAtomMenu);
     }
     else {
       setShowSelectorMenu(!showSelectorMenu);
       setShowAtomMenu(false);
-      console.log(showSelectorMenu);
     }
   }
   return (

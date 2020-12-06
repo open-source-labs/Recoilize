@@ -109,15 +109,18 @@ button:hover {
 
 .clear-buttons {
   display: flex;
+  margin-top: 1em;
 }
 
 #prevClr {
   width: 5em;
+  cursor: pointer;
 }
 
 #fwrdClr {
   width: 5em;
   margin-left: auto;
+  cursor: pointer;
 }
 
 /* SNAPSHOTLIST COMPONENT */
@@ -218,6 +221,10 @@ button:hover {
 .toggleDiv {
   display: flex;
   justify-content: flex-end;
+}
+
+#raw {
+  cursor: pointer;
 }
 
 .rawToggle {
