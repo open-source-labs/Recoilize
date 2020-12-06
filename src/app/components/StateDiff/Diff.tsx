@@ -27,7 +27,7 @@ const Diff: React.FC<DiffProps> = ({filteredPrevSnap, filteredCurSnap}) => {
   return (
     <div className="Diff">
       <div className="toggleDiv">
-        <button
+        <button id="raw"
           className="rawToggle"
           style={{color: rawToggle ? '#E6E6E6' : '#989898'}}
           onClick={() => {
