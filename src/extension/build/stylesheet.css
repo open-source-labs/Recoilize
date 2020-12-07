@@ -109,15 +109,28 @@ button:hover {
 
 .clear-buttons {
   display: flex;
+  margin-top: 1em;
+  padding-bottom: 1em;
+  border-bottom: 1px solid #646464;
+}
+
+#clear-snapshots-title {
+  margin-top: 0.7em;
+  font-size: 12px;
+  font-weight: bold;
 }
 
 #prevClr {
+  margin-left: 0.8em;
   width: 5em;
+  cursor: pointer;
 }
 
 #fwrdClr {
+  margin-right: 0.8em;
   width: 5em;
   margin-left: auto;
+  cursor: pointer;
 }
 
 /* SNAPSHOTLIST COMPONENT */
@@ -132,10 +145,11 @@ button:hover {
   display: flex;
   flex-grow: 1;
   padding: 10px;
-  padding-left: 20px;
+  padding-left: 30px;
   padding-right: 20px;
   border: none;
   /* outline: none; */
+  /* gap: 2.5em; */
   justify-content: space-between;
 }
 .individualSnapshot:hover {
@@ -218,6 +232,10 @@ button:hover {
 .toggleDiv {
   display: flex;
   justify-content: flex-end;
+}
+
+#raw {
+  cursor: pointer;
 }
 
 .rawToggle {
