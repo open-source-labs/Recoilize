@@ -464,6 +464,17 @@ button:hover {
   height: 100%;
   width: 100%;
 }
+.hoverInfo {
+  height: 15%;
+  width: min-content;
+  border: 0;
+  border-radius: 5px;
+  position: fixed;
+  /* top: 100px;
+  left: 179px; */
+  background-color: #484848;
+  font-size: 25%;
+}
 
 #fixedButton {
   position: fixed;
