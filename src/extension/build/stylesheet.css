@@ -447,15 +447,14 @@ button:hover {
   width: 100%;
 }
 .hoverInfo {
-  height: 15%;
+  height: min-content;
   width: min-content;
   border: 0;
   border-radius: 5px;
   position: fixed;
-  /* top: 100px;
-  left: 179px; */
   background-color: #484848;
   font-size: 25%;
+  padding: 1em;
 }
 
 #fixedButton {
