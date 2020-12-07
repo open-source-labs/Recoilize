@@ -109,15 +109,28 @@ button:hover {
 
 .clear-buttons {
   display: flex;
+  margin-top: 1em;
+  padding-bottom: 1em;
+  border-bottom: 1px solid #646464;
+}
+
+#clear-snapshots-title {
+  margin-top: 0.7em;
+  font-size: 12px;
+  font-weight: bold;
 }
 
 #prevClr {
+  margin-left: 0.8em;
   width: 5em;
+  cursor: pointer;
 }
 
 #fwrdClr {
+  margin-right: 0.8em;
   width: 5em;
   margin-left: auto;
+  cursor: pointer;
 }
 
 /* SNAPSHOTLIST COMPONENT */
@@ -132,10 +145,11 @@ button:hover {
   display: flex;
   flex-grow: 1;
   padding: 10px;
-  padding-left: 20px;
+  padding-left: 30px;
   padding-right: 20px;
   border: none;
   /* outline: none; */
+  /* gap: 2.5em; */
   justify-content: space-between;
 }
 .individualSnapshot:hover {
@@ -218,6 +232,10 @@ button:hover {
 .toggleDiv {
   display: flex;
   justify-content: flex-end;
+}
+
+#raw {
+  cursor: pointer;
 }
 
 .rawToggle {
@@ -446,7 +464,19 @@ button:hover {
   height: 100%;
   width: 100%;
 }
-
+.hoverInfo {
+  height: min-content;
+  width: max-content;
+  border: 0;
+  border-radius: 5px;
+  position: fixed;
+  background-color: #484848;
+  font-size: 30%;
+  padding: 0 1%;
+}
+#componentGraph {
+  transform-origin: 25% -25%;
+}
 #fixedButton {
   position: fixed;
   bottom: 0px;
@@ -456,6 +486,7 @@ button:hover {
   background: transparent;
   border: none !important;
   margin-right: 5px;
+  cursor: pointer;
 }
 
 .AtomNetworkLegend {
@@ -503,7 +534,7 @@ button:hover {
 #atomDrop,
 #selectorDrop {
   display: grid;
-  grid-row: 4;
+  grid-row: 5;
   border: 0.1em solid rgb(43, 34, 34);
 }
 
