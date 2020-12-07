@@ -403,6 +403,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
           setRawToggle(!rawToggle);
         }}>
       </button>
+      <span>{rawToggle ? 'Collapse' : 'Expand'}</span>
       <div className="AtomNetworkLegend">
         <div className="AtomLegend" />
         <p onClick={openDropdown} id="AtomP" className="AtomP">ATOM</p>
