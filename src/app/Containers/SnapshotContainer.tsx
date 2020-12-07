@@ -27,31 +27,16 @@ const SnapshotsContainer: React.FC = () => {
     });
   };
 
-  // function reIndexing () {
-  //   const snapshotListArr = document.querySelectorAll('.individualSnapshot')
-    
-  //   snapshotListArr.forEach((element, i) => {
-  //     (element.childNodes[0] as Element).innerHTML = `${i}`;
-  //   })
-  // }
-
   function prevClr() {
     const snapshotListArr = document.querySelectorAll('.individualSnapshot')
     for (let i = 0; i < snapshotListArr.length; i++) {
       let index = parseInt(snapshotListArr[i].id.match(/\d+/g)[0]);
-      // console.log("this is snapshotListArr[i] ", (snapshotListArr[i].childNodes[0] as Element).innerHTML);
       
       if (index < renderIndex) {
         snapshotListArr[i].parentNode.removeChild(snapshotListArr[i])
-        // setSnapshotHistory((prev) => {
-        //   const newSnapshotHistory = prev.slice();
-        //   newSnapshotHistory.shift();
-        //   return newSnapshotHistory;
-        // })
       }
       else break;
     }
-    // reIndexing();
   }
 
   function fwrdClr() {
@@ -65,7 +50,6 @@ const SnapshotsContainer: React.FC = () => {
       }
       else break;
     }
-    // reIndexing();
   }
 
   return (
