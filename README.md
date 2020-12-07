@@ -95,8 +95,8 @@ ReactDOM.render(
 <p>Previous and Forward clear buttons have been implemented to clear snapshots either before or after the currently selected snapshot</p>
 
 <h3>Refactored Component Graph</h3>
+<p>Visibility button was removed and incorporated into individual atom legend and hover</p>
 <h4>Hover</h4>
-<p>Visibility button was removed and incorporated into individual atom legend by hovering over the graph nodes</p>
 <p>Improved hover for the graph to display the information in more readable format</p>
 <h4>Atom Legend</h4>
 <p>The atom legend has been made clickable and will display a dropdown list of atoms or selectors</p>
