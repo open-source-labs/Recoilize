@@ -376,7 +376,7 @@ const Network: React.FC<NetworkProps> = ({filteredCurSnap}) => {
           {showSelectorMenu &&
             <div className="SelectorDropdown">{selectorList.map(([selector, selectorObj], i) => {
               return (<p key={i} id={`Selector${i}`} className='SelectorListItem' style={{opacity: '30%'}} onClick={(e: React.MouseEvent) => {
-                //set the opacity to 30%, unless spefic element is clicked then changes it to 100%
+                //set the opacity to 30%, unless specific element is clicked then changes it to 100%
                 document.querySelector(`#Selector${i}`).setAttribute('style', 'opacity: 100%;');
                 document.querySelectorAll('.SelectorListItem').forEach(item => {
                   if(item.id !== `Selector${i}`) item.setAttribute('style', 'opacity: 30%;')
