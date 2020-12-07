@@ -57,7 +57,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
     // creating a pseudo-class for reusability
     const g = svgContainer
       .append('g')
-      .attr('transform', `translate(${x}, ${y}), scale(${k})`)
+      // .attr('transform', `translate(${x}, ${y}), scale(${k})`)
       .attr('id', 'componentGraph');
 
     let i = 0;
@@ -158,8 +158,9 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
               .attr('opacity', '.85');
 
             //created a str for hover div to have corrensponding info
-            let newStr = formatAtomSelectorText(atsel).join('\n');
-            newStr = newStr.replace(/,/g, '\n');
+            let newStr = formatAtomSelectorText(atsel).join('<br>');
+            newStr = newStr.replace(/,/g, '<br>');
+            newStr = newStr.replace(/{/g, '<br>{');
 
             console.log(newStr)
             //tooltip appear near your mouse when hover over a node
