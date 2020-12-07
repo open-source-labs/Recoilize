@@ -11,7 +11,7 @@ interface SnapshotsListProps {
 const SnapshotsList: React.FC<SnapshotsListProps> = ({
   timeTravelFunc,
 }) => {
-  const {snapshotHistory, setSnapshotHistory} = useContext(snapshotHistoryContext);
+  const {snapshotHistory} = useContext(snapshotHistoryContext);
   let snapshotHistoryLength = snapshotHistory.length
   const {selected} = useContext(selectedContext);
   const {filter} = useContext(filterContext);

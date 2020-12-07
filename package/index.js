@@ -185,7 +185,6 @@ export default function RecoilizeDebugger(props) {
         ),
       };
     } else {
-      console.log('logging diff from create Dev tool data:', diff);
       return {
         filteredSnapshot: filteredSnapshot,
         componentAtomTree: formatFiberNodes(
@@ -222,7 +221,6 @@ export default function RecoilizeDebugger(props) {
   // Takes an argument of msg.data which contains name and payload
   const activateHover = (payload) => {
     let name = payload.name;
-    console.log('hello from index.js');
   }
 
   // FOR TIME TRAVEL: time travels to a given snapshot, re renders application.

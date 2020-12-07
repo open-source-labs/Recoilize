@@ -9,29 +9,6 @@ interface RankedGraphProps {
 }
 
 const RankedGraph: React.FC<RankedGraphProps> = ({data, width, height}: RankedGraphProps) => {
-
-  // create an empty array to store objects for property name and actualDuration
-  // const data: {}[] = [];
-  // let length = 0;
-  // // function to traverse through the fiber tree
-  // const namesAndDurations = (node: any) => {
-  //   if (node === undefined) return;
-  //   if (node.name && node.actualDuration) {
-  //     console.log(node.name, node.actualDuration)
-  //     const obj: any = {}
-  //     if(node.name.length > length){
-  //       length = node.name.length;
-  //     }
-  //     obj["name"] = node.name;
-  //     obj["actualDuration"] = node.actualDuration;
-  //     data.push(obj)
-  //   }
-  //   node.children.forEach((child: any) => namesAndDurations(child))
-  // }
-  // namesAndDurations(dataDurationArr);
-
-  console.log("RankedGraph.tsx - dataDurationArr ", data);
-
   const svgRef = useRef();
   useEffect(() => {
     document.getElementById('canvas').innerHTML = '';
@@ -88,7 +65,6 @@ const RankedGraph: React.FC<RankedGraphProps> = ({data, width, height}: RankedGr
       }));
     // Scale actualDuration with the y-axis
     z.domain(data.map((d: any, i) => {
-      console.log(d);
       return d.actualDuration.toFixed(2) + 'ms' + '-' + i;
     }))
     // append the rectangles for the bar chart
@@ -101,7 +77,6 @@ const RankedGraph: React.FC<RankedGraphProps> = ({data, width, height}: RankedGr
         d3.select(this).attr('opacity', '0.85');
         const backgroundConnection = chrome.runtime.connect();
         const barName = this.data
-        console.log('name of bars : ', this.getAttribute("rect"))
         const payload = {
           action: "mouseover",
           tabId: chrome.devtools.inspectedWindow.tabId,

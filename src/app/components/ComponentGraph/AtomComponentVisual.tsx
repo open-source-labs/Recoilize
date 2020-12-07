@@ -162,7 +162,6 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
             newStr = newStr.replace(/,/g, '<br>');
             newStr = newStr.replace(/{/g, '<br>{');
 
-            console.log(newStr)
             //tooltip appear near your mouse when hover over a node
             tooltip.style('opacity', 1)
               .html(`<p>${newStr}</p>`)
