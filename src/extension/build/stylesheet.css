@@ -485,6 +485,7 @@ button:hover {
   background: transparent;
   border: none !important;
   margin-right: 5px;
+  cursor: pointer;
 }
 
 .AtomNetworkLegend {
@@ -532,7 +533,7 @@ button:hover {
 #atomDrop,
 #selectorDrop {
   display: grid;
-  grid-row: 4;
+  grid-row: 5;
   border: 0.1em solid rgb(43, 34, 34);
 }
 
