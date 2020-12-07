@@ -27,13 +27,13 @@ const SnapshotsContainer: React.FC = () => {
     });
   };
 
-  function reIndexing () {
-    const snapshotListArr = document.querySelectorAll('.individualSnapshot')
+  // function reIndexing () {
+  //   const snapshotListArr = document.querySelectorAll('.individualSnapshot')
     
-    snapshotListArr.forEach((element, i) => {
-      (element.childNodes[0] as Element).innerHTML = `${i}`;
-    })
-  }
+  //   snapshotListArr.forEach((element, i) => {
+  //     (element.childNodes[0] as Element).innerHTML = `${i}`;
+  //   })
+  // }
 
   function prevClr() {
     const snapshotListArr = document.querySelectorAll('.individualSnapshot')
