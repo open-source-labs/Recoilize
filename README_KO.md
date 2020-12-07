@@ -5,9 +5,6 @@
 </p>
 
 <h1>Recoil 애플리케이션을 위한 디버깅 개발도구</h1>
-<h1 align='center'> 
-<img src='./src/extension/build/assets/demo1.gif' width=600 />
-</h1>
 
 # [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/oslabs-beta/Recoilize/blob/staging/LICENSE) [![npm version](https://img.shields.io/npm/v/recoilize)](https://www.npmjs.com/package/recoilize) ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)
 
