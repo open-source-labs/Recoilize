@@ -167,6 +167,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
               .html(`<p>${newStr}</p>`)
               .style('left', d3.event.pageX + 15 + 'px') //mouse position
               .style('top', d3.event.pageY - 20 + 'px');
+
           }
         })
         .on('mouseout', function (d: any, i: number): void {
@@ -389,12 +390,10 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
     if (target.className === "AtomP") {
       setShowAtomMenu(!showAtomMenu);
       setShowSelectorMenu(false);
-      console.log(showAtomMenu);
     }
     else {
       setShowSelectorMenu(!showSelectorMenu);
       setShowAtomMenu(false);
-      console.log(showSelectorMenu);
     }
   }
   return (
