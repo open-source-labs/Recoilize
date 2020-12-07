@@ -2,6 +2,7 @@ import React, {useState, useEffect, useContext} from 'react';
 import * as d3 from 'd3';
 import {componentAtomTree, atom, selector} from '../../../types';
 import { zoomStateContext } from '../../Containers/VisualContainer';
+// import rd3 from 'react-d3-library'
 
 interface AtomComponentVisualProps {
   componentAtomTree: componentAtomTree;
@@ -40,6 +41,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
   // need to create a hook for toggling
   const [showAtomMenu, setShowAtomMenu] = useState(false)
   const [showSelectorMenu, setShowSelectorMenu] = useState(false)
+
   useEffect(() => {
     height = document.querySelector('.Component').clientHeight;
     width = document.querySelector('.Component').clientWidth;
@@ -128,6 +130,12 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
        * display the data in the node on hover
        * add mouseOut event handler that removes the popup text
        */
+      //add div that will hold info regarding atoms and/or selectors for each node
+      const tooltip = d3.select('.tooltipContainer')
+      .append('div')
+      .attr('class', 'hoverInfo')
+      .style('opacity', 0)
+
       let nodeEnter = node
         .enter()
         .append('g')
@@ -144,27 +152,23 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
               // pushing all the atoms and selectors for the node into 'atsel'
               atsel.push(d.data.recoilNodes[x]);
             }
-            d3.select(this)
-              // .append('text')
-              // .text(formatAtomSelectorText(atsel))
-              // .style('fill', 'white')
-              .append("foreignObject")
-              .attr("width", 1580)
-              .attr("height", 2000)
-              // .append("xhtml:body")
-              .html(`<h1>${formatAtomSelectorText(atsel)}</h1>`)
-              // .attr('x', formatMouseoverXValue(d.data.recoilNodes[x]))
-              // How far the text is below the node
-              .attr('y', -550)
-              .attr('x', 300)
-              .style('font-size', '5.5em')
-              .attr('id', `x`);
+            d3.select(this).transition()
+              .duration('50')
+              .attr('opacity', '.85');
+
+            //tooltip appear near your mouse when hover over a node
+            tooltip.style('opacity', 1)
+              .html(`<p>${formatAtomSelectorText(atsel)}</p>`)
+              .style('left', d3.event.pageX + 15 + 'px') //mouse position
+              .style('top', d3.event.pageY - 20 + 'px');
           }
         })
         .on('mouseout', function (d: any, i: number): void {
-          for (let x = 0; x < d.data.recoilNodes.length; x++) {
-            d3.selectAll(`#x`).remove();
-          }
+          d3.select(this).transition()
+          .duration('50')
+          .attr('opacity', '1');
+          //remove tooltip when the mouse is not on the node
+          tooltip.style('opacity', 0)
         });
 
       // determines shape/color/size of node
@@ -402,7 +406,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
       <div className="AtomNetworkLegend">
         <div className="AtomLegend" />
         <p onClick={openDropdown} id="AtomP" className="AtomP">ATOM</p>
-      {showAtomMenu && <div id="atomDrop" className="AtomDropDown">
+        {showAtomMenu && <div id="atomDrop" className="AtomDropDown">
         {atomList.map((atom, i) => <p id={`atom-drop${i}`} className="atom-class" key={i} style={{opacity: '30%'}} 
         onClick={() => {
         document.querySelector(`#atom-drop${i}`).setAttribute('style', 'opacity: 100%;');
@@ -410,7 +414,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
           if(item.id !== `atom-drop${i}`) item.setAttribute('style', 'opacity: 30%;')
         });
         setSelectedRecoilValue([atom, 'atom'])
-      }}>{atom}</p>)}</div>}
+        }}>{atom}</p>)}</div>}
         <div className="SelectorLegend"></div>
         <p onClick={openDropdown} id="SelectorP" className="SelectorP">SELECTOR</p>
         {showSelectorMenu && <div id="selectorDrop" className="SelectorDropDown">
@@ -426,6 +430,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
         <p>BOTH</p>
         <div className={hasSuspense ? "suspenseLegend" : ''}></div>
         <p>{hasSuspense?'SUSPENSE': ''}</p>
+        <div className='tooltipContainer'></div>
       </div>
     </div>
   );
