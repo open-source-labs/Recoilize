@@ -57,7 +57,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
     // creating a pseudo-class for reusability
     const g = svgContainer
       .append('g')
-      .attr('transform', `translate(${x}, ${y}), scale(${k})`)
+      // .attr('transform', `translate(${x}, ${y}), scale(${k})`)
       .attr('id', 'componentGraph');
 
     let i = 0;
@@ -132,9 +132,9 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
        */
       //add div that will hold info regarding atoms and/or selectors for each node
       const tooltip = d3.select('.tooltipContainer')
-      .append('div')
-      .attr('class', 'hoverInfo')
-      .style('opacity', 0)
+        .append('div')
+        .attr('class', 'hoverInfo')
+        .style('opacity', 0)
 
       let nodeEnter = node
         .enter()
@@ -152,14 +152,20 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
               // pushing all the atoms and selectors for the node into 'atsel'
               atsel.push(d.data.recoilNodes[x]);
             }
-
+            //change the opacity of the node when the mouse is over
             d3.select(this).transition()
               .duration('50')
               .attr('opacity', '.85');
 
+            //created a str for hover div to have corrensponding info
+            let newStr = formatAtomSelectorText(atsel).join('<br>');
+            newStr = newStr.replace(/,/g, '<br>');
+            newStr = newStr.replace(/{/g, '<br>{');
+
+            console.log(newStr)
             //tooltip appear near your mouse when hover over a node
             tooltip.style('opacity', 1)
-              .html(`<p>${formatAtomSelectorText(atsel)}</p>`)
+              .html(`<p>${newStr}</p>`)
               .style('left', d3.event.pageX + 15 + 'px') //mouse position
               .style('top', d3.event.pageY - 20 + 'px');
 
@@ -168,7 +174,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
         .on('mouseout', function (d: any, i: number): void {
           d3.select(this).transition()
           .duration('50')
-          .attr('opacity', '1');
+          .attr('opacity', '1');//change the opacity back
           //remove tooltip when the mouse is not on the node
           tooltip.style('opacity', 0)
         });

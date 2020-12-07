@@ -465,17 +465,18 @@ button:hover {
   width: 100%;
 }
 .hoverInfo {
-  height: 15%;
-  width: min-content;
+  height: min-content;
+  width: max-content;
   border: 0;
   border-radius: 5px;
   position: fixed;
-  /* top: 100px;
-  left: 179px; */
   background-color: #484848;
-  font-size: 25%;
+  font-size: 30%;
+  padding: 0 1%;
 }
-
+#componentGraph {
+  transform-origin: 25% -25%;
+}
 #fixedButton {
   position: fixed;
   bottom: 0px;
