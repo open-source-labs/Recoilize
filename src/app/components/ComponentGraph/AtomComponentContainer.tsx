@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import AtomComponentVisual from './AtomComponentVisual';
-// import AtomSelectorLegend from './AtomSelectorLegend';
 import {
   componentAtomTree,
   filteredSnapshot,
