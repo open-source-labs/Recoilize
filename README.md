@@ -95,7 +95,7 @@ ReactDOM.render(
 <p>Previous and Forward clear buttons have been implemented to clear snapshots either before or after the currently selected snapshot</p>
 
 <p align='center'> 
-<img src='./src/extension/build/assets/clearBtns.gif' width=600 height=300/>
+<img src='./src/extension/build/assets/clearButtons.gif' width=600 height=300/>
 </p>
 
 <h3>Refactored Component Graph</h3>
@@ -136,7 +136,7 @@ ReactDOM.render(
 <p>If a Suspense component was used to suspend component renderings those components will display with a red border in the expanded component graph. This indicates that a component was suspended during the render of the selected snapshot.</p>
 
 <p align='center'> 
-<img src='./src/extension/build/assets/suspenseModeFinal.gif' width=600 height=300/>
+<img src='./src/extension/build/assets/suspenseMode.gif' width=600 height=300/>
 </p>
 
 <h3>Performance Metrics</h3>
@@ -152,7 +152,7 @@ The flame graph displays the time a component took to render itself, and all of 
 <p>As one of the key features of Recoilize, the tool enables users to jump to any previous snapshots. Pressing the jump button next to each of the snapshots will change the DOM by setting the state to that snapshot.<p>
 
 <p align='center'> 
-<img src='./src/extension/build/assets/stateDiff.gif' width=600 height=300/>
+<img src='./src/extension/build/assets/timeTravel.gif' width=600 height=300/>
 </p>
 
 <h3>Visualizations</h3>

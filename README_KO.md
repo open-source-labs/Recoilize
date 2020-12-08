@@ -93,7 +93,7 @@ ReactDOM.render(
 <p>Previous와 Forward 버튼을 넣어 선택된 스냅샵의 전이나 후에 있는 스냅샷을 지울 수 있게 했습니다</p>
 
 <p align='center'> 
-<img src='./src/extension/build/assets/clearBtns.gif' width=600 height=300/>
+<img src='./src/extension/build/assets/clearButtons.gif' width=600 height=300/>
 </p>
 
 <h3>컴포넌트 그래프</h3>
@@ -132,7 +132,7 @@ ReactDOM.render(
 <p>만약 컴포넌트를 보류시키기 위해 Suspense 컴포넌트가 사용됐을 경우, 해당 컴포넌트의 노드 주위에 빨간 테두리로 표시하여 컴포넌트가 나타나기까지 지연되었음을 알려줄 것입니다</p>
 
 <p align='center'> 
-<img src='./src/extension/build/assets/suspenseModeFinal.gif' width=600 height=300/>
+<img src='./src/extension/build/assets/suspenseMode.gif' width=600 height=300/>
 </p>
 
 <h3>퍼포먼스 측정 그래프</h3>
@@ -143,7 +143,7 @@ ReactDOM.render(
 <p>Recoilize의 주요 기능 중 하나로, 이 도구는 사용자가 이전의 모든 스냅샷으로 이동할 수 있게 해줍니다. 각 스냅샷 옆에 있는 점프 버튼을 누르면 해당 스냅샷으로 상태를 설정하여 DOM이 변경됩니다.<p>
 
 <p align='center'> 
-<img src='./src/extension/build/assets/stateDiff.gif' width=600 height=300/>
+<img src='./src/extension/build/assets/timeTravel.gif' width=600 height=300/>
 </p>
 
 <h3>시각화</h3>
