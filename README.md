@@ -94,13 +94,22 @@ ReactDOM.render(
 <h3>Clear Snapshots</h3>
 <p>Previous and Forward clear buttons have been implemented to clear snapshots either before or after the currently selected snapshot</p>
 
+<p align='center'> 
+<img src='./src/extension/build/assets/clearBtns.gif' width=600 height=300/>
+</p>
+
 <h3>Refactored Component Graph</h3>
 <p>Visibility button was removed and incorporated into individual atom legend and hover</p>
+
 <h4>Hover</h4>
 <p>Improved hover for the graph to display the information in more readable format</p>
 <h4>Atom Legend</h4>
 <p>The atom legend has been made clickable and will display a dropdown list of atoms or selectors</p>
 <p>Each of the atom or selector in the dropdown list has also been made clickable to highlight the selected component in the graph</p>
+
+<p align='center'> 
+<img src='./src/extension/build/assets/componentGraph.gif' width=600 height=300/>
+</p>
 
 <h3>Refactored Atom Network</h3>
 <h4>Atom Legend</h4>
@@ -111,12 +120,24 @@ ReactDOM.render(
 <h4>Search bar bug fix</h4>
 <p>Search bar no longer overlaps with navigation bar</p>
 
+<p align='center'> 
+<img src='./src/extension/build/assets/atomNetwork.gif' width=600 height=300/>
+</p>
+
 <h3>Easier to compare changes in Ranked Graph</h3>
 <p>Removed the animation from the ranked graph to improve readability for changes in the render times</p>
+
+<p align='center'> 
+<img src='./src/extension/build/assets/rankedGraph.gif' width=600 height=300/>
+</p>
 
 <h1>Features</h1>
 <h3>Support for Concurrent Mode</h3>
 <p>If a Suspense component was used to suspend component renderings those components will display with a red border in the expanded component graph. This indicates that a component was suspended during the render of the selected snapshot.</p>
+
+<p align='center'> 
+<img src='./src/extension/build/assets/suspenseModeFinal.gif' width=600 height=300/>
+</p>
 
 <h3>Performance Metrics</h3>
 <p>In 'Metrics' tab, two graphs display component render times.
@@ -131,15 +152,11 @@ The flame graph displays the time a component took to render itself, and all of 
 <p>As one of the key features of Recoilize, the tool enables users to jump to any previous snapshots. Pressing the jump button next to each of the snapshots will change the DOM by setting the state to that snapshot.<p>
 
 <p align='center'> 
-<img src='./src/extension/build/assets/timeTravel.gif' width=600 height=300/>
+<img src='./src/extension/build/assets/stateDiff.gif' width=600 height=300/>
 </p>
 
 <h3>Visualizations</h3>
 <p>Users are able to view visualizations for their application's state by clicking individual snapshots. Recoilize provides component trees and graphs, as well as the state trees in JSON format.<p>
-
-<p align='center'> 
-<img src='./src/extension/build/assets/components.gif' width=600 height=300/>
-</p>
 
 <h3>Throttle</h3>
 <p>In the settings tab, users are able to set throttle (in milliseconds) for large scale applications or any applications that changes state rapidly. The default is set at 70ms.<p>
