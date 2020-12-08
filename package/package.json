@@ -1,6 +1,6 @@
 {
   "name": "recoilize",
-  "version": "0.9.9",
+  "version": "1.0.0",
   "description": "Recoil Dev Tool",
   "main": "index.js",
   "repository": {
