@@ -92,12 +92,20 @@ ReactDOM.render(
 <h3>스냅샷 클리어</h3>
 <p>Previous와 Forward 버튼을 넣어 선택된 스냅샵의 전이나 후에 있는 스냅샷을 지울 수 있게 했습니다</p>
 
+<p align='center'> 
+<img src='./src/extension/build/assets/clearButtons.gif' width=600 height=300/>
+</p>
+
 <h3>컴포넌트 그래프</h3>
 <h4>호버</h4>
 <p>그래프의 노드를 호버했을 때 안의 텍스트가 보이는 형태를 개선하였습니다</p>
 <h4>atom 범례</h4>
 <p>범례의 텍스트가 클릭되면 드롭다운 형태의 atom이나 selector 리스트가 보이게 하였습니다</p>
 <p>드롭다운 리스트에 있는 각각의 atom이나 selector를 누를 경우 해당 atom이나 selector를 쓰는 컴포넌트가 하이라이트되도록 바꾸었습니다</p>
+
+<p align='center'> 
+<img src='./src/extension/build/assets/componentGraph.gif' width=600 height=300/>
+</p>
 
 <h3>atom 네트워크</h3>
 <h4>atom 범례</h4>
@@ -108,12 +116,24 @@ ReactDOM.render(
 <h4>검색 창</h4>
 <p>검색 창이 탐색 버튼과 겹치지 않도록 변경하였습니다</p>
 
+<p align='center'> 
+<img src='./src/extension/build/assets/atomNetwork.gif' width=600 height=300/>
+</p>
+
 <h3>Ranked 그래프</h3>
 <p>애니메이션을 없애서 전과 후 상태비교가 쉽게 보이도록 바꾸었습니다</p>
+
+<p align='center'> 
+<img src='./src/extension/build/assets/rankedGraph.gif' width=600 height=300/>
+</p>
 
 <h1>기능</h1>
 <h3>Concurrent 모드 지원</h3>
 <p>만약 컴포넌트를 보류시키기 위해 Suspense 컴포넌트가 사용됐을 경우, 해당 컴포넌트의 노드 주위에 빨간 테두리로 표시하여 컴포넌트가 나타나기까지 지연되었음을 알려줄 것입니다</p>
+
+<p align='center'> 
+<img src='./src/extension/build/assets/suspenseMode.gif' width=600 height=300/>
+</p>
 
 <h3>퍼포먼스 측정 그래프</h3>
 <p>'Metrics' 탭에 있는 두가지 그래프는 렌더링 시간을 보여줍니다</p>
@@ -128,10 +148,6 @@ ReactDOM.render(
 
 <h3>시각화</h3>
 <p>사용자는 개별 스냅샷을 클릭하여 애플리케이션 상태에 대한 시각화된 그래프를 볼수있고, 컴포넌트 트리와 다른 그래프 뿐만 아니라 State tree를 JSON 형식으로 지원합니다<p>
-
-<p align='center'> 
-<img src='./src/extension/build/assets/components.gif' width=600 height=300/>
-</p>
 
 <h3>쓰로틀링</h3>
 <p>대규모 애플리케이션 또는 상태를 빠르게 변경하는 모든 애플리케이션에 대해 쓰로틀링(ms)을 설정할 수 있습니다. 기본값은 70ms로 설정되어 있습니다.<p>
