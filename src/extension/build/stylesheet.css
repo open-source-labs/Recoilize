@@ -148,27 +148,14 @@ button:hover {
   padding-left: 30px;
   padding-right: 20px;
   border: none;
-  /* outline: none; */
-  /* gap: 2.5em; */
   justify-content: space-between;
 }
 .individualSnapshot:hover {
   background-color: #212121;
 }
 
-/* .individualSnapshot .timeTravelButton:hover {
-  color: #e6e6e6;
-  border: 1px solid white;
-  background-color: #212121;
-  text-emphasis: bold;
-} */
-
 .timeTravelButton {
-  /* border: 1px solid #989898;
-  border-radius: 5px; */
   color: #989898;
-  /* background: none; */
-  /* outline: none; */
 }
 
 .timeTravelButton:focus {
@@ -211,11 +198,9 @@ button:hover {
   padding: 8px;
   padding-left: 10px;
   padding-right: 10px;
-  /* outline: none; */
 }
 .navBarButtons:hover {
   color: #e6e6e6;
-  /* background-color: #212121; */
   border: none;
 }
 /* DIFF COMPONENT */
@@ -279,7 +264,6 @@ button:hover {
   display: inline-block;
   position: relative;
   width: 100%;
-  /* padding-bottom: 50%; aspect ratio */
   vertical-align: top;
   overflow: hidden;
 }
@@ -295,18 +279,12 @@ button:hover {
 }
 
 .graphButton {
-  /* border: 1px solid #989898;
-  border-radius: 5px; */
   color: #989898;
-  /* background: none; */
-  /* outline: none; */
 }
 
 .graphButton:hover {
   color: #e6e6e6;
   border: 1px solid white;
-  /* background-color: #212121;
-  text-emphasis: bold; */
 }
 
 .graphButton:focus {
@@ -335,7 +313,6 @@ button:hover {
 #networkSearch {
   width: 135px;
   grid-row: 1;
-  /* outline: none; */
 }
 
 .LegendContainer {
@@ -413,22 +390,6 @@ button:hover {
   border: 0.1em solid rgb(43, 34, 34);
 }
 
-/* .SelectorDropdown {
-  display: grid;
-  grid-row: 4;
-  align-items: center;
-} */
-
-/* .SelectorDropdown p:hover,
-.AtomDropdown p:hover,
-#atomDrop p:hover,
-#selectorDrop p:hover,
-#AtomP:hover,
-#SelectorP:hover {
-  opacity: 70%;
-  cursor: pointer;
-} */
-
 .atom-class,
 .selector-class,
 .AtomListItem,
@@ -450,14 +411,6 @@ button:hover {
   width: 100%;
 }
 
-/* Not sure if this is still being used */
-/* #legendFlexContainer {
-  width: 100px;
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-} */
-
 /* ATOMCOMPONENTVISUAL COMPONENT */
 .AtomComponentVisual,
 #canvas {
@@ -471,7 +424,7 @@ button:hover {
   border-radius: 5px;
   position: fixed;
   background-color: #484848;
-  font-size: 30%;
+  font-size: 100%;
   padding: 0 1%;
 }
 #componentGraph {
@@ -570,7 +523,6 @@ button:hover {
   padding-left: 20px;
   padding-right: 20px;
   border: none;
-  /* outline: none; */
   word-wrap: break-word;
   font-size: 14px;
 }
@@ -581,13 +533,10 @@ button:hover {
 
 .minimizeButton {
   margin: 5px;
-  /* background-color: #9580ff;
-  border: #9580ff; */
   border-radius: 7px;
   width: 80px;
   height: 22px;
   cursor: pointer;
-  /* color: hsl(258, 68%, 28%); */
   font-weight: bold;
 }
 
@@ -717,17 +666,6 @@ input:checked + .slider:before {
 .slider.round:before {
   border-radius: 50%;
 }
-
-/* Could not find the 'Atoms' class on any element */
-/* .Atoms {
-  border-style: none;
-  padding: 10px;
-} */
-
-/* Could not find 'node-text' anywhere other than this css*/
-/* .node-text {
-  color: white;
-} */
 
 /* Doesn't really do anything because other elements stack on top of it,
  * but scrollbar is broken without it
