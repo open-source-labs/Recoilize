@@ -1,11 +1,10 @@
-import React from 'react';
 
-interface StateSettingsProps {
-  checked: boolean;
-  setChecked: React.Dispatch<React.SetStateAction<boolean>>;
-}
+import React, {useContext} from 'react';
+// importing context
+import { checkedContext } from '../../Containers/VisualContainer';
 
-const StateSettings: React.FC<StateSettingsProps> = ({checked, setChecked}) => {
+const StateSettings: React.FC = () => {
+  const {checked, setChecked} = useContext(checkedContext);
   // functionality to postMessage the selected snapshot index to background.js
   const persistStateFunc = (): void => {
     // setChecked as true or false

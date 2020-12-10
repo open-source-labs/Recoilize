@@ -56,20 +56,34 @@ export type componentAtomTreeDiff = {
   tag: number | number[];
   recoilNodes: string[] | string[][];
   actualDuration: number | number [];
-  treeBaseDuration: number | number[];
+  treeBaseDuration: number | number [];
   wasSuspended: boolean | boolean [];
 }
 
-//////////////////////////
-// TODO BE BETTER TYPED //
-//////////////////////////
+export type dataDuration = {
+  [name: string]: any;
+}
+
+export type dataDurationArr = dataDuration[];
+
+//! not possible to be typed better
+// atom is an object consisting of
+// atom state names and their values.
+// Since state can be anything (num, bool, str, etc.)
+// it's impossible to say what properties
+// atom can hold other than some generic key name and
+// a type of any
 export type atom = {
   [name: string]: any;
 };
 
-//////////////////////////
-// TODO BE BETTER TYPED //
-//////////////////////////
+//! not possible to be typed better
+// selector is an object consisting of
+// selector state names and their values.
+// Since state can be anything (num, bool, str, etc.)
+// it's impossible to say what properties
+// selector can hold other than some generic key name and
+// a type of any
 export type selector = {
   [name: string]: any;
 };

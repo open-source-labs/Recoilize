@@ -21,6 +21,25 @@ body {
   background-color: rgba(255, 255, 255, 0.25);
   border: 2px solid rgba(255, 255, 255, 0.2);
 }
+/* remove outlines on input boxes and buttons in all pages of the app */
+input,
+button {
+  outline: none;
+}
+/* basic css for the button and button:hover for uniform look */
+button {
+  border: 1px solid #989898;
+  border-radius: 5px;
+  color: #e6e6e6;
+  background: none;
+}
+
+button:hover {
+  color: white;
+  border: 1px solid white;
+  background-color: #212121;
+  text-emphasis: bold;
+}
 
 /* APP -> MAIN CONTAINER */
 .App,
@@ -72,6 +91,48 @@ body {
   color: #e6e6e6;
 }
 
+.removeSnapshot {
+  background-color: transparent;
+  border: none;
+  color: white;
+  /* outline: none; */
+  font-size: 0.7em;
+}
+
+.removeSnapshot:hover {
+  opacity: 50%;
+}
+.removeSnapshot:active {
+  opacity: 50%;
+  background-color: black;
+}
+
+.clear-buttons {
+  display: flex;
+  margin-top: 1em;
+  padding-bottom: 1em;
+  border-bottom: 1px solid #646464;
+}
+
+#clear-snapshots-title {
+  margin-top: 0.7em;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+#prevClr {
+  margin-left: 0.8em;
+  width: 5em;
+  cursor: pointer;
+}
+
+#fwrdClr {
+  margin-right: 0.8em;
+  width: 5em;
+  margin-left: auto;
+  cursor: pointer;
+}
+
 /* SNAPSHOTLIST COMPONENT */
 .SnapshotsList {
   height: 100%;
@@ -84,29 +145,17 @@ body {
   display: flex;
   flex-grow: 1;
   padding: 10px;
-  padding-left: 20px;
+  padding-left: 30px;
   padding-right: 20px;
   border: none;
-  outline: none;
   justify-content: space-between;
 }
 .individualSnapshot:hover {
   background-color: #212121;
 }
 
-.individualSnapshot .timeTravelButton:hover{
-  color: #e6e6e6;
-  border: 1px solid white;
-  background-color: #212121;
-  text-emphasis: bold;
-}
-
 .timeTravelButton {
-  border: 1px solid #989898;
-  border-radius: 5px;
   color: #989898;
-  background: none;
-  outline: none;
 }
 
 .timeTravelButton:focus {
@@ -149,13 +198,11 @@ body {
   padding: 8px;
   padding-left: 10px;
   padding-right: 10px;
-  outline: none;
 }
 .navBarButtons:hover {
   color: #e6e6e6;
-  background-color: #212121;
+  border: none;
 }
-
 /* DIFF COMPONENT */
 .Diff {
   height: 100%;
@@ -172,10 +219,14 @@ body {
   justify-content: flex-end;
 }
 
+#raw {
+  cursor: pointer;
+}
+
 .rawToggle {
   background: none;
   border: none !important;
-  outline: none;
+  /* outline: none; */
 }
 
 /* TREE COMPONENT */
@@ -203,18 +254,16 @@ body {
   width: 100%;
   overflow: hidden;
 }
+
 #stateGraphContainer {
   height: calc(100% - 33px); /* 33px is height of navbar */
   width: 100%;
 }
-/* .bar { 
-  fill: #9580ff; 
-} */
+
 .svg-container {
   display: inline-block;
   position: relative;
   width: 100%;
-  /* padding-bottom: 50%; aspect ratio */
   vertical-align: top;
   overflow: hidden;
 }
@@ -230,18 +279,12 @@ body {
 }
 
 .graphButton {
-  border: 1px solid #989898;
-  border-radius: 5px;
   color: #989898;
-  background: none;
-  outline: none;
 }
 
-.graphButton:hover{
+.graphButton:hover {
   color: #e6e6e6;
   border: 1px solid white;
-  background-color: #212121;
-  text-emphasis: bold;
 }
 
 .graphButton:focus {
@@ -268,20 +311,55 @@ body {
 }
 
 #networkSearch {
-  position: fixed;
-  top: 41px;
-  left: 179px;
+  width: 135px;
+  grid-row: 1;
 }
 
+.LegendContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-items: flex-start;
+}
 .AtomNetworkLegend {
   position: fixed;
   top: 58px;
   left: 179px;
   display: grid;
-  grid-template-columns: 30px 30px;
+  grid-template-rows: 30px 30px 30px 1fr;
   align-items: center;
   padding-left: 5px;
   padding-top: 5px;
+}
+.AtomDiv {
+  display: grid;
+  grid-row: 2;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 1em;
+}
+
+.SelectorDiv {
+  display: grid;
+  grid-row: 3;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 1em;
+}
+
+.AtomDiv:hover,
+.SelectorDiv:hover,
+.AtomP:hover,
+.SelectorP:hover {
+  opacity: 90% !important;
+  cursor: pointer;
+}
+
+.AtomDiv:active,
+.SelectorDiv:active,
+.AtomP:active,
+.SelectorP:active {
+  opacity: 50% !important;
 }
 
 .AtomLegend {
@@ -292,6 +370,7 @@ body {
   border: 1px solid #9580ff;
   border-radius: 20px;
   margin: 0px;
+  flex-grow: 1;
 }
 
 .SelectorLegend {
@@ -302,6 +381,25 @@ body {
   border: 1px solid #ff80bf;
   border-radius: 20px;
   margin: 0px;
+  flex-grow: 1;
+}
+.AtomDropdown,
+.SelectorDropdown {
+  display: grid;
+  grid-row: 4;
+  border: 0.1em solid rgb(43, 34, 34);
+}
+
+.atom-class,
+.selector-class,
+.AtomListItem,
+.SelectorListItem {
+  cursor: pointer;
+}
+
+.SelectorDropdown p:active,
+.AtomDropdown p:active {
+  opacity: 80%;
 }
 
 /* ATOMCOMPONENTVISUAL CONTAINER ->
@@ -313,21 +411,25 @@ body {
   width: 100%;
 }
 
-/* Not sure if this is still being used */
-/* #legendFlexContainer {
-  width: 100px;
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-} */
-
 /* ATOMCOMPONENTVISUAL COMPONENT */
 .AtomComponentVisual,
 #canvas {
   height: 100%;
   width: 100%;
 }
-
+.hoverInfo {
+  height: min-content;
+  width: max-content;
+  border: 0;
+  border-radius: 5px;
+  position: fixed;
+  background-color: #484848;
+  font-size: 100%;
+  padding: 0 1%;
+}
+#componentGraph {
+  transform-origin: 25% -25%;
+}
 #fixedButton {
   position: fixed;
   bottom: 0px;
@@ -337,6 +439,7 @@ body {
   background: transparent;
   border: none !important;
   margin-right: 5px;
+  cursor: pointer;
 }
 
 .AtomNetworkLegend {
@@ -345,6 +448,7 @@ body {
   left: 179px;
   display: grid;
   grid-template-columns: 30px 30px;
+  grid-template-rows: 30px 30px 30px 1fr;
   align-items: center;
   padding-left: 5px;
   padding-top: 5px;
@@ -380,6 +484,13 @@ body {
   margin: 0px;
 }
 
+#atomDrop,
+#selectorDrop {
+  display: grid;
+  grid-row: 5;
+  border: 0.1em solid rgb(43, 34, 34);
+}
+
 .suspenseLegend {
   display: inline-block;
   background: transparent;
@@ -412,7 +523,6 @@ body {
   padding-left: 20px;
   padding-right: 20px;
   border: none;
-  outline: none;
   word-wrap: break-word;
   font-size: 14px;
 }
@@ -423,13 +533,10 @@ body {
 
 .minimizeButton {
   margin: 5px;
-  background-color: #9580ff;
-  border: #9580ff;
   border-radius: 7px;
   width: 80px;
   height: 22px;
   cursor: pointer;
-  color: hsl(258, 68%, 28%);
   font-weight: bold;
 }
 
@@ -487,7 +594,7 @@ body {
 
 /* Links inside the dropdown */
 .dropdown-content a {
-  color:black;
+  color: black;
   padding: 12px 16px;
   text-decoration: none;
   display: block;
@@ -560,24 +667,13 @@ input:checked + .slider:before {
   border-radius: 50%;
 }
 
-/* Could not find the 'Atoms' class on any element */
-/* .Atoms {
-  border-style: none;
-  padding: 10px;
-} */
-
-/* Could not find 'node-text' anywhere other than this css*/
-/* .node-text {
-  color: white;
-} */
-
 /* Doesn't really do anything because other elements stack on top of it,
  * but scrollbar is broken without it
  */
 
- /* Code added for verticle icicle graph */
+/* Code added for verticle icicle graph */
 
- .path {
+.path {
   will-change: d;
 }
 .path:hover {

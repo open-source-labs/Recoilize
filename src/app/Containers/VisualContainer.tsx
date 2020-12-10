@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {createContext, useContext, useState} from 'react';
 import Diff from '../components/StateDiff/Diff';
 import NavBar from '../components/NavBar/NavBar';
 import Metrics from '../components/Metrics/MetricsContainer';
@@ -6,18 +6,14 @@ import Tree from '../components/StateTree/Tree';
 import Network from '../components/AtomNetwork/AtomNetwork';
 import AtomComponentVisualContainer from '../components/ComponentGraph/AtomComponentContainer';
 import Settings from '../components/Settings/SettingsContainer';
-import {stateSnapshot, selectedTypes, componentAtomTree} from '../../types';
-// import Metrics from "../components/StateGraph/metrics";
+import {stateSnapshot, componentAtomTree} from '../../types';
+// import Metrics from "../cosmponents/StateGraph/metrics";
 
 interface VisualContainerProps {
   // snapshot at index [curRender -1]
   previousSnapshot: stateSnapshot;
   // snapshot at index [curRender]
   currentSnapshot: stateSnapshot;
-  // ! passing through snapshot history
-  snapshotHistory: stateSnapshot[];
-  selected: selectedTypes[];
-  setSelected: React.Dispatch<React.SetStateAction<selectedTypes[]>>;
 }
 
 interface ZoomState {
@@ -26,11 +22,28 @@ interface ZoomState {
   k: number;
 }
 
+interface CheckedContext {
+  checked: boolean;
+  setChecked: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+interface ThrottleDisplayContext {
+  throttleDisplay: string;
+  setThrottleDisplay: React.Dispatch<React.SetStateAction<string>>;
+}
+
+interface ZoomStateContext {
+  zoomState: ZoomState;
+  setZoomState: React.Dispatch<React.SetStateAction<ZoomState>>;
+}
+
 type navTypes = {
   [tabName: string]: JSX.Element;
 };
 
-const cleanComponentAtomTree = (inputObj: componentAtomTree): componentAtomTree => {
+const cleanComponentAtomTree = (
+  inputObj: componentAtomTree,
+): componentAtomTree => {
   const obj = {} as componentAtomTree;
   let counter = 0;
   const innerClean = (inputObj: any, outputObj: any, counter: number = 0) => {
@@ -71,8 +84,8 @@ const cleanComponentAtomTree = (inputObj: componentAtomTree): componentAtomTree 
   };
   innerClean(inputObj, obj, counter);
 
-  //ensure that the root element's actual duration is inculded in outObj
-  if(inputObj.actualDuration){
+  //ensure that the root element's actual duration is included in outObj
+  if (inputObj.actualDuration) {
     obj.actualDuration = inputObj.actualDuration;
   }
 
@@ -84,9 +97,6 @@ const cleanComponentAtomTree = (inputObj: componentAtomTree): componentAtomTree 
 const VisualContainer: React.FC<VisualContainerProps> = ({
   previousSnapshot,
   currentSnapshot,
-  snapshotHistory,
-  selected,
-  setSelected,
 }) => {
   // state for checkmark in persist state in settings
   const [checked, setChecked] = useState<boolean>(false);
@@ -127,34 +137,28 @@ const VisualContainer: React.FC<VisualContainerProps> = ({
     'State Tree': <Tree filteredCurSnap={filteredCurSnap} />,
     // tree visualizer of components showing atom/selector relationships
     'Component Graph': (
-      <AtomComponentVisualContainer
-        componentAtomTree={componentAtomTree}
-        cleanedComponentAtomTree={cleanedComponentAtomTree}
-        filteredCurSnap={filteredCurSnap}
-        x={x}
-        y={y}
-        k={k}
-        setZoomState={setZoomState}
-      />
+      <zoomStateContext.Provider value={{zoomState: {x, y, k}, setZoomState}}>
+        <AtomComponentVisualContainer
+          componentAtomTree={componentAtomTree}
+          cleanedComponentAtomTree={cleanedComponentAtomTree}
+          filteredCurSnap={filteredCurSnap}
+        />
+      </zoomStateContext.Provider>
     ),
 
     // atom and selector subscription relationship
     'Atom Network': <Network filteredCurSnap={filteredCurSnap} />,
 
     // individual snapshot visualizer
-    'Metrics': <Metrics cleanedComponentAtomTree={cleanedComponentAtomTree} />,
+    Metrics: <Metrics cleanedComponentAtomTree={cleanedComponentAtomTree} />,
 
     // settings tab that doesn't want to be in quotes because too cool for school
     Settings: (
-      <Settings
-        snapshotHistory={snapshotHistory}
-        selected={selected}
-        setSelected={setSelected}
-        checked={checked}
-        setChecked={setChecked}
-        throttleDisplay={throttleDisplay}
-        setThrottleDisplay={setThrottleDisplay}
-      />
+      <checkedContext.Provider value={{checked, setChecked}}>
+        <throttleDisplayContext.Provider value={{throttleDisplay, setThrottleDisplay}}>
+          <Settings />
+        </throttleDisplayContext.Provider>
+      </checkedContext.Provider>
     ),
   };
   // array of all nav obj keys
@@ -170,4 +174,7 @@ const VisualContainer: React.FC<VisualContainerProps> = ({
   );
 };
 
+export const checkedContext = createContext<CheckedContext>(null);
+export const throttleDisplayContext = createContext<ThrottleDisplayContext>(null);
+export const zoomStateContext = createContext<ZoomStateContext>(null);
 export default VisualContainer;
