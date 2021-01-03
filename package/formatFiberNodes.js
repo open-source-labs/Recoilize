@@ -37,6 +37,7 @@ const createAtomsSelectorArray = node => {
     if (
       currentNode.hasOwnProperty('memoizedState') &&
       typeof currentNode.memoizedState === 'object' &&
+      currentNode.memoizedState !== null &&
       !Array.isArray(currentNode.memoizedState) &&
       currentNode.memoizedState.hasOwnProperty('deps')
     ) {
