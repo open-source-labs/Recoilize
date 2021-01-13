@@ -35,6 +35,7 @@ const createAtomsSelectorArray = node => {
     // if the memoizedState has a deps key, and that deps key is an array
     // then the first value of that array will be an atom or selector
     if (
+      typeof(currentNode) === 'object' &&
       currentNode.hasOwnProperty('memoizedState') &&
       typeof currentNode.memoizedState === 'object' &&
       !Array.isArray(currentNode.memoizedState) &&
