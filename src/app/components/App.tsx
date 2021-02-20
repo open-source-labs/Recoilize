@@ -27,6 +27,7 @@ export const filterContext = createContext<FilterContext>(null);
 
 const LOGO_URL = './assets/Recoilize.png';
 const App: React.FC = () => {
+  console.log('App');
   // useState hook to update the snapshotHistory array
   // array of snapshots
   const [snapshotHistory, setSnapshotHistory] = useState<stateSnapshot[]>([]);
