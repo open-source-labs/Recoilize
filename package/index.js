@@ -168,10 +168,10 @@ export default function RecoilizeDebugger(props) {
   // Sends window an action and payload message.
   const sendWindowMessage = (action, payload) => {
     window.postMessage(
-      {
+      JSON.parse(JSON.stringify({
         action,
         payload,
-      },
+      })),
       '*',
     );
   };
