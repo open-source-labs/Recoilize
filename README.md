@@ -83,6 +83,46 @@ ReactDOM.render(
 );
 ```
 
+### In order to integrate Next.js applications with RecoilizeDebugger, follow the example below. 
+
+```js
+//If your application uses Next.js modify the _app.js as follows
+import dynamic from 'next/dynamic';
+import { useEffect, useState } from 'react';
+import { RecoilRoot } from 'recoil';
+
+function MyApp({ Component, pageProps }) {
+
+  const [root, setRoot] = useState(null)
+  const RecoilizeDebugger = dynamic(
+	() => {
+	  return import('recoilize');
+	},
+	{ ssr: false}
+  );
+
+  useEffect(() => {
+
+    if (typeof window.document !== 'undefined') {
+      setRoot(document.getElementById('__next'));
+    }
+  }, [root]);
+ 
+  return (
+    <>
+    <RecoilRoot>
+      <RecoilizeDebugger root = {root}/>
+      <Component {...pageProps} />
+    </RecoilRoot>
+    </>
+  );
+}
+
+
+export default MyApp;
+
+```
+
 #### Open your application on the Chrome Browser and start debugging with Recoilize!
 
 ##### (Only supported with React applications using Recoil as state management)
