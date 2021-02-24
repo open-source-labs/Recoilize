@@ -43,9 +43,10 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
   const [showSelectorMenu, setShowSelectorMenu] = useState(false)
 
   // hook for selected button styles on the legend
-  // const [atomClicked, setAtomClicked] = useState(false);
-  // const [selectorClicked, setSelectorClicked] = useState(false);
-  // const [bothClicked, setBothClicked] = useState(false);
+  const [atomClicked, setAtomClicked] = useState(false);
+  const [selectorClicked, setSelectorClicked] = useState(false);
+  const [bothClicked, setBothClicked] = useState(false);
+  const [isDropDown, setIsDropDown] = useState(false);
 
   useEffect(() => {
     height = document.querySelector('.Component').clientHeight;
@@ -377,18 +378,6 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
           }
 
           strings.push(data);
-          
-          // if (atoms.hasOwnProperty(atomOrSelector[i])) {
-          //   strings.push(
-          //     data;
-          //   );
-          // } else if (selectors.hasOwnProperty(atomOrSelector[i])) {
-          //   strings.push(
-          //     ` SELECTOR ${atomOrSelector[i]}: ${JSON.stringify(
-          //       selectors[atomOrSelector[i]],
-          //     )}`,
-          //   );
-          // }
         }
 
         console.log('Strings in formatAtomSelectorText: ', strings);
@@ -470,6 +459,10 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
   //   document.querySelector('.AtomIcon').setAttribute('style',  );
   //   document.querySelector('.SelectorIcon').setAttribute('style','color: red');
   // }, [])
+  const resetNodes = () => {
+    setIsDropDown(false);
+    console.log('This is resetNodes');
+  }
 
   const atomButtonStyle = {
     color: '#9580ff',
@@ -510,7 +503,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
       </button>
       <div className="AtomNetworkLegend">
         <div className="AtomLegend" />
-          <button onClick={openDropdown} id="AtomP" className="AtomP" style={atomButtonStyle}>ATOM</button>
+          <button onClick={isDropDown ? resetNodes : openDropdown} id="AtomP" className="AtomP" style={atomButtonStyle}>ATOM</button>
             {showAtomMenu && 
             <div id="atomDrop" className="AtomDropDown">
               {atomList.map((atom, i) => <p id={`atom-drop${i}`} className="atom-class" key={i} style={{opacity: '30%'}} 
@@ -519,11 +512,12 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
               document.querySelectorAll('.atom-class').forEach(item => {
                 if(item.id !== `atom-drop${i}`) item.setAttribute('style', 'opacity: 30%;')
               });
-              setSelectedRecoilValue([atom, 'atom'])
+              setSelectedRecoilValue([atom, 'atom']);
+              setIsDropDown(true);
               }}>{atom}</p>)}
             </div>}
         <div className="SelectorLegend"></div>
-        <button onClick={openDropdown} id="SelectorP" className="SelectorP" style={selectorButtonStyle}>SELECTOR</button>
+        <button onClick={isDropDown ? resetNodes : openDropdown} id="SelectorP" className="SelectorP" style={selectorButtonStyle}>SELECTOR</button>
         {showSelectorMenu && <div id="selectorDrop" className="SelectorDropDown">
           {selectorList.map((selector, i) => <p id={`selector-drop${i}`} className="selector-class" key={i} style={{opacity: '30%'}}
           onClick={() => {
@@ -531,7 +525,8 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
             document.querySelectorAll('.selector-class').forEach(item => {
               if(item.id !== `selector-drop${i}`) item.setAttribute('style', 'opacity: 30%;')
             });
-            setSelectedRecoilValue([selector, 'selector'])
+            setSelectedRecoilValue([selector, 'selector']);
+            setIsDropDown(true);
       }}>{selector}</p>)}</div>}
         <div className="bothLegend"></div>
         <button style={bothButtonStyle}>BOTH</button>
