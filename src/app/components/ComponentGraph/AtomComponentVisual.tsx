@@ -543,11 +543,21 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
         <button onClick={isDropDownItem ? resetNodes : openDropdown} id="SelectorP" className="SelectorP" style={selectorButtonClicked ? selectorButtonClickedStyle : selectorButtonStyle}>SELECTOR</button>
         {showSelectorMenu && <div id="selectorDrop" className="SelectorDropDown">
           {selectorList.map((selector, i) => <div style={dropdownButtonStyle}><button id={`selector-drop${i}`} className="selector-class" key={i} style={selectorButtonStyle}
-          onClick={() => {
-            document.querySelector(`#selector-drop${i}`).setAttribute('style', 'opacity: 100%;');
+          onClick={(event) => {
+              
+            if (!(event.target as HTMLInputElement).classList.contains('selectorSelected') && (event.target as HTMLInputElement).classList.contains('selectorNotSelected') ) {
+              (event.target as HTMLInputElement).classList.replace('selectorNotSelected','selectorSelected');
+            } else if (!(event.target as HTMLInputElement).classList.contains('selectorSelected') && !(event.target as HTMLInputElement).classList.contains('selectorNotSelected')) {
+              (event.target as HTMLInputElement).classList.add('selectorSelected');
+            }
+            
             document.querySelectorAll('.selector-class').forEach(item => {
-              if(item.id !== `selector-drop${i}`) item.setAttribute('style', 'opacity: 30%;')
-            });
+              if(item.id !== `selector-drop${i}` && item.classList.contains('selectorSelected')) {
+                item.classList.replace('selectorSelected', 'selectorNotSelected');
+              } else if (item.id !== `selector-drop${i}` && !item.classList.contains('selectorNotSelected')) {
+                item.classList.add('selectorNotSelected');
+              }
+              });
             setSelectedRecoilValue([selector, 'selector']);
             setIsDropDownItem(true);
       }}>{selector}</button></div>)}</div>}
