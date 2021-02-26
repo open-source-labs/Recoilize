@@ -42,6 +42,12 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
   const [showAtomMenu, setShowAtomMenu] = useState(false)
   const [showSelectorMenu, setShowSelectorMenu] = useState(false)
 
+  // hook for selected button styles on the legend
+  const [atomButtonClicked, setAtomButtonClicked] = useState(false);
+  const [selectorButtonClicked, setSelectorButtonClicked] = useState(false);
+  const [bothButtonClicked, setBothButtonClicked] = useState(false);
+  const [isDropDownItem, setIsDropDownItem] = useState(false);
+
   useEffect(() => {
     height = document.querySelector('.Component').clientHeight;
     width = document.querySelector('.Component').clientWidth;
@@ -355,7 +361,6 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
 
       function formatAtomSelectorText(atomOrSelector: string[]): any {
         let strings: any = [];
-
         console.log('what is in atoms: ', atoms);
         console.log('what is in selectors', selectors);
 
@@ -373,18 +378,6 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
           }
 
           strings.push(data);
-          
-          // if (atoms.hasOwnProperty(atomOrSelector[i])) {
-          //   strings.push(
-          //     data;
-          //   );
-          // } else if (selectors.hasOwnProperty(atomOrSelector[i])) {
-          //   strings.push(
-          //     ` SELECTOR ${atomOrSelector[i]}: ${JSON.stringify(
-          //       selectors[atomOrSelector[i]],
-          //     )}`,
-          //   );
-          // }
         }
 
         console.log('Strings in formatAtomSelectorText: ', strings);
@@ -446,14 +439,67 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
   function openDropdown (e: React.MouseEvent) {
     const target = e.target as Element;
     if (target.className === "AtomP") {
+      setAtomButtonClicked(true);
+      setSelectorButtonClicked(false);
       setShowAtomMenu(!showAtomMenu);
       setShowSelectorMenu(false);
     }
     else {
+      setAtomButtonClicked(false);
+      setSelectorButtonClicked(true);
       setShowSelectorMenu(!showSelectorMenu);
       setShowAtomMenu(false);
     }
   }
+
+  const resetNodes = () => {
+    setIsDropDownItem(false);
+    console.log('This is resetNodes');
+  }
+
+  const atomButtonStyle = {
+    color: '#9580ff',
+    borderColor: 'white',
+    width: '120px'
+  };
+
+  const selectorButtonStyle = {
+    color: '#ff80bf',
+    borderColor: 'white',
+    width: '120px'
+  };
+
+  const bothButtonStyle = {
+    color: 'springgreen',
+    borderColor: 'white',
+    width: '120px'
+  };
+
+  const dropdownButtonStyle = {
+    margin: '5px'
+  };
+
+  const atomButtonClickedStyle = {
+    color: '#9580ff',
+    borderColor: 'white',
+    width: '120px',
+    backgroundColor: 'rgb(240, 240, 162)'
+  };
+
+  const selectorButtonClickedStyle = {
+    color: '#ff80bf',
+    borderColor: 'white',
+    width: '120px',
+    backgroundColor: 'rgb(240, 240, 162)'
+  };
+
+  const bothButtonClickedStyle = {
+    color: 'springgreen',
+    borderColor: 'white',
+    width: '120px',
+    backgroundColor: 'rgb(240, 240, 162)'
+  };
+
   return (
     <div className="AtomComponentVisual">
       <svg id="canvas"></svg>
@@ -469,29 +515,54 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
       </button>
       <div className="AtomNetworkLegend">
         <div className="AtomLegend" />
-        <p onClick={openDropdown} id="AtomP" className="AtomP">ATOM</p>
-        {showAtomMenu && <div id="atomDrop" className="AtomDropDown">
-        {atomList.map((atom, i) => <p id={`atom-drop${i}`} className="atom-class" key={i} style={{opacity: '30%'}} 
-        onClick={() => {
-        document.querySelector(`#atom-drop${i}`).setAttribute('style', 'opacity: 100%;');
-        document.querySelectorAll('.atom-class').forEach(item => {
-          if(item.id !== `atom-drop${i}`) item.setAttribute('style', 'opacity: 30%;')
-        });
-        setSelectedRecoilValue([atom, 'atom'])
-        }}>{atom}</p>)}</div>}
+          <button onClick={isDropDownItem ? resetNodes : openDropdown} id="AtomP" className="AtomP" style={atomButtonClicked ? atomButtonClickedStyle : atomButtonStyle}>ATOM</button>
+            {showAtomMenu && 
+            <div id="atomDrop" className="AtomDropDown">
+              {atomList.map((atom, i) => <div style={dropdownButtonStyle}><button id={`atom-drop${i}`} className="atom-class" key={i} style={atomButtonStyle} 
+              onClick={(event) => {
+              
+              if (!(event.target as HTMLInputElement).classList.contains('atomSelected') && (event.target as HTMLInputElement).classList.contains('atomNotSelected') ) {
+                (event.target as HTMLInputElement).classList.replace('atomNotSelected','atomSelected');
+              } else if (!(event.target as HTMLInputElement).classList.contains('atomSelected') && !(event.target as HTMLInputElement).classList.contains('atomNotSelected')) {
+                (event.target as HTMLInputElement).classList.add('atomSelected');
+              }
+              
+              document.querySelectorAll('.atom-class').forEach(item => {
+                if(item.id !== `atom-drop${i}` && item.classList.contains('atomSelected')) {
+                  item.classList.replace('atomSelected', 'atomNotSelected');
+                } else if (item.id !== `atom-drop${i}` && !item.classList.contains('atomNotSelected')) {
+                  item.classList.add('atomNotSelected');
+                }
+                });
+              
+              setSelectedRecoilValue([atom, 'atom']);
+              setIsDropDownItem(true);
+              }}>{atom}</button></div>)}
+            </div>}
         <div className="SelectorLegend"></div>
-        <p onClick={openDropdown} id="SelectorP" className="SelectorP">SELECTOR</p>
+        <button onClick={isDropDownItem ? resetNodes : openDropdown} id="SelectorP" className="SelectorP" style={selectorButtonClicked ? selectorButtonClickedStyle : selectorButtonStyle}>SELECTOR</button>
         {showSelectorMenu && <div id="selectorDrop" className="SelectorDropDown">
-          {selectorList.map((selector, i) => <p id={`selector-drop${i}`} className="selector-class" key={i} style={{opacity: '30%'}}
-          onClick={() => {
-            document.querySelector(`#selector-drop${i}`).setAttribute('style', 'opacity: 100%;');
+          {selectorList.map((selector, i) => <div style={dropdownButtonStyle}><button id={`selector-drop${i}`} className="selector-class" key={i} style={selectorButtonStyle}
+          onClick={(event) => {
+              
+            if (!(event.target as HTMLInputElement).classList.contains('selectorSelected') && (event.target as HTMLInputElement).classList.contains('selectorNotSelected') ) {
+              (event.target as HTMLInputElement).classList.replace('selectorNotSelected','selectorSelected');
+            } else if (!(event.target as HTMLInputElement).classList.contains('selectorSelected') && !(event.target as HTMLInputElement).classList.contains('selectorNotSelected')) {
+              (event.target as HTMLInputElement).classList.add('selectorSelected');
+            }
+            
             document.querySelectorAll('.selector-class').forEach(item => {
-              if(item.id !== `selector-drop${i}`) item.setAttribute('style', 'opacity: 30%;')
-            });
-            setSelectedRecoilValue([selector, 'selector'])
-      }}>{selector}</p>)}</div>}
+              if(item.id !== `selector-drop${i}` && item.classList.contains('selectorSelected')) {
+                item.classList.replace('selectorSelected', 'selectorNotSelected');
+              } else if (item.id !== `selector-drop${i}` && !item.classList.contains('selectorNotSelected')) {
+                item.classList.add('selectorNotSelected');
+              }
+              });
+            setSelectedRecoilValue([selector, 'selector']);
+            setIsDropDownItem(true);
+      }}>{selector}</button></div>)}</div>}
         <div className="bothLegend"></div>
-        <p>BOTH</p>
+        <button style={bothButtonClicked ? bothButtonClickedStyle : bothButtonStyle}>BOTH</button>
         <div className={hasSuspense ? "suspenseLegend" : ''}></div>
         <p>{hasSuspense?'SUSPENSE': ''}</p>
         <div className='tooltipContainer'></div>
