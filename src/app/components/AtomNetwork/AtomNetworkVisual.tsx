@@ -295,14 +295,16 @@ const AtomNetworkVisual: React.FC<AtomVisualProps> = ({
 
       // Give the data to this cluster layout:
       var root = d3.hierarchy(networkData, function (d: any) {
-        return d.nodes;
+        return d.children;
       });
+      console.log('root', root);
       cluster(root);
 
       // Add the links between nodes:
+      console.log('root descendants', root.descendants());
       svg
         .selectAll('path')
-        .data(root.descendants().slice(1))
+        .data(root.descendants())
         .enter()
         .append('path')
         .attr('d', function (d: any) {
