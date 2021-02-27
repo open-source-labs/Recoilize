@@ -42,6 +42,12 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
   const [showAtomMenu, setShowAtomMenu] = useState(false)
   const [showSelectorMenu, setShowSelectorMenu] = useState(false)
 
+  // hook for selected button styles on the legend
+  const [atomButtonClicked, setAtomButtonClicked] = useState(false);
+  const [selectorButtonClicked, setSelectorButtonClicked] = useState(false);
+  const [bothButtonClicked, setBothButtonClicked] = useState(false);
+  const [isDropDownItem, setIsDropDownItem] = useState(false);
+
   useEffect(() => {
     height = document.querySelector('.Component').clientHeight;
     width = document.querySelector('.Component').clientWidth;
@@ -118,12 +124,20 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
       let nodes = root.descendants(),
         links = root.descendants().slice(1);
 
+      console.log('These are the nodes: ', nodes);
+      console.log('These are the links: ', links);
+
       let node = g
         .selectAll('g.node')
         .attr('stroke-width', 5)
         .data(nodes, function (d: any): number {
+          console.log(typeof d);
+          console.log('in line 128 d is: ', d);
           return d.id || (d.id = ++i);
         });
+
+      // console.log('This is d.data: ', d.data);
+      // console.log('This is d.data.recoilNodes: ', d.data.recoilNodes);
 
       /* this tells node where to be placed and go to
        * adding a mouseOver event handler to each node
@@ -158,13 +172,44 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
               .attr('opacity', '.85');
 
             //created a str for hover div to have corrensponding info
-            let newStr = formatAtomSelectorText(atsel).join('<br>');
-            newStr = newStr.replace(/,/g, '<br>');
-            newStr = newStr.replace(/{/g, '<br>{');
+            // let newStr = formatAtomSelectorText(atsel).join('<br>');
+            // newStr = newStr.replace(/,/g, '<br>');
+            // newStr = newStr.replace(/{/g, '<br>{');
+
+            const nodeData = formatAtomSelectorText(atsel)[0];
+
+            console.log('nodeData.info: ', nodeData.info);
+            console.log('nodeData: ', nodeData);
+
+            const genHTML = (obj : any) => {
+              let str = '';
+              let htmlStr = '';
+              for (let key in obj) {
+                const curr = obj[key]
+                // if (key === 'type') htmlStr += `<h3>${curr}</h3>`
+                // if (key === 'name') htmlStr += `<h4>${curr}</h4>`
+
+                if (key === 'type') str += `${curr}: `
+                if (key === 'name') str += curr;
+                
+                if (key === 'info') {
+                  htmlStr += `<h3>${str}</h3>`
+                  htmlStr += `<h5>Atomic Values</h5>`
+                  if (typeof curr === 'string') htmlStr += `<p>title: ${curr}</p>`
+                 else for (let prop in curr) {
+                   const title = prop;
+                   const data = curr[prop]
+                   htmlStr += `<p>${title}: ${data}</p>`
+                 }
+                }
+              }
+                console.log('htmlStr: ', htmlStr);
+                return `<div>${htmlStr}</div>`
+              }
 
             //tooltip appear near your mouse when hover over a node
             tooltip.style('opacity', 1)
-              .html(`<p>${newStr}</p>`)
+              .html(genHTML(nodeData))
               .style('left', d3.event.pageX + 15 + 'px') //mouse position
               .style('top', d3.event.pageY - 20 + 'px');
 
@@ -314,23 +359,28 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
         return -150;
       }
 
-      function formatAtomSelectorText(atomOrSelector: string[]): string[] {
+      function formatAtomSelectorText(atomOrSelector: string[]): any {
         let strings: any = [];
+        console.log('what is in atoms: ', atoms);
+        console.log('what is in selectors', selectors);
+
         for (let i = 0; i < atomOrSelector.length; i++) {
-          if (atoms.hasOwnProperty(atomOrSelector[i])) {
-            strings.push(
-              ` ATOM ${atomOrSelector[i]}: ${JSON.stringify(
-                atoms[atomOrSelector[i]],
-              )}`,
-            );
-          } else if (selectors.hasOwnProperty(atomOrSelector[i])) {
-            strings.push(
-              ` SELECTOR ${atomOrSelector[i]}: ${JSON.stringify(
-                selectors[atomOrSelector[i]],
-              )}`,
-            );
+          const data: any = {};
+          const curr = atomOrSelector[i];
+
+          data.type = atoms.hasOwnProperty(curr) ? 'atom' : 'selector';
+          data.name = curr;
+
+          if (data.type === 'atom') {
+            data.info = atoms[curr];
+          } else {
+            data.info = selectors[curr];
           }
+
+          strings.push(data);
         }
+
+        console.log('Strings in formatAtomSelectorText: ', strings);
         return strings;
       }
 
@@ -354,6 +404,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
 
       function colorComponents(d: any): string {
         // if component node contains recoil atoms or selectors, make it orange red or yellow, otherwise keep node gray
+        console.log('d.data in colorComponents: ', d.data);
         if (d.data.recoilNodes && d.data.recoilNodes.length) {
           if (d.data.recoilNodes.includes(selectedRecoilValue[0])) {
             // Color of atom or selector when clicked on in legend
@@ -388,14 +439,67 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
   function openDropdown (e: React.MouseEvent) {
     const target = e.target as Element;
     if (target.className === "AtomP") {
+      setAtomButtonClicked(true);
+      setSelectorButtonClicked(false);
       setShowAtomMenu(!showAtomMenu);
       setShowSelectorMenu(false);
     }
     else {
+      setAtomButtonClicked(false);
+      setSelectorButtonClicked(true);
       setShowSelectorMenu(!showSelectorMenu);
       setShowAtomMenu(false);
     }
   }
+
+  const resetNodes = () => {
+    setIsDropDownItem(false);
+    console.log('This is resetNodes');
+  }
+
+  const atomButtonStyle = {
+    color: '#9580ff',
+    borderColor: 'white',
+    width: '120px'
+  };
+
+  const selectorButtonStyle = {
+    color: '#ff80bf',
+    borderColor: 'white',
+    width: '120px'
+  };
+
+  const bothButtonStyle = {
+    color: 'springgreen',
+    borderColor: 'white',
+    width: '120px'
+  };
+
+  const dropdownButtonStyle = {
+    margin: '5px'
+  };
+
+  const atomButtonClickedStyle = {
+    color: '#9580ff',
+    borderColor: 'white',
+    width: '120px',
+    backgroundColor: 'rgb(240, 240, 162)'
+  };
+
+  const selectorButtonClickedStyle = {
+    color: '#ff80bf',
+    borderColor: 'white',
+    width: '120px',
+    backgroundColor: 'rgb(240, 240, 162)'
+  };
+
+  const bothButtonClickedStyle = {
+    color: 'springgreen',
+    borderColor: 'white',
+    width: '120px',
+    backgroundColor: 'rgb(240, 240, 162)'
+  };
+
   return (
     <div className="AtomComponentVisual">
       <svg id="canvas"></svg>
@@ -411,29 +515,54 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
       </button>
       <div className="AtomNetworkLegend">
         <div className="AtomLegend" />
-        <p onClick={openDropdown} id="AtomP" className="AtomP">ATOM</p>
-        {showAtomMenu && <div id="atomDrop" className="AtomDropDown">
-        {atomList.map((atom, i) => <p id={`atom-drop${i}`} className="atom-class" key={i} style={{opacity: '30%'}} 
-        onClick={() => {
-        document.querySelector(`#atom-drop${i}`).setAttribute('style', 'opacity: 100%;');
-        document.querySelectorAll('.atom-class').forEach(item => {
-          if(item.id !== `atom-drop${i}`) item.setAttribute('style', 'opacity: 30%;')
-        });
-        setSelectedRecoilValue([atom, 'atom'])
-        }}>{atom}</p>)}</div>}
+          <button onClick={isDropDownItem ? resetNodes : openDropdown} id="AtomP" className="AtomP" style={atomButtonClicked ? atomButtonClickedStyle : atomButtonStyle}>ATOM</button>
+            {showAtomMenu && 
+            <div id="atomDrop" className="AtomDropDown">
+              {atomList.map((atom, i) => <div style={dropdownButtonStyle}><button id={`atom-drop${i}`} className="atom-class" key={i} style={atomButtonStyle} 
+              onClick={(event) => {
+              
+              if (!(event.target as HTMLInputElement).classList.contains('atomSelected') && (event.target as HTMLInputElement).classList.contains('atomNotSelected') ) {
+                (event.target as HTMLInputElement).classList.replace('atomNotSelected','atomSelected');
+              } else if (!(event.target as HTMLInputElement).classList.contains('atomSelected') && !(event.target as HTMLInputElement).classList.contains('atomNotSelected')) {
+                (event.target as HTMLInputElement).classList.add('atomSelected');
+              }
+              
+              document.querySelectorAll('.atom-class').forEach(item => {
+                if(item.id !== `atom-drop${i}` && item.classList.contains('atomSelected')) {
+                  item.classList.replace('atomSelected', 'atomNotSelected');
+                } else if (item.id !== `atom-drop${i}` && !item.classList.contains('atomNotSelected')) {
+                  item.classList.add('atomNotSelected');
+                }
+                });
+              
+              setSelectedRecoilValue([atom, 'atom']);
+              setIsDropDownItem(true);
+              }}>{atom}</button></div>)}
+            </div>}
         <div className="SelectorLegend"></div>
-        <p onClick={openDropdown} id="SelectorP" className="SelectorP">SELECTOR</p>
+        <button onClick={isDropDownItem ? resetNodes : openDropdown} id="SelectorP" className="SelectorP" style={selectorButtonClicked ? selectorButtonClickedStyle : selectorButtonStyle}>SELECTOR</button>
         {showSelectorMenu && <div id="selectorDrop" className="SelectorDropDown">
-          {selectorList.map((selector, i) => <p id={`selector-drop${i}`} className="selector-class" key={i} style={{opacity: '30%'}}
-          onClick={() => {
-            document.querySelector(`#selector-drop${i}`).setAttribute('style', 'opacity: 100%;');
+          {selectorList.map((selector, i) => <div style={dropdownButtonStyle}><button id={`selector-drop${i}`} className="selector-class" key={i} style={selectorButtonStyle}
+          onClick={(event) => {
+              
+            if (!(event.target as HTMLInputElement).classList.contains('selectorSelected') && (event.target as HTMLInputElement).classList.contains('selectorNotSelected') ) {
+              (event.target as HTMLInputElement).classList.replace('selectorNotSelected','selectorSelected');
+            } else if (!(event.target as HTMLInputElement).classList.contains('selectorSelected') && !(event.target as HTMLInputElement).classList.contains('selectorNotSelected')) {
+              (event.target as HTMLInputElement).classList.add('selectorSelected');
+            }
+            
             document.querySelectorAll('.selector-class').forEach(item => {
-              if(item.id !== `selector-drop${i}`) item.setAttribute('style', 'opacity: 30%;')
-            });
-            setSelectedRecoilValue([selector, 'selector'])
-      }}>{selector}</p>)}</div>}
+              if(item.id !== `selector-drop${i}` && item.classList.contains('selectorSelected')) {
+                item.classList.replace('selectorSelected', 'selectorNotSelected');
+              } else if (item.id !== `selector-drop${i}` && !item.classList.contains('selectorNotSelected')) {
+                item.classList.add('selectorNotSelected');
+              }
+              });
+            setSelectedRecoilValue([selector, 'selector']);
+            setIsDropDownItem(true);
+      }}>{selector}</button></div>)}</div>}
         <div className="bothLegend"></div>
-        <p>BOTH</p>
+        <button style={bothButtonClicked ? bothButtonClickedStyle : bothButtonStyle}>BOTH</button>
         <div className={hasSuspense ? "suspenseLegend" : ''}></div>
         <p>{hasSuspense?'SUSPENSE': ''}</p>
         <div className='tooltipContainer'></div>

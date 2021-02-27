@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   useRecoilTransactionObserver_UNSTABLE,
   useRecoilSnapshot,
   useGotoRecoilSnapshot,
 } from 'recoil';
-import { formatFiberNodes } from './formatFiberNodes';
+import {formatFiberNodes} from './formatFiberNodes';
 
 // grabs isPersistedState from sessionStorage
 let isPersistedState = sessionStorage.getItem('isPersistedState');
@@ -29,7 +29,7 @@ export default function RecoilizeDebugger(props) {
 
   // Check if a root was passed to props.
   if (props.root) {
-    const { root } = props;
+    const {root} = props;
     recoilizeRoot = root;
   } else {
     recoilizeRoot = document.getElementById('root');
@@ -219,9 +219,9 @@ export default function RecoilizeDebugger(props) {
 
   // Will add hover effect over highlighted component
   // Takes an argument of msg.data which contains name and payload
-  const activateHover = (payload) => {
+  const activateHover = payload => {
     let name = payload.name;
-  }
+  };
 
   // FOR TIME TRAVEL: time travels to a given snapshot, re renders application.
   const timeTravelToSnapshot = async msg => {
@@ -233,7 +233,7 @@ export default function RecoilizeDebugger(props) {
   };
 
   // FOR TIME TRAVEL: Recoil hook to fire a callback on every atom/selector change -- research Throttle
-  useRecoilTransactionObserver_UNSTABLE(({ snapshot }) => {
+  useRecoilTransactionObserver_UNSTABLE(({snapshot}) => {
     const now = new Date().getTime();
     if (now - throttleTimer < throttleLimit) {
       isRestoredState = true;

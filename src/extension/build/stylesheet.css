@@ -488,7 +488,34 @@ button:hover {
 #selectorDrop {
   display: grid;
   grid-row: 5;
-  border: 0.1em solid rgb(43, 34, 34);
+}
+
+.atomSelected {
+  color: '#9580ff';
+  border-color: 'white';
+  width: '120px';
+  opacity: 100%;
+}
+
+.atomNotSelected {
+  color: '#9580ff';
+  border-color: 'white';
+  width: '120px';
+  opacity: 30%;
+}
+
+.selectorNotSelected {
+  color: '#ff80bf';
+  border-color: 'white';
+  width: '120px';
+  opacity: 100%;
+}
+
+.selectorNotSelected {
+  color: '#ff80bf';
+  border-color: 'white';
+  width: '120px';
+  opacity: 30%;
 }
 
 .suspenseLegend {
