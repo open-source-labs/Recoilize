@@ -263,7 +263,8 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
       nodeUpdate
         .select('circle.node')
         .attr('r', determineSize)
-        .attr('fill', resetColors ? updateColors : colorComponents)
+        .attr('fill', colorComponents)
+        // .attr('fill', resetColors ? updateColors : colorComponents)
         .attr('cursor', 'pointer')
         .style('stroke', borderColor)
         .style('stroke-width', 15);
@@ -470,47 +471,47 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
     console.log('This is resetNodes');
   }
 
-  const updateColors = () => {
-    treeMap(root);
+  // const updateColors = () => {
+  //   // treeMap(root);
 
-    let nodes = root.descendants(),
+  //   // let nodes = root.descendants();
 
 
 
-    console.log('updateColors happened');
-    let hasAtom = false;
-    let hasSelector = false;
-    console.log('atomList in updateColors: ', atomList);
-    console.log('selectorList in updateColors: ', selectorList);
-    const atsel = [...atomList, ...selectorList];
+  //   console.log('updateColors happened');
+  //   let hasAtom = false;
+  //   let hasSelector = false;
+  //   console.log('atomList in updateColors: ', atomList);
+  //   console.log('selectorList in updateColors: ', selectorList);
+  //   const atsel = [...atomList, ...selectorList];
 
-    for (let i = 0; i < atsel.length; i++) {
-      const currentNode = atsel[i];
-      console.log('currentNode in updateColors: ', currentNode);
+  //   for (let i = 0; i < atsel.length; i++) {
+  //     const currentNode = atsel[i];
+  //     console.log('currentNode in updateColors: ', currentNode);
 
-      console.log('atoms in updateColors: ', atoms);
-      if (atoms.hasOwnProperty(currentNode)) {
-        hasAtom = true;
-      }
-      if (selectors.hasOwnProperty(currentNode)) {
-        hasSelector = true;
-      }
-    }
+  //     console.log('atoms in updateColors: ', atoms);
+  //     if (atoms.hasOwnProperty(currentNode)) {
+  //       hasAtom = true;
+  //     }
+  //     if (selectors.hasOwnProperty(currentNode)) {
+  //       hasSelector = true;
+  //     }
+  //   }
 
-    if (hasAtom && hasSelector) {
-      return 'springgreen';
-    }
+  //   if (hasAtom && hasSelector) {
+  //     return 'springgreen';
+  //   }
           
-    if (hasAtom) {
-      return '#9580ff';
-    }
+  //   if (hasAtom) {
+  //     return '#9580ff';
+  //   }
     
-    if (hasSelector) {
-      return '#ff80bf';
-    }
+  //   if (hasSelector) {
+  //     return '#ff80bf';
+  //   }
       
-    return 'gray';
-  }
+  //   return 'gray';
+  // }
 
 
   const atomButtonStyle = {
