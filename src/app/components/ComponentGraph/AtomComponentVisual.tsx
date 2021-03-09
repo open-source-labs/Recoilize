@@ -1,7 +1,8 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, {useState, useEffect, useContext, useRef} from 'react';
 import * as d3 from 'd3';
 import {componentAtomTree, atom, selector} from '../../../types';
 import {zoomStateContext} from '../../Containers/VisualContainer';
+import {connectableObservableDescriptor} from 'rxjs/internal/observable/ConnectableObservable';
 // import rd3 from 'react-d3-library'
 
 interface AtomComponentVisualProps {
@@ -47,6 +48,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
   const [selectorButtonClicked, setSelectorButtonClicked] = useState(false);
   const [bothButtonClicked, setBothButtonClicked] = useState(false);
   const [isDropDownItem, setIsDropDownItem] = useState(false);
+  // const recoilNodes = useRef([]);
 
   useEffect(() => {
     height = document.querySelector('.Component').clientHeight;
@@ -163,6 +165,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
         .on('mouseover', function (d: any, i: number): void {
           // atsel is an array of all the atoms and selectors
           const atsel: any = [];
+          console.log('d.data.recoilNodes in mouseover: ', d.data.recoilNodes);
           if (d.data.recoilNodes) {
             for (let x = 0; x < d.data.recoilNodes.length; x++) {
               // pushing all the atoms and selectors for the node into 'atsel'
@@ -260,6 +263,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
         .select('circle.node')
         .attr('r', determineSize)
         .attr('fill', colorComponents)
+        // .attr('fill', resetColors ? updateColors : colorComponents)
         .attr('cursor', 'pointer')
         .style('stroke', borderColor)
         .style('stroke-width', 15);
@@ -404,6 +408,8 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
 
       function colorComponents(d: any): string {
         // if component node contains recoil atoms or selectors, make it orange red or yellow, otherwise keep node gray
+        console.log('first render');
+        console.log('selectedRecoilValue :', selectedRecoilValue);
         console.log('d.data in colorComponents: ', d.data);
         if (d.data.recoilNodes && d.data.recoilNodes.length) {
           if (d.data.recoilNodes.includes(selectedRecoilValue[0])) {
@@ -413,6 +419,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
 
           let hasAtom = false;
           let hasSelector = false;
+          //recoilNodes.current = d.data.recoilNodes;
           for (let i = 0; i < d.data.recoilNodes.length; i++) {
             if (atoms.hasOwnProperty(d.data.recoilNodes[i])) {
               hasAtom = true;
