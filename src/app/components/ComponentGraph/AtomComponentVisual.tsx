@@ -48,7 +48,6 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
   const [selectorButtonClicked, setSelectorButtonClicked] = useState(false);
   const [bothButtonClicked, setBothButtonClicked] = useState(false);
   const [isDropDownItem, setIsDropDownItem] = useState(false);
-  // const recoilNodes = useRef([]);
 
   useEffect(() => {
     height = document.querySelector('.Component').clientHeight;
@@ -419,7 +418,6 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
 
           let hasAtom = false;
           let hasSelector = false;
-          //recoilNodes.current = d.data.recoilNodes;
           for (let i = 0; i < d.data.recoilNodes.length; i++) {
             if (atoms.hasOwnProperty(d.data.recoilNodes[i])) {
               hasAtom = true;

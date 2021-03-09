@@ -490,8 +490,24 @@ button:hover {
   grid-row: 5;
 }
 
+.selectorSelected:hover {
+  color: '#ff80bf';
+  background-color: rgb(240, 240, 162);
+  border-color: 'white';
+  width: '120px';
+  opacity: 100%;
+}
+
+.atomSelected:hover {
+  color: '#9580ff';
+  background-color: rgb(240, 240, 162);
+  border-color: 'white';
+  width: '120px';
+  opacity: 100%;
+}
 .atomSelected {
   color: '#9580ff';
+  background-color: rgb(240, 240, 162);
   border-color: 'white';
   width: '120px';
   opacity: 100%;
@@ -504,8 +520,9 @@ button:hover {
   opacity: 30%;
 }
 
-.selectorNotSelected {
+.selectorSelected {
   color: '#ff80bf';
+  background-color: rgb(240, 240, 162);
   border-color: 'white';
   width: '120px';
   opacity: 100%;
