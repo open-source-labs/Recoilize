@@ -407,9 +407,6 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
 
       function colorComponents(d: any): string {
         // if component node contains recoil atoms or selectors, make it orange red or yellow, otherwise keep node gray
-        console.log('first render');
-        console.log('selectedRecoilValue :', selectedRecoilValue);
-        console.log('d.data in colorComponents: ', d.data);
         if (d.data.recoilNodes && d.data.recoilNodes.length) {
           if (d.data.recoilNodes.includes(selectedRecoilValue[0])) {
             // Color of atom or selector when clicked on in legend
@@ -442,7 +439,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
 
   function openDropdown(e: React.MouseEvent) {
     const target = e.target as Element;
-    if (target.className === 'AtomP') {
+    if (target.id === 'AtomP') {
       setAtomButtonClicked(true);
       setSelectorButtonClicked(false);
       setShowAtomMenu(!showAtomMenu);
@@ -462,7 +459,6 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
     setShowAtomMenu(false);
     setAtomButtonClicked(false);
     setSelectorButtonClicked(false);
-    console.log('This is resetNodes');
   };
 
   const atomButtonStyle = {
@@ -481,10 +477,6 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
     color: 'springgreen',
     borderColor: 'white',
     width: '120px',
-  };
-
-  const dropdownButtonStyle = {
-    margin: '5px',
   };
 
   const atomButtonClickedStyle = {
@@ -526,14 +518,16 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
         <button
           onClick={isDropDownItem ? resetNodes : openDropdown}
           id="AtomP"
-          className="AtomP"
-          style={atomButtonClicked ? atomButtonClickedStyle : atomButtonStyle}>
+          // className="AtomP"
+          className={
+            atomButtonClicked ? "AtomP atomSelected" : "AtomP atomLegendDefault"
+          }>
           ATOM
         </button>
         {showAtomMenu && (
           <div id="atomDrop" className="AtomDropDown">
             {atomList.map((atom, i) => (
-              <div style={dropdownButtonStyle}>
+              <div className="dropDownButtonDiv">
                 <button
                   id={`atom-drop${i}`}
                   className="atom-class"
@@ -595,18 +589,16 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
         <button
           onClick={isDropDownItem ? resetNodes : openDropdown}
           id="SelectorP"
-          className="SelectorP"
-          style={
-            selectorButtonClicked
-              ? selectorButtonClickedStyle
-              : selectorButtonStyle
+          // className="SelectorP"
+          className={
+            selectorButtonClicked ? "SelectorP selectorSelected" : "SelectorP selectorLegendDefault"
           }>
           SELECTOR
         </button>
         {showSelectorMenu && (
           <div id="selectorDrop" className="SelectorDropDown">
             {selectorList.map((selector, i) => (
-              <div style={dropdownButtonStyle}>
+              <div className="dropDownButtonDiv">
                 <button
                   id={`selector-drop${i}`}
                   className="selector-class"
