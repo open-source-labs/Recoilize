@@ -40,14 +40,14 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
   const [atomList, setAtomList] = useState(Object.keys(atoms));
   const [selectorList, setSelectorList] = useState(Object.keys(selectors));
   // need to create a hook for toggling
-  const [showAtomMenu, setShowAtomMenu] = useState(false);
-  const [showSelectorMenu, setShowSelectorMenu] = useState(false);
+  const [showAtomMenu, setShowAtomMenu] = useState<boolean>(false);
+  const [showSelectorMenu, setShowSelectorMenu] = useState<boolean>(false);
 
   // hook for selected button styles on the legend
-  const [atomButtonClicked, setAtomButtonClicked] = useState(false);
-  const [selectorButtonClicked, setSelectorButtonClicked] = useState(false);
-  const [bothButtonClicked, setBothButtonClicked] = useState(false);
-  const [isDropDownItem, setIsDropDownItem] = useState(false);
+  const [atomButtonClicked, setAtomButtonClicked] = useState<boolean>(false);
+  const [selectorButtonClicked, setSelectorButtonClicked] = useState<boolean>(false);
+  const [bothButtonClicked, setBothButtonClicked] = useState<boolean>(false);
+  const [isDropDownItem, setIsDropDownItem] = useState<boolean>(false);
 
   useEffect(() => {
     height = document.querySelector('.Component').clientHeight;
@@ -126,20 +126,12 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
       let nodes = root.descendants(),
         links = root.descendants().slice(1);
 
-      console.log('These are the nodes: ', nodes);
-      console.log('These are the links: ', links);
-
       let node = g
         .selectAll('g.node')
         .attr('stroke-width', 5)
         .data(nodes, function (d: any): number {
-          console.log(typeof d);
-          console.log('in line 128 d is: ', d);
           return d.id || (d.id = ++i);
         });
-
-      // console.log('This is d.data: ', d.data);
-      // console.log('This is d.data.recoilNodes: ', d.data.recoilNodes);
 
       /* this tells node where to be placed and go to
        * adding a mouseOver event handler to each node
@@ -164,7 +156,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
         .on('mouseover', function (d: any, i: number): void {
           // atsel is an array of all the atoms and selectors
           const atsel: any = [];
-          console.log('d.data.recoilNodes in mouseover: ', d.data.recoilNodes);
+          
           if (d.data.recoilNodes) {
             for (let x = 0; x < d.data.recoilNodes.length; x++) {
               // pushing all the atoms and selectors for the node into 'atsel'
@@ -180,17 +172,12 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
 
             const nodeData = formatAtomSelectorText(atsel)[0];
 
-            console.log('nodeData.info: ', nodeData.info);
-            console.log('nodeData: ', nodeData);
-
-            const genHTML = (obj: any) => {
+            const genHTML = (obj: any): string => {
               let str = '';
               let htmlStr = '';
               for (let key in obj) {
                 const curr = obj[key];
-                // if (key === 'type') htmlStr += `<h3>${curr}</h3>`
-                // if (key === 'name') htmlStr += `<h4>${curr}</h4>`
-
+               
                 if (key === 'type') str += `${curr}: `;
                 if (key === 'name') str += curr;
 
@@ -207,7 +194,6 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
                     }
                 }
               }
-              console.log('htmlStr: ', htmlStr);
               return `<div>${htmlStr}</div>`;
             };
 
@@ -262,7 +248,6 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
         .select('circle.node')
         .attr('r', determineSize)
         .attr('fill', colorComponents)
-        // .attr('fill', resetColors ? updateColors : colorComponents)
         .attr('cursor', 'pointer')
         .style('stroke', borderColor)
         .style('stroke-width', 15);
@@ -362,10 +347,8 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
         return -150;
       }
 
-      function formatAtomSelectorText(atomOrSelector: string[]): any {
-        let strings: any = [];
-        console.log('what is in atoms: ', atoms);
-        console.log('what is in selectors', selectors);
+      function formatAtomSelectorText(atomOrSelector: string[]): string[] {
+        const strings: string[] = [];
 
         for (let i = 0; i < atomOrSelector.length; i++) {
           const data: any = {};
@@ -383,7 +366,6 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
           strings.push(data);
         }
 
-        console.log('Strings in formatAtomSelectorText: ', strings);
         return strings;
       }
 
