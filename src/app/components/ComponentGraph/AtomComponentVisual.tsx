@@ -39,6 +39,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
   //declare hooks to render lists of atoms or selectors
   const [atomList, setAtomList] = useState(Object.keys(atoms));
   const [selectorList, setSelectorList] = useState(Object.keys(selectors));
+
   // need to create a hook for toggling
   const [showAtomMenu, setShowAtomMenu] = useState<boolean>(false);
   const [showSelectorMenu, setShowSelectorMenu] = useState<boolean>(false);
@@ -162,14 +163,15 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
               // pushing all the atoms and selectors for the node into 'atsel'
               atsel.push(d.data.recoilNodes[x]);
             }
-            //change the opacity of the node when the mouse is over
+            // change the opacity of the node when the mouse is over
             d3.select(this).transition().duration('50').attr('opacity', '.85');
 
-            //created a str for hover div to have corrensponding info
+            // created a str for hover div to have corrensponding info
             // let newStr = formatAtomSelectorText(atsel).join('<br>');
             // newStr = newStr.replace(/,/g, '<br>');
             // newStr = newStr.replace(/{/g, '<br>{');
 
+            // to make the info-windows more clear for the user, this iterates over the nodeData and returns a stringified html element that gets rendered by the tooltip
             const nodeData = formatAtomSelectorText(atsel)[0];
 
             const genHTML = (obj: any): string => {
@@ -197,11 +199,11 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
               return `<div>${htmlStr}</div>`;
             };
 
-            //tooltip appear near your mouse when hover over a node
+            // tooltip appear near your mouse when hover over a node
             tooltip
               .style('opacity', 1)
               .html(genHTML(nodeData))
-              .style('left', d3.event.pageX + 15 + 'px') //mouse position
+              .style('left', d3.event.pageX + 15 + 'px') // mouse position
               .style('top', d3.event.pageY - 20 + 'px');
           }
         })
@@ -347,8 +349,9 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
         return -150;
       }
 
+      // creates an array of objects with node data        
       function formatAtomSelectorText(atomOrSelector: string[]): string[] {
-        const strings: string[] = [];
+        const recoilData: any = [];
 
         for (let i = 0; i < atomOrSelector.length; i++) {
           const data: any = {};
@@ -363,10 +366,10 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
             data.info = selectors[curr];
           }
 
-          strings.push(data);
+          recoilData.push(data);
         }
 
-        return strings;
+        return recoilData;
       }
 
       function determineSize(d: any): number {
@@ -419,6 +422,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
     }
   }, [componentAtomTree, rawToggle, selectedRecoilValue]);
 
+  // setting the component's user interface state by checking if the dropdown menu is open or not
   function openDropdown(e: React.MouseEvent) {
     const target = e.target as Element;
     if (target.id === 'AtomP') {
@@ -434,6 +438,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
     }
   }
 
+  // resetting the component's user interface state when toggling between atoms & selectors
   const resetNodes = () => {
     setIsDropDownItem(false);
     setSelectedRecoilValue([]);
@@ -441,19 +446,6 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
     setShowAtomMenu(false);
     setAtomButtonClicked(false);
     setSelectorButtonClicked(false);
-  };
-
-  const bothButtonStyle = {
-    color: 'springgreen',
-    borderColor: 'white',
-    width: '120px',
-  };
-
-  const bothButtonClickedStyle = {
-    color: 'springgreen',
-    borderColor: 'white',
-    width: '120px',
-    backgroundColor: 'rgb(240, 240, 162)',
   };
 
   return (
@@ -611,8 +603,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
         )}
         <div className="bothLegend"></div>
         <button
-          style={bothButtonClicked ? bothButtonClickedStyle : bothButtonStyle}>
-          BOTH
+          className="bothLegendDefault">BOTH
         </button>
         <div className={hasSuspense ? 'suspenseLegend' : ''}></div>
         <p>{hasSuspense ? 'SUSPENSE' : ''}</p>

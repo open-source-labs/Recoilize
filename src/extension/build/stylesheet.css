@@ -560,6 +560,12 @@ button:hover {
   width: 120px;
 }
 
+.bothLegendDefault {
+  color: springgreen;
+  border-color: white;
+  width: 120px;
+}
+
 .suspenseLegend {
   display: inline-block;
   background: transparent;
