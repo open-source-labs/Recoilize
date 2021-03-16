@@ -521,6 +521,12 @@ button:hover {
   opacity: 30%;
 }
 
+.atomDropDown {
+  color: #9580ff;
+  border-color: white;
+  width: 120px;
+}
+
 .atomLegendDefault {
   color: #9580ff;
   border-color: white;
@@ -540,6 +546,12 @@ button:hover {
   border-color: white;
   width: 120px;
   opacity: 30%;
+}
+
+.selectorDropDown {
+  color: #ff80bf;
+  border-color: white;
+  width: 120px;
 }
 
 .selectorLegendDefault {

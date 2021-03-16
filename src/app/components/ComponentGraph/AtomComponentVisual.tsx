@@ -461,36 +461,10 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
     setSelectorButtonClicked(false);
   };
 
-  const atomButtonStyle = {
-    color: '#9580ff',
-    borderColor: 'white',
-    width: '120px',
-  };
-
-  const selectorButtonStyle = {
-    color: '#ff80bf',
-    borderColor: 'white',
-    width: '120px',
-  };
-
   const bothButtonStyle = {
     color: 'springgreen',
     borderColor: 'white',
     width: '120px',
-  };
-
-  const atomButtonClickedStyle = {
-    color: '#9580ff',
-    borderColor: 'white',
-    width: '120px',
-    backgroundColor: 'rgb(240, 240, 162)',
-  };
-
-  const selectorButtonClickedStyle = {
-    color: '#ff80bf',
-    borderColor: 'white',
-    width: '120px',
-    backgroundColor: 'rgb(240, 240, 162)',
   };
 
   const bothButtonClickedStyle = {
@@ -518,7 +492,6 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
         <button
           onClick={isDropDownItem ? resetNodes : openDropdown}
           id="AtomP"
-          // className="AtomP"
           className={
             atomButtonClicked ? "AtomP atomSelected" : "AtomP atomLegendDefault"
           }>
@@ -530,9 +503,8 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
               <div className="dropDownButtonDiv">
                 <button
                   id={`atom-drop${i}`}
-                  className="atom-class"
+                  className="atom-class atomDropDown"
                   key={i}
-                  style={atomButtonStyle}
                   onClick={event => {
                     if (
                       !(event.target as HTMLInputElement).classList.contains(
@@ -589,7 +561,6 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
         <button
           onClick={isDropDownItem ? resetNodes : openDropdown}
           id="SelectorP"
-          // className="SelectorP"
           className={
             selectorButtonClicked ? "SelectorP selectorSelected" : "SelectorP selectorLegendDefault"
           }>
@@ -601,9 +572,8 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
               <div className="dropDownButtonDiv">
                 <button
                   id={`selector-drop${i}`}
-                  className="selector-class"
+                  className="selector-class selectorDropDown"
                   key={i}
-                  style={selectorButtonStyle}
                   onClick={event => {
                     if (
                       !(event.target as HTMLInputElement).classList.contains(
