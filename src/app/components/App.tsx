@@ -7,7 +7,7 @@ import {diff} from 'jsondiffpatch';
 interface SnapshotHistoryContext {
   snapshotHistory: Partial<stateSnapshot[]>;
   setSnapshotHistory: React.Dispatch<React.SetStateAction<stateSnapshot[]>>;
-};
+}
 
 interface SelectedContext {
   selected: selectedTypes[];
@@ -21,17 +21,20 @@ interface FilterContext {
 
 // contexts created for our state values to later reference in child components
 // purpose is to eliminate prop drilling
-export const snapshotHistoryContext = createContext<SnapshotHistoryContext>(null);
+export const snapshotHistoryContext = createContext<SnapshotHistoryContext>(
+  null,
+);
 export const selectedContext = createContext<SelectedContext>(null);
 export const filterContext = createContext<FilterContext>(null);
 
 const LOGO_URL = './assets/Recoilize.png';
 const App: React.FC = () => {
+  console.log('App');
   // useState hook to update the snapshotHistory array
   // array of snapshots
   const [snapshotHistory, setSnapshotHistory] = useState<stateSnapshot[]>([]);
   // selected will be an array with objects containing filteredSnapshot key names (the atoms and selectors)
-      // ex: [{name: 'Atom1'}, {name: 'Atom2'}, {name: 'Selector1'}, ...]
+  // ex: [{name: 'Atom1'}, {name: 'Atom2'}, {name: 'Selector1'}, ...]
   const [selected, setSelected] = useState<selectedTypes[]>([]);
   // todo: Create algo that will clean up the big setSnapshothistory object, now and before
   // Filter is an array of objects containing differences between snapshots
@@ -114,7 +117,8 @@ const App: React.FC = () => {
   const renderMainContainer: JSX.Element = (
     <filterContext.Provider value={{filter, setFilter}}>
       <selectedContext.Provider value={{selected, setSelected}}>
-        <snapshotHistoryContext.Provider value={{snapshotHistory, setSnapshotHistory}}>
+        <snapshotHistoryContext.Provider
+          value={{snapshotHistory, setSnapshotHistory}}>
           <MainContainer />
         </snapshotHistoryContext.Provider>
       </selectedContext.Provider>
