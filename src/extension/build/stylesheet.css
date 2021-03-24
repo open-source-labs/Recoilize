@@ -325,11 +325,11 @@ button:hover {
   position: fixed;
   top: 58px;
   left: 179px;
-  display: grid;
-  grid-template-rows: 30px 30px 30px 1fr;
-  align-items: center;
   padding-left: 5px;
   padding-top: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 .AtomDiv {
   display: grid;
@@ -442,9 +442,33 @@ button:hover {
   cursor: pointer;
 }
 
+.RecoilSearch {
+  position: fixed;
+  top: 58px;
+  left: 179px;
+  display: grid;
+  grid-template-columns: 30px 30px;
+  grid-template-rows: 30px 30px 30px 1fr;
+  align-items: center;
+  padding-left: 5px;
+  padding-top: 5px;
+}
+
 .AtomNetworkLegend {
   position: fixed;
   top: 58px;
+  left: 179px;
+  display: grid;
+  grid-template-columns: 30px 30px;
+  grid-template-rows: 30px 30px 30px 1fr;
+  align-items: center;
+  padding-left: 5px;
+  padding-top: 5px;
+}
+
+.AtomNetworkLegendWithSearch {
+  position: fixed;
+  top: 100px;
   left: 179px;
   display: grid;
   grid-template-columns: 30px 30px;
@@ -578,6 +602,13 @@ button:hover {
 
 .dropDownButtonDiv {
   margin: 5px;
+}
+
+.LegendButtons {
+  display: flex;
+  flex-direction: column;
+  margin: 5px;
+  margin-top: 60px;
 }
 
 /* ATOMSELECTORLEGEND COMPONENT */
