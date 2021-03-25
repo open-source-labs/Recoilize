@@ -42,6 +42,7 @@ const App: React.FC = () => {
   // ! Setting up the selected
   // Whenever snapshotHistory changes, useEffect will run, and selected will be updated
   useEffect(() => {
+    console.log('Running Dev');
     let last;
     if (snapshotHistory[snapshotHistory.length - 1]) {
       last = snapshotHistory[snapshotHistory.length - 1].filteredSnapshot;
