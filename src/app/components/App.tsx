@@ -92,9 +92,12 @@ const App: React.FC = () => {
         // ! Setting the FILTER Array
         if (!msg.payload[1] || filter.length === 0) {
           // todo: currently the filter does not work if recoilize is not open, we must change msg.payload to incorporate delta function in the backend
+          //Correct improper state changes
           filter = msg.payload;
           setFilter(msg.payload);
+          //Does not enter into second if statement
         } else if (filter.length === 0) {
+          //Correct improper state changes
           filter.push(msg.payload[0]);
           setFilter(filter);
         } else {
@@ -104,6 +107,7 @@ const App: React.FC = () => {
             msg.payload[msg.payload.length - 1],
           );
           // only push if the snapshot length is chill
+          //Correct improper state changes
           if (filter.length < msg.payload.length) {
             filter.push(delta);
             setFilter(filter);

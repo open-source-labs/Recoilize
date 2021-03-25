@@ -45,7 +45,9 @@ const cleanComponentAtomTree = (
   inputObj: componentAtomTree,
 ): componentAtomTree => {
   const obj = {} as componentAtomTree;
+  console.log('obj supposed to be empty', JSON.stringify(obj)); 
   let counter = 0;
+  console.log('inputObj', inputObj)
   const innerClean = (inputObj: any, outputObj: any, counter: number = 0) => {
     if (
       (inputObj.tag === 0 || inputObj.tag === 2) &&
@@ -54,13 +56,17 @@ const cleanComponentAtomTree = (
       inputObj.name !== 'RecoilizeDebugger' &&
       inputObj.name !== 'CssBaseline'
     ) {
+      console.log('+++++', obj, 'length:', Object.keys(obj).length, '++++++');
       // if the obj is empty, we do this
       if (Object.keys(obj).length === 0) {
+        console.log('******************', outputObj, '******************');
         outputObj.children = [];
         outputObj.name = inputObj.name;
         outputObj.recoilNodes = inputObj.recoilNodes;
         outputObj.tag = inputObj.tag;
+        console.log('outputObj 1', outputObj)
         outputObj = outputObj.children;
+        console.log('outputObj 2', outputObj)
       }
       // create another conditional
       else {
@@ -70,8 +76,10 @@ const cleanComponentAtomTree = (
         deepCopy.children = [];
         outputObj.push(deepCopy);
         if (outputObj.length > 1) {
+          console.log('first if in else', outputObj);
           outputObj = outputObj[outputObj.length - 1].children;
         } else {
+          console.log('else in else', outputObj);
           outputObj = outputObj[0].children;
         }
       }
@@ -80,8 +88,10 @@ const cleanComponentAtomTree = (
     for (let i = 0; i < inputObj.children.length; i++) {
       innerClean(inputObj.children[i], outputObj, counter);
     }
+    console.log('outputObj', outputObj);
     return outputObj;
   };
+  console.log('obj supposed to be empty right before invoking innerClean', obj); 
   innerClean(inputObj, obj, counter);
 
   //ensure that the root element's actual duration is included in outObj
@@ -90,6 +100,7 @@ const cleanComponentAtomTree = (
   }
 
   // returning the new object that we create
+  console.log('obj final', obj);
   return obj;
 };
 

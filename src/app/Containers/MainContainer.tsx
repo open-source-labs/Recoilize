@@ -5,7 +5,7 @@ import {snapshotHistoryContext} from '../components/App';
 
 interface RenderIndexContext {
   renderIndex: number;
-  setRenderIndex: React.Dispatch<React.SetStateAction<number>>
+  setRenderIndex: React.Dispatch<React.SetStateAction<number>>;
 }
 
 export const renderIndexContext = createContext<RenderIndexContext>(null);
