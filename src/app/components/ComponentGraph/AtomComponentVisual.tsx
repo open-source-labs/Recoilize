@@ -3,6 +3,8 @@ import * as d3 from 'd3';
 import {componentAtomTree, atom, selector} from '../../../types';
 import {zoomStateContext} from '../../Containers/VisualContainer';
 import {connectableObservableDescriptor} from 'rxjs/internal/observable/ConnectableObservable';
+import {useSelector, useDispatch} from "react-redux";
+import {updateZoomState, selectZoomState} from '../../state-management/slices/ZoomSlice';
 // import rd3 from 'react-d3-library'
 
 interface AtomComponentVisualProps {
@@ -26,6 +28,9 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
 }) => {
   const {zoomState, setZoomState} = useContext(zoomStateContext);
   const {x, y, k} = zoomState;
+  const dispatch = useDispatch();
+  const zoomSelector = useSelector(selectZoomState);
+
   // set the heights and width of the tree to be passed into treeMap function
   let width: number = 0;
   let height: number = 0;
@@ -116,8 +121,10 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
     function zoomed() {
       g.attr('transform', d3.event.transform).on(
         'mouseup',
-        setZoomState(d3.zoomTransform(d3.select('#canvas').node())),
+        dispatch(updateZoomState(d3.zoomTransform(d3.select('#canvas').node()))),
+        // setZoomState(d3.zoomTransform(d3.select('#canvas').node())),
       );
+      console.log('this is the zoomSelector:', zoomSelector);
     }
 
     // Update function
