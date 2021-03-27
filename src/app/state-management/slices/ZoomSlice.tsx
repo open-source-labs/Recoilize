@@ -18,17 +18,16 @@ export const zoomSlice = createSlice({
   initialState,
   reducers: {
     updateZoomState: (state, action: PayloadAction<ZoomState>) => {
-      console.log('this is the payload: ', action.payload);
       state.zoomData = action.payload;
-      console.log(
-        'this is the state.zoomData in action post update: ',
-        state.zoomData,
-      );
+    },
+    setDefaultZoom: state => {
+      console.log('set default called');
+      state.zoomData = initialState.zoomData;
     },
   },
 });
 
-export const {updateZoomState} = zoomSlice.actions;
+export const {updateZoomState, setDefaultZoom} = zoomSlice.actions;
 
 // The function below is called a thunk and allows us to perform async logic. It
 // can be dispatched like a regular action: `dispatch(incrementAsync(10))`. This

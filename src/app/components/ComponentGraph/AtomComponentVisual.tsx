@@ -7,6 +7,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import {
   updateZoomState,
   selectZoomState,
+  setDefaultZoom,
 } from '../../state-management/slices/ZoomSlice';
 // import rd3 from 'react-d3-library'
 
@@ -35,7 +36,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
   const {x, y, k} = zoomSelector;
   const dispatch = useDispatch();
 
-  console.log('i am zoomSelector', zoomSelector);
+  // console.log('i am zoomSelector', zoomSelector);
   // console.log('i am x, y, k', x, y, k);
 
   // set the heights and width of the tree to be passed into treeMap function
@@ -128,7 +129,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
 
     // helper function that allows for zooming
     function zoomed() {
-      console.log('this is the zoomSelector before dispatch:', zoomSelector);
+      // console.log('this is the zoomSelector before dispatch:', zoomSelector);
       g.attr('transform', d3.event.transform).on(
         'mouseup',
         dispatch(
@@ -477,6 +478,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
         }}
         onClick={() => {
           setRawToggle(!rawToggle);
+          dispatch(setDefaultZoom());
         }}>
         <span>{rawToggle ? 'Collapse' : 'Expand'}</span>
       </button>
