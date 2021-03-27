@@ -1,30 +1,25 @@
-import React, {useState} from 'react';
-// import {throttleDisplayContext} from '../../Containers/VisualContainer';
-
+import React, {useState, useEffect} from 'react';
 import {useAppSelector, useAppDispatch} from '../../state-management/hooks';
 import {
   newThrottle,
   resetThrottle,
-  // selectThrottle,
 } from '../../state-management/slices/ThrottleSlice';
 
-
 const ThrottleSettings: React.FC = () => {
-  // const {throttleDisplay, setThrottleDisplay} = useContext(
-  //   throttleDisplayContext,
-  // );
   const dispatch = useAppDispatch();
 
   const throttle = useAppSelector(state => state.throttle.throttleValue);
+  console.log('Throttle', throttle);
   const [throttleNum, setThrottleNum] = useState<string>(throttle);
+  console.log('Throttle Num', throttleNum);
+
+  useEffect(() => {
+    setThrottleNum(throttle);
+  }, [throttle]);
 
   // onClick function for reset button. 70ms is the default throttle
   const onClick = (): void => {
-    // setThrottleDisplay('70');
     dispatch(resetThrottle());
-    console.log('throttle', throttle);
-    setThrottleNum(throttle);
-    console.log(throttleNum);
   };
 
   // Creating function to tie to get to the backend
@@ -39,9 +34,7 @@ const ThrottleSettings: React.FC = () => {
       payload: {value: throttleNum}, // edit this value to some other number
     });
 
-    // setThrottleDisplay(throttleNum);
     dispatch(newThrottle(throttleNum));
-    // setThrottleNum(throttle);
   };
 
   return (
