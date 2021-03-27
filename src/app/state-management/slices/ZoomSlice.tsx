@@ -1,16 +1,16 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RootState } from '../index';
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {RootState} from '../index';
 
 interface ZoomState {
-    zoomData: any
+  zoomData: any;
 }
 
 const initialState: ZoomState = {
-    zoomData: {
-        x: 18,
-        y: 527,
-        k: 0.12,
-    },
+  zoomData: {
+    x: 18,
+    y: 527,
+    k: 0.12,
+  },
 };
 
 export const zoomSlice = createSlice({
@@ -18,14 +18,17 @@ export const zoomSlice = createSlice({
   initialState,
   reducers: {
     updateZoomState: (state, action: PayloadAction<ZoomState>) => {
-        console.log('this is the payload: ', action.payload);
-        console.log('this is the state.zoomData: ', state.zoomData)
+      console.log('this is the payload: ', action.payload);
       state.zoomData = action.payload;
+      console.log(
+        'this is the state.zoomData in action post update: ',
+        state.zoomData,
+      );
     },
   },
 });
 
-export const { updateZoomState } = zoomSlice.actions;
+export const {updateZoomState} = zoomSlice.actions;
 
 // The function below is called a thunk and allows us to perform async logic. It
 // can be dispatched like a regular action: `dispatch(incrementAsync(10))`. This
@@ -42,6 +45,6 @@ export const { updateZoomState } = zoomSlice.actions;
 // in the slice file. For example: `useSelector((state: RootState) => state.counter.value)`
 export const selectZoomState = (state: RootState) => state.zoom.zoomData;
 
-const zoomReducer = zoomSlice.reducer
+const zoomReducer = zoomSlice.reducer;
 
-export default zoomReducer
+export default zoomReducer;
