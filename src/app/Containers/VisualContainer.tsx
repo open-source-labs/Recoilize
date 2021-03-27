@@ -27,10 +27,6 @@ interface CheckedContext {
   setChecked: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-interface ThrottleDisplayContext {
-  throttleDisplay: string;
-  setThrottleDisplay: React.Dispatch<React.SetStateAction<string>>;
-}
 
 interface ZoomStateContext {
   zoomState: ZoomState;
@@ -100,9 +96,7 @@ const VisualContainer: React.FC<VisualContainerProps> = ({
 }) => {
   // state for checkmark in persist state in settings
   const [checked, setChecked] = useState<boolean>(false);
-  // variables to store/reference connection
-  const [throttleDisplay, setThrottleDisplay] = useState<string>('70');
-
+  
   // this state allows the canvas to stay at the zoom level on multiple re-renders
   const [{x, y, k}, setZoomState] = useState<ZoomState>({
     x: 50,
@@ -155,9 +149,7 @@ const VisualContainer: React.FC<VisualContainerProps> = ({
     // settings tab that doesn't want to be in quotes because too cool for school
     Settings: (
       <checkedContext.Provider value={{checked, setChecked}}>
-        <throttleDisplayContext.Provider value={{throttleDisplay, setThrottleDisplay}}>
-          <Settings />
-        </throttleDisplayContext.Provider>
+           <Settings />
       </checkedContext.Provider>
     ),
   };
@@ -175,6 +167,5 @@ const VisualContainer: React.FC<VisualContainerProps> = ({
 };
 
 export const checkedContext = createContext<CheckedContext>(null);
-export const throttleDisplayContext = createContext<ThrottleDisplayContext>(null);
 export const zoomStateContext = createContext<ZoomStateContext>(null);
 export default VisualContainer;
