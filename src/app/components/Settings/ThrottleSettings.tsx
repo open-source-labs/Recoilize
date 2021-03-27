@@ -1,15 +1,3 @@
-<<<<<<< HEAD
-import React, {useEffect, useState} from 'react';
-
-
-import {useAppSelector, useAppDispatch} from '../../state-management/hooks';
-import {
-  newThrottle,
-  resetThrottle,,
-} from '../../state-management/slices/ThrottleSlice';
-
-const ThrottleSettings: React.FC = () => {
-=======
 import React, {useState, useEffect} from 'react';
 import {useAppSelector, useAppDispatch} from '../../state-management/hooks';
 import {
@@ -18,9 +6,6 @@ import {
 } from '../../state-management/slices/ThrottleSlice';
 
 const ThrottleSettings: React.FC = () => {
-  const dispatch = useAppDispatch();
->>>>>>> d3b3f9107fc23cc760454a1b2cb33adde6dd822a
-
   const dispatch = useAppDispatch();
   const throttle = useAppSelector(state => state.throttle.throttleValue);
   console.log('Throttle', throttle);
