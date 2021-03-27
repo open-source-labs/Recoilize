@@ -3,8 +3,11 @@ import * as d3 from 'd3';
 import {componentAtomTree, atom, selector} from '../../../types';
 import {zoomStateContext} from '../../Containers/VisualContainer';
 import {connectableObservableDescriptor} from 'rxjs/internal/observable/ConnectableObservable';
-import {useSelector, useDispatch} from "react-redux";
-import {updateZoomState, selectZoomState} from '../../state-management/slices/ZoomSlice';
+import {useSelector, useDispatch} from 'react-redux';
+import {
+  updateZoomState,
+  selectZoomState,
+} from '../../state-management/slices/ZoomSlice';
 // import rd3 from 'react-d3-library'
 
 interface AtomComponentVisualProps {
@@ -26,10 +29,10 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
   setStr,
   setSelectedRecoilValue,
 }) => {
-  const {zoomState, setZoomState} = useContext(zoomStateContext);
-  const {x, y, k} = zoomState;
-  const dispatch = useDispatch();
+  // const {zoomState, setZoomState} = useContext(zoomStateContext);
   const zoomSelector = useSelector(selectZoomState);
+  const {x, y, k} = zoomSelector;
+  const dispatch = useDispatch();
 
   // set the heights and width of the tree to be passed into treeMap function
   let width: number = 0;
@@ -51,7 +54,9 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
 
   // hook for selected button styles on the legend
   const [atomButtonClicked, setAtomButtonClicked] = useState<boolean>(false);
-  const [selectorButtonClicked, setSelectorButtonClicked] = useState<boolean>(false);
+  const [selectorButtonClicked, setSelectorButtonClicked] = useState<boolean>(
+    false,
+  );
   const [bothButtonClicked, setBothButtonClicked] = useState<boolean>(false);
   const [isDropDownItem, setIsDropDownItem] = useState<boolean>(false);
 
@@ -121,7 +126,9 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
     function zoomed() {
       g.attr('transform', d3.event.transform).on(
         'mouseup',
-        dispatch(updateZoomState(d3.zoomTransform(d3.select('#canvas').node()))),
+        dispatch(
+          updateZoomState(d3.zoomTransform(d3.select('#canvas').node())),
+        ),
         // setZoomState(d3.zoomTransform(d3.select('#canvas').node())),
       );
       console.log('this is the zoomSelector:', zoomSelector);
@@ -164,7 +171,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
         .on('mouseover', function (d: any, i: number): void {
           // atsel is an array of all the atoms and selectors
           const atsel: any = [];
-          
+
           if (d.data.recoilNodes) {
             for (let x = 0; x < d.data.recoilNodes.length; x++) {
               // pushing all the atoms and selectors for the node into 'atsel'
@@ -186,7 +193,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
               let htmlStr = '';
               for (let key in obj) {
                 const curr = obj[key];
-               
+
                 if (key === 'type') str += `${curr}: `;
                 if (key === 'name') str += curr;
 
@@ -356,7 +363,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
         return -150;
       }
 
-      // creates an array of objects with node data        
+      // creates an array of objects with node data
       function formatAtomSelectorText(atomOrSelector: string[]): string[] {
         const recoilData: any = [];
 
@@ -474,7 +481,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
           onClick={isDropDownItem ? resetNodes : openDropdown}
           id="AtomP"
           className={
-            atomButtonClicked ? "AtomP atomSelected" : "AtomP atomLegendDefault"
+            atomButtonClicked ? 'AtomP atomSelected' : 'AtomP atomLegendDefault'
           }>
           ATOM
         </button>
@@ -543,7 +550,9 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
           onClick={isDropDownItem ? resetNodes : openDropdown}
           id="SelectorP"
           className={
-            selectorButtonClicked ? "SelectorP selectorSelected" : "SelectorP selectorLegendDefault"
+            selectorButtonClicked
+              ? 'SelectorP selectorSelected'
+              : 'SelectorP selectorLegendDefault'
           }>
           SELECTOR
         </button>
@@ -609,9 +618,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
           </div>
         )}
         <div className="bothLegend"></div>
-        <button
-          className="bothLegendDefault">BOTH
-        </button>
+        <button className="bothLegendDefault">BOTH</button>
         <div className={hasSuspense ? 'suspenseLegend' : ''}></div>
         <p>{hasSuspense ? 'SUSPENSE' : ''}</p>
         <div className="tooltipContainer"></div>
