@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, {useEffect, useState} from 'react';
 
 
@@ -8,10 +9,27 @@ import {
 } from '../../state-management/slices/ThrottleSlice';
 
 const ThrottleSettings: React.FC = () => {
+=======
+import React, {useState, useEffect} from 'react';
+import {useAppSelector, useAppDispatch} from '../../state-management/hooks';
+import {
+  newThrottle,
+  resetThrottle,
+} from '../../state-management/slices/ThrottleSlice';
+
+const ThrottleSettings: React.FC = () => {
+  const dispatch = useAppDispatch();
+>>>>>>> d3b3f9107fc23cc760454a1b2cb33adde6dd822a
 
   const dispatch = useAppDispatch();
   const throttle = useAppSelector(state => state.throttle.throttleValue);
+  console.log('Throttle', throttle);
   const [throttleNum, setThrottleNum] = useState<string>(throttle);
+  console.log('Throttle Num', throttleNum);
+
+  useEffect(() => {
+    setThrottleNum(throttle);
+  }, [throttle]);
 
   useEffect(() => {
     setThrottleNum(throttle);
@@ -33,9 +51,7 @@ const ThrottleSettings: React.FC = () => {
       payload: {value: throttleNum}, // edit this value to some other number
     });
 
-    // setThrottleDisplay(throttleNum);
     dispatch(newThrottle(throttleNum));
-    // setThrottleNum(throttle);
   };
 
   return (
