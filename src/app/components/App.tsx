@@ -9,6 +9,8 @@ interface SnapshotHistoryContext {
   setSnapshotHistory: React.Dispatch<React.SetStateAction<stateSnapshot[]>>;
 }
 
+console.log('store');
+
 interface SelectedContext {
   selected: selectedTypes[];
   setSelected: React.Dispatch<React.SetStateAction<selectedTypes[]>>;

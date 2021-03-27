@@ -1,14 +1,30 @@
-import React, {useState, useContext} from 'react';
-import { throttleDisplayContext } from '../../Containers/VisualContainer';
+import React, {useState} from 'react';
+// import {throttleDisplayContext} from '../../Containers/VisualContainer';
+
+import {useAppSelector, useAppDispatch} from '../../state-management/hooks';
+import {
+  newThrottle,
+  resetThrottle,
+  // selectThrottle,
+} from '../../state-management/slices/ThrottleSlice';
+
 
 const ThrottleSettings: React.FC = () => {
-  const {throttleDisplay, setThrottleDisplay} = useContext(throttleDisplayContext);
-  const [throttleNum, setThrottleNum] = useState<string>('');
+  // const {throttleDisplay, setThrottleDisplay} = useContext(
+  //   throttleDisplayContext,
+  // );
+  const dispatch = useAppDispatch();
+
+  const throttle = useAppSelector(state => state.throttle.throttleValue);
+  const [throttleNum, setThrottleNum] = useState<string>(throttle);
 
   // onClick function for reset button. 70ms is the default throttle
   const onClick = (): void => {
-    setThrottleDisplay('70');
-    setThrottleNum('70');
+    // setThrottleDisplay('70');
+    dispatch(resetThrottle());
+    console.log('throttle', throttle);
+    setThrottleNum(throttle);
+    console.log(throttleNum);
   };
 
   // Creating function to tie to get to the backend
@@ -23,8 +39,9 @@ const ThrottleSettings: React.FC = () => {
       payload: {value: throttleNum}, // edit this value to some other number
     });
 
-    setThrottleDisplay(throttleNum);
-    setThrottleNum('');
+    // setThrottleDisplay(throttleNum);
+    dispatch(newThrottle(throttleNum));
+    // setThrottleNum(throttle);
   };
 
   return (
@@ -41,17 +58,14 @@ const ThrottleSettings: React.FC = () => {
         <span style={{fontSize: '14px'}}>milliseconds</span>
         <div>
           <button type="submit">Enter</button>
-          <button onClick={onClick} type="submit">
+          <button onClick={onClick} type="button">
             Reset
           </button>
         </div>
       </form>
       <span>
         Current throttle is{' '}
-        {throttleDisplay === '70'
-          ? `${throttleDisplay} (default)`
-          : throttleDisplay}{' '}
-        ms
+        {throttle === '70' ? `${throttle} (default)` : throttle} ms
       </span>
     </div>
   );
