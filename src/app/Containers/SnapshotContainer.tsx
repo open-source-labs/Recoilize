@@ -1,15 +1,17 @@
 import React, {useContext} from 'react';
 import SnapshotsList from '../components/SnapshotList/SnapshotList';
 import {renderIndexContext} from './MainContainer';
-import {filterContext} from '../components/App';
+import {useSelector} from 'react-redux';
+import {selectFilterState} from '../state-management/slices/FilterSlice';
 
 const SnapshotsContainer: React.FC = () => {
   const {renderIndex} = useContext(renderIndexContext);
-  const {filter} = useContext(filterContext);
+  // const {filter} = useContext(filterContext);
+  const filterData = useSelector(selectFilterState);
   //indexDiff is used to ensure the index of filter matches the index of the snapshots array in the backend
   let indexDiff: number = 0;
-  if (filter[0] && filter[0].indexDiff) {
-    indexDiff = filter[0].indexDiff;
+  if (filterData[0] && filterData[0].indexDiff) {
+    indexDiff = filterData[0].indexDiff;
   }
 
   // functionality to postMessage the selected snapshot index to background.js

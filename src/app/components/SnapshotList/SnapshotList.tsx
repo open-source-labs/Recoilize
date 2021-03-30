@@ -1,7 +1,9 @@
 // renders a list of all of the snapshots that were taking
 import React, {useEffect, useRef, useContext} from 'react';
-import {snapshotHistoryContext, filterContext, selectedContext} from '../App';
+import {snapshotHistoryContext, selectedContext} from '../App';
 import {renderIndexContext} from '../../Containers/MainContainer';
+import {useSelector} from 'react-redux';
+import {selectFilterState} from '../../state-management/slices/FilterSlice';
 
 interface SnapshotsListProps {
   // functionality to postMessage the selected snapshot index to background.js
@@ -14,7 +16,8 @@ const SnapshotsList: React.FC<SnapshotsListProps> = ({
   const {snapshotHistory} = useContext(snapshotHistoryContext);
   let snapshotHistoryLength = snapshotHistory.length
   const {selected} = useContext(selectedContext);
-  const {filter} = useContext(filterContext);
+  // const {filter} = useContext(filterContext);
+  const filterData = useSelector(selectFilterState);
   const {renderIndex, setRenderIndex} = useContext(renderIndexContext);
   // useRef for a dummy div at the bottom of the scroll
   const snapshotEndRef = useRef<HTMLDivElement>(null);
@@ -41,8 +44,8 @@ const SnapshotsList: React.FC<SnapshotsListProps> = ({
         return true;
       }
       // checks if the filteredSnapshot object at index i has a key (atom or selector) found in the selected array. This would indicate that there was a change to that state/selector because filter is an array of objects containing differences between snapshots.
-      if (filter[i]) {
-        for (let key in filter[i].filteredSnapshot) {
+      if (filterData[i]) {
+        for (let key in filterData[i].filteredSnapshot) {
           for (let j = 0; j < selected.length; j++) {
             if (key === selected[j].name) {
               return true;
@@ -64,10 +67,10 @@ const SnapshotsList: React.FC<SnapshotsListProps> = ({
       renderTime = snapshotHistory[0].componentAtomTree.treeBaseDuration;
     } 
     //Checks to see if the actualDuration within filter is an array. If it is an array then the 2nd value in the array is the new actualDuration.
-    else if (Array.isArray(filter[i].componentAtomTree.actualDuration)) {      
-      renderTime = (filter[i].componentAtomTree.treeBaseDuration as number[])[1];
+    else if (Array.isArray(filterData[i].componentAtomTree.actualDuration)) {      
+      renderTime = (filterData[i].componentAtomTree.treeBaseDuration as number[])[1];
     } else {
-      renderTime = filter[i].componentAtomTree.treeBaseDuration as number;
+      renderTime = filterData[i].componentAtomTree.treeBaseDuration as number;
     }
 
     // Push a div container to snapshotDivs array only if there was a change to state. 
