@@ -3,13 +3,13 @@ import MainContainer from '../Containers/MainContainer';
 import {stateSnapshot, selectedTypes, stateSnapshotDiff} from '../../types';
 // importing the diff to find difference
 import {diff} from 'jsondiffpatch';
+import {useAppSelector, useAppDispatch} from '../state-management/hooks';
+import {setSnapshotHistory} from '../state-management/slices/SnapshotSlice';
 
-interface SnapshotHistoryContext {
-  snapshotHistory: Partial<stateSnapshot[]>;
-  setSnapshotHistory: React.Dispatch<React.SetStateAction<stateSnapshot[]>>;
-}
-
-console.log('store');
+// interface SnapshotHistoryContext {
+//   snapshotHistory: Partial<stateSnapshot[]>;
+//   setSnapshotHistory: React.Dispatch<React.SetStateAction<stateSnapshot[]>>;
+// }
 
 interface SelectedContext {
   selected: selectedTypes[];
@@ -23,18 +23,23 @@ interface FilterContext {
 
 // contexts created for our state values to later reference in child components
 // purpose is to eliminate prop drilling
-export const snapshotHistoryContext = createContext<SnapshotHistoryContext>(
-  null,
-);
+// export const snapshotHistoryContext = createContext<SnapshotHistoryContext>(
+//   null,
+// );
 export const selectedContext = createContext<SelectedContext>(null);
 export const filterContext = createContext<FilterContext>(null);
 
 const LOGO_URL = './assets/Recoilize.png';
 const App: React.FC = () => {
+
+  const dispatch = useAppDispatch();
+
   console.log('App');
   // useState hook to update the snapshotHistory array
   // array of snapshots
-  const [snapshotHistory, setSnapshotHistory] = useState<stateSnapshot[]>([]);
+  const snapshotHistory = useAppSelector(
+    state => state.snapshot.snapshotHistory,
+  );
   // selected will be an array with objects containing filteredSnapshot key names (the atoms and selectors)
   // ex: [{name: 'Atom1'}, {name: 'Atom2'}, {name: 'Selector1'}, ...]
   const [selected, setSelected] = useState<selectedTypes[]>([]);
@@ -90,8 +95,13 @@ const App: React.FC = () => {
           }
           setSelected(arr);
         }
+
+        console.log('MSG payload', msg.payload);
         // ! Set the snapshot history state
-        setSnapshotHistory(msg.payload);
+        // setSnapshotHistory(msg.payload);
+        dispatch(setSnapshotHistory(msg.payload[msg.payload.length - 1]));
+
+        console.log('snapshothistory', snapshotHistory);
         // ! Setting the FILTER Array
         if (!msg.payload[1] || filter.length === 0) {
           // todo: currently the filter does not work if recoilize is not open, we must change msg.payload to incorporate delta function in the backend
@@ -123,10 +133,10 @@ const App: React.FC = () => {
   const renderMainContainer: JSX.Element = (
     <filterContext.Provider value={{filter, setFilter}}>
       <selectedContext.Provider value={{selected, setSelected}}>
-        <snapshotHistoryContext.Provider
-          value={{snapshotHistory, setSnapshotHistory}}>
+        {/* <snapshotHistoryContext.Provider
+          value={{snapshotHistory, setSnapshotHistory}}> */}
           <MainContainer />
-        </snapshotHistoryContext.Provider>
+        {/* </snapshotHistoryContext.Provider> */}
       </selectedContext.Provider>
     </filterContext.Provider>
   );

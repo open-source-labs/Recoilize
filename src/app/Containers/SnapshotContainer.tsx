@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import SnapshotsList from '../components/SnapshotList/SnapshotList';
+// import SnapshotsList from '../components/SnapshotList/SnapshotList';
 import {renderIndexContext} from './MainContainer';
 import {filterContext} from '../components/App';
 
@@ -68,9 +68,9 @@ const SnapshotsContainer: React.FC = () => {
         }}>
         Snapshots
       </span>
-      <SnapshotsList
+      {/* <SnapshotsList
         timeTravelFunc={timeTravelFunc}
-      />
+      /> */}
     </div>
   );
 };
