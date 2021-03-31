@@ -6,11 +6,6 @@ import {diff} from 'jsondiffpatch';
 import {useAppSelector, useAppDispatch} from '../state-management/hooks';
 import {setSnapshotHistory} from '../state-management/slices/SnapshotSlice';
 
-// interface SnapshotHistoryContext {
-//   snapshotHistory: Partial<stateSnapshot[]>;
-//   setSnapshotHistory: React.Dispatch<React.SetStateAction<stateSnapshot[]>>;
-// }
-
 interface SelectedContext {
   selected: selectedTypes[];
   setSelected: React.Dispatch<React.SetStateAction<selectedTypes[]>>;
@@ -21,11 +16,6 @@ interface FilterContext {
   setFilter: React.Dispatch<React.SetStateAction<stateSnapshotDiff[]>>;
 }
 
-// contexts created for our state values to later reference in child components
-// purpose is to eliminate prop drilling
-// export const snapshotHistoryContext = createContext<SnapshotHistoryContext>(
-//   null,
-// );
 export const selectedContext = createContext<SelectedContext>(null);
 export const filterContext = createContext<FilterContext>(null);
 
@@ -96,12 +86,8 @@ const App: React.FC = () => {
           setSelected(arr);
         }
 
-        console.log('MSG payload', msg.payload);
-        // ! Set the snapshot history state
-        // setSnapshotHistory(msg.payload);
         dispatch(setSnapshotHistory(msg.payload[msg.payload.length - 1]));
 
-        console.log('snapshothistory', snapshotHistory);
         // ! Setting the FILTER Array
         if (!msg.payload[1] || filter.length === 0) {
           // todo: currently the filter does not work if recoilize is not open, we must change msg.payload to incorporate delta function in the backend
@@ -129,10 +115,7 @@ const App: React.FC = () => {
   const renderMainContainer: JSX.Element = (
     <filterContext.Provider value={{filter, setFilter}}>
       <selectedContext.Provider value={{selected, setSelected}}>
-        {/* <snapshotHistoryContext.Provider
-          value={{snapshotHistory, setSnapshotHistory}}> */}
           <MainContainer />
-        {/* </snapshotHistoryContext.Provider> */}
       </selectedContext.Provider>
     </filterContext.Provider>
   );

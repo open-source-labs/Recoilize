@@ -1,20 +1,25 @@
 import React, {useState} from 'react';
+import {useAppSelector, useAppDispatch} from '../../state-management/hooks';
+import { setSearchValue } from '../../state-management/slices/AtomNetworkSlice';
 
-interface AtomLegend {
-    // filteredCurSnap is an object of atom or selector names as keys and 
-    // an object as their value.
-    atomAndSelectorArr: [string, any][];
-    setSearchValue: any;
-  };
+const AtomNetworkLegend: React.FC = () => {
+  const dispatch = useAppDispatch();
 
-const AtomNetworkLegend: React.FC<AtomLegend> = ({atomAndSelectorArr, setSearchValue}) => {
+  //Retrieve snapshotHistory State from Redux Store
+  const snapshotHistory = useAppSelector(
+    state => state.snapshot.snapshotHistory,
+  );
+  const filteredCurSnap =
+  snapshotHistory[snapshotHistory.length - 1].filteredSnapshot;
 
+   // an array of atoms and selector sub
+   const atomAndSelectorArr = Object.entries(filteredCurSnap);
+  
     // array of atom names (what the drop down showAtomMenu is going to display)
-    const [atomList] = useState(atomAndSelectorArr.filter(([isAtom, obj])=> !obj.nodeDeps.length ? isAtom : null));
-    
-    // array of selectors (what the drop down showSelectorMenu is going to display)
-    const [selectorList] = useState(atomAndSelectorArr.filter(([isSelector, obj]) => obj.nodeDeps.length ? isSelector : null));
+    const [atomList] = useState(atomAndSelectorArr.filter(([isAtom, obj]: [string, any])=> !obj.nodeDeps.length ? isAtom : null));
 
+    // array of selectors (what the drop down showSelectorMenu is going to display)
+    const [selectorList] = useState(atomAndSelectorArr.filter(([isSelector, obj]:[string, any]) => obj.nodeDeps.length ? isSelector : null));
 
     //state hook for showing list of atoms
     const [showAtomMenu, setShowAtomMenu] = useState(false);
@@ -26,7 +31,7 @@ const AtomNetworkLegend: React.FC<AtomLegend> = ({atomAndSelectorArr, setSearchV
 
     // function to handle change in search bar. Sets searchValue state
      const handleChange = (e: any) => {
-        setSearchValue(e.target.value);
+        dispatch(setSearchValue(e.target.value));
      };
 
     // handles clicking on Selector and Atom buttom to bring down

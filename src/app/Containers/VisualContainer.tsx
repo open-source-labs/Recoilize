@@ -2,19 +2,10 @@ import React, {createContext, useContext, useState} from 'react';
 import Diff from '../components/StateDiff/Diff';
 import NavBar from '../components/NavBar/NavBar';
 // import Metrics from '../components/Metrics/MetricsContainer';
-// import Tree from '../components/StateTree/Tree';
-// import Network from '../components/AtomNetwork/AtomNetwork';
+import Tree from '../components/StateTree/Tree';
+import Network from '../components/AtomNetwork/AtomNetwork';
 // import AtomComponentVisualContainer from '../components/ComponentGraph/AtomComponentContainer';
-// import Settings from '../components/Settings/SettingsContainer';
-// import {stateSnapshot, componentAtomTree} from '../../types';
-// import Metrics from "../cosmponents/StateGraph/metrics";
-
-// interface VisualContainerProps {
-//   // snapshot at index [curRender -1]
-//   previousSnapshot: stateSnapshot;
-//   // snapshot at index [curRender]
-//   currentSnapshot: stateSnapshot;
-// }
+import Settings from '../components/Settings/SettingsContainer';
 
 interface ZoomState {
   x: number;
@@ -93,7 +84,7 @@ type navTypes = {
 const VisualContainer: React.FC = () => {
   // state for checkmark in persist state in settings
   const [checked, setChecked] = useState<boolean>(false);
-  
+
   // this state allows the canvas to stay at the zoom level on multiple re-renders
   const [{x, y, k}, setZoomState] = useState<ZoomState>({
     x: 50,
@@ -120,7 +111,7 @@ const VisualContainer: React.FC = () => {
     // compare the diff of filteredPrevSnap and filteredCurSnap
     'State Diff': <Diff />,
     // render JSON tree of snapshot
-    // 'State Tree': <Tree filteredCurSnap={filteredCurSnap} />,
+    'State Tree': <Tree />,
     // tree visualizer of components showing atom/selector relationships
     // 'Component Graph': (
     //   <zoomStateContext.Provider value={{zoomState: {x, y, k}, setZoomState}}>
@@ -133,17 +124,17 @@ const VisualContainer: React.FC = () => {
     // ),
 
     // atom and selector subscription relationship
-    // 'Atom Network': <Network filteredCurSnap={filteredCurSnap} />,
+    'Atom Network': <Network />,
 
     // individual snapshot visualizer
     // Metrics: <Metrics cleanedComponentAtomTree={cleanedComponentAtomTree} />,
 
     // settings tab that doesn't want to be in quotes because too cool for school
-    // Settings: (
-    //   <checkedContext.Provider value={{checked, setChecked}}>
-    //        <Settings />
-    //   </checkedContext.Provider>
-    // ),
+    Settings: (
+      <checkedContext.Provider value={{checked, setChecked}}>
+           <Settings />
+      </checkedContext.Provider>
+    ),
   };
   // array of all nav obj keys
   const tabsList: string[] = Object.keys(nav);

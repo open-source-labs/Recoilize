@@ -1,17 +1,19 @@
 import React, {useState, useEffect} from 'react';
 import * as d3 from 'd3';
 import makeRelationshipLinks from '../../utils/makeRelationshipLinks';
-import {filteredSnapshot} from '../../../types/index';
+import {useAppSelector} from '../../state-management/hooks';
+import {filteredSnapshot} from '../../../types';
 
-interface AtomVisualProps {
-  filteredCurSnap: filteredSnapshot;
-  searchValue: string;
-}
+const AtomNetworkVisual: React.FC = () => {
+  //Retrieve snapshotHistory State from Redux Store
+  const snapshotHistory = useAppSelector(
+    state => state.snapshot.snapshotHistory,
+  );
+  const filteredCurSnap =
+    snapshotHistory[snapshotHistory.length - 1].filteredSnapshot;
+  //Retrieve atomNetworkSearch State from Redux Store
+  const searchValue = useAppSelector(state => state.atomNetwork.searchValue);
 
-const AtomNetworkVisual: React.FC<AtomVisualProps> = ({
-  filteredCurSnap,
-  searchValue,
-}) => {
   useEffect(() => {
     // new filtered snap object to be constructed with search value
     const newFilteredCurSnap: any = {};
@@ -69,13 +71,10 @@ const AtomNetworkVisual: React.FC<AtomVisualProps> = ({
     //Create Disjoint Force-Directed Graph
 
     const chart = (data: any) => {
-      console.log('chart data', data);
       const links = data.links.map((d: any) => Object.create(d));
       const nodes = data.nodes.map((d: any) => {
-        console.log('d', d);
         return Object.create(d);
       });
-      console.log('first nodes', nodes);
 
       const simulation = d3
         .forceSimulation(nodes)
@@ -101,8 +100,6 @@ const AtomNetworkVisual: React.FC<AtomVisualProps> = ({
         .join('line')
         .attr('stroke-width', (d: any) => Math.sqrt(d.value));
 
-      console.log('link', link);
-
       const node = svg
         .append('g')
         .attr('stroke', '#fff')
@@ -114,8 +111,6 @@ const AtomNetworkVisual: React.FC<AtomVisualProps> = ({
         .style('fill', function (d: any, i: any) {
           return d.name === 'Atom' ? '#9580FF' : '#FF80BF';
         });
-
-      console.log('nodes', nodes);
 
       node
         .append('title')
