@@ -16,7 +16,6 @@ const SnapshotsList: React.FC<SnapshotsListProps> = ({
   const {snapshotHistory} = useContext(snapshotHistoryContext);
   let snapshotHistoryLength = snapshotHistory.length
   const {selected} = useContext(selectedContext);
-  // const {filter} = useContext(filterContext);
   const filterData = useSelector(selectFilterState);
   const {renderIndex, setRenderIndex} = useContext(renderIndexContext);
   // useRef for a dummy div at the bottom of the scroll
@@ -105,6 +104,7 @@ const SnapshotsList: React.FC<SnapshotsListProps> = ({
       </div>,
     );
   }
+  
   /*
   Filter snapshotDivs to show only the snapshots that have
   an atom/selector from the Atom and Selector Filter in the Settings tab

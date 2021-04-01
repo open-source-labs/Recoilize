@@ -18,18 +18,12 @@ interface SelectedContext {
   setSelected: React.Dispatch<React.SetStateAction<selectedTypes[]>>;
 }
 
-// interface FilterContext {
-//   filter: stateSnapshotDiff[];
-//   setFilter: React.Dispatch<React.SetStateAction<stateSnapshotDiff[]>>;
-// }
-
 // contexts created for our state values to later reference in child components
 // purpose is to eliminate prop drilling
 export const snapshotHistoryContext = createContext<SnapshotHistoryContext>(
   null,
 );
 export const selectedContext = createContext<SelectedContext>(null);
-// export const filterContext = createContext<FilterContext>(null);
 
 const LOGO_URL = './assets/Recoilize.png';
 const App: React.FC = () => {
@@ -41,17 +35,12 @@ const App: React.FC = () => {
   // ex: [{name: 'Atom1'}, {name: 'Atom2'}, {name: 'Selector1'}, ...]
   const [selected, setSelected] = useState<selectedTypes[]>([]);
   // todo: Create algo that will clean up the big setSnapshothistory object, now and before
-  // Filter is an array of objects containing differences between snapshots
-  // let [filter, setFilter] = useState<stateSnapshotDiff[]>([]);
   // ! Setting up the selected
-  // Whenever snapshotHistory changes, useEffect will run, and selected will be updated
   const filterData = useSelector(selectFilterState);
   const dispatch = useDispatch();
-
-  console.log('this is the filter outside of the useEffect: ', filterData);
-
+  
+  // Whenever snapshotHistory changes, useEffect will run, and selected will be updated
   useEffect(() => {
-    console.log('Running Dev');
     let last;
     if (snapshotHistory[snapshotHistory.length - 1]) {
       last = snapshotHistory[snapshotHistory.length - 1].filteredSnapshot;
@@ -76,9 +65,9 @@ const App: React.FC = () => {
       }
     }
   }, [snapshotHistory]); // Only re-run the effect if snapshot history changes -- react hooks
+
   // useEffect for snapshotHistory
   useEffect(() => {
-    console.log('this is the pre-filterState in the useEffect: ', filterData);
     // SETUP connection to bg script
     const backgroundConnection = chrome.runtime.connect();
     // INITIALIZE connection to bg script
@@ -88,7 +77,6 @@ const App: React.FC = () => {
     });
     // LISTEN for messages FROM bg script
     backgroundConnection.onMessage.addListener(msg => {
-      console.log('this is the msg.payload: ', msg.payload);
       if (msg.action === 'recordSnapshot') {
         // ! sets the initial selected
         if (!msg.payload[1] || filterData.length === 0) {
@@ -101,42 +89,26 @@ const App: React.FC = () => {
         }
         // ! Set the snapshot history state
         setSnapshotHistory(msg.payload);
-        // ! Setting the FILTER Array
-        console.log('This is msg.payload before if statement: ', msg.payload);
-        console.log('This is the filter before the if statement: ', filterData);
 
+        // ! Setting the FILTER Array
         if (!msg.payload[1] && filterData.length === 0) {
-          // todo: currently the filter does not work if recoilize is not open, we must change msg.payload to incorporate delta function in the backend
-          // filter = msg.payload;
-          // setFilter(msg.payload);
-          console.log('this is the first if-statement inside useEffect');
+          // todo: currently the filter does not work if recoilize is not open, we must change msg.payload to incorporate delta function in the backend    
           dispatch(updateFilter(msg.payload))
-        } 
-        // else if (filterData.length === 0) {
-        //   // filter.push(msg.payload[0]);
-        //   // setFilter(filter);
-        //   console.log('this is the second if-statement inside useEffect');
-        //   dispatch(updateFilter(msg.payload[0]))
-        // } 
-        else {
+        } else {
           // push the difference between the objects
-          console.log('this is the third statement inside useEffect');
           const delta = diff(
             msg.payload[msg.payload.length - 2],
             msg.payload[msg.payload.length - 1],
           );
           // only push if the snapshot length is chill
           if (filterData.length < msg.payload.length) {
-            console.log('this is delta: ', delta);
-            // filter.push(delta);
-            console.log('this is filter: ', filterData);
-            // setFilter(filter);
             dispatch(updateFilter([delta]))
           }
         }
       }
     });
   }, []);
+
   // Render main container if we have detected a recoil app with the recoilize module passing data
   const renderMainContainer: JSX.Element = (
       <selectedContext.Provider value={{selected, setSelected}}>
@@ -146,6 +118,7 @@ const App: React.FC = () => {
         </snapshotHistoryContext.Provider>
       </selectedContext.Provider>
   );
+
   // Render module not found message if snapHistory is null, this means we have not detected a recoil app with recoilize module installed properly
   const renderModuleNotFoundContainer: JSX.Element = (
     <div className="notFoundContainer">

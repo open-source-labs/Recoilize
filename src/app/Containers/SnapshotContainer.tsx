@@ -1,5 +1,4 @@
 import React, {useEffect, useContext, useState, useRef} from 'react';
-import SnapshotsList from '../components/SnapshotList/SnapshotList';
 import {renderIndexContext} from './MainContainer';
 import {useSelector} from 'react-redux';
 import {selectFilterState} from '../state-management/slices/FilterSlice';
@@ -7,8 +6,6 @@ import {snapshotHistoryContext, selectedContext} from '../components/App';
 
 const SnapshotsContainer: React.FC = () => {
   const {snapshotHistory} = useContext(snapshotHistoryContext);
-  // const {renderIndex} = useContext(renderIndexContext);
-  // const {filter} = useContext(filterContext);
   const [renderIndex, setRenderIndex] = useState(snapshotHistory.length - 1);
   const filterData = useSelector(selectFilterState);
   const {selected} = useContext(selectedContext);
