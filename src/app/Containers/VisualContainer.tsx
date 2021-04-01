@@ -1,4 +1,4 @@
-import React, {createContext, useContext, useState} from 'react';
+import React, {createContext, useState} from 'react';
 import Diff from '../components/StateDiff/Diff';
 import NavBar from '../components/NavBar/NavBar';
 import Metrics from '../components/Metrics/MetricsContainer';
@@ -7,21 +7,9 @@ import Network from '../components/AtomNetwork/AtomNetwork';
 import AtomComponentVisualContainer from '../components/ComponentGraph/AtomComponentContainer';
 import Settings from '../components/Settings/SettingsContainer';
 
-interface ZoomState {
-  x: number;
-  y: number;
-  k: number;
-}
-
 interface CheckedContext {
   checked: boolean;
   setChecked: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-
-interface ZoomStateContext {
-  zoomState: ZoomState;
-  setZoomState: React.Dispatch<React.SetStateAction<ZoomState>>;
 }
 
 type navTypes = {
@@ -84,14 +72,7 @@ const cleanComponentAtomTree = (
 const VisualContainer: React.FC = () => {
   // state for checkmark in persist state in settings
   const [checked, setChecked] = useState<boolean>(false);
-
-  // this state allows the canvas to stay at the zoom level on multiple re-renders
-  const [{x, y, k}, setZoomState] = useState<ZoomState>({
-    x: 50,
-    y: 380,
-    k: 0.07,
-  });
-
+  
   // conditional render of filtered snaps/ based on non-filtered snaps
   // const filteredCurSnap = currentSnapshot
   //   ? currentSnapshot.filteredSnapshot
@@ -114,13 +95,11 @@ const VisualContainer: React.FC = () => {
     'State Tree': <Tree />,
     // tree visualizer of components showing atom/selector relationships
     'Component Graph': (
-      <zoomStateContext.Provider value={{zoomState: {x, y, k}, setZoomState}}>
         <AtomComponentVisualContainer
           componentAtomTree={componentAtomTree}
           cleanedComponentAtomTree={cleanedComponentAtomTree}
           filteredCurSnap={filteredCurSnap}
         />
-      </zoomStateContext.Provider>
     ),
 
     // atom and selector subscription relationship
@@ -150,5 +129,4 @@ const VisualContainer: React.FC = () => {
 };
 
 export const checkedContext = createContext<CheckedContext>(null);
-export const zoomStateContext = createContext<ZoomStateContext>(null);
 export default VisualContainer;

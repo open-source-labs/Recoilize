@@ -1,15 +1,105 @@
-import React, {useContext} from 'react';
-import SnapshotsList from '../components/SnapshotList/SnapshotList';
+import React, {useEffect, useContext, useState, useRef} from 'react';
 import {renderIndexContext} from './MainContainer';
-import {filterContext} from '../components/App';
+import {useSelector} from 'react-redux';
+import {selectFilterState} from '../state-management/slices/FilterSlice';
+import {snapshotHistoryContext, selectedContext} from '../components/App';
 
 const SnapshotsContainer: React.FC = () => {
-  const {renderIndex} = useContext(renderIndexContext);
-  const {filter} = useContext(filterContext);
+  const {snapshotHistory} = useContext(snapshotHistoryContext);
+  const [renderIndex, setRenderIndex] = useState(snapshotHistory.length - 1);
+  const filterData = useSelector(selectFilterState);
+  const {selected} = useContext(selectedContext);
+  const snapshotEndRef = useRef<HTMLDivElement>(null);
+  let snapshotHistoryLength = snapshotHistory.length
+
+  // useEffect to scroll bottom whenever snapshot history changes
+  useEffect(() => {
+    scrollToBottom();
+  }, [snapshotHistoryLength]);
+
+  // using scrollInToView makes a smoother scroll
+  const scrollToBottom = (): void => {
+    snapshotEndRef.current.scrollIntoView({behavior: 'smooth'});
+  };
+
+  const snapshotDivs: JSX.Element[] = [];
+  // iterate the same length of our snapshotHistory
+  for (let i = 0; i < snapshotHistoryLength; i++) {
+    
+    // filterFunc will return false if there is no change to state
+    const filterFunc = (): boolean => {
+    
+      // don't use the counter for this, not reliable
+      if (i === 0) {
+        return true;
+      }
+      // checks if the filteredSnapshot object at index i has a key (atom or selector) found in the selected array. This would indicate that there was a change to that state/selector because filter is an array of objects containing differences between snapshots.
+      if (filterData[i]) {
+        for (let key in filterData[i].filteredSnapshot) {
+          for (let j = 0; j < selected.length; j++) {
+            if (key === selected[j].name) {
+              return true;
+            }
+          }
+        }
+      }
+      return false;
+    };
+    const x: boolean = filterFunc();
+    
+    if (x === false) {
+      continue;
+    }
+    
+    // renderTime is set equal to the actualDuration. If i is zero then we are obtaining actualDuration from the very first snapshot in snapshotHistory. This is to avoid having undefined filter elements since there will be no difference between snapshot at the first instance. 
+    let renderTime: number;
+    if(i === 0) {
+      renderTime = snapshotHistory[0].componentAtomTree.treeBaseDuration;
+    } 
+    //Checks to see if the actualDuration within filter is an array. If it is an array then the 2nd value in the array is the new actualDuration.
+    else if (Array.isArray(filterData[i].componentAtomTree.actualDuration)) {      
+      renderTime = (filterData[i].componentAtomTree.treeBaseDuration as number[])[1];
+    } else {
+      renderTime = filterData[i].componentAtomTree.treeBaseDuration as number;
+    }
+
+    // Push a div container to snapshotDivs array only if there was a change to state. 
+    // The div container will contain renderTimes evaluated above.
+    snapshotDivs.push(
+      <div
+        id={`snapshot${i}`}
+        className="individualSnapshot"
+        key={i}
+        style={
+          renderIndex === i
+            ? {color: '#E6E6E6', backgroundColor: '#212121'}
+            : {color: '#989898'}
+        }
+        onClick={() => {
+          setRenderIndex(i);
+        }}>
+        {/* <li>{i}</li> */}
+        <li>{`${Math.round(renderTime*100)/100}ms`}</li>
+        <button
+          className="timeTravelButton"
+          style={
+          renderIndex === i
+            ? {color: '#E6E6E6', backgroundColor: '#212121'}
+            : {}
+          }
+          onClick={() => {
+            timeTravelFunc(i);
+          }}>
+          Jump
+        </button>
+      </div>,
+    );
+  }
+
   //indexDiff is used to ensure the index of filter matches the index of the snapshots array in the backend
   let indexDiff: number = 0;
-  if (filter[0] && filter[0].indexDiff) {
-    indexDiff = filter[0].indexDiff;
+  if (filterData[0] && filterData[0].indexDiff) {
+    indexDiff = filterData[0].indexDiff;
   }
 
   // functionality to postMessage the selected snapshot index to background.js
@@ -70,7 +160,10 @@ const SnapshotsContainer: React.FC = () => {
         }}>
         Snapshots
       </span>
-      <SnapshotsList timeTravelFunc={timeTravelFunc} />
+      <div className="SnapshotsList">
+        <div>{snapshotDivs}</div>
+        <div ref={snapshotEndRef} />
+      </div>
     </div>
   );
 };
