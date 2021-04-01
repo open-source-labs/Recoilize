@@ -10,6 +10,7 @@ const Diff: React.FC = () => {
   const snapshotHistory = useAppSelector(
     state => state.snapshot.snapshotHistory,
   );
+  console.log('snapshotHistory in diff', snapshotHistory);
   const filteredPrevSnap = snapshotHistory[snapshotHistory.length - 2]
     ? snapshotHistory[snapshotHistory.length - 2].filteredSnapshot
     : snapshotHistory[0].filteredSnapshot;
