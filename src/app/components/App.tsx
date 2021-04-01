@@ -4,34 +4,36 @@ import {stateSnapshot, selectedTypes, stateSnapshotDiff} from '../../types';
 // importing the diff to find difference
 import {diff} from 'jsondiffpatch';
 import {useAppSelector, useAppDispatch} from '../state-management/hooks';
-import {setSnapshotHistory} from '../state-management/slices/SnapshotSlice';
+import {
+  setSnapshotHistory,
+  setRenderIndex,
+  setCleanComponentAtomTree,
+} from '../state-management/slices/SnapshotSlice';
+import {useSelector, useDispatch} from 'react-redux';
+import {
+  updateFilter,
+  selectFilterState,
+} from '../state-management/slices/FilterSlice';
 
-// interface SnapshotHistoryContext {
-//   snapshotHistory: Partial<stateSnapshot[]>;
-//   setSnapshotHistory: React.Dispatch<React.SetStateAction<stateSnapshot[]>>;
-// }
+interface SnapshotHistoryContext {
+  snapshotHistory: Partial<stateSnapshot[]>;
+  setSnapshotHistory: React.Dispatch<React.SetStateAction<stateSnapshot[]>>;
+}
 
 interface SelectedContext {
   selected: selectedTypes[];
   setSelected: React.Dispatch<React.SetStateAction<selectedTypes[]>>;
 }
 
-interface FilterContext {
-  filter: stateSnapshotDiff[];
-  setFilter: React.Dispatch<React.SetStateAction<stateSnapshotDiff[]>>;
-}
-
 // contexts created for our state values to later reference in child components
 // purpose is to eliminate prop drilling
-// export const snapshotHistoryContext = createContext<SnapshotHistoryContext>(
-//   null,
-// );
+export const snapshotHistoryContext = createContext<SnapshotHistoryContext>(
+  null,
+);
 export const selectedContext = createContext<SelectedContext>(null);
-export const filterContext = createContext<FilterContext>(null);
 
 const LOGO_URL = './assets/Recoilize.png';
 const App: React.FC = () => {
-
   const dispatch = useAppDispatch();
 
   console.log('App');
@@ -40,16 +42,19 @@ const App: React.FC = () => {
   const snapshotHistory = useAppSelector(
     state => state.snapshot.snapshotHistory,
   );
+  const renderIndex = useAppSelector(state => state.snapshot.renderIndex);
   // selected will be an array with objects containing filteredSnapshot key names (the atoms and selectors)
   // ex: [{name: 'Atom1'}, {name: 'Atom2'}, {name: 'Selector1'}, ...]
   const [selected, setSelected] = useState<selectedTypes[]>([]);
   // todo: Create algo that will clean up the big setSnapshothistory object, now and before
-  // Filter is an array of objects containing differences between snapshots
-  let [filter, setFilter] = useState<stateSnapshotDiff[]>([]);
   // ! Setting up the selected
+  const filterData = useSelector(selectFilterState);
+
   // Whenever snapshotHistory changes, useEffect will run, and selected will be updated
   useEffect(() => {
-    console.log('Running Dev');
+    // whenever snapshotHistory changes, update renderIndex
+    dispatch(setRenderIndex(snapshotHistory.length - 1));
+
     let last;
     if (snapshotHistory[snapshotHistory.length - 1]) {
       last = snapshotHistory[snapshotHistory.length - 1].filteredSnapshot;
@@ -74,6 +79,14 @@ const App: React.FC = () => {
       }
     }
   }, [snapshotHistory]); // Only re-run the effect if snapshot history changes -- react hooks
+
+  //Update cleanComponentAtomTree as Render Index changes
+  useEffect(() => {
+    dispatch(
+      setCleanComponentAtomTree(snapshotHistory[renderIndex].componentAtomTree),
+    );
+  }, [renderIndex]);
+
   // useEffect for snapshotHistory
   useEffect(() => {
     // SETUP connection to bg script
@@ -87,7 +100,7 @@ const App: React.FC = () => {
     backgroundConnection.onMessage.addListener(msg => {
       if (msg.action === 'recordSnapshot') {
         // ! sets the initial selected
-        if (!msg.payload[1] || filter.length === 0) {
+        if (!msg.payload[1] || filterData.length === 0) {
           // ensures we only set initially
           const arr: selectedTypes[] = [];
           for (let key in msg.payload[0].filteredSnapshot) {
@@ -96,23 +109,12 @@ const App: React.FC = () => {
           setSelected(arr);
         }
 
-        console.log('MSG payload', msg.payload);
-        // ! Set the snapshot history state
-        // setSnapshotHistory(msg.payload);
         dispatch(setSnapshotHistory(msg.payload[msg.payload.length - 1]));
 
-        console.log('snapshothistory', snapshotHistory);
         // ! Setting the FILTER Array
-        if (!msg.payload[1] || filter.length === 0) {
+        if (!msg.payload[1] && filterData.length === 0) {
           // todo: currently the filter does not work if recoilize is not open, we must change msg.payload to incorporate delta function in the backend
-          //Correct improper state changes
-          filter = msg.payload;
-          setFilter(msg.payload);
-          //Does not enter into second if statement
-        } else if (filter.length === 0) {
-          //Correct improper state changes
-          filter.push(msg.payload[0]);
-          setFilter(filter);
+          dispatch(updateFilter(msg.payload));
         } else {
           // push the difference between the objects
           const delta = diff(
@@ -120,26 +122,21 @@ const App: React.FC = () => {
             msg.payload[msg.payload.length - 1],
           );
           // only push if the snapshot length is chill
-          //Correct improper state changes
-          if (filter.length < msg.payload.length) {
-            filter.push(delta);
-            setFilter(filter);
+          if (filterData.length < msg.payload.length) {
+            dispatch(updateFilter([delta]));
           }
         }
       }
     });
   }, []);
+
   // Render main container if we have detected a recoil app with the recoilize module passing data
   const renderMainContainer: JSX.Element = (
-    <filterContext.Provider value={{filter, setFilter}}>
-      <selectedContext.Provider value={{selected, setSelected}}>
-        {/* <snapshotHistoryContext.Provider
-          value={{snapshotHistory, setSnapshotHistory}}> */}
-          <MainContainer />
-        {/* </snapshotHistoryContext.Provider> */}
-      </selectedContext.Provider>
-    </filterContext.Provider>
+    <selectedContext.Provider value={{selected, setSelected}}>
+      <MainContainer />
+    </selectedContext.Provider>
   );
+
   // Render module not found message if snapHistory is null, this means we have not detected a recoil app with recoilize module installed properly
   const renderModuleNotFoundContainer: JSX.Element = (
     <div className="notFoundContainer">

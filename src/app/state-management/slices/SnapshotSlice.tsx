@@ -1,8 +1,10 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-// import {stateSnapshot} from '../../../types';
+import generateCleanComponentAtomTree from '../../utils/cleanComponentAtomTree';
 
 const initialState: any = {
   snapshotHistory: [],
+  renderIndex: 0,
+  cleanComponentAtomTree: {},
 };
 
 export const snapshotSlice = createSlice({
@@ -16,9 +18,21 @@ export const snapshotSlice = createSlice({
       // state.snaphotHistory = [...state.snapshotHistory, action.payload];
       state.snapshotHistory.push(action.payload);
     },
+    setRenderIndex: (state, action: PayloadAction<any>) => {
+      state.renderIndex = action.payload;
+    },
+    setCleanComponentAtomTree: (state, action: PayloadAction<any>) => {
+      state.cleanComponentAtomTree = generateCleanComponentAtomTree(
+        action.payload,
+      );
+    },
   },
 });
 
-export const {setSnapshotHistory} = snapshotSlice.actions;
+export const {
+  setSnapshotHistory,
+  setRenderIndex,
+  setCleanComponentAtomTree,
+} = snapshotSlice.actions;
 
 export default snapshotSlice.reducer;
