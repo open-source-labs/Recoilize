@@ -36,9 +36,6 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
   const {x, y, k} = zoomSelector;
   const dispatch = useDispatch();
 
-  // console.log('i am zoomSelector', zoomSelector);
-  // console.log('i am x, y, k', x, y, k);
-
   // set the heights and width of the tree to be passed into treeMap function
   let width: number = 0;
   let height: number = 0;
@@ -135,9 +132,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
         dispatch(
           updateZoomState(d3.zoomTransform(d3.select('#canvas').node())),
         ),
-        // setZoomState(d3.zoomTransform(d3.select('#canvas').node())),
       );
-      // console.log('this is the zoomSelector post dispatch:', zoomSelector);
     }
 
     // Update function

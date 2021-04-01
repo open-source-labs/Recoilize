@@ -31,8 +31,8 @@ const MainContainer: React.FC = () => {
   // render containers passing necessary props
   return (
     <div className="MainContainer">
-    <renderIndexContext.Provider value={{renderIndex, setRenderIndex}}>
-      <SnapshotsContainer />
+      <renderIndexContext.Provider value={{renderIndex, setRenderIndex}}>
+        <SnapshotsContainer />
       </renderIndexContext.Provider>
 
       <VisualContainer
