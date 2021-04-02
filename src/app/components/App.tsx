@@ -15,11 +15,6 @@ import {
   selectFilterState,
 } from '../state-management/slices/FilterSlice';
 
-interface SnapshotHistoryContext {
-  snapshotHistory: Partial<stateSnapshot[]>;
-  setSnapshotHistory: React.Dispatch<React.SetStateAction<stateSnapshot[]>>;
-}
-
 interface SelectedContext {
   selected: selectedTypes[];
   setSelected: React.Dispatch<React.SetStateAction<selectedTypes[]>>;
@@ -27,16 +22,12 @@ interface SelectedContext {
 
 // contexts created for our state values to later reference in child components
 // purpose is to eliminate prop drilling
-export const snapshotHistoryContext = createContext<SnapshotHistoryContext>(
-  null,
-);
 export const selectedContext = createContext<SelectedContext>(null);
 
 const LOGO_URL = './assets/Recoilize.png';
 const App: React.FC = () => {
   const dispatch = useAppDispatch();
 
-  console.log('App');
   // useState hook to update the snapshotHistory array
   // array of snapshots
   const snapshotHistory = useAppSelector(

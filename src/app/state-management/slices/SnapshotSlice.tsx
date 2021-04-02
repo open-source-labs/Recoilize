@@ -12,10 +12,6 @@ export const snapshotSlice = createSlice({
   initialState,
   reducers: {
     setSnapshotHistory: (state, action: PayloadAction<any>) => {
-      console.log('state history', state.snapshotHistory);
-      console.log('initial state', initialState);
-      console.log('action', action);
-      // state.snaphotHistory = [...state.snapshotHistory, action.payload];
       state.snapshotHistory.push(action.payload);
     },
     setRenderIndex: (state, action: PayloadAction<any>) => {

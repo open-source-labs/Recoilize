@@ -14,10 +14,7 @@ export const filterSlice = createSlice({
   initialState,
   reducers: {
     updateFilter: (state, action: PayloadAction<any>) => {
-      console.log('We are inside updateFilter: ', action.payload);
-      console.log('This is pre-state inside updateFilter: ', state.filterData);
       state.filterData = [...state.filterData, ...action.payload];
-      console.log('This is post-state inside updateFilter: ', state.filterData);
     },
   },
 });
