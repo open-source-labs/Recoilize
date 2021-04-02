@@ -1,6 +1,8 @@
 import {configureStore, getDefaultMiddleware} from '@reduxjs/toolkit';
 import throttleReducer from './slices/ThrottleSlice';
 import zoomReducer from '../state-management/slices/ZoomSlice';
+import snapshotReducer from '../state-management/slices/SnapshotSlice';
+import atomNetworkReducer from '../state-management/slices/AtomNetworkSlice';
 import filterReducer from '../state-management/slices/FilterSlice';
 
 const customizedPayloadAction = getDefaultMiddleware({
@@ -11,6 +13,8 @@ export const store = configureStore({
   reducer: {
     zoom: zoomReducer,
     throttle: throttleReducer,
+    snapshot: snapshotReducer,
+    atomNetwork: atomNetworkReducer,
     filter: filterReducer,
   },
   middleware: customizedPayloadAction,

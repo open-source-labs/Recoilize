@@ -1,16 +1,21 @@
 import React, {useEffect, useContext, useState, useRef} from 'react';
-import {renderIndexContext} from './MainContainer';
 import {useSelector} from 'react-redux';
 import {selectFilterState} from '../state-management/slices/FilterSlice';
-import {snapshotHistoryContext, selectedContext} from '../components/App';
+import {selectedContext} from '../components/App';
+import {useAppSelector, useAppDispatch} from '../state-management/hooks';
+import {setRenderIndex} from '../state-management/slices/SnapshotSlice';
 
 const SnapshotsContainer: React.FC = () => {
-  const {snapshotHistory} = useContext(snapshotHistoryContext);
-  const [renderIndex, setRenderIndex] = useState(snapshotHistory.length - 1);
+  const snapshotHistory = useAppSelector(
+    state => state.snapshot.snapshotHistory,
+  );
+  const renderIndex = useAppSelector(state => state.snapshot.renderIndex);
   const filterData = useSelector(selectFilterState);
   const {selected} = useContext(selectedContext);
   const snapshotEndRef = useRef<HTMLDivElement>(null);
   let snapshotHistoryLength = snapshotHistory.length
+
+  const dispatch = useAppDispatch();
 
   // useEffect to scroll bottom whenever snapshot history changes
   useEffect(() => {
@@ -76,7 +81,7 @@ const SnapshotsContainer: React.FC = () => {
             : {color: '#989898'}
         }
         onClick={() => {
-          setRenderIndex(i);
+          dispatch(setRenderIndex(i));
         }}>
         {/* <li>{i}</li> */}
         <li>{`${Math.round(renderTime*100)/100}ms`}</li>
@@ -118,36 +123,38 @@ const SnapshotsContainer: React.FC = () => {
   };
 
   function prevClr() {
-    const snapshotListArr = document.querySelectorAll('.individualSnapshot')
+    const snapshotListArr = document.querySelectorAll('.individualSnapshot');
     for (let i = 0; i < snapshotListArr.length; i++) {
       let index = parseInt(snapshotListArr[i].id.match(/\d+/g)[0]);
-      
+
       if (index < renderIndex) {
-        snapshotListArr[i].parentNode.removeChild(snapshotListArr[i])
-      }
-      else break;
+        snapshotListArr[i].parentNode.removeChild(snapshotListArr[i]);
+      } else break;
     }
   }
 
   function fwrdClr() {
-    const snapshotListArr = document.querySelectorAll('.individualSnapshot')
+    const snapshotListArr = document.querySelectorAll('.individualSnapshot');
 
     for (let i = snapshotListArr.length - 1; i >= 0; i--) {
       let index = parseInt(snapshotListArr[i].id.match(/\d+/g)[0]);
-      
+
       if (index > renderIndex) {
-        snapshotListArr[i].parentNode.removeChild(snapshotListArr[i])
-      }
-      else break;
+        snapshotListArr[i].parentNode.removeChild(snapshotListArr[i]);
+      } else break;
     }
   }
 
   return (
     <div className="SnapshotsContainer">
-      <div id='clear-snapshots-title'>Clear Snapshots</div>
+      <div id="clear-snapshots-title">Clear Snapshots</div>
       <div className="clear-buttons">
-      <button onClick={prevClr} id='prevClr'>Previous</button>
-      <button onClick={fwrdClr} id='fwrdClr'>Forward</button>
+        <button onClick={prevClr} id="prevClr">
+          Previous
+        </button>
+        <button onClick={fwrdClr} id="fwrdClr">
+          Forward
+        </button>
       </div>
       <span
         style={{
