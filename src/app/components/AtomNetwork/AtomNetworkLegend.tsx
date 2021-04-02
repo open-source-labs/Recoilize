@@ -46,7 +46,7 @@ const AtomNetworkLegend: React.FC = () => {
         // open atom list
         setShowAtomMenu(!showAtomMenu);
         // empty search box
-        setSearchValue('');
+        dispatch(setSearchValue(''));
         setAtomButtonClicked(true);
         setSelectorButtonClicked(false);
         }
@@ -57,7 +57,7 @@ const AtomNetworkLegend: React.FC = () => {
         // show Selector list
         setShowSelectorMenu(!showSelectorMenu);
         // empty search box
-        setSearchValue('');
+        dispatch(setSearchValue(''));
         setSelectorButtonClicked(true);
         setAtomButtonClicked(false);
         }
@@ -147,7 +147,7 @@ const AtomNetworkLegend: React.FC = () => {
                       });
 
                     //set the search value to the name of the paragraph element to render only corresponding and related nodes
-                    setSearchValue((event.target as Element).innerHTML);
+                    dispatch(setSearchValue((event.target as Element).innerHTML));
                 }}>{atom}</button></div>)
             })}</div>}
             {showSelectorMenu &&
@@ -199,7 +199,7 @@ const AtomNetworkLegend: React.FC = () => {
                           }
                         });
                     //set the search value to the name of the paragraph element to render only corresponding and related nodes
-                    setSearchValue((event.target as Element).innerHTML);
+                    dispatch(setSearchValue((event.target as Element).innerHTML));
                 }}>{selector}</button></div>)
             })}</div>}
             </div>

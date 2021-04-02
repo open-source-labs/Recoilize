@@ -1,4 +1,4 @@
-yimport React, {useState} from 'react';
+import React, {useState} from 'react';
 import {diff, formatters} from 'jsondiffpatch';
 import ReactHtmlParser from 'react-html-parser';
 import {useAppSelector} from '../../state-management/hooks';
@@ -12,7 +12,10 @@ const Diff: React.FC = () => {
   const renderIndex = useAppSelector(state => state.snapshot.renderIndex);
   console.log('snapshotHistory in diff', snapshotHistory);
 
-  const filteredPrevSnap = snapshotHistory[renderIndex - 1];
+  const filteredPrevSnap =
+    renderIndex > 0
+      ? snapshotHistory[renderIndex - 1].filteredSnapshot
+      : undefined;
 
   const filteredCurSnap = snapshotHistory[renderIndex]
     ? snapshotHistory[renderIndex].filteredSnapshot

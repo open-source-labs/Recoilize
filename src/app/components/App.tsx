@@ -81,7 +81,9 @@ const App: React.FC = () => {
   }, [snapshotHistory]); // Only re-run the effect if snapshot history changes -- react hooks
 
   //Update cleanComponentAtomTree as Render Index changes
+
   useEffect(() => {
+    if (snapshotHistory.length === 0) return;
     dispatch(
       setCleanComponentAtomTree(snapshotHistory[renderIndex].componentAtomTree),
     );
