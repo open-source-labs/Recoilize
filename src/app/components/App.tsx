@@ -15,22 +15,10 @@ import {
   selectFilterState,
 } from '../state-management/slices/FilterSlice';
 
-interface SnapshotHistoryContext {
-  snapshotHistory: Partial<stateSnapshot[]>;
-  setSnapshotHistory: React.Dispatch<React.SetStateAction<stateSnapshot[]>>;
-}
-
 interface SelectedContext {
   selected: selectedTypes[];
   setSelected: React.Dispatch<React.SetStateAction<selectedTypes[]>>;
 }
-
-// contexts created for our state values to later reference in child components
-// purpose is to eliminate prop drilling
-export const snapshotHistoryContext = createContext<SnapshotHistoryContext>(
-  null,
-);
-export const selectedContext = createContext<SelectedContext>(null);
 
 const LOGO_URL = './assets/Recoilize.png';
 const App: React.FC = () => {
@@ -133,11 +121,7 @@ const App: React.FC = () => {
   }, []);
 
   // Render main container if we have detected a recoil app with the recoilize module passing data
-  const renderMainContainer: JSX.Element = (
-    <selectedContext.Provider value={{selected, setSelected}}>
-      <MainContainer />
-    </selectedContext.Provider>
-  );
+  const renderMainContainer: JSX.Element = <MainContainer />;
 
   // Render module not found message if snapHistory is null, this means we have not detected a recoil app with recoilize module installed properly
   const renderModuleNotFoundContainer: JSX.Element = (
