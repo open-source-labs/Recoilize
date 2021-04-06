@@ -1,14 +1,15 @@
 import React from 'react';
 import JSONTree from 'react-json-tree';
-import {filteredSnapshot} from '../../../types';
+import {useAppSelector} from '../../state-management/hooks';
 
-interface TreeProps {
-  // snapshot at index [curRender]
-  filteredCurSnap: filteredSnapshot;
-}
-
-const Tree: React.FC<TreeProps> = ({filteredCurSnap}) => {
+const Tree: React.FC = () => {
   // render json tree while passing in newSnap as data to JSONTree
+  //Retrieve snapshotHistory State from Redux Store
+  const snapshotHistory = useAppSelector(
+    state => state.snapshot.snapshotHistory,
+  );
+  const renderIndex = useAppSelector(state => state.snapshot.renderIndex);
+  const filteredCurSnap = snapshotHistory[renderIndex].filteredSnapshot;
   return (
     <div className="Tree">
       {filteredCurSnap && (

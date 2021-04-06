@@ -1,7 +1,6 @@
-
 import React, {useContext} from 'react';
 // importing context
-import { checkedContext } from '../../Containers/VisualContainer';
+import {checkedContext} from '../../Containers/VisualContainer';
 
 const StateSettings: React.FC = () => {
   const {checked, setChecked} = useContext(checkedContext);

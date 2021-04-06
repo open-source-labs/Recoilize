@@ -1,15 +1,12 @@
-import React, {useState, useEffect, useContext, useRef} from 'react';
+import React, {useState, useEffect} from 'react';
 import * as d3 from 'd3';
 import {componentAtomTree, atom, selector} from '../../../types';
-//import {zoomStateContext} from '../../Containers/VisualContainer';
-import {connectableObservableDescriptor} from 'rxjs/internal/observable/ConnectableObservable';
-import {useSelector, useDispatch} from 'react-redux';
+import {useAppSelector, useAppDispatch} from '../../state-management/hooks';
 import {
   updateZoomState,
   selectZoomState,
   setDefaultZoom,
 } from '../../state-management/slices/ZoomSlice';
-// import rd3 from 'react-d3-library'
 
 interface AtomComponentVisualProps {
   componentAtomTree: componentAtomTree;
@@ -30,14 +27,10 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
   setStr,
   setSelectedRecoilValue,
 }) => {
-  //const {zoomState, setZoomState} = useContext(zoomStateContext);
-  const zoomSelector = useSelector(selectZoomState);
-  //const {x, y, k} = zoomState;
-  const {x, y, k} = zoomSelector;
-  const dispatch = useDispatch();
 
-  // console.log('i am zoomSelector', zoomSelector);
-  // console.log('i am x, y, k', x, y, k);
+  const zoomSelector = useAppSelector(selectZoomState);
+  const {x, y, k} = zoomSelector;
+  const dispatch = useAppDispatch();
 
   // set the heights and width of the tree to be passed into treeMap function
   let width: number = 0;
@@ -129,15 +122,12 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
 
     // helper function that allows for zooming
     function zoomed() {
-      // console.log('this is the zoomSelector before dispatch:', zoomSelector);
       g.attr('transform', d3.event.transform).on(
         'mouseup',
         dispatch(
           updateZoomState(d3.zoomTransform(d3.select('#canvas').node())),
         ),
-        // setZoomState(d3.zoomTransform(d3.select('#canvas').node())),
       );
-      // console.log('this is the zoomSelector post dispatch:', zoomSelector);
     }
 
     // Update function
