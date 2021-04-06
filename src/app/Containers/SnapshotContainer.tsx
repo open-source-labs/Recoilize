@@ -10,12 +10,12 @@ const SnapshotsContainer: React.FC = () => {
     state => state.snapshot.snapshotHistory,
   );
   const renderIndex = useAppSelector(state => state.snapshot.renderIndex);
-  const filterData = useSelector(selectFilterState);
+  const filterData = useAppSelector(selectFilterState);
   const {selected} = useContext(selectedContext);
   const snapshotEndRef = useRef<HTMLDivElement>(null);
-  let snapshotHistoryLength = snapshotHistory.length
-
   const dispatch = useAppDispatch();
+  
+  let snapshotHistoryLength = snapshotHistory.length
 
   // useEffect to scroll bottom whenever snapshot history changes
   useEffect(() => {

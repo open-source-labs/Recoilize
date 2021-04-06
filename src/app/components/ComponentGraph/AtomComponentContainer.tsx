@@ -1,13 +1,12 @@
 import React, {useState} from 'react';
 import AtomComponentVisual from './AtomComponentVisual';
 import {
-  componentAtomTree,
   filteredSnapshot,
   atom,
   selector,
 } from '../../../types';
 
-import {useAppSelector, useAppDispatch} from '../../state-management/hooks';
+import {useAppSelector} from '../../state-management/hooks';
 
 const AtomComponentVisualContainer: React.FC = () => {
   //Retrieve State from store
@@ -18,11 +17,8 @@ const AtomComponentVisualContainer: React.FC = () => {
   const cleanedComponentAtomTree = useAppSelector(
     state => state.snapshot.cleanComponentAtomTree,
   );
-  console.log('snapshot history component graph', snapshotHistory);
-  console.log('renderIndex component graph', renderIndex);
   const filteredCurSnap: filteredSnapshot =
     snapshotHistory[renderIndex].filteredSnapshot;
-  console.log('component graph', filteredCurSnap);
   const componentAtomTree = snapshotHistory[renderIndex].componentAtomTree;
 
   // this will be the atom or selector from the AtomSelectorLegend that the user clicked on.  an array with the ele at index 0 as the name of the atom/selector, and ele at index 1 will be 'atom' or 'selector'
@@ -43,8 +39,6 @@ const AtomComponentVisualContainer: React.FC = () => {
       }
     }
   }
-console.log('Atoms', atoms);
-console.log('Selectors', selectors);
 
   return (
     <div className="Component">

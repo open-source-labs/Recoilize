@@ -20,11 +20,14 @@ interface SelectedContext {
   setSelected: React.Dispatch<React.SetStateAction<selectedTypes[]>>;
 }
 
+// contexts created for our state values to later reference in child components
+// purpose is to eliminate prop drilling
+export const selectedContext = createContext<SelectedContext>(null);
+
 const LOGO_URL = './assets/Recoilize.png';
 const App: React.FC = () => {
   const dispatch = useAppDispatch();
 
-  console.log('App');
   // useState hook to update the snapshotHistory array
   // array of snapshots
   const snapshotHistory = useAppSelector(

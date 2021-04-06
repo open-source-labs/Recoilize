@@ -21,20 +21,6 @@ const VisualContainer: React.FC = () => {
   // state for checkmark in persist state in settings
   const [checked, setChecked] = useState<boolean>(false);
 
-  // conditional render of filtered snaps/ based on non-filtered snaps
-  // const filteredCurSnap = currentSnapshot
-  //   ? currentSnapshot.filteredSnapshot
-  //   : undefined;
-  // const filteredPrevSnap = previousSnapshot
-  //   ? previousSnapshot.filteredSnapshot
-  //   : undefined;
-  // const componentAtomTree = currentSnapshot
-  //   ? currentSnapshot.componentAtomTree
-  //   : undefined;
-  // const cleanedComponentAtomTree = currentSnapshot
-  //   ? cleanComponentAtomTree(currentSnapshot.componentAtomTree)
-  //   : undefined;
-
   // object containing all conditional renders based on navBar
   const nav: navTypes = {
     // compare the diff of filteredPrevSnap and filteredCurSnap
