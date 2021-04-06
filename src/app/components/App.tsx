@@ -1,6 +1,6 @@
-import React, {useState, useEffect, createContext, SetStateAction} from 'react';
+import React, {useEffect} from 'react';
 import MainContainer from '../Containers/MainContainer';
-import {stateSnapshot, selectedTypes, stateSnapshotDiff} from '../../types';
+import {selectedTypes} from '../../types';
 // importing the diff to find difference
 import {diff} from 'jsondiffpatch';
 import {useAppSelector, useAppDispatch} from '../state-management/hooks';
@@ -9,20 +9,14 @@ import {
   setRenderIndex,
   setCleanComponentAtomTree,
 } from '../state-management/slices/SnapshotSlice';
-import {useSelector, useDispatch} from 'react-redux';
+import {
+  addSelected,
+  setSelected,
+} from '../state-management/slices/SelectedSlice';
 import {
   updateFilter,
   selectFilterState,
 } from '../state-management/slices/FilterSlice';
-
-interface SelectedContext {
-  selected: selectedTypes[];
-  setSelected: React.Dispatch<React.SetStateAction<selectedTypes[]>>;
-}
-
-// contexts created for our state values to later reference in child components
-// purpose is to eliminate prop drilling
-export const selectedContext = createContext<SelectedContext>(null);
 
 const LOGO_URL = './assets/Recoilize.png';
 const App: React.FC = () => {
@@ -34,12 +28,14 @@ const App: React.FC = () => {
     state => state.snapshot.snapshotHistory,
   );
   const renderIndex = useAppSelector(state => state.snapshot.renderIndex);
+  const selected = useAppSelector(state => state.selected.selectedData);
   // selected will be an array with objects containing filteredSnapshot key names (the atoms and selectors)
   // ex: [{name: 'Atom1'}, {name: 'Atom2'}, {name: 'Selector1'}, ...]
-  const [selected, setSelected] = useState<selectedTypes[]>([]);
+  // const [selected, setSelected] = useState<selectedTypes[]>([]);
+
   // todo: Create algo that will clean up the big setSnapshothistory object, now and before
   // ! Setting up the selected
-  const filterData = useSelector(selectFilterState);
+  const filterData = useAppSelector(selectFilterState);
 
   // Whenever snapshotHistory changes, useEffect will run, and selected will be updated
   useEffect(() => {
@@ -47,8 +43,8 @@ const App: React.FC = () => {
     dispatch(setRenderIndex(snapshotHistory.length - 1));
 
     let last;
-    if (snapshotHistory[snapshotHistory.length - 1]) {
-      last = snapshotHistory[snapshotHistory.length - 1].filteredSnapshot;
+    if (snapshotHistory[renderIndex]) {
+      last = snapshotHistory[renderIndex].filteredSnapshot;
     }
     // we must compare with the original
     for (let key in last) {
@@ -65,7 +61,8 @@ const App: React.FC = () => {
           return false;
         };
         if (!check()) {
-          selected.push({name: key});
+          console.log("after Check");
+          dispatch(addSelected({name: key}));
         }
       }
     }
@@ -93,13 +90,14 @@ const App: React.FC = () => {
     backgroundConnection.onMessage.addListener(msg => {
       if (msg.action === 'recordSnapshot') {
         // ! sets the initial selected
-        if (!msg.payload[1] || filterData.length === 0) {
+        if (!msg.payload[1]) {
           // ensures we only set initially
           const arr: selectedTypes[] = [];
           for (let key in msg.payload[0].filteredSnapshot) {
             arr.push({name: key});
           }
-          setSelected(arr);
+          // setSelected(arr);
+          dispatch(setSelected(arr));
         }
 
         dispatch(setSnapshotHistory(msg.payload[msg.payload.length - 1]));
