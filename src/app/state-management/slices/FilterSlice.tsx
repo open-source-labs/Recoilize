@@ -2,11 +2,11 @@ import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {RootState} from '../index';
 
 interface FilterState {
-    filterData: any,
+  filterData: any;
 }
 
 const initialState: FilterState = {
-    filterData: [],
+  filterData: [],
 };
 
 export const filterSlice = createSlice({

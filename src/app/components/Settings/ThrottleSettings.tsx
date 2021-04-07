@@ -7,7 +7,6 @@ import {
 
 const ThrottleSettings: React.FC = () => {
   const dispatch = useAppDispatch();
-
   const throttle = useAppSelector(state => state.throttle.throttleValue);
   const [throttleNum, setThrottleNum] = useState<string>(throttle);
 

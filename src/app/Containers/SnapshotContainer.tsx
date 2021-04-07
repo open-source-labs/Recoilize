@@ -1,19 +1,19 @@
-import React, {useEffect, useContext, useState, useRef} from 'react';
-import {useSelector} from 'react-redux';
+import React, {useEffect, useState, useRef} from 'react';
 import {selectFilterState} from '../state-management/slices/FilterSlice';
-import {selectedContext} from '../components/App';
 import {useAppSelector, useAppDispatch} from '../state-management/hooks';
 import {setRenderIndex} from '../state-management/slices/SnapshotSlice';
 
 const SnapshotsContainer: React.FC = () => {
+  const dispatch = useAppDispatch();
+ 
   const snapshotHistory = useAppSelector(
     state => state.snapshot.snapshotHistory,
   );
+  const selected = useAppSelector(state => state.selected.selectedData);
+
   const renderIndex = useAppSelector(state => state.snapshot.renderIndex);
   const filterData = useAppSelector(selectFilterState);
-  const {selected} = useContext(selectedContext);
   const snapshotEndRef = useRef<HTMLDivElement>(null);
-  const dispatch = useAppDispatch();
   
   let snapshotHistoryLength = snapshotHistory.length
 

@@ -1,4 +1,4 @@
-import React, {createContext, useState} from 'react';
+import React, { useState} from 'react';
 import Diff from '../components/StateDiff/Diff';
 import NavBar from '../components/NavBar/NavBar';
 import Metrics from '../components/Metrics/MetricsContainer';
@@ -7,20 +7,12 @@ import Network from '../components/AtomNetwork/AtomNetwork';
 import AtomComponentVisualContainer from '../components/ComponentGraph/AtomComponentContainer';
 import Settings from '../components/Settings/SettingsContainer';
 
-interface CheckedContext {
-  checked: boolean;
-  setChecked: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
 type navTypes = {
   [tabName: string]: JSX.Element;
 };
 
 // Renders Navbar and conditionally renders Diff, Visualizer, and Tree
 const VisualContainer: React.FC = () => {
-  // state for checkmark in persist state in settings
-  const [checked, setChecked] = useState<boolean>(false);
-
   // object containing all conditional renders based on navBar
   const nav: navTypes = {
     // compare the diff of filteredPrevSnap and filteredCurSnap
@@ -37,11 +29,7 @@ const VisualContainer: React.FC = () => {
     Metrics: <Metrics />,
 
     // settings tab that doesn't want to be in quotes because too cool for school
-    Settings: (
-      <checkedContext.Provider value={{checked, setChecked}}>
-        <Settings />
-      </checkedContext.Provider>
-    ),
+    Settings: <Settings/>,
   };
   // array of all nav obj keys
   const tabsList: string[] = Object.keys(nav);
@@ -56,5 +44,4 @@ const VisualContainer: React.FC = () => {
   );
 };
 
-export const checkedContext = createContext<CheckedContext>(null);
 export default VisualContainer;
