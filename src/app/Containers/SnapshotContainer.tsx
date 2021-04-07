@@ -1,4 +1,4 @@
-import React, {useEffect, useContext, useState, useRef} from 'react';
+import React, {useEffect, useState, useRef} from 'react';
 import {selectFilterState} from '../state-management/slices/FilterSlice';
 import {useAppSelector, useAppDispatch} from '../state-management/hooks';
 import {setRenderIndex} from '../state-management/slices/SnapshotSlice';
