@@ -1,7 +1,6 @@
 import React from 'react';
 
 // Importing various settings components
-import StateSettings from './StateSettings';
 import ThrottleSettings from './ThrottleSettings';
 import AtomSettings from './AtomSettings';
 
@@ -10,7 +9,6 @@ const Settings: React.FC = () => {
   return (
     <div className="Settings">
       <AtomSettings />
-      <StateSettings />
       <ThrottleSettings />
     </div>
   );

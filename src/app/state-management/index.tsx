@@ -6,21 +6,35 @@ import atomNetworkReducer from '../state-management/slices/AtomNetworkSlice';
 import filterReducer from '../state-management/slices/FilterSlice';
 import selectedReducer from './slices/SelectedSlice';
 
+import {persistStore, persistReducer} from 'redux-persist';
+import storage from 'redux-persist/lib/storage/session';
+import {combineReducers}  from 'redux';
+
 const customizedPayloadAction = getDefaultMiddleware({
   serializableCheck: false,
 });
 
+const reducers = combineReducers({
+  zoom: zoomReducer,
+  throttle: throttleReducer,
+  snapshot: snapshotReducer,
+  atomNetwork: atomNetworkReducer,
+  filter: filterReducer,
+  selected: selectedReducer,
+});
+
+const persistConfig = {
+  key: 'root',
+  storage
+};
+
+const persistedReducer = persistReducer(persistConfig, reducers);
+
 export const store = configureStore({
-  reducer: {
-    zoom: zoomReducer,
-    throttle: throttleReducer,
-    snapshot: snapshotReducer,
-    atomNetwork: atomNetworkReducer,
-    filter: filterReducer,
-    selected: selectedReducer,
-  },
+  reducer: persistedReducer ,
   middleware: customizedPayloadAction,
 });
 
+export let persistor = persistStore(store);
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
