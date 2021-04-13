@@ -21,7 +21,7 @@ export const zoomSlice = createSlice({
       state.zoomData = action.payload;
     },
     setDefaultZoom: state => {
-      console.log('set default called');
+      // console.log('set default called');
       state.zoomData = initialState.zoomData;
     },
   },
