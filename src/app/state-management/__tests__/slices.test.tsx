@@ -15,6 +15,7 @@ import {
 } from '../slices/ZoomSlice';
 import {useAppDispatch, useAppSelector} from '../hooks';
 import {store} from '../index';
+import {snapshotHistoryMock} from '../../../../mock/state-snapshot';
 
 describe('ZoomSlice', () => {
   it('update zoom state', () => {
@@ -78,16 +79,40 @@ describe('SnapshotSlice', () => {
     expect(renderIndex).toEqual(10);
   });
 
-  xit('set cleaned component atom tree', () => {});
+  it('set cleaned component atom tree', () => {
+    store.dispatch(
+      setCleanComponentAtomTree(
+        snapshotHistoryMock.snapshotHistory[0].componentAtomTree,
+      ),
+    );
+    const cleanedComponentAtomTreeData = store.getState().snapshot
+      .cleanComponentAtomTree;
 
-  it('set snapshot', () => {
-    const obj = {
-      renderIndex: 5,
+    const result: any = {
+      children: [
+        {
+          actualDuration: 0.8450000004813774,
+          children: [],
+          name: 'PlaygroundStart',
+          recoilNodes: [],
+          tag: 0,
+          treeBaseDuration: 0.5550000005314359,
+          wasSuspended: false,
+        },
+      ],
+      name: 'PlaygroundRender',
+      recoilNodes: ['playStart'],
+      tag: 0,
+      actualDuration: 1.6750000004321919,
     };
 
-    store.dispatch(setSnapshotHistory(obj));
+    expect(cleanedComponentAtomTreeData).toEqual(result);
+  });
+
+  it('set snapshot', () => {
+    store.dispatch(setSnapshotHistory(snapshotHistoryMock));
     const snapshotData = store.getState().snapshot.snapshotHistory;
-    expect(snapshotData).toEqual([obj]);
+    expect(snapshotData).toEqual([snapshotHistoryMock]);
   });
 });
 
