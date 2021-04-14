@@ -16,14 +16,6 @@ import {
 import {useAppDispatch, useAppSelector} from '../hooks';
 import {store} from '../index';
 
-// let zoomState: any;
-// let searchValue: string;
-
-// beforeAll(() => {
-//   zoomState = store.getState().zoom.zoomData;
-//   searchValue = store.getState().atomNetwork.searchValue;
-// });
-
 describe('ZoomSlice', () => {
   it('update zoom state', () => {
     const obj: any = {
@@ -68,5 +60,51 @@ describe('ThrottleSlice', () => {
     store.dispatch(resetThrottle());
     const defaultThrottleValue = store.getState().throttle.throttleValue;
     expect(defaultThrottleValue).toEqual('70');
+  });
+});
+
+describe('FilterSlice', () => {
+  it('update filter', () => {
+    store.dispatch(updateFilter(['square-8']));
+    const filterData = store.getState().filter.filterData;
+    expect(filterData).toEqual(['square-8']);
+  });
+});
+
+describe('SnapshotSlice', () => {
+  it('set render index', () => {
+    store.dispatch(setRenderIndex(10));
+    const renderIndex = store.getState().snapshot.renderIndex;
+    expect(renderIndex).toEqual(10);
+  });
+
+  xit('set cleaned component atom tree', () => {});
+
+  it('set snapshot', () => {
+    const obj = {
+      renderIndex: 5,
+    };
+
+    store.dispatch(setSnapshotHistory(obj));
+    const snapshotData = store.getState().snapshot.snapshotHistory;
+    expect(snapshotData).toEqual([obj]);
+  });
+});
+
+describe('SelectedSlice', () => {
+  beforeEach(() => {
+    store.dispatch(setSelected([]));
+  });
+
+  it('set selected item', () => {
+    store.dispatch(setSelected(['square-8']));
+    const selectedData = store.getState().selected.selectedData;
+    expect(selectedData).toEqual(['square-8']);
+  });
+
+  it('add selected item', () => {
+    store.dispatch(addSelected('square-8'));
+    const selectedData = store.getState().selected.selectedData;
+    expect(selectedData).toEqual(['square-8']);
   });
 });
