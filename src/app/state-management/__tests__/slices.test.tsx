@@ -1,6 +1,5 @@
-// import {Reducer} from 'redux';
 import {setSearchValue} from '../slices/AtomNetworkSlice';
-import {updateFilter, selectFilterState} from '../slices/FilterSlice';
+import {updateFilter} from '../slices/FilterSlice';
 import {setSelected, addSelected} from '../slices/SelectedSlice';
 import {
   setSnapshotHistory,
@@ -8,12 +7,7 @@ import {
   setCleanComponentAtomTree,
 } from '../slices/SnapshotSlice';
 import {newThrottle, resetThrottle} from '../slices/ThrottleSlice';
-import {
-  setDefaultZoom,
-  updateZoomState,
-  selectZoomState,
-} from '../slices/ZoomSlice';
-import {useAppDispatch, useAppSelector} from '../hooks';
+import {setDefaultZoom, updateZoomState} from '../slices/ZoomSlice';
 import {store} from '../index';
 import {snapshotHistoryMock} from '../../../../mock/state-snapshot';
 
