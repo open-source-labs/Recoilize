@@ -39,7 +39,6 @@ export default function RecoilizeDebugger(props) {
 
   // getNodes_UNSTABLE will return an iterable that contains atom and selector objects.
   const nodes = [...snapshot.getNodes_UNSTABLE()];
-
   // Local state of all previous snapshots to use for time traveling when requested by dev tools.
   const [snapshots, setSnapshots] = useState([snapshot]);
   // const [isRestoredState, setRestoredState] = useState(false);
@@ -169,10 +168,10 @@ export default function RecoilizeDebugger(props) {
   // Sends window an action and payload message.
   const sendWindowMessage = (action, payload) => {
     window.postMessage(
-      {
+      JSON.parse(JSON.stringify({
         action,
         payload,
-      },
+      })),
       '*',
     );
   };
@@ -186,7 +185,6 @@ export default function RecoilizeDebugger(props) {
         ),
       };
     } else {
-      console.log('logging diff from create Dev tool data:', diff);
       return {
         filteredSnapshot: filteredSnapshot,
         componentAtomTree: formatFiberNodes(
@@ -217,6 +215,12 @@ export default function RecoilizeDebugger(props) {
       }
     }
     return filteredSnapshot;
+  };
+
+  // Will add hover effect over highlighted component
+  // Takes an argument of msg.data which contains name and payload
+  const activateHover = payload => {
+    let name = payload.name;
   };
 
   // FOR TIME TRAVEL: time travels to a given snapshot, re renders application.
