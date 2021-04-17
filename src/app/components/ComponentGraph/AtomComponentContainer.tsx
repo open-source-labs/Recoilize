@@ -1,23 +1,26 @@
 import React, {useState} from 'react';
 import AtomComponentVisual from './AtomComponentVisual';
 import {
-  componentAtomTree,
   filteredSnapshot,
   atom,
   selector,
 } from '../../../types';
 
-interface AtomComponentVisualContainerProps {
-  filteredCurSnap: filteredSnapshot;
-  componentAtomTree: componentAtomTree;
-  cleanedComponentAtomTree: componentAtomTree;
-}
+import {useAppSelector} from '../../state-management/hooks';
 
-const AtomComponentVisualContainer: React.FC<AtomComponentVisualContainerProps> = ({
-  filteredCurSnap,
-  componentAtomTree,
-  cleanedComponentAtomTree,
-}) => {
+const AtomComponentVisualContainer: React.FC = () => {
+  //Retrieve State from store
+  const snapshotHistory = useAppSelector(
+    state => state.snapshot.snapshotHistory,
+  );
+  const renderIndex = useAppSelector(state => state.snapshot.renderIndex);
+  const cleanedComponentAtomTree = useAppSelector(
+    state => state.snapshot.cleanComponentAtomTree,
+  );
+  const filteredCurSnap: filteredSnapshot =
+    snapshotHistory[renderIndex].filteredSnapshot;
+  const componentAtomTree = snapshotHistory[renderIndex].componentAtomTree;
+
   // this will be the atom or selector from the AtomSelectorLegend that the user clicked on.  an array with the ele at index 0 as the name of the atom/selector, and ele at index 1 will be 'atom' or 'selector'
   // Why was selectedRecoilValue formatted as an array? why not an object?
   const [selectedRecoilValue, setSelectedRecoilValue] = useState<string[]>([]);

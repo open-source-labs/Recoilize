@@ -1,14 +1,25 @@
-import React, {useState, useContext} from 'react';
-import { throttleDisplayContext } from '../../Containers/VisualContainer';
+import React, {useState, useEffect} from 'react';
+import {useAppSelector, useAppDispatch} from '../../state-management/hooks';
+import {
+  newThrottle,
+  resetThrottle,
+} from '../../state-management/slices/ThrottleSlice';
 
 const ThrottleSettings: React.FC = () => {
-  const {throttleDisplay, setThrottleDisplay} = useContext(throttleDisplayContext);
-  const [throttleNum, setThrottleNum] = useState<string>('');
+  const dispatch = useAppDispatch();
+  const throttle = useAppSelector(state => state.throttle.throttleValue);
+  const [throttleNum, setThrottleNum] = useState<string>(throttle);
 
+  useEffect(() => {
+    setThrottleNum(throttle);
+  }, [throttle]);
+
+  useEffect(() => {
+    setThrottleNum(throttle);
+  }, [throttle]);
   // onClick function for reset button. 70ms is the default throttle
   const onClick = (): void => {
-    setThrottleDisplay('70');
-    setThrottleNum('70');
+    dispatch(resetThrottle());
   };
 
   // Creating function to tie to get to the backend
@@ -23,8 +34,7 @@ const ThrottleSettings: React.FC = () => {
       payload: {value: throttleNum}, // edit this value to some other number
     });
 
-    setThrottleDisplay(throttleNum);
-    setThrottleNum('');
+    dispatch(newThrottle(throttleNum));
   };
 
   return (
@@ -41,17 +51,14 @@ const ThrottleSettings: React.FC = () => {
         <span style={{fontSize: '14px'}}>milliseconds</span>
         <div>
           <button type="submit">Enter</button>
-          <button onClick={onClick} type="submit">
+          <button onClick={onClick} type="button">
             Reset
           </button>
         </div>
       </form>
       <span>
         Current throttle is{' '}
-        {throttleDisplay === '70'
-          ? `${throttleDisplay} (default)`
-          : throttleDisplay}{' '}
-        ms
+        {throttle === '70' ? `${throttle} (default)` : throttle} ms
       </span>
     </div>
   );

@@ -325,11 +325,11 @@ button:hover {
   position: fixed;
   top: 58px;
   left: 179px;
-  display: grid;
-  grid-template-rows: 30px 30px 30px 1fr;
-  align-items: center;
   padding-left: 5px;
   padding-top: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 .AtomDiv {
   display: grid;
@@ -442,9 +442,33 @@ button:hover {
   cursor: pointer;
 }
 
+.RecoilSearch {
+  position: fixed;
+  top: 58px;
+  left: 179px;
+  display: grid;
+  grid-template-columns: 30px 30px;
+  grid-template-rows: 30px 30px 30px 1fr;
+  align-items: center;
+  padding-left: 5px;
+  padding-top: 5px;
+}
+
 .AtomNetworkLegend {
   position: fixed;
   top: 58px;
+  left: 179px;
+  display: grid;
+  grid-template-columns: 30px 30px;
+  grid-template-rows: 30px 30px 30px 1fr;
+  align-items: center;
+  padding-left: 5px;
+  padding-top: 5px;
+}
+
+.AtomNetworkLegendWithSearch {
+  position: fixed;
+  top: 100px;
   left: 179px;
   display: grid;
   grid-template-columns: 30px 30px;
@@ -488,7 +512,82 @@ button:hover {
 #selectorDrop {
   display: grid;
   grid-row: 5;
-  border: 0.1em solid rgb(43, 34, 34);
+}
+
+.selectorSelected:hover {
+  color: #ff80bf;
+  background-color: rgb(240, 240, 162);
+  border-color: white;
+  width: 120px;
+  opacity: 100%;
+}
+
+.atomSelected:hover {
+  color: #9580ff;
+  background-color: rgb(240, 240, 162);
+  border-color: white;
+  width: 120px;
+  opacity: 100%;
+}
+
+.atomSelected {
+  color: #9580ff;
+  background-color: rgb(240, 240, 162);
+  border-color: white;
+  width: 120px;
+  opacity: 100%;
+}
+
+.atomNotSelected {
+  color: #9580ff;
+  border-color: white;
+  width: 120px;
+  opacity: 30%;
+}
+
+.atomDropDown {
+  color: #9580ff;
+  border-color: white;
+  width: 120px;
+}
+
+.atomLegendDefault {
+  color: #9580ff;
+  border-color: white;
+  width: 120px;
+}
+
+.selectorSelected {
+  color: #ff80bf;
+  background-color: rgb(240, 240, 162);
+  border-color: white;
+  width: 120px;
+  opacity: 100%;
+}
+
+.selectorNotSelected {
+  color: #ff80bf;
+  border-color: white;
+  width: 120px;
+  opacity: 30%;
+}
+
+.selectorDropDown {
+  color: #ff80bf;
+  border-color: white;
+  width: 120px;
+}
+
+.selectorLegendDefault {
+  color: #ff80bf;
+  border-color: white;
+  width: 120px;
+}
+
+.bothLegendDefault {
+  color: springgreen;
+  border-color: white;
+  width: 120px;
 }
 
 .suspenseLegend {
@@ -499,6 +598,17 @@ button:hover {
   border: 3px solid red;
   border-radius: 20px;
   margin: 0px;
+}
+
+.dropDownButtonDiv {
+  margin: 5px;
+}
+
+.LegendButtons {
+  display: flex;
+  flex-direction: column;
+  margin: 5px;
+  margin-top: 60px;
 }
 
 /* ATOMSELECTORLEGEND COMPONENT */

@@ -1,16 +1,24 @@
-import React, { useContext } from 'react';
+import React, {useEffect} from 'react';
 const {Multiselect} = require('multiselect-react-dropdown');
 import {selectedTypes} from '../../../types';
-import { selectedContext, snapshotHistoryContext } from '../App';
+import {useAppSelector, useAppDispatch} from '../../state-management/hooks';
+import {setSelected} from '../../state-management/slices/SelectedSlice';
 
 const AtomSettings: React.FC = () => {
-  const {snapshotHistory} = useContext(snapshotHistoryContext);
-  const {selected, setSelected} = useContext(selectedContext);
+  const dispatch = useAppDispatch();
+
+  //Retrieve snapshotHistory State from Redux Store
+  const snapshotHistory = useAppSelector(
+    state => state.snapshot.snapshotHistory,
+  );
+  const renderIndex = useAppSelector(state => state.snapshot.renderIndex);
+  const selected = useAppSelector(state => state.selected.selectedData);
+
   // https://github.com/srigar/multiselect-react-dropdown
   // Make filterArray into array of objects, we want to get the most recent so that we have all possible options
   const options: selectedTypes[] = [];
-  for (let key in snapshotHistory[snapshotHistory.length - 1] // filling the options with the most recent
-    .filteredSnapshot) {
+  // filling the options with the most recent
+  for (let key in snapshotHistory[renderIndex].filteredSnapshot) {
     const obj: selectedTypes = {name: key};
     options.push(obj);
   }
@@ -24,11 +32,11 @@ const AtomSettings: React.FC = () => {
   // Todo: Create a conditional that will update the selected options onchange of the array -- updates if they are not equal, will add in NEW ADDITIONS
   // onSelect & onRemove functions for when selecting & removing atoms/selectors from the filter
   const onSelect = (selectedList: selectedTypes[]): void => {
-    setSelected(selectedList); // propdrilled, so edited up top
+    dispatch(setSelected(selectedList)); // propdrilled, so edited up top
   };
 
   const onRemove = (selectedList: selectedTypes[]): void => {
-    setSelected(selectedList);
+    dispatch(setSelected(selectedList));
   };
   return (
     <div>
