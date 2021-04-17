@@ -127,8 +127,8 @@ export default MyApp;
 
 ##### (Only supported with React applications using Recoil as state management)
 
-<h1>New Features for Version 1.0.0</h1>
-<h3>Support for Recoil 0.1.2</h3>
+<h1>New Features for Version 2.0.0</h1>
+<h3>Support for Recoil 0.1.3</h3>
 <p>Recoilize now supports the most recent update to the Recoil library and is backwards compatible with older versions of Recoil.</p>
 
 <h3>Clear Snapshots</h3>
@@ -201,8 +201,8 @@ The flame graph displays the time a component took to render itself, and all of 
 <h3>Throttle</h3>
 <p>In the settings tab, users are able to set throttle (in milliseconds) for large scale applications or any applications that changes state rapidly. The default is set at 70ms.<p>
 
-<h3>State Persistence (BETA)</h3>
-<p>Recoilize allows the users to persist their application's state through a refresh or reload. At this time, the user is able to view the previous states in the dev tool, but cannot time travel to the states before refresh. The team is still working on completing this feature.</p>
+<h3>State Persistence</h3>
+<p>Recoilize allows the users to persist their application's state through a refresh or reload. At this time, the user is able to view the previous states in the dev tool, but cannot time travel to the states before refresh.</p>
 
 <h3>Additional Features</h3>
 <ul><li>legend to see relationship between component graph and state</li></ul>
@@ -251,3 +251,14 @@ The flame graph displays the time a component took to render itself, and all of 
 <h4>Anthony Magallanes <a  href='https://github.com/amagalla' target=“_blank”>@github </a><a  href='https://www.linkedin.com/in/anthony-magallanes/' target=“_blank”>@linkedin</a> </h4>
 
 <h4>Edward Shei <a  href='https://github.com/calibeach' target=“_blank”>@github </a><a  href='https://www.linkedin.com/in/edwardshei/' target=“_blank”>@linkedin</a> </h4>
+
+<h4>Nathan Bargers <a  href='https://github.com/nbargers' target=“_blank”>@github </a><a  href='https://www.linkedin.com/in/nathan-bargers/' target=“_blank”>@linkedin</a> </h4>
+
+<h4>Scott Campbell <a  href='https://github.com/thisisscottcampbell' target=“_blank”>@github </a><a  href='https://www.linkedin.com/in/thisisscottcampbell/' target=“_blank”>@linkedin</a> </h4>
+
+<h4>Steve Hong <a  href='https://github.com/stevehong423' target=“_blank”>@github </a><a  href='https://www.linkedin.com/in/stevehongpa/' target=“_blank”>@linkedin</a> </h4>
+
+<h4>Jason Lee <a  href='https://github.com/j4s0n1020' target=“_blank”>@github </a><a  href='https://www.linkedin.com/in/jasonjml/' target=“_blank”>@linkedin</a> </h4>
+
+<h4>Razana Nisathar <a  href='https://github.com/razananisathar' target=“_blank”>@github </a><a  href='http://www.linkedin.com/in/razananisathar' target=“_blank”>@linkedin</a> </h4>
+

@@ -81,13 +81,53 @@ ReactDOM.render(
 );
 ```
 
+### In order to integrate Next.js applications with RecoilizeDebugger, follow the example below. 
+
+```js
+//If your application uses Next.js modify the _app.js as follows
+import dynamic from 'next/dynamic';
+import { useEffect, useState } from 'react';
+import { RecoilRoot } from 'recoil';
+
+function MyApp({ Component, pageProps }) {
+
+  const [root, setRoot] = useState(null)
+  const RecoilizeDebugger = dynamic(
+	() => {
+	  return import('recoilize');
+	},
+	{ ssr: false}
+  );
+
+  useEffect(() => {
+
+    if (typeof window.document !== 'undefined') {
+      setRoot(document.getElementById('__next'));
+    }
+  }, [root]);
+ 
+  return (
+    <>
+    <RecoilRoot>
+      <RecoilizeDebugger root = {root}/>
+      <Component {...pageProps} />
+    </RecoilRoot>
+    </>
+  );
+}
+
+
+export default MyApp;
+
+```
+
 #### Open your application on the Chrome Browser and start debugging with Recoilize!
 
 ##### (Only supported with React applications using Recoil as state management)
 
-<h1>New Features for Version 0.9.8</h1>
+<h1>New Features for Version 2.0.1</h1>
 
-<h3>Support for Recoil 0.1.2</h3>
+<h3>Support for Recoil 0.1.3</h3>
 <p>Recoilize now supports the most recent update to the Recoil library.</p>
 
 <h3>Ease of Use</h3>
@@ -111,8 +151,8 @@ The flame graph displays the time a component took to render itself, and all of 
 <h3>Throttle</h3>
 <p>In the settings tab, users are able to set throttle (in milliseconds) for large scale applications or any applications that changes state rapidly. The default is set at 70ms.<p>
 
-<h3>State Persistence (BETA)</h3>
-<p>Recoilize allows the users to persist their application's state through a refresh or reload. At this time, the user is able to view the previous states in the dev tool, but cannot time travel to the states before refresh. The team is still working on completing this feature.</p>
+<h3>State Persistence</h3>
+<p>Recoilize allows the users to persist their application's state through a refresh or reload. At this time, the user is able to view the previous states in the dev tool, but cannot time travel to the states before refresh.</p>
 
 <h3>Additional Features</h3>
 <ul><li>component graph hover to view atoms and selectors</li></ul>
@@ -162,3 +202,13 @@ The flame graph displays the time a component took to render itself, and all of 
 <h4>Anthony Magallanes <a  href='https://github.com/amagalla' target="_blank">@github </a><a  href='https://www.linkedin.com/in/anthony-magallanes/' target="_blank">@linkedin</a> </h4>
 
 <h4>Edward Shei <a  href='https://github.com/calibeach' target="_blank">@github </a><a  href='https://www.linkedin.com/in/edwardshei/' target="_blank">@linkedin</a> </h4>
+
+<h4>Nathan Bargers <a  href='https://github.com/nbargers' target=“_blank”>@github </a><a  href='https://www.linkedin.com/in/nathan-bargers/' target=“_blank”>@linkedin</a> </h4>
+
+<h4>Scott Campbell <a  href='https://github.com/thisisscottcampbell' target=“_blank”>@github </a><a  href='https://www.linkedin.com/in/thisisscottcampbell/' target=“_blank”>@linkedin</a> </h4>
+
+<h4>Steve Hong <a  href='https://github.com/stevehong423' target=“_blank”>@github </a><a  href='https://www.linkedin.com/in/stevehongpa/' target=“_blank”>@linkedin</a> </h4>
+
+<h4>Jason Lee <a  href='https://github.com/j4s0n1020' target=“_blank”>@github </a><a  href='https://www.linkedin.com/in/jasonjml/' target=“_blank”>@linkedin</a> </h4>
+
+<h4>Razana Nisathar <a  href='https://github.com/razananisathar' target=“_blank”>@github </a><a  href='http://www.linkedin.com/in/razananisathar' target=“_blank”>@linkedin</a> </h4>
