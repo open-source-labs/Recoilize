@@ -1,6 +1,6 @@
 {
   "name": "Recoilize",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "devtools_page": "devtools.html",
   "description": "A Chrome extension that helps debug Recoil applications by memorizing the state of components with every render.",
   "manifest_version": 2,
