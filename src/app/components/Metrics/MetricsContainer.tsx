@@ -10,11 +10,13 @@ const Metrics: React.FC = () => {
     state => state.snapshot.cleanComponentAtomTree,
   );
   //create state for the graph type toggle
-  const [graphType, setGraphType] = useState<boolean>(true);
+  const [graphType, setGraphType] = useState<string>('flame');
 
   //funciton that toggles the graphType state
-  const toggleGraphFunc = (flame: boolean): void => {
-    flame ? setGraphType(false) : setGraphType(true);
+  const toggleGraphFunc = (check: string): void => {
+    if (check === 'flame') setGraphType('flame');
+    if (check === 'ranked') setGraphType('ranked');
+    if (check === 'comparison') setGraphType('comparison');
   };
 
   // create an empty array to store objects for property name and actualDuration for rankedGraph
@@ -38,7 +40,7 @@ const Metrics: React.FC = () => {
 
   //function that renders either graphComponent based on graphType state variable
   const determineRender: any = () => {
-    if (graphType) {
+    if (graphType === 'flame') {
       return (
         //ParentSize component allows us to scale the FlameGraph to fit its container.
         <ParentSize>
@@ -53,7 +55,21 @@ const Metrics: React.FC = () => {
           }
         </ParentSize>
       );
-    } else {
+    } else if (graphType === 'ranked') {
+      return (
+        <ParentSize>
+          {size =>
+            size.ref && (
+              <RankedGraph
+                data={dataDurationArr}
+                width={size.width}
+                height={size.height}
+              />
+            )
+          }
+        </ParentSize>
+      );
+    } else if (graphType === 'comparison') {
       return (
         <ParentSize>
           {size =>
@@ -78,16 +94,23 @@ const Metrics: React.FC = () => {
           className="graphButton"
           autoFocus={true}
           onClick={() => {
-            toggleGraphFunc(false);
+            toggleGraphFunc('flame');
           }}>
           Flame Graph
         </button>
         <button
           className="graphButton"
           onClick={() => {
-            toggleGraphFunc(true);
+            toggleGraphFunc('ranked');
           }}>
           Ranked Graph
+        </button>
+        <button
+          className="graphButton"
+          onClick={() => {
+            toggleGraphFunc('comparison');
+          }}>
+          Comparison Graph
         </button>
       </div>
       {determineRender()}

@@ -1,4 +1,4 @@
-import React, { useState} from 'react';
+import React, {useState} from 'react';
 import Diff from '../components/StateDiff/Diff';
 import NavBar from '../components/NavBar/NavBar';
 import Metrics from '../components/Metrics/MetricsContainer';
@@ -29,7 +29,7 @@ const VisualContainer: React.FC = () => {
     Metrics: <Metrics />,
 
     // settings tab that doesn't want to be in quotes because too cool for school
-    Settings: <Settings/>,
+    Settings: <Settings />,
   };
   // array of all nav obj keys
   const tabsList: string[] = Object.keys(nav);

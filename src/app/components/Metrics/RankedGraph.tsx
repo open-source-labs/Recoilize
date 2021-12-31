@@ -127,6 +127,13 @@ const RankedGraph: React.FC<RankedGraphProps> = ({
 
   return (
     <div data-testid="canvas" id="stateGraphContainer">
+      <button
+        className="save-series-button"
+        onClick={e => {
+          console.log('save button has been clicked');
+        }}>
+        Save Series
+      </button>
       <svg id="canvas" ref={svgRef}></svg>
     </div>
   );
