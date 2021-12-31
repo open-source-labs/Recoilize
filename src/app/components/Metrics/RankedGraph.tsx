@@ -3,7 +3,7 @@ import * as d3 from 'd3';
 import {dataDurationArr} from '../../../types';
 
 interface RankedGraphProps {
-  data: dataDurationArr;
+  data: dataDurationArr; // an array of object{name:, actualDuration}
   width?: number;
   height?: number;
 }
@@ -13,6 +13,14 @@ const RankedGraph: React.FC<RankedGraphProps> = ({
   width,
   height,
 }: RankedGraphProps) => {
+  // create a function to store current data to local storage
+  const toLocalStorage = (data: any) => {
+    for (let i = 0; i < data.length; i++) {
+      console.log('trigger toLocalStorage');
+      const jsonData = JSON.stringify(data[i]);
+      localStorage.setItem(`snapshot ${i}`, jsonData);
+    }
+  };
   const svgRef = useRef();
   useEffect(() => {
     document.getElementById('canvas').innerHTML = '';
@@ -131,6 +139,10 @@ const RankedGraph: React.FC<RankedGraphProps> = ({
         className="save-series-button"
         onClick={e => {
           console.log('save button has been clicked');
+          console.log('before save: ', localStorage);
+          console.log('data: ', data);
+          toLocalStorage(data);
+          console.log('after save: ', localStorage);
         }}>
         Save Series
       </button>
