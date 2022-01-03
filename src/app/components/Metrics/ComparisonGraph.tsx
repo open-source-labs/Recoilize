@@ -13,8 +13,31 @@ const ComparisonGraph: React.FC<ComparisonGraphProps> = ({
   width,
   height,
 }: ComparisonGraphProps) => {
+  // declare an array that holds 2 objects: past and current
+  const displayData = [
+    {name: 'past', duration: 0},
+    {name: 'current', duration: 0},
+  ];
+  // get total duration for current serie
+  for (const element of data) {
+    if (element.actualDuration > 0)
+      displayData[1].duration += element.actualDuration;
+  }
+  // retrieve and get total duration for past serie from the local storage
+  const values: any[] = [];
+  const keys = Object.keys(localStorage);
+  let i = keys.length;
+  while (i--) {
+    const series = localStorage.getItem(keys[i]);
+    values.push(JSON.parse(series));
+  }
+  for (const element of values) {
+    displayData[0].duration += element.actualDuration;
+  }
   const svgRef = useRef();
   useEffect(() => {
+    console.log('total past duration ', displayData[0].duration);
+    console.log('total current duration ', displayData[1].duration);
     document.getElementById('canvas').innerHTML = '';
     // set the dimensions and margins of the graph
     let left = 80;
@@ -59,26 +82,26 @@ const ComparisonGraph: React.FC<ComparisonGraphProps> = ({
     // Scale the range of the data in the domain
     x.domain([
       0,
-      d3.max(data, (d: any) => {
-        return d.actualDuration;
+      d3.max(displayData, (d: any) => {
+        return d.duration;
       }),
     ]);
     // Scale the range of the data across the y-axis
     y.domain(
-      data.map((d: any, i) => {
+      displayData.map((d: any, i) => {
         return d.name + '-' + i;
       }),
     );
     // Scale actualDuration with the y-axis
     z.domain(
-      data.map((d: any, i) => {
-        return d.actualDuration.toFixed(2) + 'ms' + '-' + i;
+      displayData.map((d: any, i) => {
+        return d.duration.toFixed(2) + 'ms' + '-' + i;
       }),
     );
     // append the rectangles for the bar chart
     svg
       .selectAll('.bar')
-      .data(data)
+      .data(displayData)
       .enter()
       .append('rect')
       .attr('class', 'bar')
@@ -97,10 +120,10 @@ const ComparisonGraph: React.FC<ComparisonGraphProps> = ({
       // .duration(1300)
       // .delay((d: any,i: any) => i * 100)
       .attr('width', function (d: any) {
-        return x(d.actualDuration);
+        return x(d.duration);
       })
       .attr('fill', function (d: any) {
-        return colorPicker(d.actualDuration);
+        return colorPicker(d.duration);
       })
       .attr('y', function (d: any, i: any) {
         return y(d.name + '-' + i);
