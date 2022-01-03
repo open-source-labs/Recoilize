@@ -138,11 +138,7 @@ const RankedGraph: React.FC<RankedGraphProps> = ({
       <button
         className="save-series-button"
         onClick={e => {
-          console.log('save button has been clicked');
-          console.log('before save: ', localStorage);
-          console.log('data: ', data);
           toLocalStorage(data);
-          console.log('after save: ', localStorage);
         }}>
         Save Series
       </button>

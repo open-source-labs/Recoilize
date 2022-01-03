@@ -34,10 +34,9 @@ const ComparisonGraph: React.FC<ComparisonGraphProps> = ({
   for (const element of values) {
     displayData[0].duration += element.actualDuration;
   }
+  // svg
   const svgRef = useRef();
   useEffect(() => {
-    console.log('total past duration ', displayData[0].duration);
-    console.log('total current duration ', displayData[1].duration);
     document.getElementById('canvas').innerHTML = '';
     // set the dimensions and margins of the graph
     let left = 80;
