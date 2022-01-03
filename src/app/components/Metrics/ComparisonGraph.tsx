@@ -2,25 +2,17 @@ import React, {useEffect, useRef} from 'react';
 import * as d3 from 'd3';
 import {dataDurationArr} from '../../../types';
 
-interface RankedGraphProps {
+interface ComparisonGraphProps {
   data: dataDurationArr; // an array of object{name:, actualDuration}
   width?: number;
   height?: number;
 }
 
-const RankedGraph: React.FC<RankedGraphProps> = ({
+const ComparisonGraph: React.FC<ComparisonGraphProps> = ({
   data,
   width,
   height,
-}: RankedGraphProps) => {
-  // create a function to store current data to local storage
-  const toLocalStorage = (data: any) => {
-    for (let i = 0; i < data.length; i++) {
-      console.log('trigger toLocalStorage');
-      const jsonData = JSON.stringify(data[i]);
-      localStorage.setItem(`${i}`, jsonData);
-    }
-  };
+}: ComparisonGraphProps) => {
   const svgRef = useRef();
   useEffect(() => {
     document.getElementById('canvas').innerHTML = '';
@@ -135,20 +127,9 @@ const RankedGraph: React.FC<RankedGraphProps> = ({
 
   return (
     <div data-testid="canvas" id="stateGraphContainer">
-      <button
-        className="save-series-button"
-        onClick={e => {
-          console.log('save button has been clicked');
-          console.log('before save: ', localStorage);
-          console.log('data: ', data);
-          toLocalStorage(data);
-          console.log('after save: ', localStorage);
-        }}>
-        Save Series
-      </button>
       <svg id="canvas" ref={svgRef}></svg>
     </div>
   );
 };
 
-export default RankedGraph;
+export default ComparisonGraph;

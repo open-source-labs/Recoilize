@@ -3,6 +3,7 @@ import {ParentSize} from '@vx/responsive';
 import {dataDurationArr} from '../../../types';
 import FlameGraph from './FlameGraph.js';
 import RankedGraph from './RankedGraph';
+import ComparisonGraph from './ComparisonGraph';
 import {useAppSelector} from '../../state-management/hooks';
 
 const Metrics: React.FC = () => {
@@ -74,7 +75,7 @@ const Metrics: React.FC = () => {
         <ParentSize>
           {size =>
             size.ref && (
-              <RankedGraph
+              <ComparisonGraph
                 data={dataDurationArr}
                 width={size.width}
                 height={size.height}
