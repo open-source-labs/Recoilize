@@ -1,16 +1,16 @@
-import React, { useState, useRef } from 'react';
-import { scaleLinear } from 'd3-scale';
-import { interpolate } from 'd3-interpolate';
-import { format as d3format } from 'd3-format';
-import { hierarchy } from 'd3-hierarchy';
-import { Group } from '@vx/group';
-import { Partition } from '@vx/hierarchy';
-import { useSpring, animated } from 'react-spring';
+import React, {useState, useRef} from 'react';
+import {scaleLinear} from 'd3-scale';
+import {interpolate} from 'd3-interpolate';
+import {format as d3format} from 'd3-format';
+import {hierarchy} from 'd3-hierarchy';
+import {Group} from '@vx/group';
+import {Partition} from '@vx/hierarchy';
+import {useSpring, animated} from 'react-spring';
 
 //determining the number of decimal places displayed
 const format = d3format('.2f');
 
-const FlameGraph = ({ cleanedComponentAtomTree, width, height }) => {
+const FlameGraph = ({cleanedComponentAtomTree, width, height}) => {
   //Building a heirarchy for d3 to graph
   const root = hierarchy(cleanedComponentAtomTree)
     //determining tree based duration by summing actual duration of children
@@ -32,7 +32,7 @@ const FlameGraph = ({ cleanedComponentAtomTree, width, height }) => {
   const averageDiration = root.value / totalNodes;
 
   //setting margins to fit graphed componets together and fit to container
-  const margin = { top: 0, left: 0, right: 0, bottom: 0 };
+  const margin = {top: 0, left: 0, right: 0, bottom: 0};
 
   //scaleLinear outputs a funciton
   //this function is used to determine a graph components color based on actualDuration
@@ -64,11 +64,11 @@ const FlameGraph = ({ cleanedComponentAtomTree, width, height }) => {
   const yr = interpolate(yScale.current.range(), area.yRange);
 
   //set parameters for zooming animations
-  const { t } = useSpring({
+  const {t} = useSpring({
     native: true,
     reset: true,
-    from: { t: 0 },
-    to: { t: 1 },
+    from: {t: 0},
+    to: {t: 1},
     config: {
       mass: 5,
       tension: 500,

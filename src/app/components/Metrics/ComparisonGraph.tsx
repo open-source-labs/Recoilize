@@ -2,27 +2,42 @@ import React, {useEffect, useRef} from 'react';
 import * as d3 from 'd3';
 import {dataDurationArr} from '../../../types';
 
-interface RankedGraphProps {
+interface ComparisonGraphProps {
   data: dataDurationArr; // an array of object{name:, actualDuration}
   width?: number;
   height?: number;
 }
 
-const RankedGraph: React.FC<RankedGraphProps> = ({
+const ComparisonGraph: React.FC<ComparisonGraphProps> = ({
   data,
   width,
   height,
-}: RankedGraphProps) => {
-  // create a function to store current data to local storage
-  const toLocalStorage = (data: any) => {
-    for (let i = 0; i < data.length; i++) {
-      console.log('trigger toLocalStorage');
-      const jsonData = JSON.stringify(data[i]);
-      localStorage.setItem(`${i}`, jsonData);
-    }
-  };
+}: ComparisonGraphProps) => {
+  // declare an array that holds 2 objects: past and current
+  const displayData = [
+    {name: 'past', duration: 0},
+    {name: 'current', duration: 0},
+  ];
+
+  // retrieve and get total duration for past serie from the local storage
+  const values: any[] = [];
+  const keys = Object.keys(localStorage);
+  let i = keys.length;
+  while (i--) {
+    const series = localStorage.getItem(keys[i]);
+    values.push(JSON.parse(series));
+  }
+  for (const element of values) {
+    displayData[0].duration += element.actualDuration;
+  }
+  // svg
   const svgRef = useRef();
   useEffect(() => {
+    // get total duration for current serie
+    for (const element of data) {
+      if (element.actualDuration > 0)
+        displayData[1].duration += element.actualDuration;
+    }
     document.getElementById('canvas').innerHTML = '';
     // set the dimensions and margins of the graph
     let left = 80;
@@ -67,26 +82,26 @@ const RankedGraph: React.FC<RankedGraphProps> = ({
     // Scale the range of the data in the domain
     x.domain([
       0,
-      d3.max(data, (d: any) => {
-        return d.actualDuration;
+      d3.max(displayData, (d: any) => {
+        return d.duration;
       }),
     ]);
     // Scale the range of the data across the y-axis
     y.domain(
-      data.map((d: any, i) => {
+      displayData.map((d: any, i) => {
         return d.name + '-' + i;
       }),
     );
     // Scale actualDuration with the y-axis
     z.domain(
-      data.map((d: any, i) => {
-        return d.actualDuration.toFixed(2) + 'ms' + '-' + i;
+      displayData.map((d: any, i) => {
+        return d.duration.toFixed(2) + 'ms' + '-' + i;
       }),
     );
     // append the rectangles for the bar chart
     svg
       .selectAll('.bar')
-      .data(data)
+      .data(displayData)
       .enter()
       .append('rect')
       .attr('class', 'bar')
@@ -105,10 +120,10 @@ const RankedGraph: React.FC<RankedGraphProps> = ({
       // .duration(1300)
       // .delay((d: any,i: any) => i * 100)
       .attr('width', function (d: any) {
-        return x(d.actualDuration);
+        return x(d.duration);
       })
       .attr('fill', function (d: any) {
-        return colorPicker(d.actualDuration);
+        return colorPicker(d.duration);
       })
       .attr('y', function (d: any, i: any) {
         return y(d.name + '-' + i);
@@ -135,16 +150,9 @@ const RankedGraph: React.FC<RankedGraphProps> = ({
 
   return (
     <div data-testid="canvas" id="stateGraphContainer">
-      <button
-        className="save-series-button"
-        onClick={e => {
-          toLocalStorage(data);
-        }}>
-        Save Series
-      </button>
       <svg id="canvas" ref={svgRef}></svg>
     </div>
   );
 };
 
-export default RankedGraph;
+export default ComparisonGraph;
