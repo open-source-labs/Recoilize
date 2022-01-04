@@ -18,11 +18,7 @@ const ComparisonGraph: React.FC<ComparisonGraphProps> = ({
     {name: 'past', duration: 0},
     {name: 'current', duration: 0},
   ];
-  // get total duration for current serie
-  for (const element of data) {
-    if (element.actualDuration > 0)
-      displayData[1].duration += element.actualDuration;
-  }
+
   // retrieve and get total duration for past serie from the local storage
   const values: any[] = [];
   const keys = Object.keys(localStorage);
@@ -37,6 +33,11 @@ const ComparisonGraph: React.FC<ComparisonGraphProps> = ({
   // svg
   const svgRef = useRef();
   useEffect(() => {
+    // get total duration for current serie
+    for (const element of data) {
+      if (element.actualDuration > 0)
+        displayData[1].duration += element.actualDuration;
+    }
     document.getElementById('canvas').innerHTML = '';
     // set the dimensions and margins of the graph
     let left = 80;
