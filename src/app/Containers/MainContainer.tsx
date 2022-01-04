@@ -6,9 +6,9 @@ import TravelContainer from './TravelContainer';
 const MainContainer: React.FC = () => {
   return (
     <div className="MainContainer">
-      <TravelContainer />
       <SnapshotsContainer />
       <VisualContainer />
+      <TravelContainer />
     </div>
   );
 };

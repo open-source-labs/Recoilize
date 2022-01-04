@@ -76,7 +76,18 @@ button:hover {
  */
 .MainContainer {
   height: 100%;
-  display: flex;
+  /* display: flex; */
+  display: grid;
+  grid-template-columns: min-content 2fr;
+  grid-template-rows: 8fr 1fr;
+  grid-template-areas:
+    'actions states'
+    'travel travel';
+}
+
+/* Time Travel Container */
+.travel-container {
+  grid-area: travel;
 }
 
 /* SNAPSHOT CONTAINER -> SNAPSHOTLIST COMPONENT */
@@ -89,6 +100,7 @@ button:hover {
   background-color: #2d2d2d;
   text-align: center;
   color: #e6e6e6;
+  grid-area: actions;
 }
 
 .removeSnapshot {
@@ -180,6 +192,7 @@ button:hover {
   color: #e6e6e6;
   height: 100%;
   width: 100%;
+  grid-area: states;
 }
 /* NAVBAR COMPONENT */
 .NavBar {
