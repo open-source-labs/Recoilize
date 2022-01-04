@@ -1,9 +1,10 @@
 import React from 'react';
+import MainSlider from '../components/MainSlider';
 
 const TravelContainer: React.FC = () => {
   return (
     <div className="travel-container">
-      <button>Click here</button>
+      <MainSlider />
     </div>
   );
 };

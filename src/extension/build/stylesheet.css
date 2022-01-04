@@ -88,6 +88,62 @@ button:hover {
 /* Time Travel Container */
 .travel-container {
   grid-area: travel;
+  background: linear-gradient(
+		90deg,
+		rgba(41, 41, 41, 1) 0%,
+		rgba(51, 51, 51, 1) 50%,
+		rgba(41, 41, 41, 1) 100%
+	);
+	display: flex;
+  flex-direction: column;
+}
+
+.rc-slider {
+	position: relative;
+	width: 100%;
+	margin: 10px;
+	border-radius: 6px;
+	-ms-touch-action: none;
+	touch-action: none;
+	box-sizing: border-box;
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+.rc-slider * {
+	box-sizing: border-box;
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+.rc-slider-rail {
+	position: absolute;
+	width: 100%;
+	background-color: #ebf2fa;
+	height: 4px;
+	border-radius: 6px;
+}
+
+.rc-slider-track {
+	position: absolute;
+	left: 0;
+	height: 4px;
+	border-radius: 6px;
+	background-color: #ff5470;
+}
+
+.rc-slider-handle {
+	position: absolute;
+	margin-left: -10px;
+	margin-top: -10px;
+	width: 25px;
+	height: 25px;
+	cursor: pointer;
+	cursor: -webkit-grab;
+	cursor: grab;
+	border-radius: 50%;
+	background-color: #bd4f6c;
+  background-image: linear-gradient(326deg, #bd4f6c 0%, #d7816a 74%);
+	-ms-touch-action: pan-x;
+	touch-action: pan-x;
 }
 
 /* SNAPSHOT CONTAINER -> SNAPSHOTLIST COMPONENT */
