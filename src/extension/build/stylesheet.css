@@ -98,9 +98,15 @@ button:hover {
   flex-direction: column;
 }
 
+#slider-start-button {
+  width: 100px;
+  height: 25px;
+  margin: 0 1% 0 2%;
+}
+
 .rc-slider {
 	position: relative;
-	width: 100%;
+	width: 70%;
 	margin: 10px;
 	border-radius: 6px;
 	-ms-touch-action: none;
@@ -132,10 +138,11 @@ button:hover {
 
 .rc-slider-handle {
 	position: absolute;
-	margin-left: -10px;
+	margin-left: 5px;
 	margin-top: -10px;
-	width: 25px;
-	height: 25px;
+  padding-left: 10px;
+	width: 20px;
+	height: 20px;
 	cursor: pointer;
 	cursor: -webkit-grab;
 	cursor: grab;

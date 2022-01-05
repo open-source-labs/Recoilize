@@ -1,6 +1,8 @@
 import React from 'react';
 import Slider from 'rc-slider';
 import Tooltip from 'rc-tooltip';
+import {useAppSelector, useAppDispatch} from '../state-management/hooks';
+import {setRenderIndex} from '../state-management/slices/SnapshotSlice';
 
 const {Handle} = Slider;
 
@@ -25,7 +27,7 @@ const handle = (props: handleProps) => {
   return (
     <Tooltip
       prefixCls="rc-slider-tooltip"
-      overlay={value}
+      overlay={''}
       visible={dragging}
       placement="top"
       key={index}>
@@ -39,10 +41,25 @@ const handle = (props: handleProps) => {
 // }
 
 function MainSlider() {
+  const dispatch = useAppDispatch();
+
+  const renderIndex = useAppSelector(state => state.snapshot.renderIndex);
+  const snapshotHistory = useAppSelector(
+    state => state.snapshot.snapshotHistory,
+  );
+  console.log('this is renderIndex ', renderIndex);
+  console.log('this is snapshotHistory length ', snapshotHistory.length);
   return (
     <div>
-      <button>Start</button>
-      <Slider min={0} max={1000} defaultValue={0} handle={handle} />
+      <Slider
+        min={0}
+        max={snapshotHistory.length - 1}
+        value={renderIndex}
+        onChange={(index: number) => {
+          dispatch(setRenderIndex(index));
+        }}
+        handle={handle}
+      />
     </div>
   );
 }
