@@ -86,10 +86,26 @@ function MainSlider() {
         }}
         handle={handle}
       />
-      <button className="backfor-button" type="button">
+      <button
+        className="backfor-button"
+        type="button"
+        onClick={() => {
+          if (renderIndex > 0) {
+            dispatch(setRenderIndex(renderIndex - 1));
+            timeTravelFunc(renderIndex);
+          }
+        }}>
         {'<'}
       </button>
-      <button className="backfor-button" type="button">
+      <button
+        className="backfor-button"
+        type="button"
+        onClick={() => {
+          if (renderIndex < snapshotHistory.length - 1) {
+            dispatch(setRenderIndex(renderIndex + 1));
+            timeTravelFunc(renderIndex);
+          }
+        }}>
         {'>'}
       </button>
     </div>
