@@ -76,7 +76,91 @@ button:hover {
  */
 .MainContainer {
   height: 100%;
-  display: flex;
+  /* display: flex; */
+  display: grid;
+  grid-template-columns: min-content 2fr;
+  grid-template-rows: 8fr 1fr;
+  grid-template-areas:
+    'actions states'
+    'travel travel';
+}
+
+/* Time Travel Container */
+.travel-container {
+  grid-area: travel;
+  background: linear-gradient(
+		90deg,
+		rgba(41, 41, 41, 1) 0%,
+		rgba(51, 51, 51, 1) 50%,
+		rgba(41, 41, 41, 1) 100%
+	);
+	display: flex;
+  flex-direction: column;
+}
+
+.main-slider {
+  display:inline-flex;
+}
+
+#slider-start-button {
+  width: 100px;
+  height: 25px;
+  margin: 0 1% 1% 2%;
+}
+
+.backfor-button {
+  width: 30px;
+  height: 25;
+  margin: 0 0 1% 1%;
+}
+
+.rc-slider {
+	position: relative;
+	width: 70%;
+	margin: 10px;
+	border-radius: 6px;
+	-ms-touch-action: none;
+	touch-action: none;
+	box-sizing: border-box;
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+.rc-slider * {
+	box-sizing: border-box;
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+.rc-slider-rail {
+	position: absolute;
+	width: 100%;
+	background-color: #ebf2fa;
+	height: 4px;
+	border-radius: 6px;
+}
+
+.rc-slider-track {
+	position: absolute;
+	left: 0;
+	height: 4px;
+	border-radius: 6px;
+	background-color: #ff5470;
+}
+
+.rc-slider-handle {
+	position: absolute;
+	margin-left: 5px;
+	margin-top: -10px;
+  padding-left: 10px;
+	width: 20px;
+	height: 20px;
+	cursor: pointer;
+	cursor: -webkit-grab;
+	cursor: grab;
+	border-radius: 50%;
+	background-color: #bd4f6c;
+  background-image: linear-gradient(326deg, #bd4f6c 0%, #d7816a 74%);
+	-ms-touch-action: pan-x;
+	touch-action: pan-x;
 }
 
 /* SNAPSHOT CONTAINER -> SNAPSHOTLIST COMPONENT */
@@ -89,6 +173,7 @@ button:hover {
   background-color: #2d2d2d;
   text-align: center;
   color: #e6e6e6;
+  grid-area: actions;
 }
 
 .removeSnapshot {
@@ -180,6 +265,7 @@ button:hover {
   color: #e6e6e6;
   height: 100%;
   width: 100%;
+  grid-area: states;
 }
 /* NAVBAR COMPONENT */
 .NavBar {
