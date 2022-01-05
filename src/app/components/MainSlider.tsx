@@ -73,6 +73,7 @@ function MainSlider() {
   };
 
   const forwardButton = () => {
+    console.log('forward');
     if (renderIndex < snapshotHistory.length - 1) {
       dispatch(setRenderIndex(renderIndex + 1));
       timeTravelFunc(renderIndex + 1);
@@ -92,17 +93,14 @@ function MainSlider() {
         id="slider-start-button"
         type="button"
         onClick={() => {
-          dispatch(setRenderIndex(0));
-          timeTravelFunc(renderIndex);
-          let runTime = 0;
-          const intervalId = setInterval(() => {
-            runTime += 1;
-            if (runTime === snapshotHistory.length - 3) {
-              clearInterval(intervalId);
-            }
-            dispatch(setRenderIndex(renderIndex + 1));
-            timeTravelFunc(renderIndex);
-          }, 1000);
+          for (let i = 0; i < snapshotHistory.length; i++) {
+            setTimeout(() => {
+              console.log('heii');
+              dispatch(setRenderIndex(i));
+              timeTravelFunc(i + 1);
+              console.log('render index in start ', renderIndex);
+            }, 1000);
+          }
         }}>
         Start
       </button>
