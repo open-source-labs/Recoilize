@@ -68,15 +68,6 @@ const SnapshotsContainer: React.FC = () => {
       renderTime = filterData[i].componentAtomTree.treeBaseDuration as number;
     }
 
-    // create a function to store current data to local storage
-    const toLocalStorage = (data: any) => {
-    for (let i = 0; i < data.length; i++) {
-        console.log('trigger toLocalStorage');
-        const jsonData = JSON.stringify(data[i]);
-        localStorage.setItem(`${i}`, jsonData);
-      }
-    };
-
     // Push a div container to snapshotDivs array only if there was a change to state. 
     // The div container will contain renderTimes evaluated above.
     snapshotDivs.push(
@@ -154,6 +145,15 @@ const SnapshotsContainer: React.FC = () => {
     }
   }
 
+    // create a function to store current data to local storage
+    const toLocalStorage = (data: any) => {
+      for (let i = 0; i < data.length; i++) {
+          console.log('trigger toLocalStorage');
+          const jsonData = JSON.stringify(data[i]);
+          localStorage.setItem(`${i}`, jsonData);
+        }
+      };
+
   return (
     <div className="SnapshotsContainer">
       <div id="clear-snapshots-title">Clear Snapshots</div>
@@ -177,7 +177,7 @@ const SnapshotsContainer: React.FC = () => {
       <button
         className="save-series-button"
         onClick={e => {
-          toLocalStorage(data);
+          toLocalStorage(snapshotHistory);
         }}>
         Save Series
       </button>
