@@ -87,22 +87,30 @@ function MainSlider() {
     }
   };
 
+  const playButton = () => {
+    let currentIndex = 0;
+    dispatch(setRenderIndex(currentIndex));
+    timeTravelFunc(currentIndex);
+    const intervalId = setInterval(() => {
+      if (currentIndex < snapshotHistory.length - 1) {
+        dispatch(setRenderIndex(currentIndex + 1));
+        timeTravelFunc(currentIndex + 1);
+        currentIndex += 1;
+      } else {
+        clearInterval(intervalId);
+      }
+    }, 1000);
+  };
+
   return (
     <div className="main-slider">
       <button
         id="slider-start-button"
         type="button"
         onClick={() => {
-          for (let i = 0; i < snapshotHistory.length; i++) {
-            setTimeout(() => {
-              console.log('heii');
-              dispatch(setRenderIndex(i));
-              timeTravelFunc(i + 1);
-              console.log('render index in start ', renderIndex);
-            }, 1000);
-          }
+          playButton();
         }}>
-        Start
+        Play
       </button>
       <Slider
         min={0}
