@@ -71,9 +71,39 @@ function MainSlider() {
       },
     });
   };
+
+  const forwardButton = () => {
+    if (renderIndex < snapshotHistory.length - 1) {
+      dispatch(setRenderIndex(renderIndex + 1));
+      timeTravelFunc(renderIndex + 1);
+    }
+  };
+
+  const backwardButton = () => {
+    if (renderIndex > 0) {
+      dispatch(setRenderIndex(renderIndex - 1));
+      timeTravelFunc(renderIndex - 1);
+    }
+  };
+
   return (
     <div className="main-slider">
-      <button id="slider-start-button" type="button">
+      <button
+        id="slider-start-button"
+        type="button"
+        onClick={() => {
+          dispatch(setRenderIndex(0));
+          timeTravelFunc(renderIndex);
+          let runTime = 0;
+          const intervalId = setInterval(() => {
+            runTime += 1;
+            if (runTime === snapshotHistory.length - 3) {
+              clearInterval(intervalId);
+            }
+            dispatch(setRenderIndex(renderIndex + 1));
+            timeTravelFunc(renderIndex);
+          }, 1000);
+        }}>
         Start
       </button>
       <Slider
@@ -90,10 +120,7 @@ function MainSlider() {
         className="backfor-button"
         type="button"
         onClick={() => {
-          if (renderIndex > 0) {
-            dispatch(setRenderIndex(renderIndex - 1));
-            timeTravelFunc(renderIndex);
-          }
+          backwardButton();
         }}>
         {'<'}
       </button>
@@ -101,10 +128,7 @@ function MainSlider() {
         className="backfor-button"
         type="button"
         onClick={() => {
-          if (renderIndex < snapshotHistory.length - 1) {
-            dispatch(setRenderIndex(renderIndex + 1));
-            timeTravelFunc(renderIndex);
-          }
+          forwardButton();
         }}>
         {'>'}
       </button>
