@@ -76,7 +76,6 @@ button:hover {
  */
 .MainContainer {
   height: 100%;
-  /* display: flex; */
   display: grid;
   grid-template-columns: min-content 2fr;
   grid-template-rows: 8fr 1fr;

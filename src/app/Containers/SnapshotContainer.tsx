@@ -165,6 +165,7 @@ const SnapshotsContainer: React.FC = () => {
         }}>
         Snapshots
       </span>
+      <button>Save Series</button>
       <div className="SnapshotsList">
         <div>{snapshotDivs}</div>
         <div ref={snapshotEndRef} />
