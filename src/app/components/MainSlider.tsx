@@ -72,7 +72,10 @@ function MainSlider() {
     });
   };
   return (
-    <div>
+    <div className="main-slider">
+      <button id="slider-start-button" type="button">
+        Start
+      </button>
       <Slider
         min={0}
         max={snapshotHistory.length - 1}
@@ -83,6 +86,12 @@ function MainSlider() {
         }}
         handle={handle}
       />
+      <button className="backfor-button" type="button">
+        {'<'}
+      </button>
+      <button className="backfor-button" type="button">
+        {'>'}
+      </button>
     </div>
   );
 }

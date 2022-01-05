@@ -98,10 +98,20 @@ button:hover {
   flex-direction: column;
 }
 
+.main-slider {
+  display:inline-flex;
+}
+
 #slider-start-button {
   width: 100px;
   height: 25px;
-  margin: 0 1% 0 2%;
+  margin: 0 1% 1% 2%;
+}
+
+.backfor-button {
+  width: 30px;
+  height: 25;
+  margin: 0 0.5% 1% 0;
 }
 
 .rc-slider {
