@@ -175,6 +175,12 @@ button:hover {
   grid-area: actions;
 }
 
+.save-series-button {
+  width: 50%;
+  margin-left: 45px;
+  margin-bottom: 5px;
+}
+
 .removeSnapshot {
   background-color: transparent;
   border: none;
