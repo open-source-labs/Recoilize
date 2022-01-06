@@ -32,7 +32,7 @@ const FlameGraph = ({cleanedComponentAtomTree, width, height}) => {
   const averageDiration = root.value / totalNodes;
 
   //setting margins to fit graphed componets together and fit to container
-  const margin = {top: 0, left: 0, right: 0, bottom: 0};
+  const margin = {top: 20, left: 0, right: 20, bottom: 30};
 
   //scaleLinear outputs a funciton
   //this function is used to determine a graph components color based on actualDuration
@@ -87,6 +87,8 @@ const FlameGraph = ({cleanedComponentAtomTree, width, height}) => {
       <Partition
         top={margin.top}
         left={margin.left}
+        right={margin.right}
+        bottom={margin.bottom}
         root={root}
         size={[height, width]}
         padding={1}

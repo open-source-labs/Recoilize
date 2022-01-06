@@ -145,6 +145,15 @@ const SnapshotsContainer: React.FC = () => {
     }
   }
 
+    // create a function to store current data to local storage
+    const toLocalStorage = (data: any) => {
+      for (let i = 0; i < data.length; i++) {
+          console.log('trigger toLocalStorage');
+          const jsonData = JSON.stringify(data[i]);
+          localStorage.setItem(`${i}`, jsonData);
+        }
+      };
+
   return (
     <div className="SnapshotsContainer">
       <div id="clear-snapshots-title">Clear Snapshots</div>
@@ -165,6 +174,13 @@ const SnapshotsContainer: React.FC = () => {
         }}>
         Snapshots
       </span>
+      <button
+        className="save-series-button"
+        onClick={e => {
+          toLocalStorage(snapshotHistory);
+        }}>
+        Save Series
+      </button>
       <div className="SnapshotsList">
         <div>{snapshotDivs}</div>
         <div ref={snapshotEndRef} />

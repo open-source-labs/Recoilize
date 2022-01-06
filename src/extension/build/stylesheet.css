@@ -76,7 +76,6 @@ button:hover {
  */
 .MainContainer {
   height: 100%;
-  /* display: flex; */
   display: grid;
   grid-template-columns: min-content 2fr;
   grid-template-rows: 8fr 1fr;
@@ -174,6 +173,12 @@ button:hover {
   text-align: center;
   color: #e6e6e6;
   grid-area: actions;
+}
+
+.save-series-button {
+  width: 50%;
+  margin-left: 45px;
+  margin-bottom: 5px;
 }
 
 .removeSnapshot {

@@ -13,14 +13,6 @@ const RankedGraph: React.FC<RankedGraphProps> = ({
   width,
   height,
 }: RankedGraphProps) => {
-  // create a function to store current data to local storage
-  const toLocalStorage = (data: any) => {
-    for (let i = 0; i < data.length; i++) {
-      console.log('trigger toLocalStorage');
-      const jsonData = JSON.stringify(data[i]);
-      localStorage.setItem(`${i}`, jsonData);
-    }
-  };
   const svgRef = useRef();
   useEffect(() => {
     document.getElementById('canvas').innerHTML = '';
@@ -54,7 +46,7 @@ const RankedGraph: React.FC<RankedGraphProps> = ({
       .classed('svg-container', true)
       .append('svg')
       .attr('class', 'chart')
-      .attr('viewBox', '0 0 600 490')
+      .attr('viewBox', '-100 0 900 600')
       .attr('preserveAspectRatio', 'xMinYMin meet')
       .classed('svg-content-responsive', true)
       .call(
@@ -135,13 +127,6 @@ const RankedGraph: React.FC<RankedGraphProps> = ({
 
   return (
     <div data-testid="canvas" id="stateGraphContainer">
-      <button
-        className="save-series-button"
-        onClick={e => {
-          toLocalStorage(data);
-        }}>
-        Save Series
-      </button>
       <svg id="canvas" ref={svgRef}></svg>
     </div>
   );
