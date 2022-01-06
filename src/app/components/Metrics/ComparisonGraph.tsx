@@ -1,6 +1,7 @@
 import React, {useEffect, useRef} from 'react';
 import * as d3 from 'd3';
 import {dataDurationArr} from '../../../types';
+import {useAppSelector} from '../../state-management/hooks';
 
 interface ComparisonGraphProps {
   data: dataDurationArr; // an array of object{name:, actualDuration}
@@ -13,6 +14,11 @@ const ComparisonGraph: React.FC<ComparisonGraphProps> = ({
   width,
   height,
 }: ComparisonGraphProps) => {
+  const snapshotHistory = useAppSelector(
+    (state: {snapshot: {snapshotHistory: any}}) =>
+      state.snapshot.snapshotHistory,
+  );
+  console.log('comparison snapshot ', snapshotHistory);
   // declare an array that holds 2 objects: past and current
   const displayData = [
     {name: 'past', duration: 0},
@@ -28,16 +34,17 @@ const ComparisonGraph: React.FC<ComparisonGraphProps> = ({
     values.push(JSON.parse(series));
   }
   for (const element of values) {
-    displayData[0].duration += element.actualDuration;
+    displayData[0].duration += element.componentAtomTree.treeBaseDuration;
   }
+
+  let total = 0;
+  for (const element of snapshotHistory) {
+    total += element.componentAtomTree.treeBaseDuration;
+  }
+  displayData[1].duration = total;
   // svg
   const svgRef = useRef();
   useEffect(() => {
-    // get total duration for current serie
-    for (const element of data) {
-      if (element.actualDuration > 0)
-        displayData[1].duration += element.actualDuration;
-    }
     document.getElementById('canvas').innerHTML = '';
     // set the dimensions and margins of the graph
     let left = 80;
@@ -69,7 +76,7 @@ const ComparisonGraph: React.FC<ComparisonGraphProps> = ({
       .classed('svg-container', true)
       .append('svg')
       .attr('class', 'chart')
-      .attr('viewBox', '0 0 600 490')
+      .attr('viewBox', '-100 0 900 600')
       .attr('preserveAspectRatio', 'xMinYMin meet')
       .classed('svg-content-responsive', true)
       .call(
