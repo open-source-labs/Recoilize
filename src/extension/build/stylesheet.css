@@ -81,7 +81,8 @@ button:hover {
   grid-template-rows: 8fr 1fr;
   grid-template-areas:
     'actions states'
-    'travel travel';
+    'travel travel'
+    'buttons buttons';
 }
 
 /* Time Travel Container */
@@ -109,7 +110,7 @@ button:hover {
 
 .backfor-button {
   width: 30px;
-  height: 25;
+  height: 25px;
   margin: 0 0 1% 1%;
 }
 
@@ -160,6 +161,18 @@ button:hover {
   background-image: linear-gradient(326deg, #bd4f6c 0%, #d7816a 74%);
 	-ms-touch-action: pan-x;
 	touch-action: pan-x;
+}
+
+/* Buttons Container */
+.buttons_container {
+  grid-area: buttons;
+  display: flex;
+}
+
+#docs_button {
+  width: 100px;
+  height: 25px;
+  margin: 0 1% 1% 2%;
 }
 
 /* SNAPSHOT CONTAINER -> SNAPSHOTLIST COMPONENT */
