@@ -1,5 +1,5 @@
 import React from 'react';
-import MainSlider from '../components/MainSlider';
+import MainSlider from '../components/Slider/MainSlider';
 import ButtonsContainer from './ButtonsContainer';
 
 const TravelContainer: React.FC = () => {

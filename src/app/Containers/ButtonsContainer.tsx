@@ -3,7 +3,6 @@ import React from 'react';
 const ButtonsContainer = () => {
   const howToUseHandler = () => {
     window.open('https://github.com/open-source-labs/Recoilize', '_blank');
-    return null;
   };
   return (
     <div className="buttons_container">
@@ -12,7 +11,9 @@ const ButtonsContainer = () => {
         type="button"
         onClick={() => {
           howToUseHandler();
-        }}></button>
+        }}>
+        How To Use
+      </button>
     </div>
   );
 };
