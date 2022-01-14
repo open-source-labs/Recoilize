@@ -42,9 +42,8 @@ const ComparisonGraph: React.FC<ComparisonGraphProps> = ({
     total += element.componentAtomTree.treeBaseDuration;
   }
   displayData[1].duration = total;
-
   // delete series in local storage
-  const deleteSerires = () => {
+  const deleteSeries = () => {
     for (const i of keys) {
       localStorage.removeItem(i);
     }
@@ -166,9 +165,9 @@ const ComparisonGraph: React.FC<ComparisonGraphProps> = ({
   return (
     <div data-testid="canvas" id="stateGraphContainer">
       <button
-        id="delete-series-button"
+        id="docs_button"
         onClick={() => {
-          deleteSerires();
+          deleteSeries();
         }}>
         Delete Series
       </button>
