@@ -76,16 +76,20 @@ button:hover {
  */
 .MainContainer {
   height: 100%;
+  width: 100%;
   display: grid;
   grid-template-columns: min-content 2fr;
   grid-template-rows: 8fr 1fr;
   grid-template-areas:
     'actions states'
-    'travel travel';
+    'travel travel'
+    'buttons buttons';
+  overflow: hidden;
 }
 
 /* Time Travel Container */
 .travel-container {
+  width: 100%;
   grid-area: travel;
   background: linear-gradient(
 		90deg,
@@ -93,29 +97,40 @@ button:hover {
 		rgba(51, 51, 51, 1) 50%,
 		rgba(41, 41, 41, 1) 100%
 	);
+  position: absolute;
+  bottom: 0px;
 	display: flex;
   flex-direction: column;
 }
 
 .main-slider {
+  /* will need to fix a number of things if changed to vvv 
+  position: absolute;
+  bottom: 0px; */
   display:inline-flex;
+  /* side effect */
+  /* creates a black box above slider */
+  /* not covering snapshot list */
+  margin-top: 10px;
 }
 
 #slider-start-button {
   width: 100px;
   height: 25px;
-  margin: 0 1% 1% 2%;
+  margin: 0px 5px 5px 10px;
+  /* margin: 0 1% 1% 2%; */
 }
 
 .backfor-button {
   width: 30px;
-  height: 25;
-  margin: 0 0 1% 1%;
+  height: 25px;
+  margin: 0px 10px 10px 5px;
+  /* margin: 0 0 1% 1%; */
 }
 
 .rc-slider {
 	position: relative;
-	width: 70%;
+	width: calc(100% - 170px);
 	margin: 10px;
 	border-radius: 6px;
 	-ms-touch-action: none;
@@ -162,6 +177,20 @@ button:hover {
 	touch-action: pan-x;
 }
 
+/* Buttons Container */
+.buttons_container {
+  grid-area: buttons;
+  display: flex;
+}
+
+#docs_button {
+  width: 100px;
+  height: 25px;
+  margin: 0px 5px 15px 10px;
+  /* margin: 0 5px 10px 10px; */
+  /* margin: 0 1% 1% 2%; */
+}
+
 /* SNAPSHOT CONTAINER -> SNAPSHOTLIST COMPONENT */
 .SnapshotsContainer {
   height: 100%;
@@ -173,6 +202,7 @@ button:hover {
   text-align: center;
   color: #e6e6e6;
   grid-area: actions;
+  overflow: auto;
 }
 
 .save-series-button {
@@ -263,26 +293,39 @@ button:hover {
  * 6) SETTINGS,
  */
 .VisualContainer {
+  /* height && margin-top */
+  /* affects how scroll bar looks within State Diff && State Tree tabs */
+  height: calc(100% - 33px); 
+  margin-top: 33px;
+  width: 100%;
   display: flex;
   flex-grow: 8;
   flex-direction: column;
   border-left: 2px solid #484848;
-  color: #e6e6e6;
-  height: 100%;
-  width: 100%;
   grid-area: states;
+  color: #e6e6e6;
+  /* overflow: auto; is important for visual consistency */
+  /* affects initial loading of NavBar && State Diff */
+  /* affects scrolling of State Diff && State Tree */
+  overflow: auto;
+  /* overflow-y: auto messes up the height styling */
 }
 /* NAVBAR COMPONENT */
 .NavBar {
-  width: 100%;
+  width: calc(100% - 174px);
   display: flex;
-  flex-grow: 0;
   flex-direction: row;
+  text-align: center;
+  border-right: 2px solid #484848;
   border-bottom: 2px solid #484848;
   background-color: #2d2d2d;
+  position: absolute;
+  top: 0px;
+  z-index: 1;
 }
 
 .navBarButtons {
+  /* flex-grow: 1; */
   color: #989898;
   background-color: #2d2d2d;
   border: none;
@@ -296,18 +339,21 @@ button:hover {
 }
 /* DIFF COMPONENT */
 .Diff {
-  height: 100%;
-  overflow: auto;
+  /* 33px is height of navbar */
+  height: calc(100% - 33px); 
+  /* ! this height affects how scroll bar appears under State Diff tab */
   border-style: none;
   display: flex;
   flex-direction: column;
   padding: 10px;
   padding-bottom: 20px;
+  overflow: auto;
 }
 
 .toggleDiv {
-  display: flex;
-  justify-content: flex-end;
+  /* display: flex;
+  justify-content: flex-end; */
+  overflow: auto;
 }
 
 #raw {
@@ -322,21 +368,37 @@ button:hover {
 
 /* TREE COMPONENT */
 .Tree {
+  height: calc(100% - 33px); 
+  /* ! this height affects how scroll bar works/scroll under State Tree tab */
+  width: 90%;
+  /* this width affects how scroll bar looks within State Tree tab */
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
   padding: 10px;
-  overflow-y: auto;
+  /* overflow: auto; */
+  /* not the one needing overflow scrolling */
 }
 
 .json-tree {
-  margin: 10px;
-  padding: 0;
+  /* 33px is height of navbar */
+  height: calc(100% - 33px); 
+  width: 100%;
+  /* margin: 10px; */
+  /* padding: 0; */
+  padding-bottom: 20px;
   background-color: none;
   list-style: none;
+  /* not the one needing overflow scrolling */
 }
 
 /* VISUALIZER COMPONENT  */
+/* Flame Graph */
 #metricsWrapper {
-  height: calc(100% - 33px);
-  width: 100%;
+  height: calc(100% - 33px - 50px);
+  /* width: 98% fixes moving-bars issue */
+  width: 98%;
+  overflow: hidden;
 }
 
 .RankedGraph,
@@ -347,9 +409,15 @@ button:hover {
 }
 
 #stateGraphContainer {
-  height: calc(100% - 33px); /* 33px is height of navbar */
+  /* 33px is height of navbar */
+  height: calc(100% - 33px); 
   width: 100%;
+  overflow: auto;
 }
+
+/* svg {
+  height: calc(100% - 33px - 50px);
+} */
 
 .svg-container {
   display: inline-block;
@@ -359,7 +427,9 @@ button:hover {
   overflow: hidden;
 }
 .svg-content-responsive {
-  display: inline-block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   position: absolute;
   top: 10px;
   left: 0;
@@ -444,6 +514,7 @@ button:hover {
 .SelectorP:hover {
   opacity: 90% !important;
   cursor: pointer;
+  z-index: 1;
 }
 
 .AtomDiv:active,
@@ -498,6 +569,7 @@ button:hover {
  * 1) ATOMSELECTORLEGEND COMPONENT
  */
 .Component {
+  /* position: relative; */
   height: 100%;
   width: 100%;
 }
@@ -505,6 +577,8 @@ button:hover {
 /* ATOMCOMPONENTVISUAL COMPONENT */
 .AtomComponentVisual,
 #canvas {
+  /* centers graph content */
+  position: relative;
   height: 100%;
   width: 100%;
 }
@@ -517,12 +591,14 @@ button:hover {
   background-color: #484848;
   font-size: 100%;
   padding: 0 1%;
+  z-index: 1;
 }
 #componentGraph {
-  transform-origin: 25% -25%;
+  transform-origin: 15% -90%;
 }
 #fixedButton {
   position: fixed;
+  z-index: 1;
   bottom: 0px;
   right: 0px;
   width: 65px;
@@ -705,7 +781,6 @@ button:hover {
 /* ATOMSELECTORLEGEND COMPONENT */
 .AtomSelectorLegend {
   background-color: rgba(45, 45, 45, 0.65);
-  z-index: 1;
   position: fixed;
   right: 0;
   border: 2px solid #484848;
@@ -726,10 +801,12 @@ button:hover {
   border: none;
   word-wrap: break-word;
   font-size: 14px;
+  z-index: 1;
 }
 .atomLi:hover,
 .selectorLi:hover {
   background-color: #212121;
+  z-index: 1;
 }
 
 .minimizeButton {
@@ -835,12 +912,12 @@ button:hover {
 
 .slider {
   background-color: #ccc;
-  bottom: 0;
   cursor: pointer;
-  left: 0;
   position: absolute;
-  right: 0;
   top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
   transition: 0.4s;
 }
 .slider:before {
