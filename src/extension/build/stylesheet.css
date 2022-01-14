@@ -293,7 +293,10 @@ button:hover {
  * 6) SETTINGS,
  */
 .VisualContainer {
+  /* height && margin-top */
+  /* affects how scroll bar looks within State Diff && State Tree tabs */
   height: calc(100% - 33px); 
+  margin-top: 33px;
   width: 100%;
   display: flex;
   flex-grow: 8;
@@ -339,7 +342,6 @@ button:hover {
   /* 33px is height of navbar */
   height: calc(100% - 33px); 
   /* ! this height affects how scroll bar appears under State Diff tab */
-  margin-top: 33px;
   border-style: none;
   display: flex;
   flex-direction: column;
@@ -370,7 +372,6 @@ button:hover {
   /* ! this height affects how scroll bar works/scroll under State Tree tab */
   width: 90%;
   /* this width affects how scroll bar looks within State Tree tab */
-  margin-top: 33px;
   margin-bottom: 20px;
   display: flex;
   flex-direction: column;
@@ -392,9 +393,9 @@ button:hover {
 }
 
 /* VISUALIZER COMPONENT  */
+/* Flame Graph */
 #metricsWrapper {
-  height: calc(100% - 33px);
-  margin-top: 33px;
+  height: calc(100% - 33px - 50px);
   /* width: 98% fixes moving-bars issue */
   width: 98%;
   overflow: hidden;
@@ -413,6 +414,10 @@ button:hover {
   width: 100%;
   overflow: auto;
 }
+
+/* svg {
+  height: calc(100% - 33px - 50px);
+} */
 
 .svg-container {
   display: inline-block;
@@ -564,15 +569,16 @@ button:hover {
  * 1) ATOMSELECTORLEGEND COMPONENT
  */
 .Component {
+  /* position: relative; */
   height: 100%;
   width: 100%;
-  overflow: auto;
 }
 
 /* ATOMCOMPONENTVISUAL COMPONENT */
 .AtomComponentVisual,
 #canvas {
-  margin: top 33px;
+  /* centers graph content */
+  position: relative;
   height: 100%;
   width: 100%;
 }
@@ -585,9 +591,10 @@ button:hover {
   background-color: #484848;
   font-size: 100%;
   padding: 0 1%;
+  z-index: 1;
 }
 #componentGraph {
-  transform-origin: 25% -25%;
+  transform-origin: 15% -90%;
 }
 #fixedButton {
   position: fixed;
@@ -794,10 +801,12 @@ button:hover {
   border: none;
   word-wrap: break-word;
   font-size: 14px;
+  z-index: 1;
 }
 .atomLi:hover,
 .selectorLi:hover {
   background-color: #212121;
+  z-index: 1;
 }
 
 .minimizeButton {
