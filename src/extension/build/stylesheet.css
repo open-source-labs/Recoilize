@@ -394,6 +394,7 @@ button:hover {
 /* VISUALIZER COMPONENT  */
 #metricsWrapper {
   height: calc(100% - 33px);
+  margin-top: 33px;
   /* width: 98% fixes moving-bars issue */
   width: 98%;
   overflow: hidden;
