@@ -5,7 +5,7 @@ import {setRenderIndex} from '../state-management/slices/SnapshotSlice';
 
 const SnapshotsContainer: React.FC = () => {
   const dispatch = useAppDispatch();
- 
+
   const snapshotHistory = useAppSelector(
     state => state.snapshot.snapshotHistory,
   );
@@ -14,8 +14,8 @@ const SnapshotsContainer: React.FC = () => {
   const renderIndex = useAppSelector(state => state.snapshot.renderIndex);
   const filterData = useAppSelector(selectFilterState);
   const snapshotEndRef = useRef<HTMLDivElement>(null);
-  
-  let snapshotHistoryLength = snapshotHistory.length
+
+  let snapshotHistoryLength = snapshotHistory.length;
 
   // useEffect to scroll bottom whenever snapshot history changes
   useEffect(() => {
@@ -30,10 +30,8 @@ const SnapshotsContainer: React.FC = () => {
   const snapshotDivs: JSX.Element[] = [];
   // iterate the same length of our snapshotHistory
   for (let i = 0; i < snapshotHistoryLength; i++) {
-    
     // filterFunc will return false if there is no change to state
     const filterFunc = (): boolean => {
-    
       // don't use the counter for this, not reliable
       if (i === 0) {
         return true;
@@ -51,24 +49,25 @@ const SnapshotsContainer: React.FC = () => {
       return false;
     };
     const x: boolean = filterFunc();
-    
+
     if (x === false) {
       continue;
     }
-    
-    // renderTime is set equal to the actualDuration. If i is zero then we are obtaining actualDuration from the very first snapshot in snapshotHistory. This is to avoid having undefined filter elements since there will be no difference between snapshot at the first instance. 
-    let renderTime: number;
-    if(i === 0) {
-      renderTime = snapshotHistory[0].componentAtomTree.treeBaseDuration;
-    } 
-    //Checks to see if the actualDuration within filter is an array. If it is an array then the 2nd value in the array is the new actualDuration.
-    else if (Array.isArray(filterData[i].componentAtomTree.actualDuration)) {      
-      renderTime = (filterData[i].componentAtomTree.treeBaseDuration as number[])[1];
-    } else {
-      renderTime = filterData[i].componentAtomTree.treeBaseDuration as number;
-    }
 
-    // Push a div container to snapshotDivs array only if there was a change to state. 
+    // renderTime is set equal to the actualDuration. If i is zero then we are obtaining actualDuration from the very first snapshot in snapshotHistory. This is to avoid having undefined filter elements since there will be no difference between snapshot at the first instance.
+    let renderTime: number =
+      snapshotHistory[i].componentAtomTree.treeBaseDuration;
+    // if (i === 0) {
+    //   renderTime = snapshotHistory[0].componentAtomTree.treeBaseDuration;
+    // }
+    // //Checks to see if the actualDuration within filter is an array. If it is an array then the 2nd value in the array is the new actualDuration.
+    // else if (Array.isArray(filterData[i].componentAtomTree.actualDuration)) {
+    //   renderTime = filterData[i].componentAtomTree.treeBaseDuration[1];
+    // } else {
+    //   renderTime = filterData[i].componentAtomTree.treeBaseDuration;
+    // }
+
+    // Push a div container to snapshotDivs array only if there was a change to state.
     // The div container will contain renderTimes evaluated above.
     snapshotDivs.push(
       <div
@@ -84,13 +83,13 @@ const SnapshotsContainer: React.FC = () => {
           dispatch(setRenderIndex(i));
         }}>
         {/* <li>{i}</li> */}
-        <li>{`${Math.round(renderTime*100)/100}ms`}</li>
+        <li>{`${Math.round(renderTime * 100) / 100}ms`}</li>
         <button
           className="timeTravelButton"
           style={
-          renderIndex === i
-            ? {color: '#E6E6E6', backgroundColor: '#212121'}
-            : {}
+            renderIndex === i
+              ? {color: '#E6E6E6', backgroundColor: '#212121'}
+              : {}
           }
           onClick={() => {
             timeTravelFunc(i);
@@ -145,14 +144,14 @@ const SnapshotsContainer: React.FC = () => {
     }
   }
 
-    // create a function to store current data to local storage
-    const toLocalStorage = (data: any) => {
-      for (let i = 0; i < data.length; i++) {
-          console.log('trigger toLocalStorage');
-          const jsonData = JSON.stringify(data[i]);
-          localStorage.setItem(`${i}`, jsonData);
-        }
-      };
+  // create a function to store current data to local storage
+  const toLocalStorage = (data: any) => {
+    for (let i = 0; i < data.length; i++) {
+      console.log('trigger toLocalStorage');
+      const jsonData = JSON.stringify(data[i]);
+      localStorage.setItem(`${i}`, jsonData);
+    }
+  };
 
   return (
     <div className="SnapshotsContainer">
