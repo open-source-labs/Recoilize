@@ -104,25 +104,33 @@ button:hover {
 }
 
 .main-slider {
+  /* will need to fix a number of things if changed to vvv 
+  position: absolute;
+  bottom: 0px; */
   display:inline-flex;
+  /* side effect */
+  /* creates a black box above slider */
+  /* not covering snapshot list */
   margin-top: 10px;
 }
 
 #slider-start-button {
   width: 100px;
   height: 25px;
-  margin: 0 1% 1% 2%;
+  margin: 0px 5px 5px 10px;
+  /* margin: 0 1% 1% 2%; */
 }
 
 .backfor-button {
   width: 30px;
   height: 25px;
-  margin: 0 0 1% 1%;
+  margin: 0px 10px 10px 5px;
+  /* margin: 0 0 1% 1%; */
 }
 
 .rc-slider {
 	position: relative;
-	width: 70%;
+	width: calc(100% - 170px);
 	margin: 10px;
 	border-radius: 6px;
 	-ms-touch-action: none;
@@ -178,7 +186,9 @@ button:hover {
 #docs_button {
   width: 100px;
   height: 25px;
-  margin: 0 1% 1% 2%;
+  margin: 0px 5px 15px 10px;
+  /* margin: 0 5px 10px 10px; */
+  /* margin: 0 1% 1% 2%; */
 }
 
 /* SNAPSHOT CONTAINER -> SNAPSHOTLIST COMPONENT */
@@ -283,29 +293,36 @@ button:hover {
  * 6) SETTINGS,
  */
 .VisualContainer {
+  height: calc(100% - 33px); 
+  width: 100%;
   display: flex;
   flex-grow: 8;
   flex-direction: column;
   border-left: 2px solid #484848;
-  color: #e6e6e6;
   grid-area: states;
-  height: 100%;
-  width: 100%;
+  color: #e6e6e6;
+  /* overflow: auto; is important for visual consistency */
+  /* affects initial loading of NavBar && State Diff */
+  /* affects scrolling of State Diff && State Tree */
   overflow: auto;
+  /* overflow-y: auto messes up the height styling */
 }
 /* NAVBAR COMPONENT */
 .NavBar {
-  width: 100%;
+  width: calc(100% - 174px);
   display: flex;
   flex-direction: row;
-  flex-grow: 0;
+  text-align: center;
+  border-right: 2px solid #484848;
   border-bottom: 2px solid #484848;
   background-color: #2d2d2d;
-  position: relative;
+  position: absolute;
   top: 0px;
+  z-index: 1;
 }
 
 .navBarButtons {
+  /* flex-grow: 1; */
   color: #989898;
   background-color: #2d2d2d;
   border: none;
@@ -319,7 +336,10 @@ button:hover {
 }
 /* DIFF COMPONENT */
 .Diff {
-  height: 100%;
+  /* 33px is height of navbar */
+  height: calc(100% - 33px); 
+  /* ! this height affects how scroll bar appears under State Diff tab */
+  margin-top: 33px;
   border-style: none;
   display: flex;
   flex-direction: column;
@@ -346,25 +366,37 @@ button:hover {
 
 /* TREE COMPONENT */
 .Tree {
-  height: 100%;
-  width: 100%;
+  height: calc(100% - 33px); 
+  /* ! this height affects how scroll bar works/scroll under State Tree tab */
+  width: 90%;
+  /* this width affects how scroll bar looks within State Tree tab */
+  margin-top: 33px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
   padding: 10px;
-  overflow: auto;
+  /* overflow: auto; */
+  /* not the one needing overflow scrolling */
 }
 
 .json-tree {
-  margin: 10px;
-  padding: 0;
+  /* 33px is height of navbar */
+  height: calc(100% - 33px); 
+  width: 100%;
+  /* margin: 10px; */
+  /* padding: 0; */
+  padding-bottom: 20px;
   background-color: none;
   list-style: none;
-  overflow: auto;
+  /* not the one needing overflow scrolling */
 }
 
 /* VISUALIZER COMPONENT  */
 #metricsWrapper {
-  height: 100%;
-  /* height: calc(100% - 33px); */
-  width: 100%;
+  height: calc(100% - 33px);
+  /* width: 98% fixes moving-bars issue */
+  width: 98%;
+  overflow: hidden;
 }
 
 .RankedGraph,
@@ -375,8 +407,10 @@ button:hover {
 }
 
 #stateGraphContainer {
-  height: calc(100% - 33px); /* 33px is height of navbar */
+  /* 33px is height of navbar */
+  height: calc(100% - 33px); 
   width: 100%;
+  overflow: auto;
 }
 
 .svg-container {
@@ -474,6 +508,7 @@ button:hover {
 .SelectorP:hover {
   opacity: 90% !important;
   cursor: pointer;
+  z-index: 1;
 }
 
 .AtomDiv:active,
@@ -530,12 +565,13 @@ button:hover {
 .Component {
   height: 100%;
   width: 100%;
-  /* overflow: auto; */
+  overflow: auto;
 }
 
 /* ATOMCOMPONENTVISUAL COMPONENT */
 .AtomComponentVisual,
 #canvas {
+  margin: top 33px;
   height: 100%;
   width: 100%;
 }
@@ -554,6 +590,7 @@ button:hover {
 }
 #fixedButton {
   position: fixed;
+  z-index: 1;
   bottom: 0px;
   right: 0px;
   width: 65px;
@@ -736,7 +773,6 @@ button:hover {
 /* ATOMSELECTORLEGEND COMPONENT */
 .AtomSelectorLegend {
   background-color: rgba(45, 45, 45, 0.65);
-  z-index: 1;
   position: fixed;
   right: 0;
   border: 2px solid #484848;
