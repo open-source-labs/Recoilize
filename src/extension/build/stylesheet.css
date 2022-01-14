@@ -76,6 +76,7 @@ button:hover {
  */
 .MainContainer {
   height: 100%;
+  width: 100%;
   display: grid;
   grid-template-columns: min-content 2fr;
   grid-template-rows: 8fr 1fr;
@@ -83,10 +84,12 @@ button:hover {
     'actions states'
     'travel travel'
     'buttons buttons';
+  overflow: hidden;
 }
 
 /* Time Travel Container */
 .travel-container {
+  width: 100%;
   grid-area: travel;
   background: linear-gradient(
 		90deg,
@@ -94,12 +97,15 @@ button:hover {
 		rgba(51, 51, 51, 1) 50%,
 		rgba(41, 41, 41, 1) 100%
 	);
+  position: absolute;
+  bottom: 0px;
 	display: flex;
   flex-direction: column;
 }
 
 .main-slider {
   display:inline-flex;
+  margin-top: 10px;
 }
 
 #slider-start-button {
@@ -186,6 +192,7 @@ button:hover {
   text-align: center;
   color: #e6e6e6;
   grid-area: actions;
+  overflow: auto;
 }
 
 .save-series-button {
@@ -281,18 +288,21 @@ button:hover {
   flex-direction: column;
   border-left: 2px solid #484848;
   color: #e6e6e6;
+  grid-area: states;
   height: 100%;
   width: 100%;
-  grid-area: states;
+  overflow: auto;
 }
 /* NAVBAR COMPONENT */
 .NavBar {
   width: 100%;
   display: flex;
-  flex-grow: 0;
   flex-direction: row;
+  flex-grow: 0;
   border-bottom: 2px solid #484848;
   background-color: #2d2d2d;
+  position: relative;
+  top: 0px;
 }
 
 .navBarButtons {
@@ -310,17 +320,18 @@ button:hover {
 /* DIFF COMPONENT */
 .Diff {
   height: 100%;
-  overflow: auto;
   border-style: none;
   display: flex;
   flex-direction: column;
   padding: 10px;
   padding-bottom: 20px;
+  overflow: auto;
 }
 
 .toggleDiv {
-  display: flex;
-  justify-content: flex-end;
+  /* display: flex;
+  justify-content: flex-end; */
+  overflow: auto;
 }
 
 #raw {
@@ -335,8 +346,10 @@ button:hover {
 
 /* TREE COMPONENT */
 .Tree {
+  height: 100%;
+  width: 100%;
   padding: 10px;
-  overflow-y: auto;
+  overflow: auto;
 }
 
 .json-tree {
@@ -344,11 +357,13 @@ button:hover {
   padding: 0;
   background-color: none;
   list-style: none;
+  overflow: auto;
 }
 
 /* VISUALIZER COMPONENT  */
 #metricsWrapper {
-  height: calc(100% - 33px);
+  height: 100%;
+  /* height: calc(100% - 33px); */
   width: 100%;
 }
 
@@ -372,7 +387,9 @@ button:hover {
   overflow: hidden;
 }
 .svg-content-responsive {
-  display: inline-block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   position: absolute;
   top: 10px;
   left: 0;
@@ -513,6 +530,7 @@ button:hover {
 .Component {
   height: 100%;
   width: 100%;
+  /* overflow: auto; */
 }
 
 /* ATOMCOMPONENTVISUAL COMPONENT */
@@ -848,12 +866,12 @@ button:hover {
 
 .slider {
   background-color: #ccc;
-  bottom: 0;
   cursor: pointer;
-  left: 0;
   position: absolute;
-  right: 0;
   top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
   transition: 0.4s;
 }
 .slider:before {
