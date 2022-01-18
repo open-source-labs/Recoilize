@@ -5,11 +5,11 @@ interface ZoomState {
   zoomData: any;
 }
 
-const initialState: ZoomState = {
-  zoomData: {
-    x: 18,
-    y: 527,
-    k: 0.12,
+const initialState: ZoomState = { // starting x, y positions on SVG canvas
+  zoomData: { //What are these values?  x: 18, y: 527, k: 0.12 - updated x: 100, y: 527, k: 0.09
+    x: 75,
+    y: 500,
+    k: 0.09,
   },
 };
 
