@@ -5,11 +5,11 @@ interface ZoomState {
   zoomData: any;
 }
 
-const initialState: ZoomState = {
-  zoomData: {
-    x: 18,
-    y: 527,
-    k: 0.12,
+const initialState: ZoomState = { // starting x, y positions on SVG canvas
+  zoomData: { // x: 18, y: 527, k: 0.12 - updated x: 100, y: 527, k: 0.09
+    x: 220,
+    y: 850,
+    k: 0.09,
   },
 };
 
@@ -21,7 +21,6 @@ export const zoomSlice = createSlice({
       state.zoomData = action.payload;
     },
     setDefaultZoom: state => {
-      // console.log('set default called');
       state.zoomData = initialState.zoomData;
     },
   },
