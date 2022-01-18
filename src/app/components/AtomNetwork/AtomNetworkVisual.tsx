@@ -142,6 +142,14 @@ const AtomNetworkVisual: React.FC = () => {
         node.attr('cx', (d: any) => d.x).attr('cy', (d: any) => d.y);
       });
 
+      //Zoom functions
+      function zoomActions() {
+        svg.attr('transform', d3.event.transform);
+      }
+
+      var zoomHandler = d3.zoom().on('zoom', zoomActions);
+      zoomHandler(svg);
+
       // allows the nodes to be draggable
       const dragDrop = d3
         .drag()
