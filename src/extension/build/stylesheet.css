@@ -70,7 +70,7 @@ button:hover {
   height: auto;
 }
 
-/* MAIN CONTAINER -> 
+/* MAIN CONTAINER ->
  * 0) SNAPSHOTS CONTAINER,
  * 1) VISUAL CONTAINER,
  */
@@ -104,7 +104,7 @@ button:hover {
 }
 
 .main-slider {
-  /* will need to fix a number of things if changed to vvv 
+  /* will need to fix a number of things if changed to vvv
   position: absolute;
   bottom: 0px; */
   display:inline-flex;
@@ -284,18 +284,18 @@ button:hover {
 }
 
 /* VISUAL CONTAINER ->
- * 0) NAVBAR, 
- * 1) DIFF, 
- * 2) TREE, 
- * 3) VISUALIZER, 
- * 4) NETWORK, 
- * 5) ATOMCOMPONENTVISUAL CONTAINER, 
+ * 0) NAVBAR,
+ * 1) DIFF,
+ * 2) TREE,
+ * 3) VISUALIZER,
+ * 4) NETWORK,
+ * 5) ATOMCOMPONENTVISUAL CONTAINER,
  * 6) SETTINGS,
  */
 .VisualContainer {
   /* height && margin-top */
   /* affects how scroll bar looks within State Diff && State Tree tabs */
-  height: calc(100% - 33px); 
+  height: calc(100% - 33px);
   margin-top: 33px;
   width: 100%;
   display: flex;
@@ -340,7 +340,7 @@ button:hover {
 /* DIFF COMPONENT */
 .Diff {
   /* 33px is height of navbar */
-  height: calc(100% - 33px); 
+  height: calc(100% - 33px);
   /* ! this height affects how scroll bar appears under State Diff tab */
   border-style: none;
   display: flex;
@@ -368,7 +368,7 @@ button:hover {
 
 /* TREE COMPONENT */
 .Tree {
-  height: calc(100% - 33px); 
+  height: calc(100% - 33px);
   /* ! this height affects how scroll bar works/scroll under State Tree tab */
   width: 90%;
   /* this width affects how scroll bar looks within State Tree tab */
@@ -382,7 +382,7 @@ button:hover {
 
 .json-tree {
   /* 33px is height of navbar */
-  height: calc(100% - 33px); 
+  height: calc(100% - 33px);
   width: 100%;
   /* margin: 10px; */
   /* padding: 0; */
@@ -410,7 +410,7 @@ button:hover {
 
 #stateGraphContainer {
   /* 33px is height of navbar */
-  height: calc(100% - 33px); 
+  height: calc(100% - 33px);
   width: 100%;
   overflow: auto;
 }
@@ -482,7 +482,80 @@ button:hover {
   align-items: flex-start;
   justify-items: flex-start;
 }
-.AtomNetworkLegend {
+
+.graph-slider {
+  position: relative;
+  top: 0;
+  left: 0;
+}
+
+#spacingSliders {
+  position: fixed;
+  top: 72px;
+  left: 375px;
+  width: 150px;
+  height: 70px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: #e6e6e6;
+}
+
+.sliderContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.sliderLabel {
+  width: 10px;
+  padding: 5px;
+}
+
+.siblingSlider, .parentChildSlider {
+  -webkit-appearance: none;
+  border-radius: 5px;
+  width: 125px;
+  background: none;
+}
+
+.siblingSlider::-webkit-slider-runnable-track,
+.parentChildSlider::-webkit-slider-runnable-track {
+  background-color: #e6e6e6;
+  border-radius: 5px;
+  height: 4px;
+}
+
+.siblingSlider::-webkit-slider-thumb,
+.parentChildSlider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  background-color: #bd4f6c;
+  background-image: linear-gradient(326deg, #bd4f6c 0%, #d7816a 74%);
+  border: none;
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  cursor: grab;
+  margin-top: -8px;
+  padding-left: 10px;
+}
+
+.graphBtnContainer {
+  position: fixed;
+  top: 150px;
+  left: 375px;
+  width: 150px;
+  height: 65px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 15px;
+}
+
+.graphBtn {
+  display: flex;
+}
+
+.AtomNetworkLegend { /*dropdown bars container in Component Graph*/
   position: fixed;
   top: 58px;
   left: 179px;
@@ -492,6 +565,7 @@ button:hover {
   flex-direction: column;
   align-items: flex-start;
 }
+
 .AtomDiv {
   display: grid;
   grid-row: 2;
@@ -597,16 +671,13 @@ button:hover {
   transform-origin: 15% -90%;
 }
 #fixedButton {
-  position: fixed;
-  z-index: 1;
-  bottom: 0px;
-  right: 0px;
   width: 65px;
   height: 50px;
   background: transparent;
   border: none !important;
   margin-right: 5px;
   cursor: pointer;
+  color: #989898;
 }
 
 .RecoilSearch {
