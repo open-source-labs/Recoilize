@@ -59,8 +59,11 @@ const AtomNetworkVisual: React.FC = () => {
     let edgelabels: any;
 
     const networkContainer = document.querySelector('.networkContainer');
-    const width = networkContainer.clientWidth;
-    const height = networkContainer.clientHeight;
+    // sets starting position of the atomNetwork graph.
+    // const width = networkContainer.clientWidth;
+    // const height = networkContainer.clientHeight;
+    const width = 300;
+    const height = 300;
 
     // snap will be newFilteredCurSnap if searchValue exists, if not original
     let snap: any = searchValue ? newFilteredCurSnap : filteredCurSnap;
@@ -138,6 +141,28 @@ const AtomNetworkVisual: React.FC = () => {
 
         node.attr('cx', (d: any) => d.x).attr('cy', (d: any) => d.y);
       });
+
+      // allows the nodes to be draggable
+      const dragDrop = d3
+        .drag()
+        .on('start', (node: {fx: any; x: any; fy: any; y: any}) => {
+          node.fx = node.x;
+          node.fy = node.y;
+        })
+        .on('drag', (node: {fx: any; fy: any}) => {
+          simulation.alphaTarget(1).restart();
+          node.fx = d3.event.x;
+          node.fy = d3.event.y;
+        })
+        .on('end', (node: {fx: any; fy: any}) => {
+          if (!d3.event.active) {
+            simulation.alphaTarget(0);
+          }
+          node.fx = null;
+          node.fy = null;
+        });
+
+      node.call(dragDrop);
 
       simulation.alpha(1).restart();
 
