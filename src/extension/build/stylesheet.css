@@ -104,7 +104,7 @@ button:hover {
 }
 
 .main-slider {
-  /* will need to fix a number of things if changed to vvv 
+  /* will need to fix a number of things if changed to vvv
   position: absolute;
   bottom: 0px; */
   display:inline-flex;
@@ -295,7 +295,7 @@ button:hover {
 .VisualContainer {
   /* height && margin-top */
   /* affects how scroll bar looks within State Diff && State Tree tabs */
-  height: calc(100% - 33px); 
+  height: calc(100% - 33px);
   margin-top: 33px;
   width: 100%;
   display: flex;
@@ -340,7 +340,7 @@ button:hover {
 /* DIFF COMPONENT */
 .Diff {
   /* 33px is height of navbar */
-  height: calc(100% - 33px); 
+  height: calc(100% - 33px);
   /* ! this height affects how scroll bar appears under State Diff tab */
   border-style: none;
   display: flex;
@@ -368,7 +368,7 @@ button:hover {
 
 /* TREE COMPONENT */
 .Tree {
-  height: calc(100% - 33px); 
+  height: calc(100% - 33px);
   /* ! this height affects how scroll bar works/scroll under State Tree tab */
   width: 90%;
   /* this width affects how scroll bar looks within State Tree tab */
@@ -382,7 +382,7 @@ button:hover {
 
 .json-tree {
   /* 33px is height of navbar */
-  height: calc(100% - 33px); 
+  height: calc(100% - 33px);
   width: 100%;
   /* margin: 10px; */
   /* padding: 0; */
@@ -410,7 +410,7 @@ button:hover {
 
 #stateGraphContainer {
   /* 33px is height of navbar */
-  height: calc(100% - 33px); 
+  height: calc(100% - 33px);
   width: 100%;
   overflow: auto;
 }
@@ -671,13 +671,6 @@ button:hover {
   transform-origin: 15% -90%;
 }
 #fixedButton {
-<<<<<<< HEAD
-=======
-  position: fixed;
-  z-index: 1;
-  bottom: 0px;
-  right: 0px;
->>>>>>> staging
   width: 65px;
   height: 50px;
   background: transparent;
