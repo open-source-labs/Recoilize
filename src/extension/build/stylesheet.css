@@ -555,6 +555,17 @@ button:hover {
   display: flex;
 }
 
+#orientationBtn {
+  width: 65px;
+  height: 50px;
+  background: transparent;
+  border: none !important;
+  margin-right: 5px;
+  cursor: pointer;
+  padding-right: 5px;
+  color: #989898;
+}
+
 .AtomNetworkLegend { /*dropdown bars container in Component Graph*/
   position: fixed;
   top: 58px;
