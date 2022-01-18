@@ -66,6 +66,9 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
   const [parentSpacingFactor, setParentSpacingFactor] = useState<number>(1);
   const [parentChildSlider, setParentChildSlider] = useState<number>(10);
 
+  // hook for component graph orientation
+  const [vertOrient, setVertOrient] = useState<boolean>(false);
+
   useEffect(() => {
     height = document.querySelector('.Component').clientHeight;
     width = document.querySelector('.Component').clientWidth;
@@ -286,7 +289,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
         // .transition()
         // .duration(duration)
         .attr('transform', function (d: any): string {
-          return `translate(${d.y}, ${d.x})`;
+          return vertOrient ? `translate(${d.x}, ${d.y})` : `translate(${d.y}, ${d.x})`;
         });
 
       // allows user to see hand pop out when clicking is available and maintains color/size
@@ -355,10 +358,17 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
       });
 
       function diagonal(s: any, d: any): string {
-        path = `M ${s.y} ${s.x}
-              C ${(s.y + d.y) / 2} ${s.x},
-                ${(s.y + d.y) / 2} ${d.x},
-                ${d.y} ${d.x}`;
+        if (vertOrient) {
+          path = `M ${s.x} ${s.y}
+                C ${s.x} ${(s.y + d.y) / 2},
+                  ${d.x} ${(s.y + d.y) / 2},
+                  ${d.x} ${d.y}`;
+        } else {
+          path = `M ${s.y} ${s.x}
+                C ${(s.y + d.y) / 2} ${s.x},
+                  ${(s.y + d.y) / 2} ${d.x},
+                  ${d.y} ${d.x}`;
+        }
         return path;
       }
 
@@ -462,7 +472,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
         return 'gray';
       }
     }
-  }, [componentAtomTree, rawToggle, siblingSpacingFactor, parentSpacingFactor, selectedRecoilValue]);
+  }, [componentAtomTree, rawToggle, siblingSpacingFactor, parentSpacingFactor, vertOrient, selectedRecoilValue]);
 
   // setting the component's user interface state by checking if the dropdown menu is open or not
   function openDropdown(e: React.MouseEvent) {
@@ -498,7 +508,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
         <div className='sliderContainer'>
           <label
             className='sliderLabel'
-            >{'V'}
+            >{vertOrient ? 'H' : 'V'}
           </label>
           <input
             className='siblingSlider'
@@ -516,7 +526,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
         <div className='sliderContainer'>
           <label
             className='sliderLabel'
-            >{'H'}
+            >{vertOrient ? 'V' : 'H'}
           </label>
           <input
             className='parentChildSlider'
@@ -545,6 +555,19 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
           }}>
           <span>
             {rawToggle ? 'Expand' : 'Collapse'}
+          </span>
+        </button>
+        <button
+          id='orientationBtn'
+          className='graphBtn'
+          style={{
+            color: vertOrient ? '#E6E6E6' : '#989898',
+          }}
+          onClick={() => {
+            setVertOrient(!vertOrient);
+          }}>
+          <span>
+            {vertOrient ? 'Horizontal' : 'Vertical'}
           </span>
         </button>
       </div>
