@@ -18,7 +18,7 @@ import {
   selectFilterState,
 } from '../state-management/slices/FilterSlice';
 
-const LOGO_URL = './assets/Recoilize.png';
+const LOGO_URL = './assets/Recoilize-v2.png';
 const App: React.FC = () => {
   const dispatch = useAppDispatch();
 
@@ -132,9 +132,9 @@ const App: React.FC = () => {
     <div className="notFoundContainer">
       <img className="logo" src={LOGO_URL} />
       <p>
-        Supported only with Recoil apps with the Recoilize NPM module. Follow
-        the installation instructions at
+        Supported only with Recoil apps with the Recoilize NPM module.
         <br />
+        Please follow the installation instructions at&nbsp;
         <a
           target="_blank"
           href="https://github.com/open-source-labs/Recoilize"

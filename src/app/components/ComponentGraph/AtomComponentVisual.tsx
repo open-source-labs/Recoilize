@@ -114,7 +114,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
     }
 
     // Node distance from each other
-    root.x0 = 10;
+    root.x0 = 500;
     root.y0 = width / 2;
 
     update(root);

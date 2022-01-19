@@ -21,6 +21,7 @@ body {
   background-color: rgba(255, 255, 255, 0.25);
   border: 2px solid rgba(255, 255, 255, 0.2);
 }
+
 /* remove outlines on input boxes and buttons in all pages of the app */
 input,
 button {
@@ -33,7 +34,6 @@ button {
   color: #e6e6e6;
   background: none;
 }
-
 button:hover {
   color: white;
   border: 1px solid white;
@@ -59,7 +59,7 @@ button:hover {
   font-size: 1.2rem;
 }
 .notFoundContainer p {
-  margin: 60px;
+  margin: 10px 20px;
 }
 .notFoundContainer a {
   color: #3578e5;
@@ -104,13 +104,12 @@ button:hover {
 }
 
 .main-slider {
-  /* will need to fix a number of things if changed to vvv
+  /* if changed, other css attributes will also be affected:
   position: absolute;
   bottom: 0px; */
   display:inline-flex;
   /* side effect */
-  /* creates a black box above slider */
-  /* not covering snapshot list */
+  /* creates a black box above slider (not covering snapshot list) */
   margin-top: 10px;
 }
 
@@ -118,7 +117,6 @@ button:hover {
   width: 100px;
   height: 25px;
   margin: 0px 5px 5px 10px;
-  /* margin: 0 1% 1% 2%; */
 }
 
 .backfor-button {
@@ -187,15 +185,15 @@ button:hover {
   width: 100px;
   height: 25px;
   margin: 0px 5px 15px 10px;
-  /* margin: 0 5px 10px 10px; */
-  /* margin: 0 1% 1% 2%; */
 }
 
 /* SNAPSHOT CONTAINER -> SNAPSHOTLIST COMPONENT */
 .SnapshotsContainer {
-  height: 100%;
+  /* adjustment for snapshot list & scrollbar */
+  height: calc(100% - 40px); 
   display: flex;
   flex-direction: column;
+  justify-content: stretch;
   flex-shrink: 1;
   min-width: 170px;
   background-color: #2d2d2d;
@@ -229,25 +227,24 @@ button:hover {
 
 .clear-buttons {
   display: flex;
-  margin-top: 1em;
   padding-bottom: 1em;
   border-bottom: 1px solid #646464;
 }
 
 #clear-snapshots-title {
-  margin-top: 0.7em;
+  padding: 1em;
   font-size: 12px;
   font-weight: bold;
 }
 
 #prevClr {
-  margin-left: 0.8em;
+  margin-left: 0.9em;
   width: 5em;
   cursor: pointer;
 }
 
 #fwrdClr {
-  margin-right: 0.8em;
+  margin-right: 0.9em;
   width: 5em;
   margin-left: auto;
   cursor: pointer;
@@ -255,8 +252,8 @@ button:hover {
 
 /* SNAPSHOTLIST COMPONENT */
 .SnapshotsList {
-  height: 100%;
-  overflow-y: auto;
+  height: calc(100% - 40px);
+  overflow: auto;
   border-style: none;
 }
 
@@ -277,7 +274,6 @@ button:hover {
 .timeTravelButton {
   color: #989898;
 }
-
 .timeTravelButton:focus {
   color: #e6e6e6;
   background-color: #212121;
@@ -310,6 +306,7 @@ button:hover {
   overflow: auto;
   /* overflow-y: auto messes up the height styling */
 }
+
 /* NAVBAR COMPONENT */
 .NavBar {
   width: calc(100% - 174px);
@@ -337,11 +334,12 @@ button:hover {
   color: #e6e6e6;
   border: none;
 }
+
 /* DIFF COMPONENT */
 .Diff {
   /* 33px is height of navbar */
-  height: calc(100% - 33px);
-  /* ! this height affects how scroll bar appears under State Diff tab */
+  height: calc(100% - 33px); 
+  /* height affects how scrollbar works/looks in State Diff tab */
   border-style: none;
   display: flex;
   flex-direction: column;
@@ -363,15 +361,14 @@ button:hover {
 .rawToggle {
   background: none;
   border: none !important;
-  /* outline: none; */
 }
 
 /* TREE COMPONENT */
 .Tree {
-  height: calc(100% - 33px);
-  /* ! this height affects how scroll bar works/scroll under State Tree tab */
+  /* adjustment for height of navbar (33px) */
+  height: calc(100% - 33px); 
   width: 90%;
-  /* this width affects how scroll bar looks within State Tree tab */
+  /* height & width affect how scrollbar works/looks in State Tree tab */
   margin-bottom: 20px;
   display: flex;
   flex-direction: column;
@@ -381,11 +378,9 @@ button:hover {
 }
 
 .json-tree {
-  /* 33px is height of navbar */
-  height: calc(100% - 33px);
+  /* adjustment for height of navbar (33px) */
+  height: calc(100% - 33px); 
   width: 100%;
-  /* margin: 10px; */
-  /* padding: 0; */
   padding-bottom: 20px;
   background-color: none;
   list-style: none;
@@ -402,7 +397,7 @@ button:hover {
 }
 
 .RankedGraph,
-#canvas {
+#canvas { /* #canvas --> Component Graph */
   flex-grow: 1;
   width: 100%;
   overflow: hidden;
@@ -426,6 +421,7 @@ button:hover {
   vertical-align: top;
   overflow: hidden;
 }
+
 .svg-content-responsive {
   display: flex;
   align-items: center;
@@ -483,90 +479,7 @@ button:hover {
   justify-items: flex-start;
 }
 
-.graph-slider {
-  position: relative;
-  top: 0;
-  left: 0;
-}
-
-#spacingSliders {
-  position: fixed;
-  top: 72px;
-  left: 375px;
-  width: 150px;
-  height: 70px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  color: #e6e6e6;
-}
-
-.sliderContainer {
-  display: flex;
-  justify-content: space-between;
-}
-
-.sliderLabel {
-  width: 10px;
-  padding: 5px;
-}
-
-.siblingSlider, .parentChildSlider {
-  -webkit-appearance: none;
-  border-radius: 5px;
-  width: 125px;
-  background: none;
-}
-
-.siblingSlider::-webkit-slider-runnable-track,
-.parentChildSlider::-webkit-slider-runnable-track {
-  background-color: #e6e6e6;
-  border-radius: 5px;
-  height: 4px;
-}
-
-.siblingSlider::-webkit-slider-thumb,
-.parentChildSlider::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  background-color: #bd4f6c;
-  background-image: linear-gradient(326deg, #bd4f6c 0%, #d7816a 74%);
-  border: none;
-  height: 20px;
-  width: 20px;
-  border-radius: 50%;
-  cursor: grab;
-  margin-top: -8px;
-  padding-left: 10px;
-}
-
-.graphBtnContainer {
-  position: fixed;
-  top: 150px;
-  left: 375px;
-  width: 150px;
-  height: 65px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 5px 15px;
-}
-
-.graphBtn {
-  display: flex;
-}
-
-#orientationBtn {
-  width: 65px;
-  height: 50px;
-  background: transparent;
-  border: none !important;
-  margin-right: 5px;
-  cursor: pointer;
-  padding-right: 5px;
-  color: #989898;
-}
-
-.AtomNetworkLegend { /*dropdown bars container in Component Graph*/
+.AtomNetworkLegend {
   position: fixed;
   top: 58px;
   left: 179px;
@@ -630,6 +543,7 @@ button:hover {
   margin: 0px;
   flex-grow: 1;
 }
+
 .AtomDropdown,
 .SelectorDropdown {
   display: grid;
@@ -662,11 +576,11 @@ button:hover {
 /* ATOMCOMPONENTVISUAL COMPONENT */
 .AtomComponentVisual,
 #canvas {
-  /* centers graph content */
   position: relative;
   height: 100%;
   width: 100%;
 }
+
 .hoverInfo {
   height: min-content;
   width: max-content;
@@ -678,9 +592,11 @@ button:hover {
   padding: 0 1%;
   z-index: 1;
 }
+
 #componentGraph {
   transform-origin: 15% -90%;
 }
+
 #fixedButton {
   width: 65px;
   height: 50px;
@@ -929,7 +845,6 @@ button:hover {
   border: none;
   cursor: pointer;
 }
-
 /* Dropdown button on hover & focus */
 .dropbtn:hover,
 .dropbtn:focus {
@@ -951,7 +866,6 @@ button:hover {
   min-width: 160px;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
 }
-
 /* Links inside the dropdown */
 .dropdown-content a {
   color: black;
@@ -959,7 +873,6 @@ button:hover {
   text-decoration: none;
   display: block;
 }
-
 /* Change color of dropdown links on hover */
 .dropdown-content a:hover {
   background-color: #f1f1f1;
