@@ -74,7 +74,8 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
     const g = svgContainer
       .append('g')
       // .attr('transform', `translate(${x}, ${y}), scale(${k})`)
-      .attr('id', 'componentGraph');
+      .attr('id', 'componentGraph')
+      .attr('viewBox', [-width / 2, -height / 2, width, height]);
 
     let i = 0;
     let duration: number = 750;
@@ -98,7 +99,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
     }
 
     // Node distance from each other
-    root.x0 = 10;
+    root.x0 = 500;
     root.y0 = width / 2;
 
     update(root);
