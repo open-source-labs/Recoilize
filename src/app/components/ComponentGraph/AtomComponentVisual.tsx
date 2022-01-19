@@ -19,17 +19,17 @@ interface AtomComponentVisualProps {
 }
 
 const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
-  componentAtomTree,
-  cleanedComponentAtomTree,
-  selectedRecoilValue,
-  atoms,
-  selectors,
-  setStr,
-  setSelectedRecoilValue,
-}) => {
+    componentAtomTree,
+    cleanedComponentAtomTree,
+    selectedRecoilValue,
+    atoms,
+    selectors,
+    setStr,
+    setSelectedRecoilValue,
+  }) => {
 
   const zoomSelector = useAppSelector(selectZoomState);
-  const {x, y, k} = zoomSelector;
+  const {x, y, k} = zoomSelector; // initial scaling
   const dispatch = useAppDispatch();
 
   // set the heights and width of the tree to be passed into treeMap function
@@ -43,7 +43,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
   const [hasSuspense, setHasSuspense] = useState<boolean>(false);
 
   //declare hooks to render lists of atoms or selectors
-  const [atomList, setAtomList] = useState(Object.keys(atoms));
+  const [atomList, setAtomList] = useState(Object.keys(atoms)); // returns an array of atom's properties
   const [selectorList, setSelectorList] = useState(Object.keys(selectors));
 
   // need to create a hook for toggling
@@ -57,6 +57,17 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
   );
   const [bothButtonClicked, setBothButtonClicked] = useState<boolean>(false);
   const [isDropDownItem, setIsDropDownItem] = useState<boolean>(false);
+
+  // hooks for sibling level node spacing adjustment
+  const [siblingSpacingFactor, setSiblingSpacingFactor] = useState<number>(1);
+  const [siblingSlider, setSiblingSlider] = useState<number>(10);
+
+  // hooks for parent-child node spacing adjustment
+  const [parentSpacingFactor, setParentSpacingFactor] = useState<number>(1);
+  const [parentChildSlider, setParentChildSlider] = useState<number>(10);
+
+  // hook for component graph orientation
+  const [vertOrient, setVertOrient] = useState<boolean>(false);
 
   useEffect(() => {
     height = document.querySelector('.Component').clientHeight;
@@ -73,9 +84,8 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
     // creating a pseudo-class for reusability
     const g = svgContainer
       .append('g')
-      // .attr('transform', `translate(${x}, ${y}), scale(${k})`)
-      .attr('id', 'componentGraph')
-      .attr('viewBox', [-width / 2, -height / 2, width, height]);
+      .attr('transform', `translate(${x}, ${y}), scale(${k})`)
+      .attr('id', 'componentGraph');
 
     let i = 0;
     let duration: number = 750;
@@ -83,16 +93,21 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
     let path: string;
 
     // creating the tree map
-    const treeMap = d3.tree().nodeSize([height, width]);
+    const treeMap = d3.tree().nodeSize(
+      [
+        height * siblingSpacingFactor,
+        width * parentSpacingFactor
+      ]
+    );
 
-    if (!rawToggle) {
+    if (!rawToggle) { // expanded tree
       root = d3.hierarchy(
         cleanedComponentAtomTree,
         function (d: componentAtomTree) {
           return d.children;
         },
       );
-    } else {
+    } else { // collapsed tree
       root = d3.hierarchy(componentAtomTree, function (d: componentAtomTree) {
         return d.children;
       });
@@ -107,6 +122,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
     // d3 zoom functionality
     let zoom = d3.zoom().on('zoom', zoomed);
 
+    // https://github.com/d3/d3-zoom/blob/v3.0.0/README.md#zoom_transform
     svgContainer.call(
       zoom.transform,
       // Changes the initial view, (left, top)
@@ -117,7 +133,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
     svgContainer.call(
       d3
         .zoom()
-        .scaleExtent([0.05, 0.9]) // [zoomOut, zoomIn]
+        .scaleExtent([0.05, 0.9]) // [max zoomed out view, max zoomed in view]
         .on('zoom', zoomed),
     );
 
@@ -132,18 +148,39 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
     }
 
     // Update function
+    /***
+     *  Function: Update()
+     *  Parameters: source
+     *  Output:
+     *
+     */
     function update(source: any) {
-      treeMap(root);
 
+      treeMap(root);
       let nodes = root.descendants(),
         links = root.descendants().slice(1);
 
       let node = g
         .selectAll('g.node')
-        .attr('stroke-width', 5)
-        .data(nodes, function (d: any): number {
-          return d.id || (d.id = ++i);
-        });
+      .attr('stroke-width', 5)
+      .data(nodes, function (d: any): number {
+        return d.id || (d.id = ++i);
+      });
+
+/* getting group element with id = "componentGraph"
+  ex 1: <path class="link" stroke="#646464" stroke-width="5"
+            d="M 582 0
+              C 291 0,
+                291 0,
+                0 0">
+          </path>
+  ex 2: <g class="node" transform="translate(0, 0)" opacity="1">
+            <circle class="node" r="100" fill="#9580ff" cursor="pointer" style="stroke: none; stroke-width: 15;">
+            </circle>
+            <text dy=".31em" y="138" text-anchor="middle" style="font-size: 7.5rem; fill: white;">PlaygroundRender
+            </text>
+          </g>
+  https://devdocs.io/d3~5/d3-selection#selectAll */
 
       /* this tells node where to be placed and go to
        * adding a mouseOver event handler to each node
@@ -163,6 +200,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
         .attr('class', 'node')
         .attr('transform', function (): string {
           return `translate(${source.y0}, ${source.x0})`;
+        // getting <g class="node"> && setting its "transform" attr to "translate(x, y) --> css manipulation"
         })
         .on('click', click)
         .on('mouseover', function (d: any, i: number): void {
@@ -182,7 +220,6 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
             // newStr = newStr.replace(/,/g, '<br>');
             // newStr = newStr.replace(/{/g, '<br>{');
 
-            // to make the info-windows more clear for the user, this iterates over the nodeData and returns a stringified html element that gets rendered by the tooltip
             const nodeData = formatAtomSelectorText(atsel)[0];
 
             const genHTML = (obj: any): string => {
@@ -219,12 +256,11 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
           }
         })
         .on('mouseout', function (d: any, i: number): void {
-          d3.select(this).transition().duration('50').attr('opacity', '1'); //change the opacity back
-          //remove tooltip when the mouse is not on the node
+          d3.select(this).transition().duration('50').attr('opacity', '1');
           tooltip.style('opacity', 0);
         });
 
-      // determines shape/color/size of node
+      // determines shape/color/size of node // adding styling attributes
       nodeEnter
         .append('circle')
         .attr('class', 'node')
@@ -232,7 +268,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
         .attr('fill', colorComponents)
         .style('stroke', borderColor)
         .style('stroke-width', 15);
-      // TO DO: Add attribute for border if it is a suspense component
+      // TO DO: Add attribute for border if it is a suspense component // what is a suspense component and what color to add?
 
       // for each node that got created, append a text element that displays the name of the node
       nodeEnter
@@ -253,7 +289,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
         // .transition()
         // .duration(duration)
         .attr('transform', function (d: any): string {
-          return `translate(${d.y}, ${d.x})`;
+          return vertOrient ? `translate(${d.x}, ${d.y})` : `translate(${d.y}, ${d.x})`;
         });
 
       // allows user to see hand pop out when clicking is available and maintains color/size
@@ -316,18 +352,23 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
         })
         .remove();
 
-      // makes next Node needed to appear from the previous and not the start
       nodes.forEach(function (d: any): void {
         d.x0 = d.x;
         d.y0 = d.y;
       });
 
       function diagonal(s: any, d: any): string {
-        path = `M ${s.y} ${s.x}
-            C ${(s.y + d.y) / 2} ${s.x},
-              ${(s.y + d.y) / 2} ${d.x},
-              ${d.y} ${d.x}`;
-
+        if (vertOrient) {
+          path = `M ${s.x} ${s.y}
+                C ${s.x} ${(s.y + d.y) / 2},
+                  ${d.x} ${(s.y + d.y) / 2},
+                  ${d.x} ${d.y}`;
+        } else {
+          path = `M ${s.y} ${s.x}
+                C ${(s.y + d.y) / 2} ${s.x},
+                  ${(s.y + d.y) / 2} ${d.x},
+                  ${d.y} ${d.x}`;
+        }
         return path;
       }
 
@@ -352,6 +393,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
 
       // allows the canvas to be draggable
       node.call(d3.drag());
+      // https://github.com/d3/d3-selection/blob/v3.0.0/README.md#selection_call
 
       function formatMouseoverXValue(recoilValue: string): number {
         if (atoms.hasOwnProperty(recoilValue)) {
@@ -360,7 +402,6 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
         return -150;
       }
 
-      // creates an array of objects with node data
       function formatAtomSelectorText(atomOrSelector: string[]): string[] {
         const recoilData: any = [];
 
@@ -431,11 +472,12 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
         return 'gray';
       }
     }
-  }, [componentAtomTree, rawToggle, selectedRecoilValue]);
+  }, [componentAtomTree, rawToggle, siblingSpacingFactor, parentSpacingFactor, vertOrient, selectedRecoilValue]);
 
   // setting the component's user interface state by checking if the dropdown menu is open or not
   function openDropdown(e: React.MouseEvent) {
     const target = e.target as Element;
+    // the button element with id 'AtomP'
     if (target.id === 'AtomP') {
       setAtomButtonClicked(true);
       setSelectorButtonClicked(false);
@@ -462,17 +504,73 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
   return (
     <div className="AtomComponentVisual">
       <svg id="canvas"></svg>
-      <button
-        id="fixedButton"
-        style={{
-          color: rawToggle ? '#E6E6E6' : '#989898',
-        }}
-        onClick={() => {
-          setRawToggle(!rawToggle);
-          dispatch(setDefaultZoom());
-        }}>
-        <span>{rawToggle ? 'Collapse' : 'Expand'}</span>
-      </button>
+      <div id='spacingSliders'>
+        <div className='sliderContainer'>
+          <label
+            className='sliderLabel'
+            >{vertOrient ? 'H' : 'V'}
+          </label>
+          <input
+            className='siblingSlider'
+            type='range'
+            min={1}
+            max={20}
+            value={siblingSlider}
+            onChange={(e) => {
+              const val = parseInt(e.target.value);
+              setSiblingSlider(val);
+              setSiblingSpacingFactor(val / 10);
+            }}
+          />
+        </div>
+        <div className='sliderContainer'>
+          <label
+            className='sliderLabel'
+            >{vertOrient ? 'V' : 'H'}
+          </label>
+          <input
+            className='parentChildSlider'
+            type='range'
+            min={1}
+            max={50}
+            value={parentChildSlider}
+            onChange={(e) => {
+              const val = parseInt(e.target.value);
+              setParentChildSlider(val);
+              setParentSpacingFactor(val / 10);
+            }}
+          />
+        </div>
+      </div>
+      <div className='graphBtnContainer'>
+        <button
+          id='fixedButton'
+          className='graphBtn'
+          style={{
+            color: rawToggle ? '#E6E6E6' : '#989898',
+          }}
+          onClick={() => {
+            setRawToggle(!rawToggle);
+            dispatch(setDefaultZoom());
+          }}>
+          <span>
+            {rawToggle ? 'Expand' : 'Collapse'}
+          </span>
+        </button>
+        <button
+          id='orientationBtn'
+          className='graphBtn'
+          style={{
+            color: vertOrient ? '#E6E6E6' : '#989898',
+          }}
+          onClick={() => {
+            setVertOrient(!vertOrient);
+          }}>
+          <span>
+            {vertOrient ? 'Horizontal' : 'Vertical'}
+          </span>
+        </button>
+      </div>
       <div className="AtomNetworkLegend">
         <div className="AtomLegend" />
         <button

@@ -70,7 +70,7 @@ button:hover {
   height: auto;
 }
 
-/* MAIN CONTAINER -> 
+/* MAIN CONTAINER ->
  * 0) SNAPSHOTS CONTAINER,
  * 1) VISUAL CONTAINER,
  */
@@ -280,18 +280,18 @@ button:hover {
 }
 
 /* VISUAL CONTAINER ->
- * 0) NAVBAR, 
- * 1) DIFF, 
- * 2) TREE, 
- * 3) VISUALIZER, 
- * 4) NETWORK, 
- * 5) ATOMCOMPONENTVISUAL CONTAINER, 
+ * 0) NAVBAR,
+ * 1) DIFF,
+ * 2) TREE,
+ * 3) VISUALIZER,
+ * 4) NETWORK,
+ * 5) ATOMCOMPONENTVISUAL CONTAINER,
  * 6) SETTINGS,
  */
 .VisualContainer {
   /* height && margin-top */
   /* affects how scroll bar looks within State Diff && State Tree tabs */
-  height: calc(100% - 33px); 
+  height: calc(100% - 33px);
   margin-top: 33px;
   width: 100%;
   display: flex;
@@ -405,7 +405,7 @@ button:hover {
 
 #stateGraphContainer {
   /* 33px is height of navbar */
-  height: calc(100% - 33px); 
+  height: calc(100% - 33px);
   width: 100%;
   overflow: auto;
 }
@@ -598,16 +598,13 @@ button:hover {
 }
 
 #fixedButton {
-  position: fixed;
-  z-index: 1;
-  bottom: 0px;
-  right: 0px;
   width: 65px;
   height: 50px;
   background: transparent;
   border: none !important;
   margin-right: 5px;
   cursor: pointer;
+  color: #989898;
 }
 
 .RecoilSearch {
