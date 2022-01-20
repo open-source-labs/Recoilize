@@ -25,10 +25,7 @@ export const snapshotSlice = createSlice({
   },
 });
 
-export const {
-  setSnapshotHistory,
-  setRenderIndex,
-  setCleanComponentAtomTree,
-} = snapshotSlice.actions;
+export const {setSnapshotHistory, setRenderIndex, setCleanComponentAtomTree} =
+  snapshotSlice.actions;
 
 export default snapshotSlice.reducer;

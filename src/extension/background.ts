@@ -43,9 +43,9 @@ chrome.runtime.onConnect.addListener(port => {
           chrome.tabs.sendMessage(Number(tabId), msg);
         }
         break;
-      
+
       case 'mouseover':
-        if(tabId) {
+        if (tabId) {
           chrome.tabs.sendMessage(Number(tabId), msg);
         }
         break;
@@ -149,14 +149,12 @@ chrome.runtime.onMessage.addListener((msg, sender) => {
     case 'persistSnapshots':
       // getting the array of filtered snapshots that exists on locoal storage
       chrome.storage.local.get(tabId, function (result) {
-        
         connections[tabId].postMessage({
           action: 'recordSnapshot',
           payload: result[tabId],
         });
       });
 
-      
     default:
       break;
   }

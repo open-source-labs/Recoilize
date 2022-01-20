@@ -8,7 +8,7 @@ import selectedReducer from './slices/SelectedSlice';
 
 import {persistStore, persistReducer} from 'redux-persist';
 import storage from 'redux-persist/lib/storage/session';
-import {combineReducers}  from 'redux';
+import {combineReducers} from 'redux';
 
 const customizedPayloadAction = getDefaultMiddleware({
   serializableCheck: false,
@@ -25,13 +25,13 @@ const reducers = combineReducers({
 
 const persistConfig = {
   key: 'root',
-  storage
+  storage,
 };
 
 const persistedReducer = persistReducer(persistConfig, reducers);
 
 export const store = configureStore({
-  reducer: persistedReducer ,
+  reducer: persistedReducer,
   middleware: customizedPayloadAction,
 });
 
