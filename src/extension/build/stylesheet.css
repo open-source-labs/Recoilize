@@ -291,9 +291,10 @@ button:hover {
 .VisualContainer {
   /* height && margin-top */
   /* affects how scroll bar looks within State Diff && State Tree tabs */
-  height: calc(100% - 33px);
+  height: calc(100% - 33px - 20px);
   margin-top: 33px;
-  width: 100%;
+  margin-bottom: 20px;
+  width: calc(100% - 3px);
   display: flex;
   flex-grow: 8;
   flex-direction: column;
@@ -366,10 +367,9 @@ button:hover {
 /* TREE COMPONENT */
 .Tree {
   /* adjustment for height of navbar (33px) */
-  height: calc(100% - 33px); 
+  height: calc(100% - 33px - 20px); 
   width: 90%;
   /* height & width affect how scrollbar works/looks in State Tree tab */
-  margin-bottom: 20px;
   display: flex;
   flex-direction: column;
   padding: 10px;
@@ -379,9 +379,11 @@ button:hover {
 
 .json-tree {
   /* adjustment for height of navbar (33px) */
-  height: calc(100% - 33px); 
-  width: 100%;
+  height: calc(100% - 33px - 25px); 
+  margin-bottom: 20px;
   padding-bottom: 20px;
+  width: 100%;
+  /* padding-bottom: 20px; */
   background-color: none;
   list-style: none;
   /* not the one needing overflow scrolling */
@@ -488,6 +490,89 @@ button:hover {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
+}
+
+.graph-slider {
+  position: relative;
+  top: 0;
+  left: 0;
+}
+
+#spacingSliders {
+  position: fixed;
+  top: 72px;
+  left: 375px;
+  width: 150px;
+  height: 70px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: #e6e6e6;
+}
+
+.sliderContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.sliderLabel {
+  width: 10px;
+  padding: 5px;
+}
+
+.siblingSlider, .parentChildSlider {
+  -webkit-appearance: none;
+  border-radius: 5px;
+  width: 125px;
+  background: none;
+}
+
+.siblingSlider::-webkit-slider-runnable-track,
+.parentChildSlider::-webkit-slider-runnable-track {
+  background-color: #e6e6e6;
+  border-radius: 5px;
+  height: 4px;
+}
+
+.siblingSlider::-webkit-slider-thumb,
+.parentChildSlider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  background-color: #bd4f6c;
+  background-image: linear-gradient(326deg, #bd4f6c 0%, #d7816a 74%);
+  border: none;
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  cursor: grab;
+  margin-top: -8px;
+  padding-left: 10px;
+}
+
+.graphBtnContainer {
+  position: fixed;
+  top: 150px;
+  left: 375px;
+  width: 150px;
+  height: 65px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 15px;
+}
+
+.graphBtn {
+  display: flex;
+}
+
+#orientationBtn {
+  width: 65px;
+  height: 50px;
+  background: transparent;
+  border: none !important;
+  margin-right: 5px;
+  cursor: pointer;
+  padding-right: 5px;
+  color: #989898;
 }
 
 .AtomDiv {
