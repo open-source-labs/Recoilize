@@ -21,6 +21,7 @@ body {
   background-color: rgba(255, 255, 255, 0.25);
   border: 2px solid rgba(255, 255, 255, 0.2);
 }
+
 /* remove outlines on input boxes and buttons in all pages of the app */
 input,
 button {
@@ -33,7 +34,6 @@ button {
   color: #e6e6e6;
   background: none;
 }
-
 button:hover {
   color: white;
   border: 1px solid white;
@@ -59,7 +59,7 @@ button:hover {
   font-size: 1.2rem;
 }
 .notFoundContainer p {
-  margin: 60px;
+  margin: 10px 20px;
 }
 .notFoundContainer a {
   color: #3578e5;
@@ -70,25 +70,143 @@ button:hover {
   height: auto;
 }
 
-/* MAIN CONTAINER -> 
+/* MAIN CONTAINER ->
  * 0) SNAPSHOTS CONTAINER,
  * 1) VISUAL CONTAINER,
  */
 .MainContainer {
   height: 100%;
+  width: 100%;
+  display: grid;
+  grid-template-columns: min-content 2fr;
+  grid-template-rows: 8fr 1fr;
+  grid-template-areas:
+    'actions states'
+    'travel travel'
+    'buttons buttons';
+  overflow: hidden;
+}
+
+/* Time Travel Container */
+.travel-container {
+  width: 100%;
+  grid-area: travel;
+  background: linear-gradient(
+		90deg,
+		rgba(41, 41, 41, 1) 0%,
+		rgba(51, 51, 51, 1) 50%,
+		rgba(41, 41, 41, 1) 100%
+	);
+  position: absolute;
+  bottom: 0px;
+	display: flex;
+  flex-direction: column;
+}
+
+.main-slider {
+  /* if changed, other css attributes will also be affected:
+  position: absolute;
+  bottom: 0px; */
+  display:inline-flex;
+  /* side effect */
+  /* creates a black box above slider (not covering snapshot list) */
+  margin-top: 10px;
+}
+
+#slider-start-button {
+  width: 100px;
+  height: 25px;
+  margin: 0px 5px 5px 10px;
+}
+
+.backfor-button {
+  width: 30px;
+  height: 25px;
+  margin: 0px 10px 10px 5px;
+  /* margin: 0 0 1% 1%; */
+}
+
+.rc-slider {
+	position: relative;
+	width: calc(100% - 170px);
+	margin: 10px;
+	border-radius: 6px;
+	-ms-touch-action: none;
+	touch-action: none;
+	box-sizing: border-box;
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+.rc-slider * {
+	box-sizing: border-box;
+	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+.rc-slider-rail {
+	position: absolute;
+	width: 100%;
+	background-color: #ebf2fa;
+	height: 4px;
+	border-radius: 6px;
+}
+
+.rc-slider-track {
+	position: absolute;
+	left: 0;
+	height: 4px;
+	border-radius: 6px;
+	background-color: #ff5470;
+}
+
+.rc-slider-handle {
+	position: absolute;
+	margin-left: 5px;
+	margin-top: -10px;
+  padding-left: 10px;
+	width: 20px;
+	height: 20px;
+	cursor: pointer;
+	cursor: -webkit-grab;
+	cursor: grab;
+	border-radius: 50%;
+	background-color: #bd4f6c;
+  background-image: linear-gradient(326deg, #bd4f6c 0%, #d7816a 74%);
+	-ms-touch-action: pan-x;
+	touch-action: pan-x;
+}
+
+/* Buttons Container */
+.buttons_container {
+  grid-area: buttons;
   display: flex;
+}
+
+#docs_button {
+  width: 100px;
+  height: 25px;
+  margin: 0px 5px 15px 10px;
 }
 
 /* SNAPSHOT CONTAINER -> SNAPSHOTLIST COMPONENT */
 .SnapshotsContainer {
-  height: 100%;
+  /* adjustment for snapshot list & scrollbar */
+  height: calc(100% - 40px); 
   display: flex;
   flex-direction: column;
+  justify-content: stretch;
   flex-shrink: 1;
   min-width: 170px;
   background-color: #2d2d2d;
   text-align: center;
   color: #e6e6e6;
+  grid-area: actions;
+  overflow: auto;
+}
+
+.save-series-button {
+  width: 50%;
+  margin-left: 45px;
+  margin-bottom: 5px;
 }
 
 .removeSnapshot {
@@ -109,25 +227,24 @@ button:hover {
 
 .clear-buttons {
   display: flex;
-  margin-top: 1em;
   padding-bottom: 1em;
   border-bottom: 1px solid #646464;
 }
 
 #clear-snapshots-title {
-  margin-top: 0.7em;
+  padding: 1em;
   font-size: 12px;
   font-weight: bold;
 }
 
 #prevClr {
-  margin-left: 0.8em;
+  margin-left: 0.9em;
   width: 5em;
   cursor: pointer;
 }
 
 #fwrdClr {
-  margin-right: 0.8em;
+  margin-right: 0.9em;
   width: 5em;
   margin-left: auto;
   cursor: pointer;
@@ -135,8 +252,8 @@ button:hover {
 
 /* SNAPSHOTLIST COMPONENT */
 .SnapshotsList {
-  height: 100%;
-  overflow-y: auto;
+  height: calc(100% - 40px);
+  overflow: auto;
   border-style: none;
 }
 
@@ -157,41 +274,56 @@ button:hover {
 .timeTravelButton {
   color: #989898;
 }
-
 .timeTravelButton:focus {
   color: #e6e6e6;
   background-color: #212121;
 }
 
 /* VISUAL CONTAINER ->
- * 0) NAVBAR, 
- * 1) DIFF, 
- * 2) TREE, 
- * 3) VISUALIZER, 
- * 4) NETWORK, 
- * 5) ATOMCOMPONENTVISUAL CONTAINER, 
+ * 0) NAVBAR,
+ * 1) DIFF,
+ * 2) TREE,
+ * 3) VISUALIZER,
+ * 4) NETWORK,
+ * 5) ATOMCOMPONENTVISUAL CONTAINER,
  * 6) SETTINGS,
  */
 .VisualContainer {
+  /* height && margin-top */
+  /* affects how scroll bar looks within State Diff && State Tree tabs */
+  height: calc(100% - 33px - 20px);
+  margin-top: 33px;
+  margin-bottom: 20px;
+  width: calc(100% - 3px);
   display: flex;
   flex-grow: 8;
   flex-direction: column;
   border-left: 2px solid #484848;
+  grid-area: states;
   color: #e6e6e6;
-  height: 100%;
-  width: 100%;
+  /* overflow: auto; is important for visual consistency */
+  /* affects initial loading of NavBar && State Diff */
+  /* affects scrolling of State Diff && State Tree */
+  overflow: auto;
+  /* overflow-y: auto messes up the height styling */
 }
+
 /* NAVBAR COMPONENT */
 .NavBar {
-  width: 100%;
+  width: calc(100% - 174px);
   display: flex;
-  flex-grow: 0;
   flex-direction: row;
+  text-align: center;
+  border-right: 2px solid #484848;
   border-bottom: 2px solid #484848;
   background-color: #2d2d2d;
+  position: absolute;
+  top: 0px;
+  z-index: 1;
 }
 
 .navBarButtons {
+  /* flex-grow: 1; */
   color: #989898;
   background-color: #2d2d2d;
   border: none;
@@ -203,20 +335,24 @@ button:hover {
   color: #e6e6e6;
   border: none;
 }
+
 /* DIFF COMPONENT */
 .Diff {
-  height: 100%;
-  overflow: auto;
+  /* 33px is height of navbar */
+  height: calc(100% - 33px); 
+  /* height affects how scrollbar works/looks in State Diff tab */
   border-style: none;
   display: flex;
   flex-direction: column;
   padding: 10px;
   padding-bottom: 20px;
+  overflow: auto;
 }
 
 .toggleDiv {
-  display: flex;
-  justify-content: flex-end;
+  /* display: flex;
+  justify-content: flex-end; */
+  overflow: auto;
 }
 
 #raw {
@@ -226,39 +362,59 @@ button:hover {
 .rawToggle {
   background: none;
   border: none !important;
-  /* outline: none; */
 }
 
 /* TREE COMPONENT */
 .Tree {
+  /* adjustment for height of navbar (33px) */
+  height: calc(100% - 33px - 20px); 
+  width: 90%;
+  /* height & width affect how scrollbar works/looks in State Tree tab */
+  display: flex;
+  flex-direction: column;
   padding: 10px;
-  overflow-y: auto;
+  /* overflow: auto; */
+  /* not the one needing overflow scrolling */
 }
 
 .json-tree {
-  margin: 10px;
-  padding: 0;
+  /* adjustment for height of navbar (33px) */
+  height: calc(100% - 33px - 25px); 
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  width: 100%;
+  /* padding-bottom: 20px; */
   background-color: none;
   list-style: none;
+  /* not the one needing overflow scrolling */
 }
 
 /* VISUALIZER COMPONENT  */
+/* Flame Graph */
 #metricsWrapper {
-  height: calc(100% - 33px);
-  width: 100%;
+  height: calc(100% - 33px - 50px);
+  /* width: 98% fixes moving-bars issue */
+  width: 98%;
+  overflow: hidden;
 }
 
 .RankedGraph,
-#canvas {
+#canvas { /* #canvas --> Component Graph */
   flex-grow: 1;
   width: 100%;
   overflow: hidden;
 }
 
 #stateGraphContainer {
-  height: calc(100% - 33px); /* 33px is height of navbar */
+  /* 33px is height of navbar */
+  height: calc(100% - 33px);
   width: 100%;
+  overflow: auto;
 }
+
+/* svg {
+  height: calc(100% - 33px - 50px);
+} */
 
 .svg-container {
   display: inline-block;
@@ -267,8 +423,11 @@ button:hover {
   vertical-align: top;
   overflow: hidden;
 }
+
 .svg-content-responsive {
-  display: inline-block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   position: absolute;
   top: 10px;
   left: 0;
@@ -321,6 +480,7 @@ button:hover {
   align-items: flex-start;
   justify-items: flex-start;
 }
+
 .AtomNetworkLegend {
   position: fixed;
   top: 58px;
@@ -331,6 +491,90 @@ button:hover {
   flex-direction: column;
   align-items: flex-start;
 }
+
+.graph-slider {
+  position: relative;
+  top: 0;
+  left: 0;
+}
+
+#spacingSliders {
+  position: fixed;
+  top: 72px;
+  left: 375px;
+  width: 150px;
+  height: 70px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: #e6e6e6;
+}
+
+.sliderContainer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.sliderLabel {
+  width: 10px;
+  padding: 5px;
+}
+
+.siblingSlider, .parentChildSlider {
+  -webkit-appearance: none;
+  border-radius: 5px;
+  width: 125px;
+  background: none;
+}
+
+.siblingSlider::-webkit-slider-runnable-track,
+.parentChildSlider::-webkit-slider-runnable-track {
+  background-color: #e6e6e6;
+  border-radius: 5px;
+  height: 4px;
+}
+
+.siblingSlider::-webkit-slider-thumb,
+.parentChildSlider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  background-color: #bd4f6c;
+  background-image: linear-gradient(326deg, #bd4f6c 0%, #d7816a 74%);
+  border: none;
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  cursor: grab;
+  margin-top: -8px;
+  padding-left: 10px;
+}
+
+.graphBtnContainer {
+  position: fixed;
+  top: 150px;
+  left: 375px;
+  width: 150px;
+  height: 65px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px 15px;
+}
+
+.graphBtn {
+  display: flex;
+}
+
+#orientationBtn {
+  width: 65px;
+  height: 50px;
+  background: transparent;
+  border: none !important;
+  margin-right: 5px;
+  cursor: pointer;
+  padding-right: 5px;
+  color: #989898;
+}
+
 .AtomDiv {
   display: grid;
   grid-row: 2;
@@ -353,6 +597,7 @@ button:hover {
 .SelectorP:hover {
   opacity: 90% !important;
   cursor: pointer;
+  z-index: 1;
 }
 
 .AtomDiv:active,
@@ -383,6 +628,7 @@ button:hover {
   margin: 0px;
   flex-grow: 1;
 }
+
 .AtomDropdown,
 .SelectorDropdown {
   display: grid;
@@ -407,6 +653,7 @@ button:hover {
  * 1) ATOMSELECTORLEGEND COMPONENT
  */
 .Component {
+  /* position: relative; */
   height: 100%;
   width: 100%;
 }
@@ -414,9 +661,11 @@ button:hover {
 /* ATOMCOMPONENTVISUAL COMPONENT */
 .AtomComponentVisual,
 #canvas {
+  position: relative;
   height: 100%;
   width: 100%;
 }
+
 .hoverInfo {
   height: min-content;
   width: max-content;
@@ -426,20 +675,21 @@ button:hover {
   background-color: #484848;
   font-size: 100%;
   padding: 0 1%;
+  z-index: 1;
 }
+
 #componentGraph {
-  transform-origin: 25% -25%;
+  transform-origin: 15% -90%;
 }
+
 #fixedButton {
-  position: fixed;
-  bottom: 0px;
-  right: 0px;
   width: 65px;
   height: 50px;
   background: transparent;
   border: none !important;
   margin-right: 5px;
   cursor: pointer;
+  color: #989898;
 }
 
 .RecoilSearch {
@@ -614,7 +864,6 @@ button:hover {
 /* ATOMSELECTORLEGEND COMPONENT */
 .AtomSelectorLegend {
   background-color: rgba(45, 45, 45, 0.65);
-  z-index: 1;
   position: fixed;
   right: 0;
   border: 2px solid #484848;
@@ -635,10 +884,12 @@ button:hover {
   border: none;
   word-wrap: break-word;
   font-size: 14px;
+  z-index: 1;
 }
 .atomLi:hover,
 .selectorLi:hover {
   background-color: #212121;
+  z-index: 1;
 }
 
 .minimizeButton {
@@ -679,7 +930,6 @@ button:hover {
   border: none;
   cursor: pointer;
 }
-
 /* Dropdown button on hover & focus */
 .dropbtn:hover,
 .dropbtn:focus {
@@ -701,7 +951,6 @@ button:hover {
   min-width: 160px;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
 }
-
 /* Links inside the dropdown */
 .dropdown-content a {
   color: black;
@@ -709,7 +958,6 @@ button:hover {
   text-decoration: none;
   display: block;
 }
-
 /* Change color of dropdown links on hover */
 .dropdown-content a:hover {
   background-color: #f1f1f1;
@@ -744,12 +992,12 @@ button:hover {
 
 .slider {
   background-color: #ccc;
-  bottom: 0;
   cursor: pointer;
-  left: 0;
   position: absolute;
-  right: 0;
   top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
   transition: 0.4s;
 }
 .slider:before {

@@ -1,18 +1,55 @@
 import React, {useEffect, useRef} from 'react';
 import * as d3 from 'd3';
 import {dataDurationArr} from '../../../types';
+import {useAppSelector} from '../../state-management/hooks';
 
-interface RankedGraphProps {
+interface ComparisonGraphProps {
   data: dataDurationArr; // an array of object{name:, actualDuration}
   width?: number;
   height?: number;
 }
 
-const RankedGraph: React.FC<RankedGraphProps> = ({
+const ComparisonGraph: React.FC<ComparisonGraphProps> = ({
   data,
   width,
   height,
-}: RankedGraphProps) => {
+}: ComparisonGraphProps) => {
+  const snapshotHistory = useAppSelector(
+    (state: {snapshot: {snapshotHistory: any}}) =>
+      state.snapshot.snapshotHistory,
+  );
+  console.log('comparison snapshot ', snapshotHistory);
+  // declare an array that holds 2 objects: past and current
+  const displayData = [
+    {name: 'past', duration: 0},
+    {name: 'current', duration: 0},
+  ];
+
+  // retrieve and get total duration for past serie from the local storage
+  const values: any[] = [];
+  const keys = Object.keys(localStorage);
+  let i = keys.length;
+  while (i--) {
+    const series = localStorage.getItem(keys[i]);
+    values.push(JSON.parse(series));
+  }
+  for (const element of values) {
+    displayData[0].duration += element.componentAtomTree.treeBaseDuration;
+  }
+
+  let total = 0;
+  for (const element of snapshotHistory) {
+    total += element.componentAtomTree.treeBaseDuration;
+  }
+  displayData[1].duration = total;
+  // delete series in local storage
+  const deleteSeries = () => {
+    for (const i of keys) {
+      localStorage.removeItem(i);
+    }
+  };
+
+  // svg
   const svgRef = useRef();
   useEffect(() => {
     document.getElementById('canvas').innerHTML = '';
@@ -59,26 +96,26 @@ const RankedGraph: React.FC<RankedGraphProps> = ({
     // Scale the range of the data in the domain
     x.domain([
       0,
-      d3.max(data, (d: any) => {
-        return d.actualDuration;
+      d3.max(displayData, (d: any) => {
+        return d.duration;
       }),
     ]);
     // Scale the range of the data across the y-axis
     y.domain(
-      data.map((d: any, i) => {
+      displayData.map((d: any, i) => {
         return d.name + '-' + i;
       }),
     );
     // Scale actualDuration with the y-axis
     z.domain(
-      data.map((d: any, i) => {
-        return d.actualDuration.toFixed(2) + 'ms' + '-' + i;
+      displayData.map((d: any, i) => {
+        return d.duration.toFixed(2) + 'ms' + '-' + i;
       }),
     );
     // append the rectangles for the bar chart
     svg
       .selectAll('.bar')
-      .data(data)
+      .data(displayData)
       .enter()
       .append('rect')
       .attr('class', 'bar')
@@ -97,10 +134,10 @@ const RankedGraph: React.FC<RankedGraphProps> = ({
       // .duration(1300)
       // .delay((d: any,i: any) => i * 100)
       .attr('width', function (d: any) {
-        return x(d.actualDuration);
+        return x(d.duration);
       })
       .attr('fill', function (d: any) {
-        return colorPicker(d.actualDuration);
+        return colorPicker(d.duration);
       })
       .attr('y', function (d: any, i: any) {
         return y(d.name + '-' + i);
@@ -127,9 +164,16 @@ const RankedGraph: React.FC<RankedGraphProps> = ({
 
   return (
     <div data-testid="canvas" id="stateGraphContainer">
+      <button
+        id="docs_button"
+        onClick={() => {
+          deleteSeries();
+        }}>
+        Delete Series
+      </button>
       <svg id="canvas" ref={svgRef}></svg>
     </div>
   );
 };
 
-export default RankedGraph;
+export default ComparisonGraph;

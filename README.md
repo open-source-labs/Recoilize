@@ -127,48 +127,40 @@ export default MyApp;
 
 ##### (Only supported with React applications using Recoil as state management)
 
-<h1>New Features for Version 2.0.0</h1>
+<h1>New Features for Version 3.0.0</h1>
 <h3>Support for Recoil 0.1.3</h3>
 <p>Recoilize now supports the most recent update to the Recoil library and is backwards compatible with older versions of Recoil.</p>
 
-<h3>Clear Snapshots</h3>
-<p>Previous and Forward clear buttons have been implemented to clear snapshots either before or after the currently selected snapshot</p>
+<h3>Time Travel with ease</h3>
+<p>If you had used Recoilize before, you would have noticed an annoying bug that sometimes breaks the app and won’t allow you to be productive. With the new version of Recoilize, that issue is forever gone. Users can now use the tool with confidence and worry-free.</p>
+
+<p>The main mission of Recoilize 3.0 is to make it more user-friendly, so you will enjoy our brand new time travel feature — the time travel slider! Why click and scroll through snapshots when you can do it with a slider and some buttons, right?</p>
 
 <p align='center'> 
-<img src='./src/extension/build/assets/clearButtons.gif' width=600 height=300/>
+<img src='./src/extension/build/assets/timeslider-gif.gif' width=600 height=300/>
 </p>
 
-<h3>Refactored Component Graph</h3>
-<p>Visibility button was removed, and related data was incorporated into a new dropdown menu and hover functions</p>
-
-<h4>Hover</h4>
-<p>Improved hover functionality for the graph to display the information in more readable format</p>
-<h4>Atom Legend</h4>
-<p>The atom legend has been made clickable and will display a dropdown list of atoms or selectors</p>
-<p>Each of the atom or selector in the dropdown list has also been made clickable to highlight the selected component in the graph</p>
+<h3>Customizable Component Graph</h3>
+<p>This is one of the coolest updates of Recoilize 3.0. We understand that different users have different ways of thinking and visualizing, and for that reason, the component tree now is fully customizable. You can expand or collapse the components, choose vertical or horizontal displays or adjust the spacing between elements.</p>
 
 <p align='center'> 
-<img src='./src/extension/build/assets/componentGraph.gif' width=600 height=300/>
+<img src='./src/extension/build/assets/componentTree-gif.gif' width=600 height=300/>
 </p>
 
-<h3>Refactored Atom Network</h3>
-<h4>Atom Legend</h4>
-<p>The atom legend has been made clickable and will display a dropdown list of atoms or selectors</p>
-<p>Each of the atom or selector in the dropdown list has also been made clickable to display the related atom and selector nodes</p>
-<h4>Atom Network Graph</h4>
-<p>Multiple atom network graphs no longer overlap each other</p>
-<h4>Search bar bug fix</h4>
-<p>Search bar no longer overlaps with navigation bar</p>
+<h3>Better User Experience with Atom Network</h3>
+<p>The atom network is one of the key features that differentiate Recoil.js from other alternative state management libraries. However, the atom network will grow bigger together with the app. At some points, it will be unmanageable and hard to keep track of all of the atoms. To make this easier and pain-free, the new Atom Network will allow you to freely move and arrange them anywhere you want.</p>
 
 <p align='center'> 
-<img src='./src/extension/build/assets/atomNetwork.gif' width=600 height=300/>
+<img src='./src/extension/build/assets/atomNetwork-gif.gif' width=600 height=300/>
 </p>
 
-<h3>Easier to compare changes in Ranked Graph</h3>
-<p>Removed the animation from the ranked graph to improve readability for changes in render times</p>
+<h3>Snapshot Comparison</h3>
+<p>We understand that developers always develop an app with an optimization philosophy in mind. Component rendering time can be difficult to measure for two reasons. First, your computer and your web browser are not the same as mine, so the run-time can be vastly different. Second, it’s really hard to keep track of a long series of snapshots. You definitely don’t want to waste all of your time calculating the rendering time by hand.</p>
+
+<p>With the new Recoilize, users can now save a series of state snapshots and use it later to analyze/compare with the current series.</p>
 
 <p align='center'> 
-<img src='./src/extension/build/assets/rankedGraph.gif' width=600 height=300/>
+<img src='./src/extension/build/assets/snapshotcomparison-gif.gif' width=600 height=300/>
 </p>
 
 <h1>Features</h1>
@@ -187,16 +179,6 @@ The flame graph displays the time a component took to render itself, and all of 
 <!-- <p align='center'>
 <img src='./src/extension/build/assets/metrics.gif' width=600 height=300/>
 </p> -->
-
-<h3>Time Travel</h3>
-<p>As one of the key features of Recoilize, the tool enables users to jump to any previous snapshots. Pressing the jump button next to each of the snapshots will change the DOM by setting the state to that snapshot.<p>
-
-<p align='center'> 
-<img src='./src/extension/build/assets/timeTravel.gif' width=600 height=300/>
-</p>
-
-<h3>Visualizations</h3>
-<p>Users are able to view visualizations for their application's state by clicking individual snapshots. Recoilize provides component trees and graphs, as well as the state trees in JSON format.<p>
 
 <h3>Throttle</h3>
 <p>In the settings tab, users are able to set throttle (in milliseconds) for large scale applications or any applications that changes state rapidly. The default is set at 70ms.<p>
@@ -262,3 +244,10 @@ The flame graph displays the time a component took to render itself, and all of 
 
 <h4>Razana Nisathar <a  href='https://github.com/razananisathar' target=“_blank”>@github </a><a  href='http://www.linkedin.com/in/razananisathar' target=“_blank”>@linkedin</a> </h4>
 
+<h4>Harvey Nguyen <a  href='https://github.com/harveynwynn' target=“_blank”>@github </a><a  href='https://www.linkedin.com/in/harveynwynn' target=“_blank”>@linkedin</a> </h4>
+
+<h4>Joey Ma <a  href='https://github.com/yoyoyojoe' target=“_blank”>@github </a><a  href='https://www.linkedin.com/in/joeyma' target=“_blank”>@linkedin</a> </h4>
+
+<h4>Leonard Lew <a  href='https://github.com/leolew97' target=“_blank”>@github </a><a  href='https://www.linkedin.com/in/leonardlew' target=“_blank”>@linkedin</a> </h4>
+
+<h4>Victor Wang <a  href='https://github.com/wangvwr' target=“_blank”>@github </a><a  href='https://www.linkedin.com/in/wangvwr' target=“_blank”>@linkedin</a> </h4>

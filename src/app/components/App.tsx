@@ -18,7 +18,7 @@ import {
   selectFilterState,
 } from '../state-management/slices/FilterSlice';
 
-const LOGO_URL = './assets/Recoilize.png';
+const LOGO_URL = './assets/Recoilize-v2.png';
 const App: React.FC = () => {
   const dispatch = useAppDispatch();
 
@@ -61,7 +61,7 @@ const App: React.FC = () => {
           return false;
         };
         if (!check()) {
-          console.log("after Check");
+          console.log('after Check');
           dispatch(addSelected({name: key}));
         }
       }
@@ -99,7 +99,10 @@ const App: React.FC = () => {
           // setSelected(arr);
           dispatch(setSelected(arr));
         }
-
+        console.log(
+          'this is snapshotHistory',
+          msg.payload[msg.payload.length - 1],
+        );
         dispatch(setSnapshotHistory(msg.payload[msg.payload.length - 1]));
 
         // ! Setting the FILTER Array
@@ -129,10 +132,13 @@ const App: React.FC = () => {
     <div className="notFoundContainer">
       <img className="logo" src={LOGO_URL} />
       <p>
-        Supported only with Recoil apps with the Recoilize NPM module. Follow
-        the installation instructions at
+        Supported only with Recoil apps with the Recoilize NPM module.
         <br />
-        <a target="_blank" href="https://github.com/open-source-labs/Recoilize">
+        Please follow the installation instructions at&nbsp;
+        <a
+          target="_blank"
+          href="https://github.com/open-source-labs/Recoilize"
+          rel="noreferrer">
           Recoilize
         </a>
       </p>

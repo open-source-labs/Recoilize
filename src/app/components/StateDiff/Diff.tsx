@@ -5,7 +5,7 @@ import {useAppSelector} from '../../state-management/hooks';
 
 // renders the difference between the most recent state change and the previous
 const Diff: React.FC = () => {
-  //Retrieve snapshotHistory State from Redux Store
+  // retrieve snapshotHistory State from Redux Store
   const snapshotHistory = useAppSelector(
     state => state.snapshot.snapshotHistory,
   );

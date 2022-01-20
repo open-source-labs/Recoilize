@@ -10,7 +10,7 @@ export type stateSnapshotDiff = {
   filteredSnapshot?: filteredSnapshotDiff;
   componentAtomTree?: componentAtomTreeDiff;
   indexDiff?: number;
-}
+};
 
 export type filteredSnapshot = {
   // key of atom name with the value of an atom
@@ -19,7 +19,7 @@ export type filteredSnapshot = {
 
 export type filteredSnapshotDiff = {
   [atomName: string]: nodeDiff;
-}
+};
 
 // object of either atom or selector
 export type node = {
@@ -37,8 +37,8 @@ export type nodeDiff = {
   string?: string | string[];
   contents?: any;
   nodeDeps?: string[] | string[][];
-  nodeToNodeSubscription?: string[] | string [][];
-}
+  nodeToNodeSubscription?: string[] | string[][];
+};
 
 export type componentAtomTree = {
   children: object[];
@@ -55,14 +55,14 @@ export type componentAtomTreeDiff = {
   name: string | string[];
   tag: number | number[];
   recoilNodes: string[] | string[][];
-  actualDuration: number | number [];
-  treeBaseDuration: number | number [];
-  wasSuspended: boolean | boolean [];
-}
+  actualDuration: number | number[];
+  treeBaseDuration: number | number[];
+  wasSuspended: boolean | boolean[];
+};
 
 export type dataDuration = {
   [name: string]: any;
-}
+};
 
 export type dataDurationArr = dataDuration[];
 

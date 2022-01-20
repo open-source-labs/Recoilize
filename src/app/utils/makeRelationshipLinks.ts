@@ -26,10 +26,10 @@ const makeRelationshipLinks = (obj: any) => {
       name: obj[nodeKey].type === 'RecoilState' ? 'Atom' : 'Selector',
       label: nodeKey,
       id: index,
-    }
-    if (objToReturn.name === 'Atom'){
-      if (obj[nodeKey].nodeDeps.length){
-        objToReturn.name = 'Selector'
+    };
+    if (objToReturn.name === 'Atom') {
+      if (obj[nodeKey].nodeDeps.length) {
+        objToReturn.name = 'Selector';
       }
     }
     return objToReturn;

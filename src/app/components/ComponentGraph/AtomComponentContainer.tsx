@@ -1,10 +1,6 @@
 import React, {useState} from 'react';
 import AtomComponentVisual from './AtomComponentVisual';
-import {
-  filteredSnapshot,
-  atom,
-  selector,
-} from '../../../types';
+import {filteredSnapshot, atom, selector} from '../../../types';
 
 import {useAppSelector} from '../../state-management/hooks';
 
