@@ -48,7 +48,7 @@ npm install recoilize
 import RecoilizeDebugger from 'recoilize';
 ```
 
-####RecoilizeDebugger를 recoil root 안에 리액트 컴포넌트로 넣어야 합니다
+#### RecoilizeDebugger를 recoil root 안에 리액트 컴포넌트로 넣어야 합니다
 
 ```js
 import RecoilizeDebugger from 'recoilize';
