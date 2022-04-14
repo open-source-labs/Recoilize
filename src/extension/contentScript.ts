@@ -3,7 +3,9 @@ window.postMessage({action: 'contentScriptStarted'}, '*');
 
 // Listen to messages from Recoilize module within dev webpage
 window.addEventListener('message', msg => {
+  console.log('contentScript message: ', msg);
   chrome.runtime.sendMessage(msg.data);
+
 });
 
 // listening for messages from the background script
