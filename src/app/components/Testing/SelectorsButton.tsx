@@ -30,7 +30,7 @@ const SelectorsButton: React.FC = () => {
     </div>
   );
 };
-
+ 
 export default SelectorsButton;
 
 {/* <label for="dog-names">Choose a dog name:</label>
