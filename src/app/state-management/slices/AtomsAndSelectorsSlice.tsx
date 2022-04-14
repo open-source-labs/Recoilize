@@ -1,11 +1,18 @@
 import {createSlice, PayloadAction} from '@reduxjs/toolkit';
+import {RootState} from '../index';
 
 interface selectedState {
-  atomsAndSelectors: {};
+  atomsAndSelectors: {
+    atoms: string[];
+    selectors: string[];
+  };
 }
 
 const initialState: selectedState = {
-  atomsAndSelectors: {},
+  atomsAndSelectors: {
+    atoms: [],
+    selectors: [],
+  },
 };
 
 // zoom: zoomReducer,
@@ -28,5 +35,7 @@ export const atomsAndSelectorsSlice = createSlice({
 console.log('atomsAndSelectorsSlice:', atomsAndSelectorsSlice);
 
 export const {setAtomsAndSelectors} = atomsAndSelectorsSlice.actions;
+
+export const selectAtomsAndSelectorsState = (state: RootState) => state.atomsAndSelectors;
 
 export default atomsAndSelectorsSlice.reducer;

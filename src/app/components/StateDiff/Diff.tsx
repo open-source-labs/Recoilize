@@ -12,7 +12,7 @@ const Diff: React.FC = () => {
   const renderIndex = useAppSelector(state => state.snapshot.renderIndex);
 
   const currentState = useAppSelector(state => state);
-  console.log('newState YEAHHHH: ', currentState);
+  console.log('newState in Diff: ', currentState);
 
   const filteredPrevSnap =
     renderIndex > 0
