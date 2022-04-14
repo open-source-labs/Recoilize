@@ -64,6 +64,7 @@ chrome.runtime.onConnect.addListener(port => {
         break;
       case 'throttleEdit':
         if (tabId) {
+          console.log('doing a throttle edit');
           chrome.tabs.sendMessage(Number(tabId), msg);
         }
         // window.postMessage({action: 'throttleChange'}, throttler);
@@ -141,6 +142,7 @@ chrome.runtime.onMessage.addListener((msg, sender) => {
     case 'moduleInitialized':
       console.log('module has been initialized IN BG SCRIPT', msg);
       const tabIdSnapshotHistory = [msg.payload];
+      console.log('tabIdSnapshotHistory: ', tabIdSnapshotHistory);
       // comment
       // set tabId within local storage to initial snapshot sent from module
       chrome.storage.local.set({[tabId]: tabIdSnapshotHistory}, function () {
