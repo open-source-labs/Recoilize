@@ -11,6 +11,9 @@ const Diff: React.FC = () => {
   );
   const renderIndex = useAppSelector(state => state.snapshot.renderIndex);
 
+  const currentState = useAppSelector(state => state);
+  console.log('newState YEAHHHH: ', currentState);
+
   const filteredPrevSnap =
     renderIndex > 0
       ? snapshotHistory[renderIndex - 1].filteredSnapshot

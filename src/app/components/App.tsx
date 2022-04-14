@@ -17,6 +17,9 @@ import {
   updateFilter,
   selectFilterState,
 } from '../state-management/slices/FilterSlice';
+import {
+  setAtomsAndSelectors
+} from '../state-management/slices/AtomsAndSelectorsSlice';
 
 const LOGO_URL = './assets/Recoilize-v2.png';
 const App: React.FC = () => {
@@ -88,8 +91,10 @@ const App: React.FC = () => {
     });
     // LISTEN for messages FROM bg script
     backgroundConnection.onMessage.addListener(msg => {
+      // console.log('message from backgroundscript after')
       if (msg.action === 'recordSnapshot') {
         // ! sets the initial selected
+        console.log('should have our atoms and selectors: ', msg.payload);
         if (!msg.payload[1]) {
           // ensures we only set initially
           const arr: selectedTypes[] = [];
@@ -97,6 +102,7 @@ const App: React.FC = () => {
             arr.push({name: key});
           }
           // setSelected(arr);
+          console.log('arr in App.tsx send to setSelected', arr)
           dispatch(setSelected(arr));
         }
         console.log(
@@ -104,6 +110,11 @@ const App: React.FC = () => {
           msg.payload[msg.payload.length - 1],
         );
         dispatch(setSnapshotHistory(msg.payload[msg.payload.length - 1]));
+
+        // update state with the atoms and selectors!!!
+        dispatch(setAtomsAndSelectors(msg.payload[0].atomsAndSelectors));
+        
+        
 
         // ! Setting the FILTER Array
         if (!msg.payload[1] && filterData.length === 0) {
