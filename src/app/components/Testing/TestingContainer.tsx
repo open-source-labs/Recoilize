@@ -1,6 +1,7 @@
 /* eslint-disable prettier/prettier */
 
 import React, { useState } from 'react';
+import Editor from './Editor';
 import { useAppSelector } from '../../state-management/hooks';
 
 // grab array of all selectors - snapshot history is stored in the Redux store
@@ -23,8 +24,9 @@ const Testing: React.FC = () => {
   // boardState.set__proto__
 
   return (
-   <div>
-     Testing!
+   <div className='testing-container'>
+     <h1>Testing!</h1>
+     <Editor />
    </div>
   )
 };
