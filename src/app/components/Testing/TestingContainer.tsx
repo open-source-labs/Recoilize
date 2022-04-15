@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import Editor from './Editor';
 import { useAppSelector } from '../../state-management/hooks';
+import SelectorsButton from './SelectorsButton';
 
 // grab array of all selectors - snapshot history is stored in the Redux store
   // this will store in a dropdown
@@ -13,7 +14,7 @@ import { useAppSelector } from '../../state-management/hooks';
 
 
 const Testing: React.FC = () => {
-
+  const [javascript, setJavascript] = useState('');
   // retrieve snapshotHistory State from Redux Store
   const snapshotHistory = useAppSelector(
       state => state.snapshot.snapshotHistory,
@@ -25,6 +26,14 @@ const Testing: React.FC = () => {
 
   return (
    <div className='testing-container'>
+     <div>
+       <h1>THIS HAS TO BE IT!</h1>
+       <SelectorsButton/>
+     </div>
+     <Editor
+        onChange={setJavascript}
+        value={javascript}
+     />
      <h1>Testing!</h1>
      <Editor />
    </div>
@@ -39,4 +48,3 @@ export default Testing;
 
 
 // Jester testing convo ---
-  // 
