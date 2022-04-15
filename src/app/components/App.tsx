@@ -89,9 +89,12 @@ const App: React.FC = () => {
       action: 'devToolInitialized',
       tabId: chrome.devtools.inspectedWindow.tabId,
     });
+    console.log(
+      'here is the background connection post message IN APP',
+      backgroundConnection,
+    );
     // LISTEN for messages FROM bg script
     backgroundConnection.onMessage.addListener(msg => {
-      // console.log('message from backgroundscript after')
       if (msg.action === 'recordSnapshot') {
         // ! sets the initial selected
         console.log('should have our atoms and selectors: ', msg.payload);

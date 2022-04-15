@@ -34,6 +34,8 @@ const Testing: React.FC = () => {
         onChange={setJavascript}
         value={javascript}
      />
+     <h1>Testing!</h1>
+     <Editor />
    </div>
   )
 };
@@ -46,4 +48,3 @@ export default Testing;
 
 
 // Jester testing convo ---
-  // 

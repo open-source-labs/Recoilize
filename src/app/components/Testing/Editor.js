@@ -30,6 +30,13 @@ function handleChange (editor, data, value) {
       className='code-mirror-wrapper'
       onBeforeChange={handleChange}
       value={value}
+
+const Editor = props => {
+
+  return (
+    <div className='editor-container'>
+      <ControlledEditor
+      className='code-mirror-wrapper'
       options={{
         lineWrapping: true,
         mode: 'javascript',
@@ -45,6 +52,12 @@ function handleChange (editor, data, value) {
       />
     </div>
     </>
+        theme: 'dracula'
+      }}
+      />
+      <button className='run-code'>Run Code</button>
+    </div>
+    
   )
 }
 

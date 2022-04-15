@@ -25,11 +25,15 @@ chrome.storage.local.clear(function (): void {
 // runs when devtool is connected
 chrome.runtime.onConnect.addListener(port => {
   const devToolsListener = (msg: Msg, port: object) => {
+    console.log(
+      'in the onConnect of background script IN BG SCRIPT ',
+      msg,
+      port,
+    );
     const {tabId, action} = msg;
 
     switch (action) {
       case 'devToolInitialized':
-        console.log('Dev Tool Initialized');
         connections[tabId] = port;
         // read and send back to dev tool current local storage for corresponding tabId & port
         console.log('local chrome storage: ', chrome.storage.local);
@@ -66,6 +70,7 @@ chrome.runtime.onConnect.addListener(port => {
         break;
       case 'throttleEdit':
         if (tabId) {
+          console.log('doing a throttle edit');
           chrome.tabs.sendMessage(Number(tabId), msg);
         }
         // window.postMessage({action: 'throttleChange'}, throttler);
@@ -145,9 +150,8 @@ chrome.runtime.onMessage.addListener((msg, sender) => {
 
     // If the module is loaded for first time or refreshed reset snapshot History and send initial payload
     case 'moduleInitialized':
+      console.log('module has been initialized IN BG SCRIPT', msg);
       const tabIdSnapshotHistory = [msg.payload];
-      console.log('case: moduleInitialized message: ', msg);
-
       // set tabId within local storage to initial snapshot sent from module
       chrome.storage.local.set({[tabId]: tabIdSnapshotHistory}, function () {
         // if tabId is has opened dev tool port, send snapshotHistory to dev tool.
