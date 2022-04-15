@@ -14,7 +14,7 @@ import SelectorsButton from './SelectorsButton';
 
 
 const Testing: React.FC = () => {
-
+  const [javascript, setJavascript] = useState('');
   // retrieve snapshotHistory State from Redux Store
   const snapshotHistory = useAppSelector(
       state => state.snapshot.snapshotHistory,
@@ -27,10 +27,13 @@ const Testing: React.FC = () => {
   return (
    <div className='testing-container'>
      <div>
-       <h1>Testing!</h1>
+       <h1>THIS HAS TO BE IT!</h1>
        <SelectorsButton/>
      </div>
-     <Editor />
+     <Editor
+        onChange={setJavascript}
+        value={javascript}
+     />
    </div>
   )
 };
