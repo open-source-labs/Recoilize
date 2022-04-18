@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React from 'react';
 import {useAppSelector} from '../../state-management/hooks';
 import {selectAtomsAndSelectorsState} from '../../state-management/slices/AtomsAndSelectorsSlice';
@@ -12,15 +13,12 @@ const SelectorsButton: React.FC = () => {
   // );
 
   const object = useAppSelector(selectAtomsAndSelectorsState);
-  console.log('Atoms and Selecetors: ', object);
-  const nextObject = object.atomsAndSelectors;
-  console.log('atoms agaaain: ', nextObject);
-  const newestArray = nextObject.selectors;
-  console.log('SHOULD BE SELECTORS: ', newestArray);
+  const atomsAndSelectorsObject = object.atomsAndSelectors;
+  const selectorsArray = atomsAndSelectorsObject.selectors;
 
   const selectors: JSX.Element[] = [];
-  newestArray.forEach((element, index) => {
-    selectors.push(<option>{element}</option>);
+  selectorsArray.forEach((selector, index) => {
+    selectors.push(<option>{selector}</option>);
   });
   
   return (

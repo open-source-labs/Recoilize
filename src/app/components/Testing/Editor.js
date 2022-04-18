@@ -24,40 +24,27 @@ function handleChange (editor, data, value) {
   onChange(value);
 }
   return (
-  <>
-    <div className='editor-container'>
-      <ControlledEditor
-      className='code-mirror-wrapper'
-      onBeforeChange={handleChange}
-      value={value}
-
-const Editor = props => {
-
-  return (
-    <div className='editor-container'>
-      <ControlledEditor
-      className='code-mirror-wrapper'
-      options={{
-        lineWrapping: true,
-        mode: 'javascript',
-        lineNumbers: true,
-        theme: 'dracula',
-      }}
-      />
-      <button className='run-code' onClick={() => handleClick(value)}>Run Code</button>
-    </div>
-    <div>
-      <CodeResults
-      evaluatedCode={evaluatedCode}
-      />
-    </div>
+    <>
+      <div className='editor-container'>
+        <ControlledEditor
+        className='code-mirror-wrapper'
+        onBeforeChange={handleChange}
+        value={value}
+        options={{
+          lineWrapping: true,
+          mode: 'javascript',
+          lineNumbers: true,
+          theme: 'dracula',
+        }}
+        />
+        <button className='run-code' onClick={() => handleClick(value)}>Run Code</button>
+      </div>
+      <div>
+        <CodeResults
+        evaluatedCode={evaluatedCode}
+        />
+      </div>
     </>
-        theme: 'dracula'
-      }}
-      />
-      <button className='run-code'>Run Code</button>
-    </div>
-    
   )
 }
 
