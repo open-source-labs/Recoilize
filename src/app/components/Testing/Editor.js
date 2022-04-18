@@ -29,6 +29,7 @@ function handleChange (editor, data, value) {
         <ControlledEditor
         className='code-mirror-wrapper'
         onBeforeChange={handleChange}
+        value={value}
         options={{
           lineWrapping: true,
           mode: 'javascript',
