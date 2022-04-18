@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import Editor from './Editor';
 import { useAppSelector } from '../../state-management/hooks';
 import SelectorsButton from './SelectorsButton';
-
+import './testing.css';
 // grab array of all selectors - snapshot history is stored in the Redux store
   // this will store in a dropdown
   
@@ -27,7 +27,7 @@ const Testing: React.FC = () => {
   return (
    <div className='testing-container'>
      <div>
-       <h1>THIS HAS TO BE IT!</h1>
+       <h1>Testing</h1>
        <SelectorsButton/>
      </div>
      <Editor
