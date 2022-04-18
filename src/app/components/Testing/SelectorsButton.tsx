@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import React from 'react';
 import {useAppSelector} from '../../state-management/hooks';
 import {selectAtomsAndSelectorsState} from '../../state-management/slices/AtomsAndSelectorsSlice';
