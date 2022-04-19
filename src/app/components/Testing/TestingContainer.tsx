@@ -28,7 +28,9 @@ const Testing: React.FC = () => {
    <div className='testing-container'>
      <div>
        <h1>Testing</h1>
-       <SelectorsButton/>
+       <SelectorsButton
+       key = 'selectors button'
+       />
      </div>
      <Editor
         onChange={setJavascript}

@@ -8,21 +8,24 @@ import 'codemirror/mode/javascript/javascript';
 import 'codemirror/mode/css/css';
 import { Controlled as ControlledEditor } from 'react-codemirror2';
 import CodeResults from './CodeResults'
-// import './testing.css';
+
 const Editor = props => {
 const { value, onChange } = props;
 
 const [evaluatedCode, setEvaluatedCode] = useState('Run code here...');
 
 function handleClick (valueAsString) {
-  if (valueAsString){
-    const evalCode = eval(valueAsString);
-    console.log(evalCode);
-    if (evalCode){
-      setEvaluatedCode(eval(valueAsString))
+  try {
+    if (valueAsString){
+      let evalCode = eval(valueAsString);
+      if (evalCode === undefined) evalCode = 'undefined';
+      if (evalCode === null) evalCode = 'null';
+      setEvaluatedCode(evalCode);
     } else {
-      setEvaluatedCode('Error');
+      setEvaluatedCode('');
     }
+  } catch (err) {
+    setEvaluatedCode(err.message);
   }
 }
 
@@ -45,22 +48,20 @@ function handleChange (editor, data, value) {
           indentUnit: 2,
           autoCloseBrackets: true,
           theme: 'dracula',
-          indentUnit: 2,
-          
           smartIndent: true,
         }}
         />
         </div>
+
         <div>
         <button className='run-code' onClick={() => handleClick(value)}>Run Code</button>
         </div>
-      {/* </div>
-      <div> */}
+
         <CodeResults
         evaluatedCode={evaluatedCode}
         />
+
       </div>
-    // </>
   )
 }
 
