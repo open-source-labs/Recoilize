@@ -1,0 +1,27 @@
+.testing-container {
+  display: flex;
+  flex-direction: column;
+  margin: 5px;
+  height: 100%;
+  width: 100%;
+}
+
+.code-mirror-wrapper {
+  font-size: medium;
+  position: static;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  height: 75%;
+  width: 95%;
+}
+
+.run-code {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 5px;
+}
+
+.console-output {
+  font-size: medium;
+}
+

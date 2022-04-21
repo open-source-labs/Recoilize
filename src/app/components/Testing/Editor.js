@@ -15,8 +15,17 @@ const { value, onChange } = props;
 const [evaluatedCode, setEvaluatedCode] = useState('Run code here...');
 
 function handleClick (valueAsString) {
-  if (valueAsString){
-    setEvaluatedCode(eval(valueAsString))
+  try {
+    if (valueAsString){
+      let evalCode = eval(valueAsString);
+      if (evalCode === undefined) evalCode = 'undefined';
+      if (evalCode === null) evalCode = 'null';
+      setEvaluatedCode(evalCode);
+    } else {
+      setEvaluatedCode('');
+    }
+  } catch (err) {
+    setEvaluatedCode(err.message);
   }
 }
 
@@ -24,8 +33,9 @@ function handleChange (editor, data, value) {
   onChange(value);
 }
   return (
-    <>
+    // <>
       <div className='editor-container'>
+        <div>
         <ControlledEditor
         className='code-mirror-wrapper'
         onBeforeChange={handleChange}
@@ -34,17 +44,24 @@ function handleChange (editor, data, value) {
           lineWrapping: true,
           mode: 'javascript',
           lineNumbers: true,
+          lint: true,
+          indentUnit: 2,
+          autoCloseBrackets: true,
           theme: 'dracula',
+          smartIndent: true,
         }}
         />
+        </div>
+
+        <div>
         <button className='run-code' onClick={() => handleClick(value)}>Run Code</button>
-      </div>
-      <div>
+        </div>
+
         <CodeResults
         evaluatedCode={evaluatedCode}
         />
+
       </div>
-    </>
   )
 }
 
