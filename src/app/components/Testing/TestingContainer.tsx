@@ -11,8 +11,8 @@ import SelectorsButton from './SelectorsButton';
 import './testing.css';
 // grab array of all selectors - snapshot history is stored in the Redux store
   // this will store in a dropdown
-import {atom, selector} from 'recoil';
-import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
+// import {atom, selector} from 'recoil';
+// import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 
 // assign the selectors and atoms objects to a variables to use for the creation of recoil atoms and selectors
 
