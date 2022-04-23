@@ -4,7 +4,6 @@ import React from 'react';
 const SelectorsButton: React.FC<any> = (props) => {
 
   const { $selectors, selectors, atoms } = props;
-  console.log('selector button props ', props);
 
   // completely eliminated all need for any object shenanigans or redux imports through prop drilling.
 
@@ -13,7 +12,7 @@ const SelectorsButton: React.FC<any> = (props) => {
     console.log(selectorKey);
   }
   
-  //relabled and used a value property to capture the value on an on change above - you can now find the keys. Function needs to be completed though.
+  //relabeled and used a value property to capture the value on an on change above - you can now find the keys. Function needs to be completed though.
   const HTMLselectorArray: JSX.Element[] = [];
   selectors.forEach((selector, i) => {
     HTMLselectorArray.push(<option key={i} value={selector}>{selector}</option>);

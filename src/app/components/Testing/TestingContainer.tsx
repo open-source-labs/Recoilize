@@ -16,25 +16,25 @@ const Testing = () => {
       state => state.snapshot.snapshotHistory,
   );
   
-  const [javascript, setJavascript] = useState(``);
-
-// it seems that converting everything to state fixes most of our asynchronicity problems???
-
-const [ theObject, setTheObject ] = useState(JSON.parse(
-  JSON.stringify(useAppSelector(selectAtomsAndSelectorsState)),
-));
-  // const theObject = JSON.parse(
-  //   JSON.stringify(useAppSelector(selectAtomsAndSelectorsState)),
-  // );
-
-  // dot notation started working here for some reason. -- it's SUPER inconsistent though and you may need to go back. I think we have an asynchronicity problem.
-  // const { atomsAndSelectors } = theObject;
-  //const { $selectors, selectors, atoms } = theObject.atomsAndSelectors; // may need to switch back to just atomsAndSelectors;
-  const [ $selectors, set$Selectors ] = useState(theObject.atomsAndSelectors.$selectors);
-  const [ atoms, setAtoms ] = useState(theObject.atomsAndSelectors.atoms);
-  const [ selectors, setSelectors ] = useState(theObject.atomsAndSelectors.selectors)
-  console.log('in container ', selectors, $selectors, atoms);
-
+  
+  // it seems that converting everything to state fixes most of our asynchronicity problems???
+  
+  const [ theObject, setTheObject ] = useState(JSON.parse(
+    JSON.stringify(useAppSelector(selectAtomsAndSelectorsState)),
+    ));
+    // const theObject = JSON.parse(
+      //   JSON.stringify(useAppSelector(selectAtomsAndSelectorsState)),
+      // );
+      
+      // dot notation started working here for some reason. -- it's SUPER inconsistent though and you may need to go back. I think we have an asynchronicity problem.
+      // const { atomsAndSelectors } = theObject;
+      //const { $selectors, selectors, atoms } = theObject.atomsAndSelectors; // may need to switch back to just atomsAndSelectors;
+      const [ $selectors, set$Selectors ] = useState(theObject.atomsAndSelectors.$selectors);
+      const [ atoms, setAtoms ] = useState(theObject.atomsAndSelectors.atoms);
+      const [ selectors, setSelectors ] = useState(theObject.atomsAndSelectors.selectors)
+      //console.log('in container ', selectors, $selectors, atoms);
+      
+      
     //these will probably need to be state at some point in order to update them repeatedly.
   const madeSelectors = {};
   const madeAtoms = {};
@@ -63,9 +63,9 @@ const [ theObject, setTheObject ] = useState(JSON.parse(
 const mySet = useSetRecoilState(mySetSelector);
   // const currentPlayerStateSelector = selector($nextPlayerSetSelector);
 
+// convert the stringified version of selector set and get properties back to functions 
 selectors.forEach(selectorKey => {
   // create a new recoil selector for each element in the selectorsArray and attach the to the madeSelectors object.
-  //console.log('before conversion ', $selectors[selectorKey])
   if ($selectors[selectorKey]['set']) $selectors[selectorKey]['set'] = eval('(' + $selectors[selectorKey]['set'] + ')');
   if ($selectors[selectorKey]['get']) {
     $selectors[selectorKey]['get'] = eval('(' + $selectors[selectorKey]['get'] + ')')
@@ -73,14 +73,13 @@ selectors.forEach(selectorKey => {
     //every thing must have a get, no mater what.
     $selectors[selectorKey]['get'] = ({get}) => {return};
   }
-  //console.log('after conversion ', $selectors[selectorKey])
-  madeSelectors[selectorKey] = selector($selectors[selectorKey])
-  //console.log('made selectors ', madeSelectors)
+  madeSelectors[selectorKey] = selector($selectors[selectorKey]);
 });
 
-
-  //testing out recoil playing nicely with redux. Sometimes random recoil hooks break everything.
+//testing out recoil playing nicely with redux. Sometimes random recoil hooks break everything.
 const nextPlayerSetter = useSetRecoilState(madeSelectors['nextPlayerSetSelector'])
+
+const [javascript, setJavascript] = useState('');
 
   return (
     //invoking an onclick to test out the fact that our selector works and is using the selector that WE MADE from our object.
@@ -95,6 +94,9 @@ const nextPlayerSetter = useSetRecoilState(madeSelectors['nextPlayerSetSelector'
        $selectors={$selectors}
        selectors={selectors}
        />
+     </div>
+     <div>
+      {/* component that renders the expect test */}
      </div>
      <Editor
         onChange={setJavascript}
