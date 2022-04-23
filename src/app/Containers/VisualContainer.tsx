@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import {RecoilRoot} from 'recoil';
 import Diff from '../components/StateDiff/Diff';
 import NavBar from '../components/NavBar/NavBar';
 import Metrics from '../components/Metrics/MetricsContainer';
@@ -33,7 +34,11 @@ const VisualContainer: React.FC = () => {
     // settings tab
     Settings: <Settings />,
     // add a testing tab
-    Testing: <Testing />,
+    Testing: (
+      <RecoilRoot>
+        <Testing />
+      </RecoilRoot>
+    ),
   };
   // array of all nav obj keys
   const tabsList: string[] = Object.keys(nav);

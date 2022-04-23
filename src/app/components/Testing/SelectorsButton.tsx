@@ -3,6 +3,7 @@ import React from 'react';
 import {useAppSelector} from '../../state-management/hooks';
 import {selectAtomsAndSelectorsState} from '../../state-management/slices/AtomsAndSelectorsSlice';
 
+
 const SelectorsButton: React.FC = () => {
   // const selectorArray = useAppSelector(state => {
   //   return state;
@@ -11,14 +12,20 @@ const SelectorsButton: React.FC = () => {
   //   'state in SelectorButton: ',
   //   selectorArray.atomsAndSelectors.atomsAndSelectors,
   // );
-
+  // const handleClick = (e) => {
+  //   console.log(e);
+  // }
   const object = useAppSelector(selectAtomsAndSelectorsState);
   const atomsAndSelectorsObject = object.atomsAndSelectors;
   const selectorsArray = atomsAndSelectorsObject.selectors;
-
+  //console.log('Selector button: ', atomsAndSelectorsObject);
+  const $selectors = atomsAndSelectorsObject.$selectors;
+  
+  
+  
   const selectors: JSX.Element[] = [];
-  selectorsArray.forEach((selector, index) => {
-    selectors.push(<option>{selector}</option>);
+  selectorsArray.forEach((selector, i) => {
+    selectors.push(<option key={i}>{selector}</option>);
   });
   
   return (

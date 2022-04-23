@@ -29,16 +29,17 @@ function handleClick (valueAsString) {
   }
 }
 
-function handleChange (editor, data, value) {
+function handleChange (value) {
   onChange(value);
 }
+
   return (
     // <>
       <div className='editor-container'>
         <div>
         <ControlledEditor
         className='code-mirror-wrapper'
-        onBeforeChange={handleChange}
+        onBeforeChange={() => handleChange(value)}
         value={value}
         options={{
           lineWrapping: true,
