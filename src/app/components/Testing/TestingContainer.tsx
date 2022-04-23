@@ -11,7 +11,12 @@ import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 
 
 const Testing = () => {
-const [javascript, setJavascript] = useState(``);
+  // retrieve snapshotHistory State from Redux Store
+  const snapshotHistory = useAppSelector(
+      state => state.snapshot.snapshotHistory,
+  );
+  
+  const [javascript, setJavascript] = useState(``);
 
 // it seems that converting everything to state fixes most of our asynchronicity problems???
 
@@ -73,10 +78,6 @@ selectors.forEach(selectorKey => {
   //console.log('made selectors ', madeSelectors)
 });
 
-// retrieve snapshotHistory State from Redux Store
-const snapshotHistory = useAppSelector(
-    state => state.snapshot.snapshotHistory,
-);
 
   //testing out recoil playing nicely with redux. Sometimes random recoil hooks break everything.
 const nextPlayerSetter = useSetRecoilState(madeSelectors['nextPlayerSetSelector'])
