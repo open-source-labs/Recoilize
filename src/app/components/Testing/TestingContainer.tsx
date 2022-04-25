@@ -16,71 +16,52 @@ const Testing = () => {
       state => state.snapshot.snapshotHistory,
   );
   
-  
-  // it seems that converting everything to state fixes most of our asynchronicity problems???
-  
+  // it seems that converting everything to state fixes most of our asynchronicity problems? -- need to reevaluate.
+  // go get the current collection of atoms and selectors.
   const [ theObject, setTheObject ] = useState(JSON.parse(
     JSON.stringify(useAppSelector(selectAtomsAndSelectorsState)),
     ));
-    // const theObject = JSON.parse(
-      //   JSON.stringify(useAppSelector(selectAtomsAndSelectorsState)),
-      // );
       
-      // dot notation started working here for some reason. -- it's SUPER inconsistent though and you may need to go back. I think we have an asynchronicity problem.
-      // const { atomsAndSelectors } = theObject;
-      //const { $selectors, selectors, atoms } = theObject.atomsAndSelectors; // may need to switch back to just atomsAndSelectors;
-      const [ selectorsFnAsStrings, setSelectorsFnAsStrings ] = useState(theObject.atomsAndSelectors.$selectors);
-      const [ atoms, setAtoms ] = useState(theObject.atomsAndSelectors.atoms);
-      const [ selectors, setSelectors ] = useState(theObject.atomsAndSelectors.selectors)
-      //console.log('in container ', selectors, $selectors, atoms);
+  // extract what we need as state from the object of atoms/selectors that we went and grabbed.
+  const [ selectorsFnAsStrings, setSelectorsFnAsStrings ] = useState(theObject.atomsAndSelectors.$selectors);
+  const [ atoms, setAtoms ] = useState(theObject.atomsAndSelectors.atoms);
+  const [ selectors, setSelectors ] = useState(theObject.atomsAndSelectors.selectors)
       
-      
-    //these will probably need to be state at some point in order to update them repeatedly.
-  //const madeSelectors = {};
   const madeAtoms = {};
 
-//hard coded atom for testing purposes - feel free to delete.
+  //hard coded atom for testing purposes - feel free to delete.
   const currentPlayer = atom({
     key: 'currentPlayer',
     default: 'X'
   });
 
+  // for testing purposes to render the current player on testing GUI
   const current = useRecoilValue(currentPlayer);
-
-// copmletely hard coded mySet selector for testing purposes.
-// const mySet = useSetRecoilState(mySetSelector);
-  // const currentPlayerStateSelector = selector($nextPlayerSetSelector);
-
   
-  // convert the stringified version of selector set and get properties back to functions 
-const selectorsClone = JSON.parse(JSON.stringify(selectorsFnAsStrings));
+  // convert the stringified version of selector set and get properties back to functions
+  const selectorsClone = JSON.parse(JSON.stringify(selectorsFnAsStrings));
 
-const [madeSelectors, setMadeSelectors] = useState(selectorsClone);
+  const createdSelectors = {};
+  selectors.forEach(selectorKey => {
+    // iterate through deep clone of selectors as strings and turn all stringed set/get functions into working functions.
+    if (selectorsClone[selectorKey]['set']) selectorsClone[selectorKey]['set'] = eval('(' + selectorsClone[selectorKey]['set'] + ')');
+    if (selectorsClone[selectorKey]['get']) {
+      selectorsClone[selectorKey]['get'] = eval('(' + selectorsClone[selectorKey]['get'] + ')')
+    } else {
+      //every thing must have a get, no matter what (invoking selector on a selectorsClone value without get will result in a fail)
+      selectorsClone[selectorKey]['get'] = ({get}) => {return};
+    }
+    createdSelectors[selectorKey] = selector(selectorsClone[selectorKey]);
+  });
+  const [madeSelectors, setMadeSelectors] = useState(createdSelectors);
 
-const object = {};
+  console.log('createdSelectors ', createdSelectors)
+  console.log('made Selectors ', madeSelectors)
 
-selectors.forEach(selectorKey => {
-  // create a new recoil selector for each element in the selectorsArray and attach the to the madeSelectors object.
-  if (selectorsClone[selectorKey]['set']) selectorsClone[selectorKey]['set'] = eval('(' + selectorsClone[selectorKey]['set'] + ')');
-  if (selectorsClone[selectorKey]['get']) {
-    selectorsClone[selectorKey]['get'] = eval('(' + selectorsClone[selectorKey]['get'] + ')')
-  } else {
-    //every thing must have a get, no matter what.
-    selectorsClone[selectorKey]['get'] = ({get}) => {return};
-  }
-  setMadeSelectors(selectorsClone);
-  object[selectorKey] = selector(selectorsClone[selectorKey]);
-});
-
-setMadeSelectors(object);
-//set$Selectors(madeSelectors);
-
-//testing out recoil playing nicely with redux. Sometimes random recoil hooks break everything.
+// tester to make sure that we do have a working selector from our state object.
 const nextPlayerSetter = useSetRecoilState(madeSelectors['nextPlayerSetSelector'])
 
 const [javascript, setJavascript] = useState('');
-
-
 
   return (
     //invoking an onclick to test out the fact that our selector works and is using the selector that WE MADE from our object.
@@ -91,6 +72,7 @@ const [javascript, setJavascript] = useState('');
        <h1>{current}</h1>
        <SelectorsButton
        key='selectors button'
+       madeSelectors={madeSelectors}
        atoms={atoms}
        selectorsFnAsStrings={selectorsFnAsStrings}
        selectors={selectors}
