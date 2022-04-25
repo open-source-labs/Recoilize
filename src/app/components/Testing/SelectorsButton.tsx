@@ -1,39 +1,35 @@
 /* eslint-disable prettier/prettier */
 import React from 'react';
-import {useAppSelector} from '../../state-management/hooks';
-import {selectAtomsAndSelectorsState} from '../../state-management/slices/AtomsAndSelectorsSlice';
+import DisplayTests from './displayTests';
 
-const SelectorsButton: React.FC = () => {
-  // const selectorArray = useAppSelector(state => {
-  //   return state;
-  // });
-  // console.log(
-  //   'state in SelectorButton: ',
-  //   selectorArray.atomsAndSelectors.atomsAndSelectors,
-  // );
+const SelectorsButton: React.FC<any> = (props) => {
 
-  const object = useAppSelector(selectAtomsAndSelectorsState);
-  const atomsAndSelectorsObject = object.atomsAndSelectors;
-  const selectorsArray = atomsAndSelectorsObject.selectors;
+  const { $selectors, selectors, atoms } = props;
 
-  const selectors: JSX.Element[] = [];
-  selectorsArray.forEach((selector, index) => {
-    selectors.push(<option>{selector}</option>);
+  // completely eliminated all need for any object shenanigans or redux imports through prop drilling.
+
+  const handleChange = (item) => {
+    const selectorKey = item.options[item.selectedIndex].value;
+    console.log(selectorKey);
+  }
+  
+  //relabeled and used a value property to capture the value on an on change above - you can now find the keys. Function needs to be completed though.
+  const HTMLselectorArray: JSX.Element[] = [];
+  selectors.forEach((selector, i) => {
+    HTMLselectorArray.push(<option key={i} value={selector}>{selector}</option>);
   });
   
   return (
     <div>
-      <label htmlFor='selectors'>Selectors: </label>
-      <select name='selectors'>{selectors}</select>
+      <div>
+          <label htmlFor='selectors'>Selectors: </label>
+          <select name='selectors' id='selectors' onChange={() => handleChange(document.querySelector('#selectors'))}>{HTMLselectorArray}</select>
+      </div>
+      <div>
+        <DisplayTests/>
+      </div>
     </div>
   );
 };
  
 export default SelectorsButton;
-
-{/* <label for="dog-names">Choose a dog name:</label>
-<select name="dog-names" id="dog-names"></select>
-<option value="rigatoni">Rigatoni</option>
-<option value="dave">Dave</option>
-<option value="pumpernickel">Pumpernickel</option>
-<option value="reeses">Reeses</option> */}

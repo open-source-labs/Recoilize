@@ -5,6 +5,7 @@ interface selectedState {
   atomsAndSelectors: {
     atoms: string[];
     selectors: string[];
+    $selectors: any;
   };
 }
 
@@ -12,6 +13,7 @@ const initialState: selectedState = {
   atomsAndSelectors: {
     atoms: [],
     selectors: [],
+    $selectors: {},
   },
 };
 
