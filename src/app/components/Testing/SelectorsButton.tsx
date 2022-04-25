@@ -1,5 +1,6 @@
 /* eslint-disable prettier/prettier */
 import React from 'react';
+import DisplayTests from './displayTests';
 
 const SelectorsButton: React.FC<any> = (props) => {
 
@@ -20,8 +21,13 @@ const SelectorsButton: React.FC<any> = (props) => {
   
   return (
     <div>
-        <label htmlFor='selectors'>Selectors: </label>
-        <select name='selectors' id='selectors' onChange={() => handleChange(document.querySelector('#selectors'))}>{HTMLselectorArray}</select>
+      <div>
+          <label htmlFor='selectors'>Selectors: </label>
+          <select name='selectors' id='selectors' onChange={() => handleChange(document.querySelector('#selectors'))}>{HTMLselectorArray}</select>
+      </div>
+      <div>
+        <DisplayTests/>
+      </div>
     </div>
   );
 };
