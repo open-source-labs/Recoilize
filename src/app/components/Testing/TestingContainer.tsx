@@ -26,9 +26,20 @@ const Testing = () => {
   const [ selectorsFnAsStrings, setSelectorsFnAsStrings ] = useState(theObject.atomsAndSelectors.$selectors);
   const [ atoms, setAtoms ] = useState(theObject.atomsAndSelectors.atoms);
   const [ selectors, setSelectors ] = useState(theObject.atomsAndSelectors.selectors)
-      
+  
   const madeAtoms = {};
-
+  
+  // const voidGetFunc = ({ get }) => {return};
+  // const voidGetterFuncString = voidGetFunc.toString();
+  
+  // let selectorsClone = JSON.parse(JSON.stringify(selectorsFnAsStrings));
+  // selectors.forEach(selectorKey => {
+  //   if (!selectorsClone[selectorKey]['get']) {
+  //     selectorsClone[selectorKey]['get'] = voidGetterFuncString;
+  //   }
+  // });
+  // setSelectorsFnAsStrings(selectorsClone);
+    
   //hard coded atom for testing purposes - feel free to delete.
   const currentPlayer = atom({
     key: 'currentPlayer',
@@ -39,29 +50,41 @@ const Testing = () => {
   const current = useRecoilValue(currentPlayer);
   
   // convert the stringified version of selector set and get properties back to functions
-  const selectorsClone = JSON.parse(JSON.stringify(selectorsFnAsStrings));
+  let selectorsClone = JSON.parse(JSON.stringify(selectorsFnAsStrings));
 
   const createdSelectors = {};
   selectors.forEach(selectorKey => {
     // iterate through deep clone of selectors as strings and turn all stringed set/get functions into working functions.
     if (selectorsClone[selectorKey]['set']) selectorsClone[selectorKey]['set'] = eval('(' + selectorsClone[selectorKey]['set'] + ')');
-    if (selectorsClone[selectorKey]['get']) {
-      selectorsClone[selectorKey]['get'] = eval('(' + selectorsClone[selectorKey]['get'] + ')')
+    if (selectorsClone[selectorKey]['get']){
+      selectorsClone[selectorKey]['get'] = eval('(' + selectorsClone[selectorKey]['get'] + ')');
     } else {
-      //every thing must have a get, no matter what (invoking selector on a selectorsClone value without get will result in a fail)
-      selectorsClone[selectorKey]['get'] = ({get}) => {return};
+      selectorsClone[selectorKey]['get'] = ({ get }) => {return};
     }
     createdSelectors[selectorKey] = selector(selectorsClone[selectorKey]);
   });
-  const [madeSelectors, setMadeSelectors] = useState(createdSelectors);
 
-  console.log('createdSelectors ', createdSelectors)
-  console.log('made Selectors ', madeSelectors)
+  const [ madeSelectors, setMadeSelectors ] = useState(createdSelectors);
 
-// tester to make sure that we do have a working selector from our state object.
-const nextPlayerSetter = useSetRecoilState(madeSelectors['nextPlayerSetSelector'])
+  // chosen selector piece of state that tells our container which piece of state has been chosen, and therefore will be drilled down (chosenSelector is just a string)
+  const [ chosenSelector, setChosenSelector ] = useState(''); 
+  const [ loadedSelector, setLoadedSelector ] = useState('');
+  // use effect hook that, on update, grabs the relevant selector from madeSelectors, and the relevant String version, and drills them down to be used and displayed.
+  const [javascript, setJavascript] = useState('');
+  
+  useEffect(()=> {
+  console.log('hello');
+  //   // setJavascript(selectorsFnAsStrings[chosenSelector]);
+  //   // console.log("THIS IS WHAT WE WANT TO SHOW UP ", selectorsFnAsStrings[chosenSelector])
+  //   // setJavascript(javascript + "hello does this wrok");
+  //   // going to editor -- setLoadedSelector(useSetRecoilState(madeSelectors[chosenSelector]))
+  })
+  // once we get atoms working, we will use the same process to display atoms.
 
-const [javascript, setJavascript] = useState('');
+
+  // tester to make sure that we do have a working selector from our state object.
+  const nextPlayerSetter = useSetRecoilState(madeSelectors['nextPlayerSetSelector'])
+
 
   return (
     //invoking an onclick to test out the fact that our selector works and is using the selector that WE MADE from our object.
@@ -74,8 +97,11 @@ const [javascript, setJavascript] = useState('');
        key='selectors button'
        madeSelectors={madeSelectors}
        atoms={atoms}
-       selectorsFnAsStrings={selectorsFnAsStrings}
        selectors={selectors}
+       chosenSelector={chosenSelector}
+       setChosenSelector={setChosenSelector}
+       onChange={setJavascript}
+       selectorsFnAsStrings={selectorsFnAsStrings}
        />
      </div>
      <div>
@@ -83,7 +109,9 @@ const [javascript, setJavascript] = useState('');
      </div>
      <Editor
         onChange={setJavascript}
+        selectorsFnAsStrings={selectorsFnAsStrings}
         value={javascript}
+        loadedSelector={loadedSelector}
      />
    </div>
   )
