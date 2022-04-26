@@ -16,7 +16,7 @@ const Testing = () => {
       state => state.snapshot.snapshotHistory,
   );
 
-  
+
 // use effect.
   const [ theObject, setTheObject ] = useState(JSON.parse(
     JSON.stringify(useAppSelector(selectAtomsAndSelectorsState)),
