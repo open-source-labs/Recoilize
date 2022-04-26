@@ -43,7 +43,7 @@ const SelectorsButton: React.FC<any> = (props) => {
     setCurrentAtomValue(dependentAtomValue);
   }
   
-  //relabeled and used a value property to capture the value on an on change above - you can now find the keys. Function needs to be completed though.
+  //relabeled and used a value property to capture the value on an on change above - you can now find the keys. Function needs to be completed though
   const HTMLselectorArray: JSX.Element[] = [];
   selectors.forEach((selector, i) => {
     HTMLselectorArray.push(<option key={i} value={selector}>{selector}</option>);
