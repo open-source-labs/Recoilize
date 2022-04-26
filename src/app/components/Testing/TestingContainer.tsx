@@ -98,6 +98,7 @@ const Testing = () => {
        madeSelectors={madeSelectors}
        atoms={atoms}
        selectors={selectors}
+       chosenSelector={chosenSelector}
        setChosenSelector={setChosenSelector}
        onChange={setJavascript}
        selectorsFnAsStrings={selectorsFnAsStrings}
