@@ -32,6 +32,7 @@ function handleClick (valueAsString) {
 function handleChange (editor, data, value) {
   onChange(value);
 }
+
   return (
     // <>
       <div className='editor-container'>

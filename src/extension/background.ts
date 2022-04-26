@@ -104,6 +104,8 @@ chrome.runtime.onMessage.addListener((msg, sender) => {
   // Error handling if there isn't a proper tabId
   if (!sender.tab) return;
 
+  console.log("background.ts chromeruntime msg: ", msg);
+
   // Grabs tab id from content script and converts it to a string
   const tabId = `${sender.tab.id}`;
 
@@ -112,11 +114,11 @@ chrome.runtime.onMessage.addListener((msg, sender) => {
   switch (action) {
     // Listens to new snapshots (state changes) from module, stores in local storage and sends to dev tool if port is opened
     case 'recordSnapshot':
-      console.log('chrome.runtime.onMessage with case: recordSnapshot');
+      //console.log('chrome.runtime.onMessage with case: recordSnapshot');
 
       // Next snapshot from the msg payload
       const snapshot = msg.payload;
-      console.log('snapshot: ', snapshot);
+      //console.log('snapshot: ', snapshot);
 
       // Get current snapshot history from local storage
       chrome.storage.local.get([tabId], function (result) {
@@ -148,9 +150,16 @@ chrome.runtime.onMessage.addListener((msg, sender) => {
       });
       break;
 
+    // const devToolData = createDevToolDataObject(
+    //   initialFilteredSnapshot,
+    //   indexDiff,
+    //   atomsAndSelectorsMsg,
+    //   selectorsObject,
+    // );
+
     // If the module is loaded for first time or refreshed reset snapshot History and send initial payload
     case 'moduleInitialized':
-      console.log('module has been initialized IN BG SCRIPT', msg);
+      //console.log('module has been initialized IN BG SCRIPT', msg);
       const tabIdSnapshotHistory = [msg.payload];
       // set tabId within local storage to initial snapshot sent from module
       chrome.storage.local.set({[tabId]: tabIdSnapshotHistory}, function () {
