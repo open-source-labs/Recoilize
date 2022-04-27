@@ -19,19 +19,9 @@ let isRestoredState = false;
 let throttleTimer = 0;
 let throttleLimit = 70;
 
-// persistedSnapshots initially null
-// let persistedSnapshots = null;
-
-// declare message to send with array of atoms and array of selectors
-// let atomsAndSelectorsMsg;    
-
-// define a boolean that determins whether the names of atoms and selectors have been sent to the extension App
-// reused on line 152
-let sentAtomsAndSelectors = false;
-
 // assign the value of selectorsObject in formatRecoilizeSelectors function
 // will contain the selectors from a user application
-let selectorsObject = "yes finally"; 
+let selectorsObject;
 
 export default function RecoilizeDebugger(props) {
 
@@ -126,7 +116,6 @@ export default function RecoilizeDebugger(props) {
           const initialFilteredSnapshot = formatAtomSelectorRelationship(
             filteredSnapshot,
           );
-          // console.log('SELECTOR OBJECT!!: ', selectorsObject);
           // once application renders, grab the array of atoms and array of selectors
           const appsKnownAtomsArray = [...snapshot._store.getState().knownAtoms]
           // console.log('Store State.getState: Atoms', appsKnownAtomsArray);
@@ -138,14 +127,6 @@ export default function RecoilizeDebugger(props) {
             selectors: appsKnownSelectorsArray,
             $selectors: selectorsObject         // the selectors object that contain key and set / get methods as strings
           }
-
-          // console.log('message we are trying to send from index.js of package: ', atomsAndSelectorsMsg);
-          // chrome.storage.local.set({
-          //   will: 'hi',
-          //   ryan: 'hello'
-          // });
-          // chrome.get();
-          // console.log('CHROME.STORAGE.LOCAL: ', chrome);
 
           //creating a indexDiff variable
           //only created on initial creation of devToolData
@@ -162,14 +143,6 @@ export default function RecoilizeDebugger(props) {
           setProperIndexForPersistedState();
           sendWindowMessage('persistSnapshots', null);
         }
-
-        // check if the atoms and selectors have already been sent
-        // will only be sent on component did mount (first useEffect trigger)
-        // // send over the arrays of atoms and selectors as a window message for the application to listen to
-        // if (!sentAtomsAndSelectors){
-        //   sendWindowMessage('initialArrayOfAtomsAndSelectors', atomsAndSelectorsMsg);
-        //   sentAtomsAndSelectors = true;
-        // }
         
         break;
       // Listens for a request from dev tool to time travel to previous state of the app.
@@ -271,9 +244,7 @@ export default function RecoilizeDebugger(props) {
 
   // FOR TIME TRAVEL: time travels to a given snapshot, re renders application.
   const timeTravelToSnapshot = async msg => {
-    // await setRestoredState(true);
-    // await gotoSnapshot(snapshots[msg.data.payload.snapshotIndex]);
-    // await setRestoredState(false);
+
     isRestoredState = true;
     await gotoSnapshot(snapshots[msg.data.payload.snapshotIndex]);
   };
@@ -315,12 +286,6 @@ export function formatRecoilizeSelectors(...selectors){
     selectorsObject[selector.key] = selector;
   });
 
-  //console.log("selectorsObject: ", selectorsObject);
-  //console.log("selectorsObject.payload: ", selectorsObject.payload);
-
-  // return window post message passing in selectorsObject
-  //setTimeout(() => window.postMessage(selectorsObject, '*'), 2000)
-  //return window.postMessage(selectorsObject, '*');
 }
 
 
