@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import {RecoilRoot} from 'recoil';
 import Diff from '../components/StateDiff/Diff';
 import NavBar from '../components/NavBar/NavBar';
 import Metrics from '../components/Metrics/MetricsContainer';
@@ -6,6 +7,7 @@ import Tree from '../components/StateTree/Tree';
 import Network from '../components/AtomNetwork/AtomNetwork';
 import AtomComponentVisualContainer from '../components/ComponentGraph/AtomComponentContainer';
 import Settings from '../components/Settings/SettingsContainer';
+import Testing from '../components/Testing/TestingContainer';
 
 type navTypes = {
   [tabName: string]: JSX.Element;
@@ -31,6 +33,12 @@ const VisualContainer: React.FC = () => {
 
     // settings tab
     Settings: <Settings />,
+    // add a testing tab
+    Testing: (
+      <RecoilRoot>
+        <Testing />
+      </RecoilRoot>
+    ),
   };
   // array of all nav obj keys
   const tabsList: string[] = Object.keys(nav);

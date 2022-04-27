@@ -1,3 +1,5 @@
+// TO CONSOLE LOG IN THIS FILE, we need to go to chrome://extensions/ and click inspect on the actual devTOOL!
+
 // Message Interface
 interface Msg {
   action: string;
@@ -23,17 +25,27 @@ chrome.storage.local.clear(function (): void {
 // runs when devtool is connected
 chrome.runtime.onConnect.addListener(port => {
   const devToolsListener = (msg: Msg, port: object) => {
+    console.log(
+      'in the onConnect of background script IN BG SCRIPT ',
+      msg,
+      port,
+    );
     const {tabId, action} = msg;
 
     switch (action) {
       case 'devToolInitialized':
         connections[tabId] = port;
         // read and send back to dev tool current local storage for corresponding tabId & port
+        console.log('local chrome storage: ', chrome.storage.local);
         chrome.storage.local.get(null, function (result) {
+          console.log('chrome.storage.local.get result: ', result);
           connections[tabId].postMessage({
             action: 'recordSnapshot',
             payload: result[tabId],
           });
+          console.log('connections tabId: ', connections[tabId]);
+          console.log('connections: ', connections);
+          console.log('tabId: ', tabId);
         });
         break;
 
@@ -58,6 +70,7 @@ chrome.runtime.onConnect.addListener(port => {
         break;
       case 'throttleEdit':
         if (tabId) {
+          console.log('doing a throttle edit');
           chrome.tabs.sendMessage(Number(tabId), msg);
         }
         // window.postMessage({action: 'throttleChange'}, throttler);
@@ -91,6 +104,8 @@ chrome.runtime.onMessage.addListener((msg, sender) => {
   // Error handling if there isn't a proper tabId
   if (!sender.tab) return;
 
+  console.log("background.ts chromeruntime msg: ", msg);
+
   // Grabs tab id from content script and converts it to a string
   const tabId = `${sender.tab.id}`;
 
@@ -99,8 +114,11 @@ chrome.runtime.onMessage.addListener((msg, sender) => {
   switch (action) {
     // Listens to new snapshots (state changes) from module, stores in local storage and sends to dev tool if port is opened
     case 'recordSnapshot':
+      //console.log('chrome.runtime.onMessage with case: recordSnapshot');
+
       // Next snapshot from the msg payload
       const snapshot = msg.payload;
+      //console.log('snapshot: ', snapshot);
 
       // Get current snapshot history from local storage
       chrome.storage.local.get([tabId], function (result) {
@@ -122,6 +140,7 @@ chrome.runtime.onMessage.addListener((msg, sender) => {
           // ONLY if there is a port connection with the current tabId
           if (connections[tabId]) {
             // Send to dev tool
+
             connections[tabId].postMessage({
               action: 'recordSnapshot',
               payload: tabIdSnapshotHistory,
@@ -131,10 +150,17 @@ chrome.runtime.onMessage.addListener((msg, sender) => {
       });
       break;
 
+    // const devToolData = createDevToolDataObject(
+    //   initialFilteredSnapshot,
+    //   indexDiff,
+    //   atomsAndSelectorsMsg,
+    //   selectorsObject,
+    // );
+
     // If the module is loaded for first time or refreshed reset snapshot History and send initial payload
     case 'moduleInitialized':
+      //console.log('module has been initialized IN BG SCRIPT', msg);
       const tabIdSnapshotHistory = [msg.payload];
-
       // set tabId within local storage to initial snapshot sent from module
       chrome.storage.local.set({[tabId]: tabIdSnapshotHistory}, function () {
         // if tabId is has opened dev tool port, send snapshotHistory to dev tool.
