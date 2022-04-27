@@ -3,14 +3,14 @@ import React, {useState, useEffect} from 'react';
 import {useRecoilState, useRecoilValue, useSetRecoilState} from 'recoil';
 
 const DisplayTests: React.FC<any> = (props) => {
-  const {chosenSelector, currentAtom, currentAtomValue, toBeValue, setToBeValue, parameters, setParameters} = props;
+  const {currentSelector, currentAtom, currentAtomValue, toBeValue, setToBeValue, parameters, setParameters} = props;
 
   // use displayedSelector to check if a new selector is chose
   // if truthy, reassign parameters and toBeValue to empty strings
   // reassign displayedSelector to the current value of
   // const [displayedSelector, setDisplayedSelector] = useState('');
 
-  if (chosenSelector.length){
+  if (currentSelector.length){
 
     // update the toBe value with wahtever to
     function handleToBeChange(e) {
@@ -24,7 +24,7 @@ const DisplayTests: React.FC<any> = (props) => {
     return (
       <div>
         <p>Atom ({currentAtom}): <strong>{currentAtomValue}</strong></p>
-        <p>Selector: <strong>{chosenSelector}</strong></p>
+        <p>Selector: <strong>{currentSelector}</strong></p>
         <form>
           <label htmlFor='expected'>To Be: </label>
           <input type='text' id='expected' name='expected' onChange={handleToBeChange}></input>

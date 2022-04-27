@@ -2,21 +2,21 @@
 import React, {useState, useEffect} from 'react';
 import DisplayTests from './displayTests';
 import {useAppSelector} from '../../state-management/hooks';
+import { useSetRecoilState } from 'recoil';
 
 const SelectorsButton: React.FC<any> = props => {
 
-  const { selectorsFnAsStrings, selectors, atoms, onChange, chosenSelector, setChosenSelector } = props;
+  const {
+    selectorsFnAsStrings, selectors, atoms, onChange, currentSelector, setCurrentSelector, currentAtom, setCurrentAtom, currentAtomValue, setCurrentAtomValue, toBeValue, setToBeValue, parameters, setParameters, 
+    loadedSelector, setLoadedSelector, madeSelectors
+  } = props;
 
   // create a hook that stores the current value of the selected drop down
   //const [currentSelector, setCurrentSelector] = useState('');
   // label of the atom associated with the selcetor clicked from the drop down
-  const [currentAtom, setCurrentAtom] = useState('');
   // value of the atom associated with the selector clicked from the drop down
-  const [currentAtomValue, setCurrentAtomValue] = useState('');
   // value to be expected -> updated in displayTests
-  const [toBeValue, setToBeValue] = useState('');
   // stateful value to contain parameters initialized as an empty array
-  const [parameters, setParameters] = useState([]);
   // grab the filtered snapshot so we know which atoms and selectors are dependent of each other
   const snapshotHistory = useAppSelector(
     state => state.snapshot.snapshotHistory,
@@ -31,25 +31,56 @@ const SelectorsButton: React.FC<any> = props => {
 
   const handleChange = (item) => {
     const selectorKey = item.options[item.selectedIndex].value;
-
-    console.log('handleChange, selectorKey: ', selectorKey);
     // update state with the chosen Selector
-    setChosenSelector(selectorKey);
+    setCurrentSelector(selectorKey);
+    
     const capturedFnString = selectorsFnAsStrings[selectorKey];
     let { key, set, get } = capturedFnString;
 
     const parser = (string) => {
-      // start a slice at _ and end at ; for each, the get and the set.
       if (!string) return;
+      
+      // the portion before the fat arrow (parameters)
       const firstPortion = string.slice(0, string.indexOf(';'));
+      // the portion after the fat arrow (function definition)
       const secondPortion = string.slice(string.indexOf(';') + 1, string.length);
+      
+      // determine if the passed in string has a get, set, or both get and set methods
       let newFirstPortion = '';
-      if (firstPortion.includes('get')) newFirstPortion += ' get ';
-      if (firstPortion.includes('set')) newFirstPortion += ' set ';
-      //console.log('firstPortion ,', firstPortion)
-      //console.log('newFirstPortion ', newFirstPortion);
-      return `{ ${newFirstPortion} } => { ${secondPortion}`
+      if (firstPortion.includes('get') && firstPortion.includes('set')) {newFirstPortion += 'get, set'}
+      else if (firstPortion.includes('get')) newFirstPortion += 'get';
+      else if (firstPortion.includes('set')) newFirstPortion += 'set';
+      
+      //parameter portion will be assigned the value of the strings following _ref6 (let {get,set})
+      //if there is a comma found within the slice between the parameter parenthesis
+      let parameterPortion = '';
+      if (string.slice(string.indexOf('('), string.indexOf(')')).includes(',')) {
+        parameterPortion = string.slice(string.indexOf(' ') + 1, string.indexOf(')'));
+        // return the first portion ({ get and/or set }), the parameters, and the associated function definition
+        return `({ ${newFirstPortion} }, ${parameterPortion}) => { ${secondPortion}`;
+      }
+      
+      // return the first portion ({ get and/or set }) and the associated function definition
+      return `({ ${newFirstPortion} }) => { ${secondPortion}`;
+
+      // THE TEXT BELOW CAN BE DELETED AFTER WE KNOW THE PARSER WORKS
+
+      // console.log('Original Version: ', string)
+      // // start a slice at _ and end at ; for each, the get and the set.
+      // if (!string) return;
+      // const firstPortion = string.slice(0, string.indexOf(';'));
+      // const secondPortion = string.slice(string.indexOf(';') + 1, string.length);
+      // let newFirstPortion = '';
+      // if (firstPortion.includes('get') && firstPortion.includes('set')) newFirstPortion += 'get, set';
+      // else if (firstPortion.includes('get')) newFirstPortion += 'get';
+      // else if (firstPortion.includes('set')) newFirstPortion += 'set';
+      // // if (firstPortion.includes('get')) newFirstPortion += ' get ';
+      // // if (firstPortion.includes('set')) newFirstPortion += ' set ';
+      // //console.log('firstPortion ,', firstPortion)
+      // //console.log('newFirstPortion ', newFirstPortion);
+      // return `({ ${newFirstPortion} }) => { ${secondPortion}`
     }
+
     //first portion of string is from 0 to ;
     const displayedSelector = 
     `Chosen selector:
@@ -63,7 +94,7 @@ const SelectorsButton: React.FC<any> = props => {
     // console.log('handleChange, selectorKey: ', selectorKey);
 
     // console.log('Selector Key: ', selectorKey);
-    setChosenSelector(selectorKey);
+    // setCurrentSelector(selectorKey);
 
     // find the current atom dependent on the selector clicked from the drop down
     // currently referencing the last element in the snapshotHistory array
@@ -72,6 +103,8 @@ const SelectorsButton: React.FC<any> = props => {
     // find the current atom value from the dependentAtom associated with the clicked on Selector
     const dependentAtomValue = snapshotHistory[snapshotHistory.length - 1].filteredSnapshot[dependentAtom].contents;
     setCurrentAtomValue(dependentAtomValue);
+    //setLoadedSelector(useSetRecoilState(madeSelectors.nextPlayerSetSelector));
+    //console.log('loaded Selector set: ', loadedSelector);
   }
   
   //relabeled and used a value property to capture the value on an on change above - you can now find the keys. Function needs to be completed though
@@ -88,7 +121,7 @@ const SelectorsButton: React.FC<any> = props => {
       </div>
       <div>
         <DisplayTests 
-          chosenSelector={chosenSelector}
+          currentSelector={currentSelector}
           currentAtom={currentAtom} 
           currentAtomValue={currentAtomValue} 
           toBeValue={toBeValue}

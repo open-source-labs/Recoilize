@@ -16,112 +16,138 @@ const Testing = () => {
       state => state.snapshot.snapshotHistory,
   );
   
+  const [currentAtom, setCurrentAtom] = useState('');
+  const [currentAtomValue, setCurrentAtomValue] = useState('');
+  const [toBeValue, setToBeValue] = useState('');
+  const [parameters, setParameters] = useState('');
+
+  const [loadButton, setLoadButton] = useState(true);
+  
+  //const madeAtoms = {};
+
   // it seems that converting everything to state fixes most of our asynchronicity problems? -- need to reevaluate.
   // go get the current collection of atoms and selectors.
-  const [ theObject, setTheObject ] = useState(JSON.parse(
-    JSON.stringify(useAppSelector(selectAtomsAndSelectorsState)),
-    ));
-      
+
   // extract what we need as state from the object of atoms/selectors that we went and grabbed.
-  const [ selectorsFnAsStrings, setSelectorsFnAsStrings ] = useState(theObject.atomsAndSelectors.$selectors);
-  const [ atoms, setAtoms ] = useState(theObject.atomsAndSelectors.atoms);
-  const [ selectors, setSelectors ] = useState(theObject.atomsAndSelectors.selectors)
   
-  const madeAtoms = {};
+  const [ atoms, setAtoms ] = useState([]);
+  const [ selectors, setSelectors ] = useState([]);
+  const [ selectorsFnAsStrings, setSelectorsFnAsStrings ] = useState({});
+  const [ madeSelectors, setMadeSelectors ] = useState({});
+  const [ madeAtoms, setMadeAtoms ] = useState({});
+  const theObject = JSON.parse(JSON.stringify(useAppSelector(selectAtomsAndSelectorsState)));
   
-  // const voidGetFunc = ({ get }) => {return};
-  // const voidGetterFuncString = voidGetFunc.toString();
-  
-  // let selectorsClone = JSON.parse(JSON.stringify(selectorsFnAsStrings));
-  // selectors.forEach(selectorKey => {
-  //   if (!selectorsClone[selectorKey]['get']) {
-  //     selectorsClone[selectorKey]['get'] = voidGetterFuncString;
-  //   }
-  // });
-  // setSelectorsFnAsStrings(selectorsClone);
+
+
+  const handleLoadClick = () => {
+
+    setSelectorsFnAsStrings(theObject.atomsAndSelectors.$selectors);
+    setAtoms(theObject.atomsAndSelectors.atoms);
+    setSelectors(theObject.atomsAndSelectors.selectors);
     
-  //hard coded atom for testing purposes - feel free to delete.
-  const currentPlayer = atom({
-    key: 'currentPlayer',
-    default: 'X'
-  });
+    // create our atoms using recoil on the first render instance only
+    const createdAtoms = {};
+    snapshotHistory[snapshotHistory.length - 1].atomsAndSelectors.atoms.forEach(theAtom => {
+      //console.log('theAtom thing: ', theAtom);
+      createdAtoms[theAtom] = atom({
+        key: theAtom,
+        default: snapshotHistory[snapshotHistory.length - 1].filteredSnapshot[theAtom].contents,
+      });
+    });
+    setMadeAtoms(createdAtoms);
+    
+    let selectorsClone = JSON.parse(JSON.stringify(theObject.atomsAndSelectors.$selectors));
+    const createdSelectors = {};
+    theObject.atomsAndSelectors.selectors.forEach(selectorKey => {
+      if (selectorsClone[selectorKey].set) {
+        selectorsClone[selectorKey].set = selectorsClone[selectorKey].set.replaceAll('get(', 'get(madeAtoms.');
+        selectorsClone[selectorKey].set = selectorsClone[selectorKey].set.replaceAll('set(', 'set(madeAtoms.');
+        //console.log('Dear please set: ', selectorsClone[selectorKey['set']]);
+        selectorsClone[selectorKey].set = eval('(' + selectorsClone[selectorKey].set + ')');
+      }
+      if (selectorsClone[selectorKey].get){
+        selectorsClone[selectorKey].get = selectorsClone[selectorKey].get.replaceAll('get(', 'get(madeAtoms.');
+        // console.log('Round 2 baby get: ', selectorsClone[selectorKey['get']])
+        selectorsClone[selectorKey].get = eval('(' + selectorsClone[selectorKey].get + ')');
+      } else {
+        selectorsClone[selectorKey].get = ({ get }) => {return};
+      }
 
-  // for testing purposes to render the current player on testing GUI
-  const current = useRecoilValue(currentPlayer);
+      console.log('TESTING SET AND GET BEFORE BECOMING SELECTOR: ', selectorsClone[selectorKey]);
+      createdSelectors[selectorKey] = selector(selectorsClone[selectorKey]);
+
+      //
+    });
+    console.log('Before setMade Selectors: ', createdSelectors);
+    setMadeSelectors(createdSelectors);
+
   
-  // convert the stringified version of selector set and get properties back to functions
-  let selectorsClone = JSON.parse(JSON.stringify(selectorsFnAsStrings));
+  setLoadButton(false);
+ }
 
-  const createdSelectors = {};
-  selectors.forEach(selectorKey => {
-    // iterate through deep clone of selectors as strings and turn all stringed set/get functions into working functions.
-    if (selectorsClone[selectorKey]['set']) selectorsClone[selectorKey]['set'] = eval('(' + selectorsClone[selectorKey]['set'] + ')');
-    if (selectorsClone[selectorKey]['get']){
-      selectorsClone[selectorKey]['get'] = eval('(' + selectorsClone[selectorKey]['get'] + ')');
-    } else {
-      selectorsClone[selectorKey]['get'] = ({ get }) => {return};
-    }
-    createdSelectors[selectorKey] = selector(selectorsClone[selectorKey]);
-  });
 
-  const [ madeSelectors, setMadeSelectors ] = useState(createdSelectors);
 
   // chosen selector piece of state that tells our container which piece of state has been chosen, and therefore will be drilled down (chosenSelector is just a string)
-  const [ chosenSelector, setChosenSelector ] = useState(''); 
-  const [ loadedSelector, setLoadedSelector ] = useState('');
+  const [ currentSelector, setCurrentSelector ] = useState(''); 
+  const [ loadedSelector, setLoadedSelector ] = useState(() => {return});
   // use effect hook that, on update, grabs the relevant selector from madeSelectors, and the relevant String version, and drills them down to be used and displayed.
   const [javascript, setJavascript] = useState('');
   
-  useEffect(()=> {
-  console.log('hello');
-  //   // setJavascript(selectorsFnAsStrings[chosenSelector]);
-  //   // console.log("THIS IS WHAT WE WANT TO SHOW UP ", selectorsFnAsStrings[chosenSelector])
-  //   // setJavascript(javascript + "hello does this wrok");
-  //   // going to editor -- setLoadedSelector(useSetRecoilState(madeSelectors[chosenSelector]))
-  })
-  // once we get atoms working, we will use the same process to display atoms.
+  
 
-
-  // tester to make sure that we do have a working selector from our state object.
-  const nextPlayerSetter = useSetRecoilState(madeSelectors['nextPlayerSetSelector'])
-
-
+  if (loadButton){
+    return (<div>
+      <button onClick={handleLoadClick}>Load Selectors</button>
+    </div>);
+  }
+  else {
   return (
-    //invoking an onclick to test out the fact that our selector works and is using the selector that WE MADE from our object.
-   <div className='testing-container'>
-     <div>
-       {/* requires a parameter to be passed in, regardless of whether or not it's used. */}
-       <button onClick={() => nextPlayerSetter(1)}>HELLO!</button>
-       <h1>{current}</h1>
-       <SelectorsButton
-       key='selectors button'
-       madeSelectors={madeSelectors}
-       atoms={atoms}
-       selectors={selectors}
-       chosenSelector={chosenSelector}
-       setChosenSelector={setChosenSelector}
-       onChange={setJavascript}
-       selectorsFnAsStrings={selectorsFnAsStrings}
-       />
-     </div>
-     <div>
-      {/* component that renders the expect test */}
-     </div>
-     <Editor
+      //invoking an onclick to test out the fact that our selector works and is using the selector that WE MADE from our object.
+    <div className='testing-container'>
+      <div>
+        {/* requires a parameter to be passed in, regardless of whether or not it's used. */}
+        <h1>Selector Modular Architecture Visibility</h1>
+        <SelectorsButton
+        key='selectors button'
+        madeSelectors={madeSelectors}
+        currentAtom={currentAtom}
+        setCurrentAtom={setCurrentAtom}
+        currentAtomValue={currentAtomValue}
+        setCurrentAtomValue={setCurrentAtomValue}
+        toBeValue={toBeValue}
+        setToBeValue={setToBeValue}
+        parameters={parameters}
+        setParameters={setParameters}
+        atoms={atoms}
+        selectors={selectors}
+        currentSelector={currentSelector}
+        setCurrentSelector={setCurrentSelector}
         onChange={setJavascript}
         selectorsFnAsStrings={selectorsFnAsStrings}
-        value={javascript}
         loadedSelector={loadedSelector}
-     />
-   </div>
-  )
+        setLoadedSelector={setLoadedSelector}
+        />
+      </div>
+      <div>
+        {/* component that renders the expect test */}
+      </div>
+      <Editor
+          onChange={setJavascript}
+          selectorsFnAsStrings={selectorsFnAsStrings}
+          madeAtoms={madeAtoms}
+          value={javascript}
+          loadedSelector={loadedSelector}
+          //LATEST PROP DRILLING
+          toBeValue={toBeValue}             // the value that is expected after the selector is invoked (user input)
+          currentAtom={currentAtom}         // the current atom's key value -> will need to grab our atom's value with matching key from our recoil state to compare with toBeValue
+          currentAtomValue={currentAtomValue} // reassign our GUIs stateful atom as the value of currentAtomValue 
+          currentSelector={currentSelector} // the currentSelector chosen from our drop down menu (just the key) 
+          madeSelectors={madeSelectors}     // the object containing our actual selectors from our recoil state -> match the key from currentSelector from our made selector with useSetRecoilState
+          
+      />
+    </div>
+    )
+  }
 };
 
 export default Testing;
-
-//when you select a selector
- // we have to grab that selector and save it to a variable with useSetRecoilState.
- // 
-
-
-// Jester testing convo ---
