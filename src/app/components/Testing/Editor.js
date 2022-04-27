@@ -11,75 +11,43 @@ import CodeResults from './CodeResults'
 import { useSetRecoilState, useRecoilValue } from 'recoil';
 import { selector, atom } from 'recoil';
 import { dummySelector, dummyAtom } from './dummySelector';
-const Editor = props => {//loadedSelector
-const { value, onChange, loadButton, selectorsFnAsStrings, madeAtoms, toBeValue, currentAtom, currentAtomValue, currentSelector, madeSelectors } = props;
+const Editor = props => {
+const { value, onChange, loadButton, selectorsFnAsStrings, madeAtoms, toBeValue, currentAtom, currentAtomValue, currentSelector, setCurrentSelector, madeSelectors, parameters } = props;
 // expect two more prop drilling variables: expect (atom's current value) amd user inputted to be (atom's expected value)
-
-
+const [hasRendered, setHasRendered] = useState(false);
 let mySelector;
 let comparisonValue;
 // create the selectors and atoms for use in this editor associated with the drop down selection
 if (madeSelectors[currentSelector]){
   mySelector = useSetRecoilState(madeSelectors[currentSelector]);
-  //console.log('Current Selector we are using: ', madeSelectors[currentSelector]);
+
+  if (!hasRendered){
+    
+    mySelector()
+    setHasRendered(true);
+  }
   comparisonValue = useRecoilValue(madeAtoms[currentAtom]);
-  //console.log('Comparison Value: ', comparisonValue);
+
 } else {
   mySelector = useSetRecoilState(dummySelector);
   comparisonValue = useRecoilValue(dummyAtom);
 }
 
 
-
-
-//console.log('my Selector is this ', mySelector);
 const [ evaluatedCode, setEvaluatedCode ] = useState('Run code here...');
-// if (madeSelectors[currentSelector]){
-//   const mySelector = useSetRecoilState(madeSelectors[currentSelector]);
-//   console.log('MySelectormajig: ', mySelector);
-// }
+
 function handleRunCodeClick () {
   try {
-    console.log(madeAtoms);
-    console.log('DO WE EXIST? : ', madeAtoms.currentPlayer);
-    //console.log('My Selector: ', mySelector);
-    // save the selector that we care about as a variable so that we can invoke it.
-    // save the atom that we care about as a variable so that we can have it.
-    // get the value of the atom after invocation through useRecoilValue and compare that to the toBeValue
-    console.log('SELECTIFY: ', mySelector);
-    mySelector();
-    console.log('I INVOKED');
-    // grab comparisonValue from updated atoms
     if (toBeValue !== comparisonValue) {
-      setEvaluatedCode("THE TEST HAS FAILED");
+      setEvaluatedCode(`❌ Expected ${currentAtom} to be ${toBeValue} and Received ${comparisonValue}`);
     }
     else {
-      setEvaluatedCode('IT MATCHES, BRO!');
+      setEvaluatedCode(`✅ Expected ${currentAtom} to be ${toBeValue} and Received ${comparisonValue}`);
     }
-
-    //loadedSelector();
-    //setEvaluedCode to the atom in question
-    // get the expect/tobe from drop down.
-    // invoke our selector as loadedSelector and display the results.
-    
   }
   catch(err) {
-    console.log('handleRunCodeClick error message: ', err, err.message);
     setEvaluatedCode(err.message);
   }
-
-  // try {
-  //   if (valueAsString){
-  //     let evalCode = eval(valueAsString);
-  //     if (evalCode === undefined) evalCode = 'undefined';
-  //     if (evalCode === null) evalCode = 'null';
-  //     setEvaluatedCode(evalCode);
-  //   } else {
-  //     setEvaluatedCode('');
-  //   }
-  // } catch (err) {
-  //   setEvaluatedCode(err.message);
-  // }
 }
 
 function handleChange (editor, data, value) {
@@ -87,7 +55,6 @@ function handleChange (editor, data, value) {
 }
 
   return (
-    // <>
       <div className='editor-container'>
         <div>
           <ControlledEditor
