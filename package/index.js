@@ -3,6 +3,8 @@ import {
   useRecoilTransactionObserver_UNSTABLE,
   useRecoilSnapshot,
   useGotoRecoilSnapshot,
+  useRecoilState,
+  useGetRecoilValueInfo_UNSTABLE
 } from 'recoil';
 import {formatFiberNodes} from './formatFiberNodes';
 
@@ -17,10 +19,12 @@ let isRestoredState = false;
 let throttleTimer = 0;
 let throttleLimit = 70;
 
-// persistedSnapshots initially null
-// let persistedSnapshots = null;
+// assign the value of selectorsObject in formatRecoilizeSelectors function
+// will contain the selectors from a user application
+let selectorsObject;
 
 export default function RecoilizeDebugger(props) {
+
   // We should ask for Array of atoms and selectors.
   // Captures all atoms that were defined to get the initial state
 
@@ -84,7 +88,7 @@ export default function RecoilizeDebugger(props) {
         : [],
     };
   });
-
+  
   // React lifecycle hook on re-render
   useEffect(() => {
     // Window listener for messages from dev tool UI & background.js
@@ -112,6 +116,17 @@ export default function RecoilizeDebugger(props) {
           const initialFilteredSnapshot = formatAtomSelectorRelationship(
             filteredSnapshot,
           );
+          // once application renders, grab the array of atoms and array of selectors
+          const appsKnownAtomsArray = [...snapshot._store.getState().knownAtoms]
+          // console.log('Store State.getState: Atoms', appsKnownAtomsArray);
+          const appsKnownSelectorsArray = [...snapshot._store.getState().knownSelectors]
+          // console.log('Store State.getState: Selectors', appsKnownSelectorsArray);
+  
+          const atomsAndSelectorsMsg = {
+            atoms: appsKnownAtomsArray,
+            selectors: appsKnownSelectorsArray,
+            $selectors: selectorsObject         // the selectors object that contain key and set / get methods as strings
+          }
 
           //creating a indexDiff variable
           //only created on initial creation of devToolData
@@ -121,12 +136,14 @@ export default function RecoilizeDebugger(props) {
           const devToolData = createDevToolDataObject(
             initialFilteredSnapshot,
             indexDiff,
+            atomsAndSelectorsMsg,
           );
           sendWindowMessage('moduleInitialized', devToolData);
         } else {
           setProperIndexForPersistedState();
           sendWindowMessage('persistSnapshots', null);
         }
+        
         break;
       // Listens for a request from dev tool to time travel to previous state of the app.
       case 'snapshotTimeTravel':
@@ -176,13 +193,14 @@ export default function RecoilizeDebugger(props) {
     );
   };
 
-  const createDevToolDataObject = (filteredSnapshot, diff) => {
+  const createDevToolDataObject = (filteredSnapshot, diff, atomsAndSelectors) => {
     if (diff === undefined) {
       return {
         filteredSnapshot: filteredSnapshot,
         componentAtomTree: formatFiberNodes(
           recoilizeRoot._reactRootContainer._internalRoot.current,
         ),
+        atomsAndSelectors,
       };
     } else {
       return {
@@ -191,6 +209,7 @@ export default function RecoilizeDebugger(props) {
           recoilizeRoot._reactRootContainer._internalRoot.current,
         ),
         indexDiff: diff,
+        atomsAndSelectors,
       };
     }
   };
@@ -225,9 +244,7 @@ export default function RecoilizeDebugger(props) {
 
   // FOR TIME TRAVEL: time travels to a given snapshot, re renders application.
   const timeTravelToSnapshot = async msg => {
-    // await setRestoredState(true);
-    // await gotoSnapshot(snapshots[msg.data.payload.snapshotIndex]);
-    // await setRestoredState(false);
+
     isRestoredState = true;
     await gotoSnapshot(snapshots[msg.data.payload.snapshotIndex]);
   };
@@ -248,3 +265,27 @@ export default function RecoilizeDebugger(props) {
 
   return null;
 }
+
+// function that receives objects to be passed into selector constructor function to post a message to the window
+// cannot send an object with a property that contains a function to the window - need to stringify the set and get methods
+export function formatRecoilizeSelectors(...selectors){
+  // create object to be sent via window message from target recoil application
+  selectorsObject = {};
+  // iterate through our array of objects
+  selectors.forEach(selector => {
+    // check if the current selector object contains a set method, if so, reassign it to a stringified version
+    if (selector.hasOwnProperty('set')){
+      selector.set = selector.set.toString();
+    }
+    // check if the current selector object contains a get method, if so, reassign it to a stringified version
+    if (selector.hasOwnProperty('get')){
+      selector.get = selector.get.toString();
+    }
+    // store the selector in the payload object - providing its property name as the 'key' property of the current selector object
+    // providing the object the property name of selector key will give easy searchability in GUI application for selector dropdown
+    selectorsObject[selector.key] = selector;
+  });
+
+}
+
+

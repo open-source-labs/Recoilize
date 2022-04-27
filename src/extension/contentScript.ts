@@ -1,8 +1,10 @@
 // once chrome tab connects with our content-script
 window.postMessage({action: 'contentScriptStarted'}, '*');
+//console.log('content script sending action to the window IN CONTENT SCRIPT');
 
 // Listen to messages from Recoilize module within dev webpage
 window.addEventListener('message', msg => {
+  console.log('contentScript message: ', msg.data);
   chrome.runtime.sendMessage(msg.data);
 });
 
