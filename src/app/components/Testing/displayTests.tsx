@@ -8,7 +8,6 @@ const DisplayTests: React.FC<any> = (props) => {
   // use displayedSelector to check if a new selector is chose
   // if truthy, reassign parameters and toBeValue to empty strings
   // reassign displayedSelector to the current value of
-  // const [displayedSelector, setDisplayedSelector] = useState('');
 
   if (currentSelector.length){
 
@@ -19,6 +18,7 @@ const DisplayTests: React.FC<any> = (props) => {
 
     function handleParameterChange(e) {
       setParameters(e.target.value);
+      console.log('E.TARGET.VAL: ', e.target.value);
     }
 
     return (
@@ -32,12 +32,8 @@ const DisplayTests: React.FC<any> = (props) => {
           <label htmlFor='parameters'>Parameters: </label>
           <input type='text' id='parameters' name='parameters' onChange={handleParameterChange}></input>
         </form>
-
-        
-        {/* <p>To Equal: <strong>User Input</strong></p>
-        <p>Parameters: <strong>User Input</strong></p> */}
           
-        <p>expect({currentAtomValue}).toBe({toBeValue})</p>
+        <p>expect({currentAtom}).toBe({toBeValue})</p>
       </div>
     );
   }
@@ -50,12 +46,3 @@ const DisplayTests: React.FC<any> = (props) => {
 };
 
 export default DisplayTests;
-
-
-{/* <form action="/action_page.php">
-  <label for="fname">First name:</label>
-  <input type="text" id="fname" name="fname"><br><br>
-  <label for="lname">Last name:</label>
-  <input type="text" id="lname" name="lname"><br><br>
-  <input type="submit" value="Submit">
-</form> */}
