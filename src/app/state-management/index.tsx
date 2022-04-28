@@ -5,6 +5,7 @@ import snapshotReducer from '../state-management/slices/SnapshotSlice';
 import atomNetworkReducer from '../state-management/slices/AtomNetworkSlice';
 import filterReducer from '../state-management/slices/FilterSlice';
 import selectedReducer from './slices/SelectedSlice';
+import atomsAndSelectorsReducer from './slices/AtomsAndSelectorsSlice';
 
 import {persistStore, persistReducer} from 'redux-persist';
 import storage from 'redux-persist/lib/storage/session';
@@ -21,6 +22,7 @@ const reducers = combineReducers({
   atomNetwork: atomNetworkReducer,
   filter: filterReducer,
   selected: selectedReducer,
+  atomsAndSelectors: atomsAndSelectorsReducer,
 });
 
 const persistConfig = {

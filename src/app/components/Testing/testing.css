@@ -1,0 +1,50 @@
+.testing-container {
+  display: flex;
+  flex-direction: column;
+  margin: 5px;
+  height: 100%;
+  width: 100%;
+}
+
+.code-mirror-wrapper {
+  font-size: medium;
+  position: static;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  height: 75%;
+  width: 95%;
+}
+
+.run-code {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  padding: 5px;
+}
+
+.console-output {
+  font-size: medium;
+}
+
+
+.loadButtonContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+  height: auto;
+  margin: 20px;
+}
+
+.loadButton{
+  color: #987efc;
+  padding: 10px;
+  font-size: large;
+  transition-duration: .3s;
+}
+
+.secondLoadButton{
+  color: #ff7fbb;
+  padding: 10px;
+  font-size: large;
+  transition-duration: .3s;
+}
