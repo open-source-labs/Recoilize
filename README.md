@@ -124,23 +124,39 @@ export default MyApp;
 ```
 
 ## If you would like to use the Testing Window...
+### --Important-- <br>
+<p>formatRecoilizeSelectors is expecting you to update your atoms with writeable selectors. If you are using anything else to update your atom values, they will not be able to be read by the testing window. Furthermore, for atom/selector dependencies to be registered, you have to fire off a change in state before you choose a selector from the dropdown. Choosing a selector too soon will break the page.</p>
 
-Update your atom values using writable selectors. This will allow the testing window to identify selector/atom dependencies.
+<p>First, import formatRecoilizeSelectors from Recoilize.</p>
 
-
-
-Format your selectors as objects with two properties: 
 <div>
-<img src='./src/extension/build/assets/create-object-to-pass-into-selector-function.png' width=600 height=300/>
+<img src='./src/extension/build/assets/Import-formatRecoilizeSelectors.png' width=auto height=auto/>
 </div>
 
+<p>Next, format what will become your selectors as plain objects with the appropriate properties and methods. Then pass that object into the selector function. --</p>
 
+Example:
+<div>
+<img src='./src/extension/build/assets/create-object-to-pass-into-selector-function.png' width=auto height=auto/>
+</div>
+
+<p>At the bottom of your file, you will need to pass that same object to the formatRecoilizeSelectors function. --</p>
+
+<div>
+<img src='./src/extension/build/assets/ex1.-pass-selector-objects-into-formatRecoilizeSelectors.png' width=auto height=auto/>
+</div>
+
+<p>Repeat this process for all objects that you will use to create recoil selectors, and pass them all in at the same time. Please note that using formatRecoilSelectors more than once in your application will break the testing window and you have to pass in all objects-to-be-used-as-state at the same time. --</p>
+
+<div>
+<img src='./src/extension/build/assets/ex2.-pass-selector-objects-into-formatRecoilizeSelectors.png' width=auto height=auto/>
+</div>
 
 #### Open your application on the Chrome Browser and start debugging with Recoilize!
 
 ##### (Only supported with React applications using Recoil as state management)
 
-<h1>New Features for Version 3.0.0</h1>
+<h1>New Features for Version 3.1.0</h1>
 <h3>Support for Recoil 0.1.3</h3>
 <p>Recoilize now supports the most recent update to the Recoil library and is backwards compatible with older versions of Recoil.</p>
 
@@ -175,6 +191,13 @@ Format your selectors as objects with two properties:
 <p align='center'> 
 <img src='./src/extension/build/assets/snapshotcomparison-gif.gif' width=600 height=300/>
 </p>
+<h3>Testing Window</h3>
+
+<p>As engineers, testing is an invaluable process to ensure the strength of one's application. Without implementing testing on one's application, engineers expose themselves to problems that could have been sought out proactively. With our Recoilize Testing Window, we allow users to implement Recoil testing for specific recoil selectors within their application. Within our testing window, users can review the code behind their selectors, analyze node-to-node subscriptions and dependencies, and test for an expected output of an atom's value, all completely independent of your application's state management.</p>
+
+<div align='center'>
+<img src='./src/extension/build/assets/Testing-window-gif.gif' width=auto height=auto/>
+</div>
 
 <h1>Features</h1>
 <h3>Support for Concurrent Mode</h3>
@@ -264,3 +287,11 @@ The flame graph displays the time a component took to render itself, and all of 
 <h4>Leonard Lew <a  href='https://github.com/leolew97' target=“_blank”>@github </a><a  href='https://www.linkedin.com/in/leonardlew' target=“_blank”>@linkedin</a> </h4>
 
 <h4>Victor Wang <a  href='https://github.com/wangvwr' target=“_blank”>@github </a><a  href='https://www.linkedin.com/in/wangvwr' target=“_blank”>@linkedin</a> </h4>
+
+<h4>Adam Allison <a  href='https://github.com/allisonadam81' target=“_blank”>@github </a><a  href='https://www.linkedin.com/in/allisonadam81/' target=“_blank”>@linkedin</a> </h4>
+
+<h4>William Chu <a  href='https://github.com/wi11chu' target=“_blank”>@github </a><a  href='https://www.linkedin.com/in/williamchu9/' target=“_blank”>@linkedin</a> </h4>
+
+<h4>Jordan Rice <a  href='https://github.com/JordanMRice' target=“_blank”>@github </a><a  href='https://www.linkedin.com/in/theoriginaljordanrice/' target=“_blank”>@linkedin</a> </h4>
+
+<h4>Ryan Wallace <a  href='https://github.com/RWallie' target=“_blank”>@github </a><a  href='https://www.linkedin.com/in/rwallie/' target=“_blank”>@linkedin</a> </h4>
