@@ -156,7 +156,7 @@ Example:
 
 ##### (Only supported with React applications using Recoil as state management)
 
-<h1>New Features for Version 3.1.0</h1>
+<h1>New Features for Version 3.1.2</h1>
 <h3>Support for Recoil 0.1.3</h3>
 <p>Recoilize now supports the most recent update to the Recoil library and is backwards compatible with older versions of Recoil.</p>
 

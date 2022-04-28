@@ -1,7 +1,7 @@
 <meta name='keywords' content='Recoil, Recoil.js, Recoil Dev Tool, Recoilize, Chrome Dev Tool, Recoil Chrome'>
 
 <p align='center'>
-<img src='./src/extension/build/assets/cover-photo-logo-recoilize.jpg' width=100%>
+<img src='../src/extension/build/assets/cover-photo-logo-recoilize.jpg' width=100%>
 </p>
 
 <h1>Debugger for Recoil Applications</h1>
@@ -130,33 +130,33 @@ export default MyApp;
 <p>First, import formatRecoilizeSelectors from Recoilize.</p>
 
 <div>
-<img src='./src/extension/build/assets/Import-formatRecoilizeSelectors.png' width=auto height=auto/>
+<img src='../src/extension/build/assets/Import-formatRecoilizeSelectors.png' width=auto height=auto/>
 </div>
 
 <p>Next, format what will become your selectors as plain objects with the appropriate properties and methods. Then pass that object into the selector function. --</p>
 
 Example:
 <div>
-<img src='./src/extension/build/assets/create-object-to-pass-into-selector-function.png' width=auto height=auto/>
+<img src='../src/extension/build/assets/create-object-to-pass-into-selector-function.png' width=auto height=auto/>
 </div>
 
 <p>At the bottom of your file, you will need to pass that same object to the formatRecoilizeSelectors function. --</p>
 
 <div>
-<img src='./src/extension/build/assets/ex1.-pass-selector-objects-into-formatRecoilizeSelectors.png' width=auto height=auto/>
+<img src='../src/extension/build/assets/ex1.-pass-selector-objects-into-formatRecoilizeSelectors.png' width=auto height=auto/>
 </div>
 
 <p>Repeat this process for all objects that you will use to create recoil selectors, and pass them all in at the same time. Please note that using formatRecoilSelectors more than once in your application will break the testing window and you have to pass in all objects-to-be-used-as-state at the same time. --</p>
 
 <div>
-<img src='./src/extension/build/assets/ex2.-pass-selector-objects-into-formatRecoilizeSelectors.png' width=auto height=auto/>
+<img src='../src/extension/build/assets/ex2.-pass-selector-objects-into-formatRecoilizeSelectors.png' width=auto height=auto/>
 </div>
 
 #### Open your application on the Chrome Browser and start debugging with Recoilize!
 
 ##### (Only supported with React applications using Recoil as state management)
 
-<h1>New Features for Version 3.1.0</h1>
+<h1>New Features for Version 3.1.2</h1>
 <h3>Support for Recoil 0.1.3</h3>
 <p>Recoilize now supports the most recent update to the Recoil library and is backwards compatible with older versions of Recoil.</p>
 
@@ -166,21 +166,21 @@ Example:
 <p>The main mission of Recoilize 3.0 is to make it more user-friendly, so you will enjoy our brand new time travel feature — the time travel slider! Why click and scroll through snapshots when you can do it with a slider and some buttons, right?</p>
 
 <p align='center'> 
-<img src='./src/extension/build/assets/timeslider-gif.gif' width=600 height=300/>
+<img src='../src/extension/build/assets/timeslider-gif.gif' width=600 height=300/>
 </p>
 
 <h3>Customizable Component Graph</h3>
 <p>This is one of the coolest updates of Recoilize 3.0. We understand that different users have different ways of thinking and visualizing, and for that reason, the component tree now is fully customizable. You can expand or collapse the components, choose vertical or horizontal displays or adjust the spacing between elements.</p>
 
 <p align='center'> 
-<img src='./src/extension/build/assets/componentTree-gif.gif' width=600 height=300/>
+<img src='../src/extension/build/assets/componentTree-gif.gif' width=600 height=300/>
 </p>
 
 <h3>Better User Experience with Atom Network</h3>
 <p>The atom network is one of the key features that differentiate Recoil.js from other alternative state management libraries. However, the atom network will grow bigger together with the app. At some points, it will be unmanageable and hard to keep track of all of the atoms. To make this easier and pain-free, the new Atom Network will allow you to freely move and arrange them anywhere you want.</p>
 
 <p align='center'> 
-<img src='./src/extension/build/assets/atomNetwork-gif.gif' width=600 height=300/>
+<img src='../src/extension/build/assets/atomNetwork-gif.gif' width=600 height=300/>
 </p>
 
 <h3>Snapshot Comparison</h3>
@@ -189,14 +189,14 @@ Example:
 <p>With the new Recoilize, users can now save a series of state snapshots and use it later to analyze/compare with the current series.</p>
 
 <p align='center'> 
-<img src='./src/extension/build/assets/snapshotcomparison-gif.gif' width=600 height=300/>
+<img src='../src/extension/build/assets/snapshotcomparison-gif.gif' width=600 height=300/>
 </p>
 <h3>Testing Window</h3>
 
 <p>As engineers, testing is an invaluable process to ensure the strength of one's application. Without implementing testing on one's application, engineers expose themselves to problems that could have been sought out proactively. With our Recoilize Testing Window, we allow users to implement Recoil testing for specific recoil selectors within their application. Within our testing window, users can review the code behind their selectors, analyze node-to-node subscriptions and dependencies, and test for an expected output of an atom's value, all completely independent of your application's state management.</p>
 
 <div align='center'>
-<img src='./src/extension/build/assets/Testing-window-gif.gif' width=auto height=auto/>
+<img src='../src/extension/build/assets/Testing-window-gif.gif' width=auto height=auto/>
 </div>
 
 <h1>Features</h1>
@@ -204,7 +204,7 @@ Example:
 <p>If a Suspense component was used as a placeholder during component renderings, those suspense components will display with a red border in the expanded component graph. This indicates that a component was suspended during the render of the selected snapshot.</p>
 
 <p align='center'> 
-<img src='./src/extension/build/assets/suspenseMode.gif' width=600 height=300/>
+<img src='../src/extension/build/assets/suspenseMode.gif' width=600 height=300/>
 </p>
 
 <h3>Performance Metrics</h3>
@@ -213,7 +213,7 @@ Example:
 The flame graph displays the time a component took to render itself, and all of its child components. The bar graph displays the individual render times of each component.<p>
 
 <!-- <p align='center'>
-<img src='./src/extension/build/assets/metrics.gif' width=600 height=300/>
+<img src='../src/extension/build/assets/metrics.gif' width=600 height=300/>
 </p> -->
 
 <h3>Throttle</h3>
