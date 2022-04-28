@@ -123,6 +123,19 @@ export default MyApp;
 
 ```
 
+## If you would like to use the Testing Window...
+
+Update your atom values using writable selectors. This will allow the testing window to identify selector/atom dependencies.
+
+
+
+Format your selectors as objects with two properties: 
+<div>
+<img src='./src/extension/build/assets/create-object-to-pass-into-selector-function.png' width=600 height=300/>
+</div>
+
+
+
 #### Open your application on the Chrome Browser and start debugging with Recoilize!
 
 ##### (Only supported with React applications using Recoil as state management)

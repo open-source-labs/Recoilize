@@ -25,3 +25,26 @@
   font-size: medium;
 }
 
+
+.loadButtonContainer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+  height: auto;
+  margin: 20px;
+}
+
+.loadButton{
+  color: #987efc;
+  padding: 10px;
+  font-size: large;
+  transition-duration: .3s;
+}
+
+.secondLoadButton{
+  color: #ff7fbb;
+  padding: 10px;
+  font-size: large;
+  transition-duration: .3s;
+}

@@ -85,13 +85,13 @@ const Testing = () => {
   
 
   if (loadButton){
-    return (<div>
-      <button onClick={handleLoadClick}>Load Atoms</button>
+    return (<div className='loadButtonContainer'>
+      <button onClick={handleLoadClick} className='loadButton'>Load Atoms</button>
     </div>);
   }
   else if (secondLoadButton){
-    return (<div>
-      <button onClick={handleSecondClick}>Load Selectors</button>
+    return (<div className='loadButtonContainer'>
+      <button onClick={handleSecondClick} className='secondLoadButton'>Load Selectors</button>
     </div>)
   }
   else {
