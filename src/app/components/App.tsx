@@ -62,7 +62,7 @@ const App: React.FC = () => {
           return false;
         };
         if (!check()) {
-         // console.log('after Check');
+          // console.log('after Check');
           dispatch(addSelected({name: key}));
         }
       }
