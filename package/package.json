@@ -1,11 +1,11 @@
 {
   "name": "recoilize",
-  "version": "3.1.2",
+  "version": "3.1.6",
   "description": "Recoil Dev Tool",
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/open-source-labs/Recoilize"
+    "url": "https://github.com/open-source-labs/Recoilize/staging"
   },
   "peerDependencies": {
     "react": "^16.13.1",
