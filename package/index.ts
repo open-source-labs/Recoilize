@@ -108,8 +108,12 @@ export default function RecoilizeDebugger(props: any) {
     return {
       filteredSnapshot: filteredSnapshot,
       componentAtomTree: formatFiberNodes(
-        root._reactRootContainer._internalRoot.current,
-      ),
+        // test `React.createRoot` first 
+        root[
+          Object.keys(root).find(key =>
+            key.startsWith('__reactContainer$'),
+          ) as string
+        ] || root._reactRootContainer._internalRoot.current),
     };
   };
 
