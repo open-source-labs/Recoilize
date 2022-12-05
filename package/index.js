@@ -194,11 +194,19 @@ export default function RecoilizeDebugger(props) {
   };
 
   const createDevToolDataObject = (filteredSnapshot, diff, atomsAndSelectors) => {
+    // test `React.createRoot` first 
+    let rootFiberNode =
+    recoilizeRoot[
+      Object.keys(recoilizeRoot).find(key =>
+        key.startsWith('__reactContainer$'),
+      )
+    ] || recoilizeRoot._reactRootContainer._internalRoot.current;
+
     if (diff === undefined) {
       return {
         filteredSnapshot: filteredSnapshot,
         componentAtomTree: formatFiberNodes(
-          recoilizeRoot._reactRootContainer._internalRoot.current,
+          rootFiberNode,
         ),
         atomsAndSelectors,
       };
@@ -206,7 +214,7 @@ export default function RecoilizeDebugger(props) {
       return {
         filteredSnapshot: filteredSnapshot,
         componentAtomTree: formatFiberNodes(
-          recoilizeRoot._reactRootContainer._internalRoot.current,
+          rootFiberNode,
         ),
         indexDiff: diff,
         atomsAndSelectors,
