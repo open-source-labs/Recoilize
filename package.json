@@ -17,7 +17,7 @@
   "author": "Bren Yamaguchi, Saejin Kang, Jonathan Escamilla, Sean Smith, Justin Choo, Anthony Lin, Spenser Schwartz, Steven Nguyen, Henry Taing, Seungho Baek, Taven Shumaker, Aaron Yang, Jesus Vargas, Davide Molino, Janis Hernandez, Jaime Baik, Anthony Magallanes, Edward Shei, Leonard Lew, Joey Ma, Harvey Nguyen, Victor Wang, Adam Allison, Ryan Wallace, Jordan Rice, William Chu",
   "license": "MIT",
   "devDependencies": {
-    "@babel/core": "^7.10.3",
+    "@babel/core": "^7.18.0",
     "@babel/eslint-parser": "^7.21.3",
     "@babel/polyfill": "^7.10.4",
     "@babel/preset-env": "^7.10.3",
