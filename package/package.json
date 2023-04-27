@@ -8,9 +8,9 @@
     "url": "https://github.com/open-source-labs/Recoilize/staging"
   },
   "peerDependencies": {
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "recoil": "^0.1.2"
+    "react": "^16.13.1 || ^17.0.0 || ^18.0.0",
+    "react-dom": "^16.13.1 || ^17.0.0 || ^18.0.0",
+    "recoil": "^0.7.7"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
