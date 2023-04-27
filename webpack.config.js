@@ -1,5 +1,5 @@
 const path = require('path');
-const ChromeExtensionReloader = require('webpack-chrome-extension-reloader');
+const NodePolyfillPlugin = require('node-polyfill-webpack-plugin');
 
 const config = {
   entry: {
@@ -44,19 +44,12 @@ const config = {
   resolve: {
     extensions: ['.tsx', '.ts', '.js', '.jsx'],
   },
-  plugins: [],
+  plugins: [new NodePolyfillPlugin()],
 };
 
-module.exports = (env, argv) => {
-  if (argv.mode === 'development') {
-    config.plugins.push(
-      new ChromeExtensionReloader({
-        entries: {
-          contentScript: ['app', 'content'],
-          background: ['background'],
-        },
-      }),
-    );
-  }
-  return config;
-};
+// module.exports = {
+//   // Other rules...
+//   plugins: [new NodePolyfillPlugin()],
+// };
+
+module.exports = config;
