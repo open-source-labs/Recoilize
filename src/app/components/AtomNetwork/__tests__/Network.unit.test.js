@@ -2,7 +2,7 @@ import React from 'react';
 import Network from '../AtomNetwork';
 import {render, cleanup} from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import '@babel/polyfill';
+// import '@babel/polyfill';
 import {filteredCurSnapMock} from '../../../../../mock/snapshot.js';
 
 afterEach(cleanup);
