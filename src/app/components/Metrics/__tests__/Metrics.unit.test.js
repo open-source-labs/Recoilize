@@ -1,8 +1,9 @@
 import React from 'react';
 import { render, cleanup, findByTestId } from '@testing-library/react';
-import { componentAtomTree } from '../../../../types';
+import { componentAtomTree } from '../../../../types/index.d.ts';
 import { shallow } from 'enzyme';
-import Metrics from '../Metrics';
+import Metrics from '../MetricsContainer';
+// TO-DO
 // import prop object being passed down to metric graphs to be tested
 describe('Metrics graph testing', () => {
     afterEach(cleanup);
