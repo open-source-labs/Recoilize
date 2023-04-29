@@ -3,7 +3,12 @@
   "jest": {
     "setupFiles": [
       "jest-webextension-mock"
-    ]
+    ],
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$":
+        "<rootDir>/mock/fileMock.js",
+      "\\.(css|less)$": "<rootDir>/mock/styleMock.js"
+    }
   },
   "version": "3.1.6",
   "description": "A Chrome extension that helps debug Recoil applications by memorizing the state of components with every render.",
