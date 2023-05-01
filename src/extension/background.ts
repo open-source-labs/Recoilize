@@ -21,26 +21,36 @@ chrome.storage.local.clear(function (): void {
   chrome.storage.local.get(null, function (result): void {});
 });
 
+// RUNS when devtool is connected
 // LISTEN for initial connection from dev tool
-// runs when devtool is connected
 chrome.runtime.onConnect.addListener(port => {
+  /*
+  PORT represents a communication channel between different parts of a Chrome extension, 
+  such as between a content script and a background script or between a popup and a background script. 
+  The Port object provides methods for sending and receiving messages over the connection.
+  */
   const devToolsListener = (msg: Msg, port: object) => {
     console.log(
       'in the onConnect of background script IN BG SCRIPT ',
       msg,
       port,
     );
+
     const {tabId, action} = msg;
 
     switch (action) {
       case 'devToolInitialized':
+        // assigns an object connection a property with a key of msg[tabId] and a value of the PORT
         connections[tabId] = port;
         // read and send back to dev tool current local storage for corresponding tabId & port
         console.log('local chrome storage: ', chrome.storage.local);
         chrome.storage.local.get(null, function (result) {
           console.log('chrome.storage.local.get result: ', result);
+          // Use the PORTs postMessage method to send an action and a payload
           connections[tabId].postMessage({
             action: 'recordSnapshot',
+            // payload is an array of objects
+            // payload element example: {atomsAndSelectors, componentAtomTree, filteredSnapshot, indexDiff:}
             payload: result[tabId],
           });
           console.log('connections tabId: ', connections[tabId]);
@@ -104,7 +114,7 @@ chrome.runtime.onMessage.addListener((msg, sender) => {
   // Error handling if there isn't a proper tabId
   if (!sender.tab) return;
 
-  console.log("background.ts chromeruntime msg: ", msg);
+  console.log('background.ts chromeruntime msg: ', msg);
 
   // Grabs tab id from content script and converts it to a string
   const tabId = `${sender.tab.id}`;

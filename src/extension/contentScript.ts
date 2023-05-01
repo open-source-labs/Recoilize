@@ -1,4 +1,5 @@
-// once chrome tab connects with our content-script
+// R4 - the following line sends a message to the window and it is picked up in the window by the RecoilizeDebugger Component
+// once chrome tab connects with the content-script
 window.postMessage({action: 'contentScriptStarted'}, '*');
 //console.log('content script sending action to the window IN CONTENT SCRIPT');
 
