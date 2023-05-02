@@ -9,7 +9,7 @@ window.addEventListener('message', msg => {
   chrome.runtime.sendMessage(msg.data);
 });
 
-// listening for messages from the background script
+// listening for messages from the background script AKA service_worker
 chrome.runtime.onMessage.addListener(msg => {
   // send the message to npm package
   const {action} = msg;

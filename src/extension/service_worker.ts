@@ -12,10 +12,10 @@ interface Connections {
   [tabId: string]: any;
 }
 
-// once background-script start, start with cleared connections
+// once background-script AKA service_worker start, start with cleared connections
 const connections: Connections = {};
 
-// once background starts, start with cleared local storage
+// once background AKA service_worker starts, start with cleared local storage
 // this only happens when we open chrome again, not on refresh
 chrome.storage.local.clear(function (): void {
   chrome.storage.local.get(null, function (result): void {});
@@ -26,12 +26,12 @@ chrome.storage.local.clear(function (): void {
 chrome.runtime.onConnect.addListener(port => {
   /*
   PORT represents a communication channel between different parts of a Chrome extension, 
-  such as between a content script and a background script or between a popup and a background script. 
+  such as between a content script and a background AKA service_worker script or between a popup and a background script AKA service_worker. 
   The Port object provides methods for sending and receiving messages over the connection.
   */
   const devToolsListener = (msg: Msg, port: object) => {
     console.log(
-      'in the onConnect of background script IN BG SCRIPT ',
+      'in the onConnect of background AKA service_worker script IN BG SCRIPT ',
       msg,
       port,
     );
@@ -114,7 +114,7 @@ chrome.runtime.onMessage.addListener((msg, sender) => {
   // Error handling if there isn't a proper tabId
   if (!sender.tab) return;
 
-  console.log('background.ts chromeruntime msg: ', msg);
+  console.log('service_worker.ts chromeruntime msg: ', msg);
 
   // Grabs tab id from content script and converts it to a string
   const tabId = `${sender.tab.id}`;

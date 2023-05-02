@@ -4,7 +4,7 @@ const NodePolyfillPlugin = require('node-polyfill-webpack-plugin');
 const config = {
   entry: {
     app: './src/app/index.tsx',
-    background: './src/extension/background.ts',
+    service_worker: './src/extension/service_worker.ts',
     content: './src/extension/contentScript.ts',
   },
   output: {
@@ -45,6 +45,10 @@ const config = {
     extensions: ['.tsx', '.ts', '.js', '.jsx'],
   },
   plugins: [new NodePolyfillPlugin()],
+  // the following option prevents webpack from minifying the code
+  optimization: {
+    minimize: false,
+  },
 };
 
 // module.exports = {

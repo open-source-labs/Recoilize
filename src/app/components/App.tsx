@@ -81,16 +81,16 @@ const App: React.FC = () => {
 
   // useEffect for snapshotHistory
   useEffect(() => {
-    // SETUP connection to background script
+    // SETUP connection to background script AKA service_worker script
     const backgroundConnection = chrome.runtime.connect();
-    // INITIALIZE connection to background script
+    // INITIALIZE connection to background script AKA service_worker script
     backgroundConnection.postMessage({
       action: 'devToolInitialized',
       tabId: chrome.devtools.inspectedWindow.tabId,
     });
     // console.log(
-    //   'here is the background connection post message IN APP',
-    //   backgroundConnection,
+    //   'here is the service_worker (previously known as background script) connection post message IN APP',
+    //   service_worker,
     // );
     // LISTEN for messages FROM bg script
     backgroundConnection.onMessage.addListener(msg => {
