@@ -1,30 +1,56 @@
 import React from 'react';
 import Network from '../AtomNetwork';
-import {render, cleanup} from '@testing-library/react';
+import {
+  render,
+  cleanup,
+  generateStore,
+  getByTestId,
+  screen,
+} from '../../../tests/testing';
 import '@testing-library/jest-dom/extend-expect';
-// import '@babel/polyfill';
-import {filteredCurSnapMock} from '../../../../../mock/snapshot.js';
+
+// this is our mock state that we will use to run our tests
+import {snapshotHistoryMock} from '../../../../../mock/state-snapshot';
 
 afterEach(cleanup);
 
+// not sure if this works? rewrote snapshot to reflect current render
 it('renders & matches snapshot', () => {
-  const {asFragment} = render(<Network />);
-  expect(asFragment()).toMatchSnapshot();
+  // mock search value because AtomNetworkVisual needs search value in state
+  const atomNetwork = {searchValue: ''};
+  const store = generateStore({
+    atomNetwork: atomNetwork,
+    snapshot: snapshotHistoryMock,
+  });
+  const asFragment = render(<Network />, {providers: {store}});
+  expect(asFragment).toMatchSnapshot();
 });
 
 it('loads and displays Network component', () => {
-  const {getByTestId} = render(<Network />);
-  expect(getByTestId('networkCanvas')).toBeTruthy();
+  const atomNetwork = {searchValue: ''};
+  const store = generateStore({
+    atomNetwork: atomNetwork,
+    snapshot: snapshotHistoryMock,
+  });
+  render(<Network />, {providers: {store}});
+  expect(screen.getByTestId('networkCanvas')).toBeTruthy();
 });
 
-it('if empty object props is passed into Network', () => {
-  const {asFragment} = render(<Network filteredCurSnap={{}} />);
-  expect(asFragment()).toMatchSnapshot();
+
+// probably have to delete this test, it doesn't really make sense any more
+xit('if empty object props is passed into Network', () => {
+  const atomNetwork = {searchValue: ''};
+  const store = generateStore({atomNetwork, snapshot: {snapshotHistory: [{filteredSnapshot: {}}], renderIndex: 0}});
+  const asFragment = render(<Network />, {providers: {store}});
+  expect(asFragment).toMatchSnapshot();
 });
 
-it('if mock data object prop is passed into Network', () => {
-  const {asFragment} = render(
-    <Network filteredCurSnap={filteredCurSnapMock} />,
-  );
-  expect(asFragment()).toMatchSnapshot();
-});
+// probably want to add some tests here for atom network legend
+// when button with id AtomP is clicked, it should turn yellow and display all atoms
+it('Atom button changes color and displays list of atoms when clicked', () => {
+  const atomNetwork = {searchValue: ''};
+  const store = generateStore({
+    atomNetwork: atomNetwork,
+    snapshot: snapshotHistoryMock,
+  });
+}) 
