@@ -4,8 +4,8 @@ import {
   render,
   cleanup,
   generateStore,
-  getByTestId,
   screen,
+  fireEvent,
 } from '../../../tests/testing';
 import '@testing-library/jest-dom/extend-expect';
 
@@ -22,8 +22,8 @@ it('renders & matches snapshot', () => {
     atomNetwork: atomNetwork,
     snapshot: snapshotHistoryMock,
   });
-  const asFragment = render(<Network />, {providers: {store}});
-  expect(asFragment).toMatchSnapshot();
+  const rendered = render(<Network />, {providers: {store}});
+  expect(rendered).toMatchSnapshot();
 });
 
 it('loads and displays Network component', () => {
@@ -36,21 +36,21 @@ it('loads and displays Network component', () => {
   expect(screen.getByTestId('networkCanvas')).toBeTruthy();
 });
 
-
-// probably have to delete this test, it doesn't really make sense any more
-xit('if empty object props is passed into Network', () => {
-  const atomNetwork = {searchValue: ''};
-  const store = generateStore({atomNetwork, snapshot: {snapshotHistory: [{filteredSnapshot: {}}], renderIndex: 0}});
-  const asFragment = render(<Network />, {providers: {store}});
-  expect(asFragment).toMatchSnapshot();
-});
-
-// probably want to add some tests here for atom network legend
-// when button with id AtomP is clicked, it should turn yellow and display all atoms
-it('Atom button changes color and displays list of atoms when clicked', () => {
+// when button with id AtomP is clicked, it should change color
+it('Atom button changes color when clicked', () => {
   const atomNetwork = {searchValue: ''};
   const store = generateStore({
     atomNetwork: atomNetwork,
     snapshot: snapshotHistoryMock,
   });
+  // render the network
+  const rendered = render(<Network />, {providers: {store}});
+  // select the button we are looking for
+  const atomButton = screen.getByRole('button', {name: 'ATOM'});
+  // when component is first rendered, class list should have atomP and atomLegendDefault
+  expect(atomButton.classList[1]).toBe('atomLegendDefault');
+  // click the atom button
+  fireEvent.click(atomButton);
+  // class list should change to atom selected
+  expect(atomButton.classList[1]).toBe('atomSelected');
 }) 
