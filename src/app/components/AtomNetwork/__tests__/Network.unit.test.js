@@ -9,6 +9,8 @@ import {
 } from '../../../tests/testing';
 import '@testing-library/jest-dom/extend-expect';
 
+// currently, this test does not cover ability to drag atoms/selectors in the visualizer
+
 // this is our mock state that we will use to run our tests
 import {snapshotHistoryMock} from '../../../../../mock/state-snapshot';
 
@@ -117,4 +119,56 @@ it('Selects specific atom when specific atom button is clicked', () => {
   expect(square2).toHaveClass('atomSelected');
   // square 1 should not be selected
   expect(square).toHaveClass('atomNotSelected');
+});
+
+it('Displays all selectors when selector button is clicked', () => {
+  const atomNetwork = {searchValue: ''};
+  const store = generateStore({
+    atomNetwork: atomNetwork,
+    snapshot: snapshotHistoryMock,
+  });
+  // render the network
+  const rendered = render(<Network />, {providers: {store}});
+  // select the button we are looking for
+  const selectorButton = screen.getByRole('button', {name: 'SELECTOR'});
+
+  // when network is first rendered, atoms should not be displayed
+  // here, gameendselector returns an invisible svg element
+  let gameEndSelector = screen.getByText('gameEndSelector');
+  expect(gameEndSelector).not.toBeVisible();
+
+  // // click the selector button
+  fireEvent.click(selectorButton);
+
+  // game selector should now be visible
+  gameEndSelector = screen.getAllByText('gameEndSelector')[1];
+  expect(gameEndSelector).toBeVisible();
+})
+
+it('Selects specific selector when specific selector button is clicked', () => {
+  const atomNetwork = {searchValue: ''};
+  const store = generateStore({
+    atomNetwork: atomNetwork,
+    snapshot: snapshotHistoryMock,
+  });
+
+  // render the network
+  const rendered = render(<Network />, {providers: {store}});
+  // select the main selector button
+  const selectorButton = screen.getByRole('button', {name: 'SELECTOR'});
+
+  // click the selector button
+  fireEvent.click(selectorButton);
+
+  // get selector button with id "gameEndSelector"
+  const gameEndSelector = screen.getAllByText('gameEndSelector')[1];
+  // when gameEndSelector selector is first rendered, it should not have selectorSelected/selectorNotSelected class
+  expect(gameEndSelector).not.toHaveClass('selectorNotSelected');
+  expect(gameEndSelector).not.toHaveClass('selectorSelected');
+
+  // click square-1 atom button
+  fireEvent.click(gameEndSelector);
+  // square should then be updated to be selected
+  expect(gameEndSelector).toHaveClass('selectorSelected');
+  expect(gameEndSelector).not.toHaveClass('selectorNotSelected');
 });
