@@ -12,7 +12,7 @@
     "48": "assets/Recoilize-v2.png",
     "128": "assets/Recoilize-v2.png"
   },
-  "permissions": ["storage", "tabs"],
+  "permissions": ["storage"],
   "background": {"service_worker": "bundles/service_worker.bundle.js"},
   "content_scripts": [
     {
