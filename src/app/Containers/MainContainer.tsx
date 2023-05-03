@@ -1,9 +1,9 @@
 import React from 'react';
-import SnapshotsContainer from './SnapshotContainer';
+import { SnapshotsContainer } from './SnapshotContainer';
 import VisualContainer from './VisualContainer';
 import TravelContainer from './TravelContainer';
 
-const MainContainer: React.FC = () => {
+export const MainContainer: React.FC = () => {
   return (
     <div className="MainContainer">
       <SnapshotsContainer />
@@ -13,4 +13,4 @@ const MainContainer: React.FC = () => {
   );
 };
 
-export default MainContainer;
+// export default MainContainer;

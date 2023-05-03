@@ -3,7 +3,7 @@ import {selectFilterState} from '../state-management/slices/FilterSlice';
 import {useAppSelector, useAppDispatch} from '../state-management/hooks';
 import {setRenderIndex} from '../state-management/slices/SnapshotSlice';
 
-const SnapshotsContainer: React.FC = () => {
+export const SnapshotsContainer: React.FC = () => {
   const dispatch = useAppDispatch();
 
   const snapshotHistory = useAppSelector(
@@ -17,15 +17,16 @@ const SnapshotsContainer: React.FC = () => {
 
   let snapshotHistoryLength = snapshotHistory.length;
 
+  // THIS USEEFFECT CAUSED TEST ERRORS AND TBH WAS JANKY SO COMMENTED OUT (5.2023 KW)
   // useEffect to scroll bottom whenever snapshot history changes
-  useEffect(() => {
-    scrollToBottom();
-  }, [snapshotHistoryLength]);
+  // useEffect(() => {
+  //   scrollToBottom();
+  // }, [snapshotHistoryLength]);
 
-  // using scrollInToView makes a smoother scroll
-  const scrollToBottom = (): void => {
-    snapshotEndRef.current.scrollIntoView({behavior: 'smooth'});
-  };
+  // // using scrollInToView makes a smoother scroll
+  // const scrollToBottom = (): void => {
+  //   snapshotEndRef.current.scrollIntoView({behavior: 'smooth'});
+  // };
 
   const snapshotDivs: JSX.Element[] = [];
   // iterate the same length of our snapshotHistory
@@ -37,9 +38,9 @@ const SnapshotsContainer: React.FC = () => {
         return true;
       }
       // checks if the filteredSnapshot object at index i has a key (atom or selector) found in the selected array. This would indicate that there was a change to that state/selector because filter is an array of objects containing differences between snapshots.
-      console.log('filterData:', filterData)
+      // console.log('filterData:', filterData)
       if (filterData[i]) {
-        console.log('filterData[i]', filterData[i])
+        // console.log('filterData[i]', filterData[i])
         for (let key in filterData[i].filteredSnapshot) {
           for (let j = 0; j < selected.length; j++) {
             if (key === selected[j].name) {
@@ -149,15 +150,15 @@ const SnapshotsContainer: React.FC = () => {
   // create a function to store current data to local storage
   const toLocalStorage = (data: any) => {
     for (let i = 0; i < data.length; i++) {
-      console.log('trigger toLocalStorage');
+      // console.log('trigger toLocalStorage');
       const jsonData = JSON.stringify(data[i]);
       localStorage.setItem(`${i}`, jsonData);
     }
   };
 
   return (
-    <div className="SnapshotsContainer">
-      <div id="clear-snapshots-title">Clear Snapshots</div>
+    <div className="SnapshotsContainer" data-testid="SnapshotsContainer">
+      <div id="clear-snapshots-title" data-testid="clear-snapshots-title">Clear Snapshots</div>
       <div className="clear-buttons">
         <button onClick={prevClr} id="prevClr">
           Previous
@@ -182,12 +183,14 @@ const SnapshotsContainer: React.FC = () => {
         }}>
         Save Series
       </button>
-      <div className="SnapshotsList">
-        <div>{snapshotDivs}</div>
+      <div className="SnapshotsList" data-testid="SnapshotsList">
+        <div data-testid="snapshotDiv">{snapshotDivs}</div>
         <div ref={snapshotEndRef} />
       </div>
     </div>
   );
 };
 
-export default SnapshotsContainer;
+// export default SnapshotsContainer;
+
+// console.log(typeof SnapshotsContainer)
