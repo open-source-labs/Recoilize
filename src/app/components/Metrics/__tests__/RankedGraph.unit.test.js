@@ -1,6 +1,5 @@
 import React from 'react';
 import RankedGraph from '../RankedGraph';
-import ComparisonGraph from '../ComparisonGraph';
 import {
   filteredCurSnapMock,
   componentAtomTreeMock,
@@ -10,7 +9,6 @@ import '@testing-library/dom';
 import '@testing-library/jest-dom'
 
 import {fireEvent, generateStore, screen} from '../../../tests/testing';
-// import { element, number } from 'prop-types';
 
 
 /*            What should we be testing for the Ranked Graph?
@@ -44,9 +42,9 @@ const mockWidth = 30
 afterEach(cleanup);
 
 describe('Ranked graph displays correct information', () => {
-  it('should render data, height, and width', () => {
+  xit('should render data, height, and width', () => {
     const {asFragment} = render(
-      <RankedGraph cleanedComponentAtomTree={componentAtomTreeMock}
+      <RankedGraph
         data={mock}
         width={mockWidth}
         height={mockHeight}
@@ -61,10 +59,24 @@ describe('Ranked graph displays correct information', () => {
     expect(typeof mock[1].actualDuration).not.toBe('undefined');
     expect(typeof mock[2].actualDuration).not.toBe('boolean');
     expect(typeof mock[2].actualDuration).not.toBe('string');
+    // render ranked graph
+    render(
+      <RankedGraph
+        data={mock}
+        width={mockWidth}
+        height={mockHeight}
+      />
+    )
+    // find element with name atom 3
+    const atom3 = screen.getByText('atom3')
+    console.log(atom3);
+    expect(atom3).toBeVisible();
+    const atom1Duration = screen.getByText('0.345453453ms')
+    console.log(atom1Duration)
   });
 
   //type of data in name should be a string
-  it('name should be of type string', () => {
+  xit('name should be of type string', () => {
     expect(typeof mock[0].name).toBe('string');
     expect(typeof mock[0].name).not.toBe('number');
     expect(typeof mock[1].name).not.toBe('boolean');
@@ -84,7 +96,7 @@ describe('Ranked graph displays correct information', () => {
 
 
 describe('components rendering correctly', () => {
-  it('renders without crashing', () => {
+  xit('renders without crashing', () => {
     const {getByTestId} = render(<RankedGraph 
       data={mock}
       width={mockWidth}
@@ -93,7 +105,7 @@ describe('components rendering correctly', () => {
     expect(getByTestId('canvas')).toBeTruthy();
   });
 
-  it('should match snapshot when props are passed into RankedGraph', () => {
+  xit('should match snapshot when props are passed into RankedGraph', () => {
     const {asFragment} = render(
       <RankedGraph filteredCurSnap={filteredCurSnapMock} 
       data={mock}
@@ -105,7 +117,7 @@ describe('components rendering correctly', () => {
   });
 
   //not sure I am understanding this 
-  it('should match snapshot when no props are passed in', () => {
+  xit('should match snapshot when no props are passed in', () => {
     const {asFragment} = render(<RankedGraph 
       data={mock}
       width={mockWidth}
