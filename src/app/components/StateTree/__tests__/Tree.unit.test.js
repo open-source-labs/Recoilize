@@ -1,6 +1,4 @@
-import React, {useState} from 'react';
-import ReactDOM from 'react-dom';
-import {getQueriesForElement, getByText} from '@testing-library/dom';
+import React from 'react';
 import '@testing-library/jest-dom'
 
 import {render, generateStore, screen, cleanup} from '../../../tests/testing';
