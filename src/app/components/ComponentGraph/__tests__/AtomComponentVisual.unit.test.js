@@ -1,33 +1,40 @@
-import React from 'react';
+import React, {useState} from 'react';
 import AtomComponentVisualContainer from '../AtomComponentContainer';
 import AtomComponentVisual from '../AtomComponentVisual';
-import {render, cleanup} from '@testing-library/react';
+import {render, cleanup, generateStore, screen} from '../../../tests/testing';
 import '@testing-library/jest-dom/extend-expect';
-// import '@babel/polyfill';
-import {
-  componentAtomTreeMock,
-  filteredCurSnapMock,
-} from '../../../../../mock/snapshot';
+
+// this is our mock state that we will use to run our tests
+import {snapshotHistoryMock} from '../../../../../mock/state-snapshot';
 
 afterEach(cleanup);
 
-xit('testing to see if the component is properly rendered', () => {
-  // Now that we have the componentClassDiv appended, we get the same svg error as AtomComponentContainer test
+// NOTE: in order to run these tests, comment out lines 127 to 131 in the atom component visual test (svgContainer.call with zoom transform)
+// jest does not work well with d3 in this instance
+
+it('Renders the component', () => {
+  // generate store
+  const store = generateStore({ snapshot: snapshotHistoryMock})
+  // need to include a div with class component because AtomComponentVisual needs it to render
   const componentClassDiv = document.createElement('div');
   componentClassDiv.className = 'Component';
   document.body.appendChild(componentClassDiv);
-  // This test fails because it cannot find the element with class 'Component'
-  const atomTree = {children: []};
-  const {component, debug} = render(
-    // possibly test 'setStr', 'selectedRecoilValue', 'componentAtomTree' props
+
+  const canvas = document.createElement('div');
+  canvas.id = 'canvas';
+  document.body.appendChild(canvas)
+
+  render(
+    // props are all based on snapshot history mock data of mock tic tac toe game
     <AtomComponentVisual
-      selectors={[]}
-      atoms={[]}
-      componentAtomTree={atomTree}
+      componentAtomTree={snapshotHistoryMock['snapshotHistory'][0]['componentAtomTree']}
+      cleanedComponentAtomTree={snapshotHistoryMock['cleanComponentAtomTree']}
+      atoms={['playStart', 'square-0', 'square-1', 'square-2', 'square-3', 'square-4', 'square-5', 'square-6', 'square-7', 'square-8', 'currentPlayerState']}
+      selectors={['gameEndSelector']}
+      selectedRecoilValue={['square-0', 'atom']}
     />,
-    componentClassDiv,
+    {providers: { store }}
   );
-  debug();
 });
 
 xit('renders & matches snapshot - no props', () => {
@@ -38,8 +45,6 @@ xit('renders & matches snapshot - no props', () => {
 xit('renders & matches snapshot - componetAtomTree props', () => {
   const {asFragment} = render(
     <AtomComponentVisualContainer
-      filteredSnapshot={filteredCurSnapMock}
-      componentAtomTree={componentAtomTreeMock}
     />,
   );
   expect(asFragment()).toMatchSnapshot();

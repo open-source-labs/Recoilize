@@ -145,6 +145,8 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
           updateZoomState(d3.zoomTransform(d3.select('#canvas').node())),
         ),
       );
+      // const transform = d3.zoomTransform(d3.select('#canvas').node())
+      // const state = {k: transform['k'], x: transform['x'], y: transform['y']}
     }
 
     // Update function

@@ -15,6 +15,10 @@ import {snapshotHistoryMock} from '../../../../../mock/state-snapshot';
 const zoom = {zoomData: {k: 0.09, x: 221, y: 662}}
 
 it('Atom component container renders', () => {
+  const canvas = document.createElement('div');
+  canvas.id = 'canvas';
+  document.body.appendChild(canvas)
+
   // define default store from state snapshot
   const store = generateStore({snapshot: snapshotHistoryMock, zoom: zoom});
   render(<AtomComponentVisualContainer />, {providers: {store}});
