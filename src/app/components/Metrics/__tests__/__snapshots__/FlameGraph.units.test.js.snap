@@ -1,0 +1,335 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Flame graph displays correct information should render cleanedComponentAtomTree, width, and height 1`] = `
+<DocumentFragment>
+  <svg
+    height="100"
+    width="50"
+  >
+    <g
+      class="vx-group"
+      transform="translate(0, 0)"
+    >
+      <g
+        transform="translate(1, 1)"
+      >
+        <rect
+          fill-opacity="1"
+          height="98"
+          id="rect-0"
+          width="8"
+        />
+        <clippath
+          id="clip-0"
+        >
+          <use
+            xlink:href="#rect-0"
+          />
+        </clippath>
+        <text
+          clip-path="url(#clip-0)"
+          style="font: sans-serif 10px 10px; font-weight: bold;"
+          x="4"
+          y="13"
+        >
+          <tspan
+            style="font-size: 9px; fill-opacity: 0.8;"
+          >
+             NaN
+          </tspan>
+        </text>
+      </g>
+      <g
+        transform="translate(10, 1)"
+      >
+        <rect
+          fill-opacity="1"
+          height="0"
+          id="rect-1"
+          width="9"
+        />
+        <clippath
+          id="clip-1"
+        >
+          <use
+            xlink:href="#rect-1"
+          />
+        </clippath>
+        <text
+          clip-path="url(#clip-1)"
+          style="font: sans-serif 10px 10px; font-weight: bold;"
+          x="4"
+          y="13"
+        >
+          <tspan
+            style="font-size: 9px; fill-opacity: 0.8;"
+          >
+             NaN
+          </tspan>
+        </text>
+      </g>
+      <g
+        transform="translate(10, 1)"
+      >
+        <rect
+          fill-opacity="1"
+          height="0"
+          id="rect-2"
+          width="9"
+        />
+        <clippath
+          id="clip-2"
+        >
+          <use
+            xlink:href="#rect-2"
+          />
+        </clippath>
+        <text
+          clip-path="url(#clip-2)"
+          style="font: sans-serif 10px 10px; font-weight: bold;"
+          x="4"
+          y="13"
+        >
+          <tspan
+            style="font-size: 9px; fill-opacity: 0.8;"
+          >
+             NaN
+          </tspan>
+        </text>
+      </g>
+      <g
+        transform="translate(10, 1)"
+      >
+        <rect
+          fill-opacity="1"
+          height="0"
+          id="rect-3"
+          width="9"
+        />
+        <clippath
+          id="clip-3"
+        >
+          <use
+            xlink:href="#rect-3"
+          />
+        </clippath>
+        <text
+          clip-path="url(#clip-3)"
+          style="font: sans-serif 10px 10px; font-weight: bold;"
+          x="4"
+          y="13"
+        >
+          <tspan
+            style="font-size: 9px; fill-opacity: 0.8;"
+          >
+             NaN
+          </tspan>
+        </text>
+      </g>
+      <g
+        transform="translate(20, 1)"
+      >
+        <rect
+          fill-opacity="1"
+          height="0"
+          id="rect-4"
+          width="8.999999999999996"
+        />
+        <clippath
+          id="clip-4"
+        >
+          <use
+            xlink:href="#rect-4"
+          />
+        </clippath>
+        <text
+          clip-path="url(#clip-4)"
+          style="font: sans-serif 10px 10px; font-weight: bold;"
+          x="4"
+          y="13"
+        >
+          <tspan
+            style="font-size: 9px; fill-opacity: 0.8;"
+          >
+             NaN
+          </tspan>
+        </text>
+      </g>
+      <g
+        transform="translate(20, 1)"
+      >
+        <rect
+          fill-opacity="1"
+          height="0"
+          id="rect-5"
+          width="8.999999999999996"
+        />
+        <clippath
+          id="clip-5"
+        >
+          <use
+            xlink:href="#rect-5"
+          />
+        </clippath>
+        <text
+          clip-path="url(#clip-5)"
+          style="font: sans-serif 10px 10px; font-weight: bold;"
+          x="4"
+          y="13"
+        >
+          <tspan
+            style="font-size: 9px; fill-opacity: 0.8;"
+          >
+             NaN
+          </tspan>
+        </text>
+      </g>
+      <g
+        transform="translate(20, 1)"
+      >
+        <rect
+          fill-opacity="1"
+          height="0"
+          id="rect-6"
+          width="8.999999999999996"
+        />
+        <clippath
+          id="clip-6"
+        >
+          <use
+            xlink:href="#rect-6"
+          />
+        </clippath>
+        <text
+          clip-path="url(#clip-6)"
+          style="font: sans-serif 10px 10px; font-weight: bold;"
+          x="4"
+          y="13"
+        >
+          <tspan
+            style="font-size: 9px; fill-opacity: 0.8;"
+          >
+             NaN
+          </tspan>
+        </text>
+      </g>
+      <g
+        transform="translate(20, 1)"
+      >
+        <rect
+          fill-opacity="1"
+          height="0"
+          id="rect-7"
+          width="8.999999999999996"
+        />
+        <clippath
+          id="clip-7"
+        >
+          <use
+            xlink:href="#rect-7"
+          />
+        </clippath>
+        <text
+          clip-path="url(#clip-7)"
+          style="font: sans-serif 10px 10px; font-weight: bold;"
+          x="4"
+          y="13"
+        >
+          <tspan
+            style="font-size: 9px; fill-opacity: 0.8;"
+          >
+             NaN
+          </tspan>
+        </text>
+      </g>
+      <g
+        transform="translate(30, 1)"
+      >
+        <rect
+          fill-opacity="1"
+          height="0"
+          id="rect-8"
+          width="9"
+        />
+        <clippath
+          id="clip-8"
+        >
+          <use
+            xlink:href="#rect-8"
+          />
+        </clippath>
+        <text
+          clip-path="url(#clip-8)"
+          style="font: sans-serif 10px 10px; font-weight: bold;"
+          x="4"
+          y="13"
+        >
+          <tspan
+            style="font-size: 9px; fill-opacity: 0.8;"
+          >
+             NaN
+          </tspan>
+        </text>
+      </g>
+      <g
+        transform="translate(30, 1)"
+      >
+        <rect
+          fill-opacity="1"
+          height="0"
+          id="rect-9"
+          width="9"
+        />
+        <clippath
+          id="clip-9"
+        >
+          <use
+            xlink:href="#rect-9"
+          />
+        </clippath>
+        <text
+          clip-path="url(#clip-9)"
+          style="font: sans-serif 10px 10px; font-weight: bold;"
+          x="4"
+          y="13"
+        >
+          <tspan
+            style="font-size: 9px; fill-opacity: 0.8;"
+          >
+             NaN
+          </tspan>
+        </text>
+      </g>
+      <g
+        transform="translate(40, 1)"
+      >
+        <rect
+          fill-opacity="1"
+          height="0"
+          id="rect-10"
+          width="9"
+        />
+        <clippath
+          id="clip-10"
+        >
+          <use
+            xlink:href="#rect-10"
+          />
+        </clippath>
+        <text
+          clip-path="url(#clip-10)"
+          style="font: sans-serif 10px 10px; font-weight: bold;"
+          x="4"
+          y="13"
+        >
+          <tspan
+            style="font-size: 9px; fill-opacity: 0.8;"
+          >
+             NaN
+          </tspan>
+        </text>
+      </g>
+    </g>
+  </svg>
+</DocumentFragment>
+`;

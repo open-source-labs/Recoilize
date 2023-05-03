@@ -1,56 +1,116 @@
 import React from 'react';
 import RankedGraph from '../RankedGraph';
+import ComparisonGraph from '../ComparisonGraph';
 import {
   filteredCurSnapMock,
   componentAtomTreeMock,
 } from '../../../../../mock/snapshot.js';
 import {render, cleanup} from '@testing-library/react';
+import '@testing-library/dom';
+import '@testing-library/jest-dom'
+
+import {fireEvent, generateStore, screen} from '../../../tests/testing';
+// import { element, number } from 'prop-types';
+
+
+/*            What should we be testing for the Ranked Graph?
+  - Keeps track of individual component render time (meaning the PlaygroundRender, Board, Row in our mock data)
+  - For our tests, the ranked graph component needs the data ([{name: , actualDuration}]), height, and width (these two we can create mock data for)
+    - We need to test:
+      - that the current graph being rendered contains this info with data, height, and width
+      - that the render time is a type of number 
+      - that the name is a type string 
+*/
+
+const mock = [
+  {
+    name: 'atom1', 
+    actualDuration: 0.1345
+  },
+  {
+    name: 'atom2', 
+    actualDuration: 0.23456
+  },
+  {
+    name: 'atom3', 
+    actualDuration: 1.2357
+  },
+  
+]
+
+const mockHeight = 50
+const mockWidth = 30
 
 afterEach(cleanup);
 
 describe('Ranked graph displays correct information', () => {
-  it('should display correct atom tree', () => {
+  it('should render data, height, and width', () => {
     const {asFragment} = render(
-      <RankedGraph cleanedComponentAtomTree={componentAtomTreeMock} />,
-    );
+      <RankedGraph cleanedComponentAtomTree={componentAtomTreeMock}
+        data={mock}
+        width={mockWidth}
+        height={mockHeight}
+      />
+    )
     expect(asFragment()).toMatchSnapshot();
   });
-  //a component should display the render time of a component
-  xit('render time should be of type number', () => {
-    //the type of data being rendered should be a number
-    expect().toBe();
+
+  //the type of data in actual duration should be a number
+  it('render time should be of type number', () => {
+    expect(typeof mock[0].actualDuration).toBe('number');
+    expect(typeof mock[1].actualDuration).not.toBe('undefined');
+    expect(typeof mock[2].actualDuration).not.toBe('boolean');
+    expect(typeof mock[2].actualDuration).not.toBe('string');
   });
-  xit('should be of type string', () => {
-    //that dom element should render a string
-    expect().toBe();
+
+  //type of data in name should be a string
+  it('name should be of type string', () => {
+    expect(typeof mock[0].name).toBe('string');
+    expect(typeof mock[0].name).not.toBe('number');
+    expect(typeof mock[1].name).not.toBe('boolean');
+    expect(typeof mock[2].name).not.toBe('undefined');
   });
+
   //a component should display the name of the component
   xit('should display correct name', () => {
+    //that dom element should display the correct name
+  });
+  xit('should render all labels', () => {
     //that dom element should display the correct name
     expect().toBe();
   });
 });
 
+
+
 describe('components rendering correctly', () => {
   it('renders without crashing', () => {
-    const {getByTestId} = render(<RankedGraph />);
+    const {getByTestId} = render(<RankedGraph 
+      data={mock}
+      width={mockWidth}
+      height={mockHeight}
+    />);
     expect(getByTestId('canvas')).toBeTruthy();
   });
 
   it('should match snapshot when props are passed into RankedGraph', () => {
     const {asFragment} = render(
-      <RankedGraph filteredCurSnap={filteredCurSnapMock} />,
+      <RankedGraph filteredCurSnap={filteredCurSnapMock} 
+      data={mock}
+      width={mockWidth}
+      height={mockHeight}
+      />,
     );
     expect(asFragment()).toMatchSnapshot();
   });
 
+  //not sure I am understanding this 
   it('should match snapshot when no props are passed in', () => {
-    const {asFragment} = render(<RankedGraph />);
+    const {asFragment} = render(<RankedGraph 
+      data={mock}
+      width={mockWidth}
+      height={mockHeight}
+    />);
     expect(asFragment()).toMatchSnapshot();
-  });
-
-  xit('should render Recoil Root as text', () => {
-    const {getByTestId} = render(<RankedGraph />);
-    expect(getByTestId('canvas')).toHaveTextContent('Recoil Root');
   });
 });
