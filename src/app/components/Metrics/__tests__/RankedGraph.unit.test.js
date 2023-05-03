@@ -1,24 +1,33 @@
 import React from 'react';
 import RankedGraph from '../RankedGraph';
-import {
-  filteredCurSnapMock,
-  componentAtomTreeMock,
-} from '../../../../../mock/snapshot.js';
 import {render, cleanup} from '@testing-library/react';
 import '@testing-library/dom';
 import '@testing-library/jest-dom'
 
-import {fireEvent, generateStore, screen} from '../../../tests/testing';
+import {screen} from '../../../tests/testing';
 
+
+// CURRENTLY AT 79% COVERAGE
 
 /*            What should we be testing for the Ranked Graph?
   - Keeps track of individual component render time (meaning the PlaygroundRender, Board, Row in our mock data)
   - For our tests, the ranked graph component needs the data ([{name: , actualDuration}]), height, and width (these two we can create mock data for)
     - We need to test:
-      - that the current graph being rendered contains this info with data, height, and width
-      - that the render time is a type of number 
-      - that the name is a type string 
+      - Rendering properly (x)
+      - No initial values (should not be passing because graphs are rendering when we havent started the playground) 
+      - Check that labels are properly being passed in  (x)
+          - getting atom1,2,3
+          - getting actualDuration
+
+      - Check that the x-axis is rendering 
 */
+
+const mockNoValue = [
+  {
+    name: '', 
+    actualDuration: 0
+  }
+]
 
 const mock = [
   {
@@ -42,7 +51,7 @@ const mockWidth = 30
 afterEach(cleanup);
 
 describe('Ranked graph displays correct information', () => {
-  xit('should render data, height, and width', () => {
+  it('should render data, height, and width', () => {
     const {asFragment} = render(
       <RankedGraph
         data={mock}
@@ -50,15 +59,12 @@ describe('Ranked graph displays correct information', () => {
         height={mockHeight}
       />
     )
+    //checking if new component being rendered matches the saved snapshot
     expect(asFragment()).toMatchSnapshot();
   });
 
-  //the type of data in actual duration should be a number
-  it('render time should be of type number', () => {
-    expect(typeof mock[0].actualDuration).toBe('number');
-    expect(typeof mock[1].actualDuration).not.toBe('undefined');
-    expect(typeof mock[2].actualDuration).not.toBe('boolean');
-    expect(typeof mock[2].actualDuration).not.toBe('string');
+  //check that labels are being properly passed in 
+  it('should contain data with name property', () => {
     // render ranked graph
     render(
       <RankedGraph
@@ -67,62 +73,61 @@ describe('Ranked graph displays correct information', () => {
         height={mockHeight}
       />
     )
-    // find element with name atom 3
+    //ensure that a name property is being passed in and can be found 
+    const atom1 = screen.getByText('atom1')
+    const atom2 = screen.getByText('atom2')
     const atom3 = screen.getByText('atom3')
-    console.log(atom3);
+
+    expect(atom1).toBeVisible();
+    expect(atom2).toBeVisible();
     expect(atom3).toBeVisible();
-    const atom1Duration = screen.getByText('0.345453453ms')
-    console.log(atom1Duration)
   });
-
-  //type of data in name should be a string
-  xit('name should be of type string', () => {
-    expect(typeof mock[0].name).toBe('string');
-    expect(typeof mock[0].name).not.toBe('number');
-    expect(typeof mock[1].name).not.toBe('boolean');
-    expect(typeof mock[2].name).not.toBe('undefined');
-  });
-
-  //a component should display the name of the component
-  xit('should display correct name', () => {
-    //that dom element should display the correct name
-  });
-  xit('should render all labels', () => {
-    //that dom element should display the correct name
-    expect().toBe();
+  it('should contain data with actualDuration property', () => {
+    // render ranked graph
+    render(
+      <RankedGraph
+      data={mock}
+      width={mockWidth}
+      height={mockHeight}
+      />
+      )
+      //ensure that an actualDuration property is being passed in and can be found
+      const atom1Duration = screen.getByText('0.13ms')
+      const atom2Duration = screen.getByText('0.23ms')
+      const atom3Duration = screen.getByText('1.24ms')
+      
+      expect(atom1Duration).toBeVisible();
+      expect(atom2Duration).toBeVisible();
+      expect(atom3Duration).toBeVisible();
+      expect(atom3Duration).not.toBe('1.2357ms'); 
   });
 });
 
-
-
-describe('components rendering correctly', () => {
-  xit('renders without crashing', () => {
-    const {getByTestId} = render(<RankedGraph 
-      data={mock}
-      width={mockWidth}
-      height={mockHeight}
-    />);
-    expect(getByTestId('canvas')).toBeTruthy();
-  });
-
-  xit('should match snapshot when props are passed into RankedGraph', () => {
+//Ensure that the x-axis is rendering 
+describe('Ranked graph axis label', () => {
+  it('should have an x-axis label', () => {
     const {asFragment} = render(
-      <RankedGraph filteredCurSnap={filteredCurSnapMock} 
-      data={mock}
-      width={mockWidth}
-      height={mockHeight}
-      />,
-    );
+      <RankedGraph
+        data={mock}
+        width={mockWidth}
+        height={mockHeight}
+      />
+    )
+    //checking if new component being rendered initially matches snapshot
     expect(asFragment()).toMatchSnapshot();
   });
-
-  //not sure I am understanding this 
-  xit('should match snapshot when no props are passed in', () => {
-    const {asFragment} = render(<RankedGraph 
-      data={mock}
-      width={mockWidth}
-      height={mockHeight}
-    />);
+});
+//This is passing, but it should not be passing
+describe('Ranked graph initial rendering', () => {
+  it('should not render without initial data', () => {
+    const {asFragment} = render(
+      <RankedGraph
+        data={mockNoValue}
+        width={mockWidth}
+        height={mockHeight}
+      />
+    )
+    //checking if new component being rendered initially matches snapshot
     expect(asFragment()).toMatchSnapshot();
   });
 });
