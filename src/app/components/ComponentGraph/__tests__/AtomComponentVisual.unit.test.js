@@ -37,15 +37,30 @@ it('Renders the component', () => {
   );
 });
 
-xit('renders & matches snapshot - no props', () => {
-  const {asFragment} = render(<AtomComponentVisualContainer />);
-  expect(asFragment()).toMatchSnapshot();
-});
+it('Expand and collapse buttons show expanded and collapsed graph', () => {
+  // generate store
+  const store = generateStore({ snapshot: snapshotHistoryMock})
 
-xit('renders & matches snapshot - componetAtomTree props', () => {
-  const {asFragment} = render(
-    <AtomComponentVisualContainer
+  // need to include a div with class component because AtomComponentVisual needs it to render
+  const componentClassDiv = document.createElement('div');
+  componentClassDiv.className = 'Component';
+  document.body.appendChild(componentClassDiv);
+
+  // need to have an element with an id of 'canvas' in order to render svgContainer
+  const canvas = document.createElement('div');
+  canvas.id = 'canvas';
+  document.body.appendChild(canvas)
+
+  render(
+    // props are all based on snapshot history mock data of mock tic tac toe game
+    <AtomComponentVisual
+      componentAtomTree={snapshotHistoryMock['snapshotHistory'][0]['componentAtomTree']}
+      cleanedComponentAtomTree={snapshotHistoryMock['cleanComponentAtomTree']}
+      atoms={['playStart', 'square-0', 'square-1', 'square-2', 'square-3', 'square-4', 'square-5', 'square-6', 'square-7', 'square-8', 'currentPlayerState']}
+      selectors={['gameEndSelector']}
+      selectedRecoilValue={['square-0', 'atom']}
     />,
+    {providers: { store }}
   );
-  expect(asFragment()).toMatchSnapshot();
-});
+
+})
