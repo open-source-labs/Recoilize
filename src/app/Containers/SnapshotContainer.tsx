@@ -37,7 +37,9 @@ const SnapshotsContainer: React.FC = () => {
         return true;
       }
       // checks if the filteredSnapshot object at index i has a key (atom or selector) found in the selected array. This would indicate that there was a change to that state/selector because filter is an array of objects containing differences between snapshots.
+      console.log('filterData:', filterData)
       if (filterData[i]) {
+        console.log('filterData[i]', filterData[i])
         for (let key in filterData[i].filteredSnapshot) {
           for (let j = 0; j < selected.length; j++) {
             if (key === selected[j].name) {

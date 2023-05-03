@@ -156,6 +156,7 @@ const App: React.FC = () => {
       </p>
     </div>
   );
+  
   return (
     <div className="App" key="App">
       {snapshotHistory.length
