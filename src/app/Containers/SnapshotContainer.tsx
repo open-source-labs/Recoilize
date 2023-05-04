@@ -19,7 +19,7 @@ export const SnapshotsContainer: React.FC = () => {
 
   useEffect(() => {
     snapshotEndRef.current?.scrollIntoView({ behavior: 'smooth' })
-  })
+  }, [snapshotHistoryLength]);
 
   const snapshotDivs: JSX.Element[] = [];
   // iterate the same length of our snapshotHistory

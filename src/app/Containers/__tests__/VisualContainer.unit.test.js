@@ -1,19 +1,35 @@
-import React, {useState} from 'react';
-import ReactDOM from 'react-dom';
-import {getQueriesForElement, getByText} from '@testing-library/dom';
-import '@testing-library/jest-dom';
+// All SnapshotContainer tests written 5.2023
+import React from 'react';
+import { Provider } from 'react-redux';
+import "@testing-library/jest-dom";
 
+import { VisualContainer } from '../VisualContainer';
+import { generateStore, render, screen } from '../../tests/testing';
+// this is our mock state that we will use to run our tests (for future tests)
+import { snapshotHistoryMock } from '../../../../mock/state-snapshot'
 
-import {render, fireEvent, generateStore, screen} from '../../../tests/testing';
+const store = generateStore({ snapshot: snapshotHistoryMock})
 
-// import VisualContainer from '../VisualContainer';
+beforeEach(async () => {
+  await render(
+    <Provider store={store}>
+      <VisualContainer />
+    </Provider>
+  )
+});
 
-// this is our mock state that we will use to run our tests
-import { snapshotHistoryMock } from '../../../../../mock/state-snapshot';
-
-it('Visual Container Renders', () => {
-  window.HTMLElement.prototype.scrollIntoView = jest.fn();
-  const {getByPlaceholderText, debug} = render(
-    <VisualContainer snapshotHistory={[]} />,
-  );
+describe('Visual Container Component', () => {
+  /* <----- Render Visual Container without crashing test -----> */
+  it('should render without crashing', () => {
+    expect(screen).toBeDefined();
+  });
+  // not sure if these two ^⌄ are essentially the same
+  /* <----- Render Visual Container test -----> */
+  it('should render a Visual container', () => {
+    render(
+      <Provider store={store}>
+        <VisualContainer />
+      </Provider>
+    )
+  });
 });
