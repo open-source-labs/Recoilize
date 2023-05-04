@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import "@testing-library/jest-dom";
 
 import { SnapshotsContainer } from '../SnapshotContainer';
-import { generateStore, render, screen } from '../../tests/testing';
+import { cleanup, generateStore, render, screen } from '../../tests/testing';
 // this is our mock state that we will use to run our tests (for future tests)
 import { snapshotHistoryMock } from '../../../../mock/state-snapshot'
 
@@ -18,7 +18,9 @@ beforeEach(async () => {
   )
 });
 
-describe('Snapshot Component', () => {
+afterEach(cleanup);
+
+describe('Snapshot Component Rendering', () => {
   // SnapshotContainer contains a useEffect with .scrollIntoView(). The below allows us to test this in jest by creating a mock of the function
   window.HTMLElement.prototype.scrollIntoView = jest.fn()
   /* <----- Render Snapshot Container without crashing test -----> */
@@ -75,5 +77,9 @@ describe('Snapshot Component', () => {
     expect(snapshotDivs).toBeInTheDocument();
   })
 
-  // would benefit from testing that the snapshot divs themselves render/ work
+});
+
+// would benefit from testing that the snapshot divs themselves render/ work
+describe('SnapshotContainer Functionality', () => {
+
 });

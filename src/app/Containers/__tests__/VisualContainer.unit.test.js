@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import "@testing-library/jest-dom";
 
 import { VisualContainer } from '../VisualContainer';
-import { generateStore, render, screen } from '../../tests/testing';
+import { cleanup, generateStore, render, screen } from '../../tests/testing';
 // this is our mock state that we will use to run our tests (for future tests)
 import { snapshotHistoryMock } from '../../../../mock/state-snapshot'
 
@@ -17,6 +17,8 @@ beforeEach(async () => {
     </Provider>
   )
 });
+
+afterEach(cleanup);
 
 describe('Visual Container Component', () => {
   /* <----- Render Visual Container without crashing test -----> */

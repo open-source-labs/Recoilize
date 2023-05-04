@@ -46,7 +46,7 @@ export const VisualContainer: React.FC = () => {
   const [tab, setTab] = useState<string>('State Diff');
   // conditionally render based on value of nav[tab]
   return (
-    <div className="VisualContainer" data-testId="VisualContainer">
+    <div className="VisualContainer" data-testid="VisualContainer">
       <NavBar setTab={setTab} tabsList={tabsList} tab={tab} />
       {nav[tab]}
     </div>
