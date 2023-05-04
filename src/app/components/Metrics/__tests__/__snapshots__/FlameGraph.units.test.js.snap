@@ -17,6 +17,50 @@ exports[`Flame graph displays correct information should render cleanedComponent
           fill-opacity="1"
           height="98"
           id="rect-0"
+          width="48"
+        />
+        <clippath
+          id="clip-0"
+        >
+          <use
+            xlink:href="#rect-0"
+          />
+        </clippath>
+        <text
+          clip-path="url(#clip-0)"
+          style="font: sans-serif 10px 10px; font-weight: bold;"
+          x="4"
+          y="13"
+        >
+          <tspan
+            style="font-size: 9px; fill-opacity: 0.8;"
+          >
+             NaN
+          </tspan>
+        </text>
+      </g>
+    </g>
+  </svg>
+</DocumentFragment>
+`;
+
+exports[`Flame graph initial rendering should not render when no values are passed in 1`] = `
+<DocumentFragment>
+  <svg
+    height="100"
+    width="50"
+  >
+    <g
+      class="vx-group"
+      transform="translate(0, 0)"
+    >
+      <g
+        transform="translate(1, 1)"
+      >
+        <rect
+          fill-opacity="1"
+          height="98"
+          id="rect-0"
           width="8"
         />
         <clippath
