@@ -554,7 +554,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
             dispatch(setDefaultZoom());
           }}>
           <span>
-            {rawToggle ? 'Expand' : 'Collapse'}
+            {rawToggle ? 'Collapse' : 'Expand'}
           </span>
         </button>
         <button

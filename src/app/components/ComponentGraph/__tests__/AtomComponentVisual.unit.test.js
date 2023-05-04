@@ -1,5 +1,4 @@
-import React, {useState} from 'react';
-import AtomComponentVisualContainer from '../AtomComponentContainer';
+import React from 'react';
 import AtomComponentVisual from '../AtomComponentVisual';
 import {render, cleanup, generateStore, screen} from '../../../tests/testing';
 import '@testing-library/jest-dom/extend-expect';
@@ -8,9 +7,6 @@ import '@testing-library/jest-dom/extend-expect';
 import {snapshotHistoryMock} from '../../../../../mock/state-snapshot';
 
 afterEach(cleanup);
-
-// NOTE: in order to run these tests, comment out lines 127 to 131 in the atom component visual test (svgContainer.call with zoom transform)
-// jest does not work well with d3 in this instance
 
 it('Renders the component', () => {
   // generate store
