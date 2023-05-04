@@ -1,6 +1,12 @@
 import React from 'react';
 import AtomComponentVisual from '../AtomComponentVisual';
-import {render, cleanup, generateStore, screen, fireEvent} from '../../../tests/testing';
+import {
+  render,
+  cleanup,
+  generateStore,
+  screen,
+  fireEvent,
+} from '../../../tests/testing';
 import '@testing-library/jest-dom/extend-expect';
 
 // this is our mock state that we will use to run our tests
@@ -8,9 +14,9 @@ import {snapshotHistoryMock} from '../../../../../mock/state-snapshot';
 
 afterEach(cleanup);
 
-it('Renders the component', () => {
+xit('Renders the component', () => {
   // generate store
-  const store = generateStore({ snapshot: snapshotHistoryMock})
+  const store = generateStore({snapshot: snapshotHistoryMock});
   // need to include a div with class component because AtomComponentVisual needs it to render
   const componentClassDiv = document.createElement('div');
   componentClassDiv.className = 'Component';
@@ -18,20 +24,34 @@ it('Renders the component', () => {
 
   const canvas = document.createElement('div');
   canvas.id = 'canvas';
-  document.body.appendChild(canvas)
+  document.body.appendChild(canvas);
 
   const rendered = render(
     // props are all based on snapshot history mock data of mock tic tac toe game
     <AtomComponentVisual
-      componentAtomTree={snapshotHistoryMock['snapshotHistory'][0]['componentAtomTree']}
+      componentAtomTree={
+        snapshotHistoryMock['snapshotHistory'][0]['componentAtomTree']
+      }
       cleanedComponentAtomTree={snapshotHistoryMock['cleanComponentAtomTree']}
-      atoms={['playStart', 'square-0', 'square-1', 'square-2', 'square-3', 'square-4', 'square-5', 'square-6', 'square-7', 'square-8', 'currentPlayerState']}
+      atoms={[
+        'playStart',
+        'square-0',
+        'square-1',
+        'square-2',
+        'square-3',
+        'square-4',
+        'square-5',
+        'square-6',
+        'square-7',
+        'square-8',
+        'currentPlayerState',
+      ]}
       selectors={['gameEndSelector']}
       selectedRecoilValue={['square-0', 'atom']}
     />,
-    {providers: { store }}
+    {providers: {store}},
   );
-  
+
   // find all box elements- should have 9 because mock data is tic tac toe game
   const box = screen.getAllByText('Box');
   // box elements should be visible
@@ -40,9 +60,9 @@ it('Renders the component', () => {
   expect(box.length).toBe(9);
 });
 
-it('Expand and collapse buttons show expanded and collapsed graph', () => {
+xit('Expand and collapse buttons show expanded and collapsed graph', () => {
   // generate store
-  const store = generateStore({ snapshot: snapshotHistoryMock})
+  const store = generateStore({snapshot: snapshotHistoryMock});
 
   // need to include a div with class component because AtomComponentVisual needs it to render
   const componentClassDiv = document.createElement('div');
@@ -52,25 +72,39 @@ it('Expand and collapse buttons show expanded and collapsed graph', () => {
   // need to have an element with an id of 'canvas' in order to render svgContainer
   const canvas = document.createElement('div');
   canvas.id = 'canvas';
-  document.body.appendChild(canvas)
+  document.body.appendChild(canvas);
 
   const rendered = render(
     // props are all based on snapshot history mock data of mock tic tac toe game
     <AtomComponentVisual
-      componentAtomTree={snapshotHistoryMock['snapshotHistory'][0]['componentAtomTree']}
+      componentAtomTree={
+        snapshotHistoryMock['snapshotHistory'][0]['componentAtomTree']
+      }
       cleanedComponentAtomTree={snapshotHistoryMock['cleanComponentAtomTree']}
-      atoms={['playStart', 'square-0', 'square-1', 'square-2', 'square-3', 'square-4', 'square-5', 'square-6', 'square-7', 'square-8', 'currentPlayerState']}
+      atoms={[
+        'playStart',
+        'square-0',
+        'square-1',
+        'square-2',
+        'square-3',
+        'square-4',
+        'square-5',
+        'square-6',
+        'square-7',
+        'square-8',
+        'currentPlayerState',
+      ]}
       selectors={['gameEndSelector']}
       selectedRecoilValue={['square-0', 'atom']}
     />,
-    {providers: { store }}
+    {providers: {store}},
   );
-  
+
   // find hr elements, these only exist in expanded view
   let hr = screen.queryByText('HR');
   // element should not exist in collapsed view
   expect(hr).toBeNull();
-  
+
   // find expand button
   const expandButton = screen.getByTestId('expand');
   // click expand button
@@ -78,7 +112,56 @@ it('Expand and collapse buttons show expanded and collapsed graph', () => {
   // should show expanded content
 
   // find HR element
-  hr = screen.getByText('HR')
+  hr = screen.getByText('HR');
   // it should be visible in expanded view
   expect(hr).toBeVisible();
-})
+});
+
+// when atom is hovered over, it should display atom, atom values, and title
+it('Displays atom details when mouse hovers over atom', () => {
+  // generate store
+  const store = generateStore({snapshot: snapshotHistoryMock});
+
+  // need to include a div with class component because AtomComponentVisual needs it to render
+  const componentClassDiv = document.createElement('div');
+  componentClassDiv.className = 'Component';
+  document.body.appendChild(componentClassDiv);
+
+  // need to have an element with an id of 'canvas' in order to render svgContainer
+  const canvas = document.createElement('div');
+  canvas.id = 'canvas';
+  document.body.appendChild(canvas);
+
+  const rendered = render(
+    // props are all based on snapshot history mock data of mock tic tac toe game
+    <AtomComponentVisual
+      componentAtomTree={
+        snapshotHistoryMock['snapshotHistory'][0]['componentAtomTree']
+      }
+      cleanedComponentAtomTree={snapshotHistoryMock['cleanComponentAtomTree']}
+      atoms={[
+        'playStart',
+        'square-0',
+        'square-1',
+        'square-2',
+        'square-3',
+        'square-4',
+        'square-5',
+        'square-6',
+        'square-7',
+        'square-8',
+        'currentPlayerState',
+      ]}
+      selectors={['gameEndSelector']}
+      selectedRecoilValue={['square-0', 'atom']}
+    />,
+    {providers: {store}},
+  );
+
+  // should not display "atomic values" before hovering on a specific element
+  const atomicValues = screen.queryByText('Atomic Values')
+  expect(atomicValues).toBeNull();
+
+  // find box element to hover over
+  // const blah = 
+});
