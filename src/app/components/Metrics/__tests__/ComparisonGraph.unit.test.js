@@ -63,7 +63,6 @@ describe('Comparison graph displays correct information', () => {
         width={mockWidth}
         height={mockHeight}
       />
-      // {providers: { store }}
     )
     //checking if new component being rendered matches the saved snapshot
     expect(asFragment()).toMatchSnapshot();
