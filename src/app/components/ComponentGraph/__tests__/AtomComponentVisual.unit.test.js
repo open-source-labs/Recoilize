@@ -1,6 +1,6 @@
 import React from 'react';
 import AtomComponentVisual from '../AtomComponentVisual';
-import {render, cleanup, generateStore, screen} from '../../../tests/testing';
+import {render, cleanup, generateStore, screen, fireEvent} from '../../../tests/testing';
 import '@testing-library/jest-dom/extend-expect';
 
 // this is our mock state that we will use to run our tests
@@ -40,7 +40,7 @@ it('Renders the component', () => {
   expect(box.length).toBe(9);
 });
 
-xit('Expand and collapse buttons show expanded and collapsed graph', () => {
+it('Expand and collapse buttons show expanded and collapsed graph', () => {
   // generate store
   const store = generateStore({ snapshot: snapshotHistoryMock})
 
@@ -66,6 +66,19 @@ xit('Expand and collapse buttons show expanded and collapsed graph', () => {
     {providers: { store }}
   );
   
-  const el = screen.getAllByText('blah')
-  console.log(el)
+  // find hr elements, these only exist in expanded view
+  let hr = screen.queryByText('HR');
+  // element should not exist in collapsed view
+  expect(hr).toBeNull();
+  
+  // find expand button
+  const expandButton = screen.getByTestId('expand');
+  // click expand button
+  fireEvent.click(expandButton);
+  // should show expanded content
+
+  // find HR element
+  hr = screen.getByText('HR')
+  // it should be visible in expanded view
+  expect(hr).toBeVisible();
 })

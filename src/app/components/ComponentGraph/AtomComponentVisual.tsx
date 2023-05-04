@@ -544,6 +544,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
       </div>
       <div className='graphBtnContainer'>
         <button
+          data-testid='expand'
           id='fixedButton'
           className='graphBtn'
           style={{
