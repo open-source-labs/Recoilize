@@ -37,6 +37,8 @@ export const generateStore = (
   return configureStore({
     preloadedState,
     reducer: rootReducer,
+    middleware: getDefaultMiddleware =>
+    getDefaultMiddleware({serializableCheck: false})
   });
 };
 
