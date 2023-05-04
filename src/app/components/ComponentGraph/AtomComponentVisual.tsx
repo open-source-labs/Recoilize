@@ -544,6 +544,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
       </div>
       <div className='graphBtnContainer'>
         <button
+          data-testid='expand'
           id='fixedButton'
           className='graphBtn'
           style={{
@@ -554,7 +555,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
             dispatch(setDefaultZoom());
           }}>
           <span>
-            {rawToggle ? 'Expand' : 'Collapse'}
+            {rawToggle ? 'Collapse' : 'Expand'}
           </span>
         </button>
         <button
