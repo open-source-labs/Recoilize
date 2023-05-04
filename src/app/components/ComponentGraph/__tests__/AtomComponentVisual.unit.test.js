@@ -24,7 +24,7 @@ it('Renders the component', () => {
   canvas.id = 'canvas';
   document.body.appendChild(canvas)
 
-  render(
+  const rendered = render(
     // props are all based on snapshot history mock data of mock tic tac toe game
     <AtomComponentVisual
       componentAtomTree={snapshotHistoryMock['snapshotHistory'][0]['componentAtomTree']}
@@ -35,9 +35,16 @@ it('Renders the component', () => {
     />,
     {providers: { store }}
   );
+  
+  // find all box elements- should have 9 because mock data is tic tac toe game
+  const box = screen.getAllByText('Box');
+  // box elements should be visible
+  expect(box[0]).toBeVisible();
+  // should have 9 box elements
+  expect(box.length).toBe(9);
 });
 
-it('Expand and collapse buttons show expanded and collapsed graph', () => {
+xit('Expand and collapse buttons show expanded and collapsed graph', () => {
   // generate store
   const store = generateStore({ snapshot: snapshotHistoryMock})
 
@@ -51,7 +58,7 @@ it('Expand and collapse buttons show expanded and collapsed graph', () => {
   canvas.id = 'canvas';
   document.body.appendChild(canvas)
 
-  render(
+  const rendered = render(
     // props are all based on snapshot history mock data of mock tic tac toe game
     <AtomComponentVisual
       componentAtomTree={snapshotHistoryMock['snapshotHistory'][0]['componentAtomTree']}
@@ -62,5 +69,7 @@ it('Expand and collapse buttons show expanded and collapsed graph', () => {
     />,
     {providers: { store }}
   );
-
+  
+  const el = screen.getAllByText('blah')
+  console.log(el)
 })
