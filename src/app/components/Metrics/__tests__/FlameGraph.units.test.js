@@ -12,16 +12,6 @@ import '@testing-library/dom';
 import '@testing-library/jest-dom'
 import { store } from '../../../state-management';
 
-//Currently has 83% testing coverage up from 6%
-/*            What should we be testing for the Flame Graph?
-  - Tracks render time for each individual component PLUS its children at every level of the component tree
-  - For our tests, the FlameGraph component needs the cleanedComponentTree (which is a state component), height, and width (these two we can create mock data for)
-    - We need to test:
-    - Rendering properly (x)
-    - No initial values (should not be passing because graphs are rendering when we havent started the playground) 
-    - Check that labels are properly being passed in  (x)
-      - getting comopnents from the cleanedComponentAtomTree
-*/
 
 const mockHeight = 100
 const mockWidth = 50
@@ -69,12 +59,6 @@ describe('Flame graph displays correct information', () => {
       actualDuration: 1.6750000004321919,
     };
     expect.objectContaining(result);
-
-    // expect(screen.queryByText('Board')).toBeInTheDocument();
-    //HAVING TROUBLE UNDERSTANDING HOW TO MOCK CLEANEDCOMPONENTATOMTREE, for now will just check for it, but would like to see that it includes 
-    //everything inside that cleanedComponentAtomTree
-    //ensure that the component has a cleanedComponentAtomTree property
-
   });
 
 });
