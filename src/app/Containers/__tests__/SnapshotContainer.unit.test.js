@@ -10,8 +10,8 @@ import { snapshotHistoryMock } from '../../../../mock/state-snapshot'
 
 const store = generateStore({ snapshot: snapshotHistoryMock})
 
-beforeEach(() => {
-  render(
+beforeEach(async () => {
+  await render(
     <Provider store={store}>
       <SnapshotsContainer />
     </Provider>
@@ -19,6 +19,8 @@ beforeEach(() => {
 });
 
 describe('Snapshot Component', () => {
+  // SnapshotContainer contains a useEffect with .scrollIntoView(). The below allows us to test this in jest by creating a mock of the function
+  window.HTMLElement.prototype.scrollIntoView = jest.fn()
   /* <----- Render Snapshot Container without crashing test -----> */
   it('should render without crashing', () => {
     expect(screen).toBeDefined();
@@ -31,7 +33,6 @@ describe('Snapshot Component', () => {
         <SnapshotsContainer />
       </Provider>
     )
-    // console.log('snapshotDivs', snapshotDivs)
   })
 
   /* <----- Render clear-snapshots-title div test -----> */

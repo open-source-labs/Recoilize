@@ -13,20 +13,13 @@ export const SnapshotsContainer: React.FC = () => {
 
   const renderIndex = useAppSelector(state => state.snapshot.renderIndex);
   const filterData = useAppSelector(selectFilterState);
-  const snapshotEndRef = useRef<HTMLDivElement>(null);
+  const snapshotEndRef = useRef<null | HTMLDivElement>(null);
 
   let snapshotHistoryLength = snapshotHistory.length;
 
-  // THIS USEEFFECT CAUSED TEST ERRORS AND TBH WAS JANKY SO COMMENTED OUT (5.2023 KW)
-  // useEffect to scroll bottom whenever snapshot history changes
-  // useEffect(() => {
-  //   scrollToBottom();
-  // }, [snapshotHistoryLength]);
-
-  // // using scrollInToView makes a smoother scroll
-  // const scrollToBottom = (): void => {
-  //   snapshotEndRef.current.scrollIntoView({behavior: 'smooth'});
-  // };
+  useEffect(() => {
+    snapshotEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+  })
 
   const snapshotDivs: JSX.Element[] = [];
   // iterate the same length of our snapshotHistory
