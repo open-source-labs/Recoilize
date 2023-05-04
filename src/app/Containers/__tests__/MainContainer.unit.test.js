@@ -1,14 +1,48 @@
-import React, {useState} from 'react';
-import ReactDOM from 'react-dom';
-import {getQueriesForElement, getByText} from '@testing-library/dom';
+// All MainContainer tests were written 5.2023
+import React from 'react';
+import { Provider } from 'react-redux';
+import "@testing-library/jest-dom";
 
-import {render, fireEvent} from '@testing-library/react';
+import { MainContainer } from '../MainContainer';
+import { cleanup, generateStore, render, screen } from '../../tests/testing';
+// this is our mock state that we will use to run our tests
+import { snapshotHistoryMock } from '../../../../mock/state-snapshot'
 
-import MainContainer from '../MainContainer';
+const store = generateStore({ snapshot: snapshotHistoryMock})
 
-it('Main Container Renders', () => {
-  window.HTMLElement.prototype.scrollIntoView = jest.fn();
-  const {getByPlaceholderText, debug} = render(
-    <MainContainer snapshotHistory={[]} />,
-  );
+beforeEach(() => {
+  render(
+    <Provider store={store}>
+      <MainContainer />
+    </Provider>
+  )
+});
+
+afterEach(cleanup);
+
+describe('Snapshot Component', () => {
+    // SnapshotContainer contains a useEffect with .scrollIntoView(). The below allows us to test this in jest by creating a mock of the function
+    window.HTMLElement.prototype.scrollIntoView = jest.fn()
+  /* <----- Render Main Container test -----> */
+  it('should render a main container', () => {
+    render(
+      <Provider store={store}>
+        <MainContainer />
+      </Provider>
+    )
+  })
+
+  /* <----- Render SnapshotsContainer test -----> */
+  // snapshot container has it's own testing file. simply checking that it is rendered in the main container
+  it('should render a snapshot component', () => {
+    const snapshotsContainer = screen.getByTestId("SnapshotsContainer");
+    expect(snapshotsContainer).toBeInTheDocument();
+  });
+
+  /* <----- Render VisualContainer test -----> */
+  // visual container has it's own testing file. simply checking that it is rendered in the main container
+  it('should render a visual component', () => {
+    const visualContainer = screen.getByTestId("VisualContainer");
+    expect(visualContainer).toBeInTheDocument();
+  });
 });

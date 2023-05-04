@@ -5,8 +5,7 @@
       "jest-webextension-mock"
     ],
     "moduleNameMapper": {
-      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$":
-        "<rootDir>/mock/fileMock.js",
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/mock/fileMock.js",
       "\\.(css|less)$": "<rootDir>/mock/styleMock.js"
     }
   },
@@ -16,7 +15,7 @@
   "scripts": {
     "build": "webpack --mode production",
     "dev": "webpack --mode development --watch",
-    "test": "jest --verbose",
+    "test": "jest",
     "lint": "eslint '**/*.tsx' '**/*.ts' '**/*.js' --ignore-path .gitignore"
   },
   "author": "Bren Yamaguchi, Saejin Kang, Jonathan Escamilla, Sean Smith, Justin Choo, Anthony Lin, Spenser Schwartz, Steven Nguyen, Henry Taing, Seungho Baek, Taven Shumaker, Aaron Yang, Jesus Vargas, Davide Molino, Janis Hernandez, Jaime Baik, Anthony Magallanes, Edward Shei, Leonard Lew, Joey Ma, Harvey Nguyen, Victor Wang, Adam Allison, Ryan Wallace, Jordan Rice, William Chu",
