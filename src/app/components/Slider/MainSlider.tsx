@@ -49,8 +49,8 @@ function MainSlider() {
     state => state.snapshot.snapshotHistory,
   );
   const filterData = useAppSelector(selectFilterState);
-  console.log('this is renderIndex ', renderIndex);
-  console.log('this is snapshotHistory length ', snapshotHistory.length);
+  // console.log('this is renderIndex ', renderIndex);
+  // console.log('this is snapshotHistory length ', snapshotHistory.length);
 
   //indexDiff is used to ensure the index of filter matches the index of the snapshots array in the backend
   let indexDiff: number = 0;
