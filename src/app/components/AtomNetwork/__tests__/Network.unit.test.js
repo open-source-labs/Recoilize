@@ -16,21 +16,6 @@ import {snapshotHistoryMock} from '../../../../../mock/state-snapshot';
 
 afterEach(cleanup);
 
-// currently rendering an empty snapshot
-it('renders & matches snapshot', () => {
-  // mock search value because AtomNetworkVisual needs search value in state
-  const atomNetwork = {searchValue: ''};
-  // generate store with snapshot and atomNetwork search value
-  const store = generateStore({
-    atomNetwork: atomNetwork,
-    snapshot: snapshotHistoryMock,
-  });
-  // render store
-  const rendered = render(<Network />, {providers: {store}});
-  // rendered store should match snapshot
-  expect().toMatchSnapshot();
-});
-
 it('loads and displays Network component', () => {
   const atomNetwork = {searchValue: ''};
   const store = generateStore({
