@@ -11,6 +11,7 @@ import '@testing-library/jest-dom/extend-expect';
 
 // this is our mock state that we will use to run our tests
 import {snapshotHistoryMock} from '../../../../../mock/state-snapshot';
+import { Button } from 'semantic-ui-react';
 
 afterEach(cleanup);
 
@@ -27,7 +28,7 @@ const atoms = [
   'square-7',
   'square-8',
   'currentPlayerState',
-]
+];
 
 it('Renders the component', () => {
   // generate store
@@ -100,7 +101,7 @@ it('Expand and collapse buttons show expanded and collapsed graph', () => {
   const expandButton = screen.getByTestId('expand');
   // click expand button
   fireEvent.click(expandButton);
-  
+
   // should show expanded content
   // find HR element
   hr = screen.getByText('HR');
@@ -123,7 +124,7 @@ it('Displays atom details when mouse hovers over atom', () => {
   canvas.id = 'canvas';
   document.body.appendChild(canvas);
 
-  const rendered = render(
+  render(
     // props are all based on snapshot history mock data of mock tic tac toe game
     <AtomComponentVisual
       componentAtomTree={
@@ -138,7 +139,7 @@ it('Displays atom details when mouse hovers over atom', () => {
   );
 
   // should not display "atomic values" before hovering on a specific element
-  let atomicValues = screen.queryByText('Atomic Values')
+  let atomicValues = screen.queryByText('Atomic Values');
   expect(atomicValues).toBeNull();
 
   // find first node- each one will be a circle with a mouseover listener that displays atomic values when hovered
@@ -147,6 +148,63 @@ it('Displays atom details when mouse hovers over atom', () => {
 
   fireEvent.mouseOver(nodes[0]);
 
-  atomicValues = screen.getByText('Atomic Values')
+  atomicValues = screen.getByText('Atomic Values');
   expect(atomicValues).toBeVisible();
+});
+
+// when ATOM button is clicked, should display all atoms
+it('Displays list of atom buttons when ATOM button is clicked', () => {
+  // generate store
+  const store = generateStore({snapshot: snapshotHistoryMock});
+
+  // need to include a div with class component because AtomComponentVisual needs it to render
+  const componentClassDiv = document.createElement('div');
+  componentClassDiv.className = 'Component';
+  document.body.appendChild(componentClassDiv);
+
+  // need to have an element with an id of 'canvas' in order to render svgContainer
+  const canvas = document.createElement('div');
+  canvas.id = 'canvas';
+  document.body.appendChild(canvas);
+
+  // here, atoms have to be an object because setAtomList is expecting an object
+  render(
+    // props are all based on snapshot history mock data of mock tic tac toe game
+    <AtomComponentVisual
+      componentAtomTree={
+        snapshotHistoryMock['snapshotHistory'][0]['componentAtomTree']
+      }
+      cleanedComponentAtomTree={snapshotHistoryMock['cleanComponentAtomTree']}
+      atoms={{
+        playStart: 'playStart',
+        'square-0': 'square-0',
+        'square-1': 'square-1',
+        'square-2': 'square-2',
+        'square-3': 'square-3',
+        'square-4': 'square-4',
+        'square-5': 'square-5',
+        'square-6': 'square-6',
+        'square-7': 'square-7',
+        'square-8': 'square-8',
+        currentPlayerState: 'currentPlayerState'
+      }}
+      selectors={['gameEndSelector']}
+      selectedRecoilValue={['square-0', 'atom']}
+    />,
+    {providers: {store}},
+  );
+
+  // make sure list of atom buttons do not display before atom button is clicked
+  let square1 = screen.queryByText('square-1');
+  expect(square1).toBeNull();
+
+  // find 'ATOM' button
+  const atomButton = screen.getByRole('button', {name: 'ATOM'});
+
+  // click atom button
+  fireEvent.click(atomButton);
+
+  // square 1 button should now be visible
+  square1 = screen.getByText('square-1')
+  expect(square1).toBeVisible();
 });
