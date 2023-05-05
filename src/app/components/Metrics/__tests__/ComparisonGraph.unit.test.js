@@ -1,10 +1,10 @@
 import React from 'react';
 import ComparisonGraph from '../ComparisonGraph';
-import {render, cleanup} from '@testing-library/react';
+// import {render, cleanup} from '@testing-library/react';
 import '@testing-library/dom';
 import '@testing-library/jest-dom'
 
-import {fireEvent, generateStore, screen} from '../../../tests/testing';
+import {render, cleanup, fireEvent, generateStore, screen} from '../../../tests/testing';
 import { snapshotHistoryMock } from '../../../../../mock/state-snapshot';
 
 
@@ -56,16 +56,17 @@ afterEach(cleanup);
 
 describe('Comparison graph displays correct information', () => {
   it('should render data, height, and width', () => {
-    // const store = generateStore({ snapshot: snapshotHistoryMock})
-    const {asFragment} = render(
+    const store = generateStore({ snapshot: snapshotHistoryMock})
+    const asFragment = render(
       <ComparisonGraph
         data={mock}
         width={mockWidth}
         height={mockHeight}
-      />
+      />,
+      {providers: { store }}
     )
     //checking if new component being rendered matches the saved snapshot
-    expect(asFragment()).toMatchSnapshot();
+    expect(asFragment).toMatchSnapshot();
   });
 
   // //check that labels are being properly passed in 

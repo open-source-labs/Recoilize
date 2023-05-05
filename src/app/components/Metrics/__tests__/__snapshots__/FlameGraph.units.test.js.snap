@@ -14,10 +14,11 @@ exports[`Flame graph displays correct information should render cleanedComponent
         transform="translate(1, 1)"
       >
         <rect
+          fill="rgb(238, 161, 57)"
           fill-opacity="1"
           height="98"
           id="rect-0"
-          width="48"
+          width="11"
         />
         <clippath
           id="clip-0"
@@ -32,10 +33,414 @@ exports[`Flame graph displays correct information should render cleanedComponent
           x="4"
           y="13"
         >
+          PlaygroundRender
           <tspan
             style="font-size: 9px; fill-opacity: 0.8;"
           >
-             NaN
+             1.80
+          </tspan>
+        </text>
+      </g>
+      <g
+        transform="translate(13, 1)"
+      >
+        <rect
+          fill="rgb(234, 193, 224)"
+          fill-opacity="1"
+          height="55.99999999999999"
+          id="rect-1"
+          width="11"
+        />
+        <clippath
+          id="clip-1"
+        >
+          <use
+            xlink:href="#rect-1"
+          />
+        </clippath>
+        <text
+          clip-path="url(#clip-1)"
+          style="font: sans-serif 10px 10px; font-weight: bold;"
+          x="4"
+          y="13"
+        >
+          Board
+          <tspan
+            style="font-size: 9px; fill-opacity: 0.8;"
+          >
+             1.06
+          </tspan>
+        </text>
+      </g>
+      <g
+        transform="translate(25, 1)"
+      >
+        <rect
+          fill="rgb(248, 237, 255)"
+          fill-opacity="1"
+          height="16"
+          id="rect-2"
+          width="12"
+        />
+        <clippath
+          id="clip-2"
+        >
+          <use
+            xlink:href="#rect-2"
+          />
+        </clippath>
+        <text
+          clip-path="url(#clip-2)"
+          style="font: sans-serif 10px 10px; font-weight: bold;"
+          x="4"
+          y="13"
+        >
+          Row
+          <tspan
+            style="font-size: 9px; fill-opacity: 0.8;"
+          >
+             0.40
+          </tspan>
+        </text>
+      </g>
+      <g
+        transform="translate(25, 18)"
+      >
+        <rect
+          fill="rgb(253, 251, 255)"
+          fill-opacity="1"
+          height="8"
+          id="rect-3"
+          width="12"
+        />
+        <clippath
+          id="clip-3"
+        >
+          <use
+            xlink:href="#rect-3"
+          />
+        </clippath>
+        <text
+          clip-path="url(#clip-3)"
+          style="font: sans-serif 10px 10px; font-weight: bold;"
+          x="4"
+          y="13"
+        >
+          Row
+          <tspan
+            style="font-size: 9px; fill-opacity: 0.8;"
+          >
+             0.21
+          </tspan>
+        </text>
+      </g>
+      <g
+        transform="translate(25, 27)"
+      >
+        <rect
+          fill="rgb(254, 253, 255)"
+          fill-opacity="1"
+          height="6"
+          id="rect-4"
+          width="12"
+        />
+        <clippath
+          id="clip-4"
+        >
+          <use
+            xlink:href="#rect-4"
+          />
+        </clippath>
+        <text
+          clip-path="url(#clip-4)"
+          style="font: sans-serif 10px 10px; font-weight: bold;"
+          x="4"
+          y="13"
+        >
+          Row
+          <tspan
+            style="font-size: 9px; fill-opacity: 0.8;"
+          >
+             0.17
+          </tspan>
+        </text>
+      </g>
+      <g
+        transform="translate(38, 1)"
+      >
+        <rect
+          fill="rgb(254, 253, 255)"
+          fill-opacity="1"
+          height="3"
+          id="rect-5"
+          width="11"
+        />
+        <clippath
+          id="clip-5"
+        >
+          <use
+            xlink:href="#rect-5"
+          />
+        </clippath>
+        <text
+          clip-path="url(#clip-5)"
+          style="font: sans-serif 10px 10px; font-weight: bold;"
+          x="4"
+          y="13"
+        >
+          Box
+          <tspan
+            style="font-size: 9px; fill-opacity: 0.8;"
+          >
+             0.18
+          </tspan>
+        </text>
+      </g>
+      <g
+        transform="translate(38, 5)"
+      >
+        <rect
+          fill="rgb(255, 255, 255)"
+          fill-opacity="1"
+          height="1"
+          id="rect-6"
+          width="11"
+        />
+        <clippath
+          id="clip-6"
+        >
+          <use
+            xlink:href="#rect-6"
+          />
+        </clippath>
+        <text
+          clip-path="url(#clip-6)"
+          style="font: sans-serif 10px 10px; font-weight: bold;"
+          x="4"
+          y="13"
+        >
+          Box
+          <tspan
+            style="font-size: 9px; fill-opacity: 0.8;"
+          >
+             0.08
+          </tspan>
+        </text>
+      </g>
+      <g
+        transform="translate(38, 7.000000000000001)"
+      >
+        <rect
+          fill="rgb(255, 255, 255)"
+          fill-opacity="1"
+          height="0"
+          id="rect-7"
+          width="11"
+        />
+        <clippath
+          id="clip-7"
+        >
+          <use
+            xlink:href="#rect-7"
+          />
+        </clippath>
+        <text
+          clip-path="url(#clip-7)"
+          style="font: sans-serif 10px 10px; font-weight: bold;"
+          x="4"
+          y="13"
+        >
+          Box
+          <tspan
+            style="font-size: 9px; fill-opacity: 0.8;"
+          >
+             0.07
+          </tspan>
+        </text>
+      </g>
+      <g
+        transform="translate(38, 18)"
+      >
+        <rect
+          fill="rgb(255, 255, 255)"
+          fill-opacity="1"
+          height="0"
+          id="rect-8"
+          width="11"
+        />
+        <clippath
+          id="clip-8"
+        >
+          <use
+            xlink:href="#rect-8"
+          />
+        </clippath>
+        <text
+          clip-path="url(#clip-8)"
+          style="font: sans-serif 10px 10px; font-weight: bold;"
+          x="4"
+          y="13"
+        >
+          Box
+          <tspan
+            style="font-size: 9px; fill-opacity: 0.8;"
+          >
+             0.06
+          </tspan>
+        </text>
+      </g>
+      <g
+        transform="translate(38, 19)"
+      >
+        <rect
+          fill="rgb(255, 255, 255)"
+          fill-opacity="1"
+          height="0"
+          id="rect-9"
+          width="11"
+        />
+        <clippath
+          id="clip-9"
+        >
+          <use
+            xlink:href="#rect-9"
+          />
+        </clippath>
+        <text
+          clip-path="url(#clip-9)"
+          style="font: sans-serif 10px 10px; font-weight: bold;"
+          x="4"
+          y="13"
+        >
+          Box
+          <tspan
+            style="font-size: 9px; fill-opacity: 0.8;"
+          >
+             0.06
+          </tspan>
+        </text>
+      </g>
+      <g
+        transform="translate(38, 20)"
+      >
+        <rect
+          fill="rgb(255, 255, 255)"
+          fill-opacity="1"
+          height="1"
+          id="rect-10"
+          width="11"
+        />
+        <clippath
+          id="clip-10"
+        >
+          <use
+            xlink:href="#rect-10"
+          />
+        </clippath>
+        <text
+          clip-path="url(#clip-10)"
+          style="font: sans-serif 10px 10px; font-weight: bold;"
+          x="4"
+          y="13"
+        >
+          Box
+          <tspan
+            style="font-size: 9px; fill-opacity: 0.8;"
+          >
+             0.06
+          </tspan>
+        </text>
+      </g>
+      <g
+        transform="translate(38, 27)"
+      >
+        <rect
+          fill="rgb(255, 255, 255)"
+          fill-opacity="1"
+          height="0"
+          id="rect-11"
+          width="11"
+        />
+        <clippath
+          id="clip-11"
+        >
+          <use
+            xlink:href="#rect-11"
+          />
+        </clippath>
+        <text
+          clip-path="url(#clip-11)"
+          style="font: sans-serif 10px 10px; font-weight: bold;"
+          x="4"
+          y="13"
+        >
+          Box
+          <tspan
+            style="font-size: 9px; fill-opacity: 0.8;"
+          >
+             0.06
+          </tspan>
+        </text>
+      </g>
+      <g
+        transform="translate(38, 28.000000000000004)"
+      >
+        <rect
+          fill="rgb(255, 255, 255)"
+          fill-opacity="1"
+          height="0"
+          id="rect-12"
+          width="11"
+        />
+        <clippath
+          id="clip-12"
+        >
+          <use
+            xlink:href="#rect-12"
+          />
+        </clippath>
+        <text
+          clip-path="url(#clip-12)"
+          style="font: sans-serif 10px 10px; font-weight: bold;"
+          x="4"
+          y="13"
+        >
+          Box
+          <tspan
+            style="font-size: 9px; fill-opacity: 0.8;"
+          >
+             0.05
+          </tspan>
+        </text>
+      </g>
+      <g
+        transform="translate(38, 28.999999999999996)"
+      >
+        <rect
+          fill="rgb(255, 255, 255)"
+          fill-opacity="1"
+          height="0"
+          id="rect-13"
+          width="11"
+        />
+        <clippath
+          id="clip-13"
+        >
+          <use
+            xlink:href="#rect-13"
+          />
+        </clippath>
+        <text
+          clip-path="url(#clip-13)"
+          style="font: sans-serif 10px 10px; font-weight: bold;"
+          x="4"
+          y="13"
+        >
+          Box
+          <tspan
+            style="font-size: 9px; fill-opacity: 0.8;"
+          >
+             0.04
           </tspan>
         </text>
       </g>

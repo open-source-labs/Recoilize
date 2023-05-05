@@ -22,19 +22,19 @@ import { store } from '../../../state-management';
     - Check that labels are properly being passed in  (x)
       - getting comopnents from the cleanedComponentAtomTree
 */
-
+const mock = snapshotHistoryMock.cleanComponentAtomTree;
 const mockHeight = 100
 const mockWidth = 50
 
 // define default store from state snapshot
-const cleanedComponentAtomTreeData = store.getState().snapshot.cleanComponentAtomTree;
+// const cleanedComponentAtomTreeData = store.getState().snapshot.cleanComponentAtomTree;
 afterEach(cleanup);
 
 describe('Flame graph displays correct information', () => {
   it('should render cleanedComponentAtomTree, width, and height', () => {
     const {asFragment} = render(
       <FlameGraph 
-        cleanedComponentAtomTree={cleanedComponentAtomTreeData}
+        cleanedComponentAtomTree={mock}
         width={mockWidth}
         height={mockHeight}
       />
@@ -46,35 +46,25 @@ describe('Flame graph displays correct information', () => {
     // render flame graph
     render(
       <FlameGraph 
-        cleanedComponentAtomTree={cleanedComponentAtomTreeData}
+        cleanedComponentAtomTree={mock}
         width={mockWidth}
         height={mockHeight}
       />
     )
-    const result = {
-      children: [
-        {
-          actualDuration: 0.8450000004813774,
-          children: [],
-          name: 'PlaygroundStart',
-          recoilNodes: [],
-          tag: 0,
-          treeBaseDuration: 0.5550000005314359,
-          wasSuspended: false,
-        },
-      ],
-      name: 'PlaygroundRender',
-      recoilNodes: ['playStart'],
-      tag: 0,
-      actualDuration: 1.6750000004321919,
-    };
-    expect.objectContaining(result);
+    //ensure that a name property is being passed in and can be found 
+    const board = screen.queryByText('Board');
+    const row = screen.queryAllByText('Row');
+    const box = screen.queryAllByText('Box');
+    console.log(box)
+    
+    expect(board).toBeVisible();
+    expect(box[0]).toBeVisible();
+    expect(row[0]).toBeVisible();
 
-    // expect(screen.queryByText('Board')).toBeInTheDocument();
-    //HAVING TROUBLE UNDERSTANDING HOW TO MOCK CLEANEDCOMPONENTATOMTREE, for now will just check for it, but would like to see that it includes 
-    //everything inside that cleanedComponentAtomTree
-    //ensure that the component has a cleanedComponentAtomTree property
-
+    //the mock data should also include an actualDuration with a number value
+    expect.objectContaining({actualDuration: expect.any(Number)})
+    //ensure recoilNode property are passed in 
+    expect.objectContaining({recoilNode: expect.any(String)})
   });
 
 });
