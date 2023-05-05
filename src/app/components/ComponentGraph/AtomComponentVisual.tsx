@@ -198,6 +198,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
         .enter()
         .append('g')
         .attr('class', 'node')
+        .attr('data-testid', 'node')
         .attr('transform', function (): string {
           return `translate(${source.y0}, ${source.x0})`;
         // getting <g class="node"> && setting its "transform" attr to "translate(x, y) --> css manipulation"

@@ -14,7 +14,22 @@ import {snapshotHistoryMock} from '../../../../../mock/state-snapshot';
 
 afterEach(cleanup);
 
-xit('Renders the component', () => {
+// define array of atoms to be passed down as props
+const atoms = [
+  'playStart',
+  'square-0',
+  'square-1',
+  'square-2',
+  'square-3',
+  'square-4',
+  'square-5',
+  'square-6',
+  'square-7',
+  'square-8',
+  'currentPlayerState',
+]
+
+it('Renders the component', () => {
   // generate store
   const store = generateStore({snapshot: snapshotHistoryMock});
   // need to include a div with class component because AtomComponentVisual needs it to render
@@ -33,19 +48,7 @@ xit('Renders the component', () => {
         snapshotHistoryMock['snapshotHistory'][0]['componentAtomTree']
       }
       cleanedComponentAtomTree={snapshotHistoryMock['cleanComponentAtomTree']}
-      atoms={[
-        'playStart',
-        'square-0',
-        'square-1',
-        'square-2',
-        'square-3',
-        'square-4',
-        'square-5',
-        'square-6',
-        'square-7',
-        'square-8',
-        'currentPlayerState',
-      ]}
+      atoms={atoms}
       selectors={['gameEndSelector']}
       selectedRecoilValue={['square-0', 'atom']}
     />,
@@ -60,7 +63,7 @@ xit('Renders the component', () => {
   expect(box.length).toBe(9);
 });
 
-xit('Expand and collapse buttons show expanded and collapsed graph', () => {
+it('Expand and collapse buttons show expanded and collapsed graph', () => {
   // generate store
   const store = generateStore({snapshot: snapshotHistoryMock});
 
@@ -81,19 +84,7 @@ xit('Expand and collapse buttons show expanded and collapsed graph', () => {
         snapshotHistoryMock['snapshotHistory'][0]['componentAtomTree']
       }
       cleanedComponentAtomTree={snapshotHistoryMock['cleanComponentAtomTree']}
-      atoms={[
-        'playStart',
-        'square-0',
-        'square-1',
-        'square-2',
-        'square-3',
-        'square-4',
-        'square-5',
-        'square-6',
-        'square-7',
-        'square-8',
-        'currentPlayerState',
-      ]}
+      atoms={atoms}
       selectors={['gameEndSelector']}
       selectedRecoilValue={['square-0', 'atom']}
     />,
@@ -109,8 +100,8 @@ xit('Expand and collapse buttons show expanded and collapsed graph', () => {
   const expandButton = screen.getByTestId('expand');
   // click expand button
   fireEvent.click(expandButton);
+  
   // should show expanded content
-
   // find HR element
   hr = screen.getByText('HR');
   // it should be visible in expanded view
@@ -139,19 +130,7 @@ it('Displays atom details when mouse hovers over atom', () => {
         snapshotHistoryMock['snapshotHistory'][0]['componentAtomTree']
       }
       cleanedComponentAtomTree={snapshotHistoryMock['cleanComponentAtomTree']}
-      atoms={[
-        'playStart',
-        'square-0',
-        'square-1',
-        'square-2',
-        'square-3',
-        'square-4',
-        'square-5',
-        'square-6',
-        'square-7',
-        'square-8',
-        'currentPlayerState',
-      ]}
+      atoms={atoms}
       selectors={['gameEndSelector']}
       selectedRecoilValue={['square-0', 'atom']}
     />,
@@ -159,9 +138,15 @@ it('Displays atom details when mouse hovers over atom', () => {
   );
 
   // should not display "atomic values" before hovering on a specific element
-  const atomicValues = screen.queryByText('Atomic Values')
+  let atomicValues = screen.queryByText('Atomic Values')
   expect(atomicValues).toBeNull();
 
-  // find box element to hover over
-  // const blah = 
+  // find first node- each one will be a circle with a mouseover listener that displays atomic values when hovered
+  // first node is playground render
+  const nodes = screen.getAllByTestId('node');
+
+  fireEvent.mouseOver(nodes[0]);
+
+  atomicValues = screen.getByText('Atomic Values')
+  expect(atomicValues).toBeVisible();
 });
