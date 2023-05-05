@@ -3,6 +3,7 @@ import ComparisonGraph from '../ComparisonGraph';
 // import {render, cleanup} from '@testing-library/react';
 import '@testing-library/dom';
 import '@testing-library/jest-dom'
+import  '@testing-library/react';
 
 import {render, cleanup, fireEvent, generateStore, screen} from '../../../tests/testing';
 import { snapshotHistoryMock } from '../../../../../mock/state-snapshot';
@@ -57,7 +58,7 @@ afterEach(cleanup);
 describe('Comparison graph displays correct information', () => {
   it('should render data, height, and width', () => {
     const store = generateStore({ snapshot: snapshotHistoryMock})
-    const asFragment = render(
+    const {asFragment} = render(
       <ComparisonGraph
         data={mock}
         width={mockWidth}
@@ -66,28 +67,29 @@ describe('Comparison graph displays correct information', () => {
       {providers: { store }}
     )
     //checking if new component being rendered matches the saved snapshot
-    expect(asFragment).toMatchSnapshot();
+    screen.debug()
+    expect(asFragment()).toMatchSnapshot();
   });
 
   // //check that labels are being properly passed in 
-  // it('should contain data with name property', () => {
-  //   // render ranked graph
-  //   render(
-  //     <ComparisonGraph
-  //       data={mock}
-  //       width={mockWidth}
-  //       height={mockHeight}
-  //     />
-  //   )
-  //   //ensure that a name property is being passed in and can be found 
-  //   const atom1 = screen.getByText('atom1')
-  //   const atom2 = screen.getByText('atom2')
-  //   const atom3 = screen.getByText('atom3')
+  xit('should contain data with name property', () => {
+    // render ranked graph
+    render(
+      <ComparisonGraph
+        data={mock}
+        width={mockWidth}
+        height={mockHeight}
+      />
+    )
+    //ensure that a name property is being passed in and can be found 
+    const atom1 = screen.getByText('atom1')
+    const atom2 = screen.getByText('atom2')
+    const atom3 = screen.getByText('atom3')
 
-  //   expect(atom1).toBeVisible();
-  //   expect(atom2).toBeVisible();
-  //   expect(atom3).toBeVisible();
-  // });
+    expect(atom1).toBeVisible();
+    expect(atom2).toBeVisible();
+    expect(atom3).toBeVisible();
+  });
   // it('should contain data with actualDuration property', () => {
   //   // render ranked graph
   //   render(
