@@ -1,5 +1,6 @@
 import React from 'react';
 
+// when the ATOM button is clicked, it will render these 'Atom' buttons, which can be clicked to highlight the atoms on the component graph
 const Atom = props => {
   const {i, atom, setSelectedRecoilValue, setIsDropDownItem} = props;
 
