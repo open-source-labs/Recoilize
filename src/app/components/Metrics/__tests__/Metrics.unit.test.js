@@ -29,12 +29,14 @@ describe('Metrics rendering', () => {
         <Metrics/>, {providers: {store}})
       expect(asFragment).toMatchSnapshot();
   });
+  //does not to be rendered??
   xit('should have cleanComponentAtomTree, data, height, and width', () => {
     const store = generateStore({ snapshot: snapshotHistoryMock})
     const asFragment = render(
         <Metrics/>, {providers: {store}})
       expect(asFragment).toMatchSnapshot();
   });
+  xit('should c')
 });
 
 // })

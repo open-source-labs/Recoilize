@@ -43,5 +43,4 @@ export const generateStore = (
 };
 
 export * from '@testing-library/react';
-export {customRender};
-// export {customRender as render};
+export {customRender as render};

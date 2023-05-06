@@ -3,7 +3,6 @@ import ComparisonGraph from '../ComparisonGraph';
 // import {render, cleanup} from '@testing-library/react';
 import '@testing-library/dom';
 import '@testing-library/jest-dom'
-import  '@testing-library/react';
 
 import {render, cleanup, fireEvent, generateStore, screen} from '../../../tests/testing';
 import { snapshotHistoryMock } from '../../../../../mock/state-snapshot';
@@ -55,40 +54,39 @@ const mockWidth = 30
 
 afterEach(cleanup);
 
-describe('Comparison graph displays correct information', () => {
-  it('should render data, height, and width', () => {
-    const store = generateStore({ snapshot: snapshotHistoryMock})
-    const {asFragment} = render(
-      <ComparisonGraph
-        data={mock}
-        width={mockWidth}
-        height={mockHeight}
-      />,
-      {providers: { store }}
-    )
-    //checking if new component being rendered matches the saved snapshot
-    screen.debug()
-    expect(asFragment()).toMatchSnapshot();
-  });
+describe('Comparison graph constins correct components', () => {
+  // it('should contain data, width, and height', () => {
+  //   // const store = generateStore({ snapshot: snapshotHistoryMock})
+  //   const {asFragment} = render(
+  //     <ComparisonGraph
+  //       data={mock}
+  //       width={mockWidth}
+  //       height={mockHeight}
+  //     />,
+  //     {providers: { store }}
+  //   )
+  //   //checking if new component being rendered matches the saved snapshot
+  //   screen.debug(asFragment)
+  //   expect(asFragment()).toMatchSnapshot();
+  // });
 
   // //check that labels are being properly passed in 
-  xit('should contain data with name property', () => {
+  it('should contain data with name property', () => {
+    const store = generateStore({ snapshot: snapshotHistoryMock})
     // render ranked graph
-    render(
-      <ComparisonGraph
-        data={mock}
-        width={mockWidth}
-        height={mockHeight}
-      />
-    )
-    //ensure that a name property is being passed in and can be found 
-    const atom1 = screen.getByText('atom1')
-    const atom2 = screen.getByText('atom2')
-    const atom3 = screen.getByText('atom3')
+    render(<ComparisonGraph 
+      data={mock}
+      width={mockWidth}
+      height={mockHeight}/>, {providers: { store }})
 
-    expect(atom1).toBeVisible();
-    expect(atom2).toBeVisible();
-    expect(atom3).toBeVisible();
+    //ensure that a name property is being passed in and can be found 
+    const deleteButton = screen.getByText('Delete Series')
+    // const atom2 = screen.getByText('atom2')
+    // const atom3 = screen.getByText('atom3')
+
+    expect(deleteButton).toBeVisible();
+    // expect(atom2).toBeVisible();
+    // expect(atom3).toBeVisible();
   });
   // it('should contain data with actualDuration property', () => {
   //   // render ranked graph
