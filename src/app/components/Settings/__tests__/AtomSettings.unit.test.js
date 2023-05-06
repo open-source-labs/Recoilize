@@ -8,6 +8,7 @@ import { snapshotHistoryMock } from '../../../../../mock/state-snapshot';
 const {Multiselect} = require('multiselect-react-dropdown');
 
 
+//Increased to 86% coverage (overall settings from 11%)
 afterEach(cleanup);
 
 describe('Atom Settings', () => {
