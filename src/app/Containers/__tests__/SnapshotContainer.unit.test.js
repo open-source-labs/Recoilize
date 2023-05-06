@@ -10,3 +10,5 @@ it('Snapshot Container Renders', () => {
   render(
     <SnapshotContainer />, {providers: { store }});
 });
+
+// 3 in this file (now 52%), 18% in container => 58%
