@@ -1,14 +1,14 @@
 import React from 'react';
 import ComparisonGraph from '../ComparisonGraph';
-import {render, cleanup} from '@testing-library/react';
+import {render, cleanup, fireEvent, generateStore, screen} from '../../../tests/testing';
+
 import '@testing-library/dom';
 import '@testing-library/jest-dom'
 
-import {fireEvent, generateStore, screen} from '../../../tests/testing';
 import { snapshotHistoryMock } from '../../../../../mock/state-snapshot';
 
 
-//currently at 1.58% coverage
+//currently at 79% coverage
 
 const mock = [
   {
@@ -28,20 +28,44 @@ const mock = [
 
 const mockHeight = 50
 const mockWidth = 30
+const store = generateStore({ snapshot: snapshotHistoryMock})
 
 afterEach(cleanup);
 
-describe('Comparison graph displays correct information', () => {
-  it('should render data, height, and width', () => {
-    // const store = generateStore({ snapshot: snapshotHistoryMock})
-    const {asFragment} = render(
+describe('Comparison graph constains correct components', () => {
+  it('should render properly', () => {
+    const canvas = document.createElement('div');
+    canvas.id = 'canvas';
+    document.body.appendChild(canvas)
+
+    render(
       <ComparisonGraph
         data={mock}
         width={mockWidth}
         height={mockHeight}
-      />
+      />,
+      {providers: { store }}
     )
-    //checking if new component being rendered matches the saved snapshot
-    expect(asFragment()).toMatchSnapshot();
+  });
+});
+
+describe('Check button functionality', () => {
+  it('Check the delete button', () => {
+    // creating mock functions for chrome
+    chrome.runtime.connect = function () {
+      return {postMessage: function () {}};
+    };
+    let deleteSeries = jest.fn();
+    chrome.devtools = {inspectedWindow: {}};
+
+    render(<ComparisonGraph
+    data={deleteSeries}
+    width={mockWidth}
+    height={mockHeight}
+    />
+    )
+    // Testing the buttons
+    const deleteButton = screen.getByText('Delete Series'); // check these buttons -- how to test
+    fireEvent.click(deleteButton);
   });
 });

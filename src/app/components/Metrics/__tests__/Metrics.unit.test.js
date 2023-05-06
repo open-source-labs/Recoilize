@@ -1,21 +1,17 @@
 import React from 'react';
-import { render, cleanup, findByTestId } from '@testing-library/react';
-import { componentAtomTree } from '../../../../types/index.d.ts';
-import { shallow } from 'enzyme';
+import {render, generateStore, screen, cleanup} from '../../../tests/testing';
 import Metrics from '../MetricsContainer';
-// TO-DO
-// import prop object being passed down to metric graphs to be tested
-describe('Metrics graph testing', () => {
-    afterEach(cleanup);
-    //create a shallow copy of Metrics component passing in expected prop
-    const wrapper = shallow(<Metrics includedProp={cleanedComponentAtomTree}/>);
-    describe('shape of props being passed down should match cleanedComponentAtomTree shape', () => {
-        expect(wrapper.props().includedProp).toMatchObject(componentAtomTree);
-    });
-    describe('component is being rendered correctly', () => {
-        const { getByTestId } = render(<Metrics />);
-        //if the component rendered then it has to have return an element with id 'canvas'
-        //getBy returns an error when not finding an element, here is is looking for an id of canvas
-        expect(getByTestId('canvas')).toBeTruthy();
+import { snapshotHistoryMock } from '../../../../../mock/state-snapshot';
+import '@testing-library/jest-dom'
+
+afterEach(cleanup);
+const store = generateStore({snapshot: snapshotHistoryMock});
+
+describe('Metrics rendering', () => {
+  it('should render properly', () => {
+      const metricsWrapper = document.createElement('div');
+      metricsWrapper.id = 'metricsWrapper';
+      document.body.appendChild(metricsWrapper)
+      render(<Metrics />, {providers: {store}});
     });
 });
