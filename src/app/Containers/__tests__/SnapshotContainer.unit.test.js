@@ -83,3 +83,8 @@ describe('Snapshot Component Rendering', () => {
 describe('SnapshotContainer Functionality', () => {
 
 });
+
+// would benefit from testing that the snapshot divs themselves render/ work
+describe('SnapshotContainer Functionality', () => {
+
+});
