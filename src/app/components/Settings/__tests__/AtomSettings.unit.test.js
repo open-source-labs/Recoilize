@@ -7,10 +7,9 @@ import AtomSettings from '../AtomSettings';
 import { snapshotHistoryMock } from '../../../../../mock/state-snapshot';
 const {Multiselect} = require('multiselect-react-dropdown');
 
-
-//Increased to 86% coverage (overall settings from 11%)
 afterEach(cleanup);
 
+//ensure atom settings is rendering properly
 describe('Atom Settings', () => {
   it('Atom settings renders', () => {
     const settings = document.createElement('div');
@@ -20,6 +19,7 @@ describe('Atom Settings', () => {
     const store = generateStore({snapshot: snapshotHistoryMock});
     render(<AtomSettings />, {providers: {store}});
   });
+  //ensure able to select from dropdown
   it('Multiselect component renders', () => {
     const root = document.createElement('div');
     ReactDOM.render(<Multiselect />, root);

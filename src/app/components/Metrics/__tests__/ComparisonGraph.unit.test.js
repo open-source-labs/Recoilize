@@ -7,9 +7,6 @@ import '@testing-library/jest-dom'
 
 import { snapshotHistoryMock } from '../../../../../mock/state-snapshot';
 
-
-//currently at 79% coverage
-
 const mock = [
   {
     name: 'atom1', 
@@ -32,7 +29,7 @@ const store = generateStore({ snapshot: snapshotHistoryMock})
 
 afterEach(cleanup);
 
-describe('Comparison graph constains correct components', () => {
+describe('Comparison graph contains correct components', () => {
   it('should render properly', () => {
     const canvas = document.createElement('div');
     canvas.id = 'canvas';

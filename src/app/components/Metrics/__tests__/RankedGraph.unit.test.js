@@ -1,11 +1,11 @@
 import React from 'react';
 import RankedGraph from '../RankedGraph';
-import {render, cleanup} from '@testing-library/react';
+import {render, cleanup, screen} from '@testing-library/react';
 import '@testing-library/dom';
 import '@testing-library/jest-dom'
 
-import {screen} from '../../../tests/testing';
 
+//create empty mock data
 const mockNoValue = [
   {
     name: '', 
@@ -13,6 +13,7 @@ const mockNoValue = [
   }
 ]
 
+//create mock data with name and actualDuration properties
 const mock = [
   {
     name: 'atom1', 
@@ -29,6 +30,7 @@ const mock = [
   
 ]
 
+//mock heigh and width
 const mockHeight = 50
 const mockWidth = 30
 

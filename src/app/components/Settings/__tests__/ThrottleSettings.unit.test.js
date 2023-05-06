@@ -1,19 +1,14 @@
 import React from 'react';
-// import {getQueriesForElement, getByText} from '@testing-library/dom';
-import {fireEvent, screen, asFragment, getByPlaceholderText} from '@testing-library/react';
+import {fireEvent, screen} from '@testing-library/react';
 import {cleanup, render, generateStore} from '../../../tests/testing';
 import ThrottleSettings from '../ThrottleSettings';
 import { snapshotHistoryMock } from '../../../../../mock/state-snapshot';
 import '@testing-library/dom';
 import '@testing-library/jest-dom'
-import '@testing-library/react'
 
 afterEach(cleanup);
 const throttleDisplayMock = 1000;
 const store = generateStore({snapshot: snapshotHistoryMock, throttle: throttleDisplayMock});
-
-
-//curently at 11, now at 100%%
 
 // Check the render
 describe('Throttle Component renders correctly', () => {
