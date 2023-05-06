@@ -1,14 +1,12 @@
-import React, {useState} from 'react';
-import ReactDOM from 'react-dom';
-import {getQueriesForElement, getByText} from '@testing-library/dom';
-
-import {render, fireEvent} from '@testing-library/react';
+import React from 'react';
+import { render, generateStore } from '../../tests/testing';
 
 import SnapshotContainer from '../SnapshotContainer';
+import { snapshotHistoryMock } from '../../../../mock/state-snapshot';
 
 it('Snapshot Container Renders', () => {
+  const store = generateStore({ snapshot: snapshotHistoryMock})
   window.HTMLElement.prototype.scrollIntoView = jest.fn();
-  const {getByPlaceholderText, debug} = render(
-    <SnapshotContainer snapshotHistory={[]} />,
-  );
+  render(
+    <SnapshotContainer />, {providers: { store }});
 });
