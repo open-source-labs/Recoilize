@@ -50,7 +50,7 @@ it('Renders the component', () => {
       }
       cleanedComponentAtomTree={snapshotHistoryMock['cleanComponentAtomTree']}
       atoms={atoms}
-      selectors={['gameEndSelector']}
+      selectors={{'gameEndSelector': false}}
       selectedRecoilValue={['square-0', 'atom']}
     />,
     {providers: {store}},
@@ -86,7 +86,7 @@ it('Expand and collapse buttons show expanded and collapsed graph', () => {
       }
       cleanedComponentAtomTree={snapshotHistoryMock['cleanComponentAtomTree']}
       atoms={atoms}
-      selectors={['gameEndSelector']}
+      selectors={{'gameEndSelector': false}}
       selectedRecoilValue={['square-0', 'atom']}
     />,
     {providers: {store}},
@@ -132,7 +132,7 @@ it('Displays atom details when mouse hovers over atom', () => {
       }
       cleanedComponentAtomTree={snapshotHistoryMock['cleanComponentAtomTree']}
       atoms={atoms}
-      selectors={['gameEndSelector']}
+      selectors={{'gameEndSelector': false}}
       selectedRecoilValue={['square-0', 'atom']}
     />,
     {providers: {store}},
@@ -188,7 +188,7 @@ it('Displays list of atom buttons when ATOM button is clicked', () => {
         'square-8': 'square-8',
         currentPlayerState: 'currentPlayerState',
       }}
-      selectors={['gameEndSelector']}
+      selectors={{'gameEndSelector': false}}
       selectedRecoilValue={['square-0', 'atom']}
     />,
     {providers: {store}},
@@ -224,7 +224,6 @@ it('Highlights specific atom button when specific atom button in atom dropdown i
   document.body.appendChild(canvas);
 
   // here, atoms have to be an object because setAtomList is expecting an object
-  // this test is not finished because we have to pass down setSelectedRecoilValue hook
   render(
     // props are all based on snapshot history mock data of mock tic tac toe game
     <AtomComponentVisual
@@ -245,7 +244,7 @@ it('Highlights specific atom button when specific atom button in atom dropdown i
         'square-8': 'square-8',
         currentPlayerState: 'currentPlayerState',
       }}
-      selectors={['gameEndSelector']}
+      selectors={{'gameEndSelector': false}}
       selectedRecoilValue={['square-0', 'atom']}
       setSelectedRecoilValue={jest.fn()}
     />,
@@ -282,3 +281,67 @@ it('Highlights specific atom button when specific atom button in atom dropdown i
   // square 2 should be selected
   expect(square2).toHaveClass('atomSelected');
 });
+
+it('Highlights specific selector button when specific selector button in atom dropdown is clicked', () => {
+  // generate store
+  const store = generateStore({snapshot: snapshotHistoryMock});
+
+  // need to include a div with class component because AtomComponentVisual needs it to render
+  const componentClassDiv = document.createElement('div');
+  componentClassDiv.className = 'Component';
+  document.body.appendChild(componentClassDiv);
+
+  // need to have an element with an id of 'canvas' in order to render svgContainer
+  const canvas = document.createElement('div');
+  canvas.id = 'canvas';
+  document.body.appendChild(canvas);
+
+  // here, atoms have to be an object because setAtomList is expecting an object
+  render(
+    // props are all based on snapshot history mock data of mock tic tac toe game
+    <AtomComponentVisual
+      componentAtomTree={
+        snapshotHistoryMock['snapshotHistory'][0]['componentAtomTree']
+      }
+      cleanedComponentAtomTree={snapshotHistoryMock['cleanComponentAtomTree']}
+      atoms={{
+        playStart: 'playStart',
+        'square-0': '-',
+        'square-1': '-',
+        'square-2': '-',
+        'square-3': '-',
+        'square-4': '-',
+        'square-5': '-',
+        'square-6': '-',
+        'square-7': '-',
+        'square-8': '-',
+        currentPlayerState: 'currentPlayerState',
+      }}
+      selectors={{'gameEndSelector': false}}
+      selectedRecoilValue={['square-0', 'atom']}
+      setSelectedRecoilValue={jest.fn()}
+    />,
+    {providers: {store}},
+  );
+
+  // game end selector should not be visible when first rendered
+  let gameEnd = screen.queryByText('gameEndSelector');
+  expect(gameEnd).toBeNull();
+
+  // find selector button
+  const selector = screen.getByRole('button', {name: 'SELECTOR'})
+
+  // click selector button
+  fireEvent.click(selector);
+
+  // game end selector should be visible after selector button is clicked
+  gameEnd = screen.getByText('gameEndSelector');
+  expect(gameEnd).toBeVisible();
+
+  // game end selector should not be visible when selector button is clicked again
+  // click selector button
+  fireEvent.click(selector);
+  // game end selector should not be visible
+  gameEnd = screen.queryByText('gameEndSelector');
+  expect(gameEnd).toBeNull();
+})
