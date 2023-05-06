@@ -588,7 +588,6 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
         {showAtomMenu && (
           <div id="atomDrop" className="AtomDropDown">
             {atomList.map((atom, i) => (
-              // props needed: i, atom, setselectedrecoilvalue, setisdropdownitem
               <Atom i={i} atom={atom} key={i} setSelectedRecoilValue={setSelectedRecoilValue} setIsDropDownItem ={setIsDropDownItem}/>
             ))}
           </div>
