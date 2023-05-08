@@ -91,16 +91,7 @@ export default function RecoilizeDebugger(props) {
   // React lifecycle hook on re-render
   useEffect(() => {
     // Window listener for messages from dev tool UI & service_worker.js AKA background script
-
-    //
-    //
-    // R4 - old code
-    // window.addEventListener('message', onMessageReceived);
-    //
-    //
-
-    // R4 - new code
-    window.addEventListener('message', filterOrigin);
+    window.addEventListener('message', onMessageReceived);
 
     if (!isRestoredState) {
       const devToolData = createDevToolDataObject(filteredSnapshot);
@@ -114,32 +105,17 @@ export default function RecoilizeDebugger(props) {
     } else {
       isRestoredState = false;
     }
-    // r4 -old code
-    //
-    //
     // Clears the window event listener.
-    //return () => window.removeEventListener('message', onMessageReceived);
-    //
-    //
-
-    // r4- new code: Clears the window event listener on component unmount
-    return () => window.removeEventListener('message', filterOrigin);
+    return () => window.removeEventListener('message', onMessageReceived);
   });
-
-  // function to check if the message originated from the content script of the extension
-  function filterOrigin(msg) {
-    console.log('from filterOrigin', msg);
-    if (msg.origininatedFrom === 'recoilizeContentScript') {
-      return onMessageReceived(msg);
-    } else {
-      return;
-    }
-  }
 
   // Listener callback for messages sent to windowf
   const onMessageReceived = msg => {
+    // deconstruct properties from object
+    const {action, origininatedFrom, intendedRecipient, payload} = msg.data;
+
     // Add other actions from dev tool here
-    switch (msg.data.action) {
+    switch (action) {
       // Checks to see if content script has started before sending initial snapshot
       case 'contentScriptStarted':
         if (isPersistedState === 'false' || isPersistedState === null) {
@@ -187,7 +163,7 @@ export default function RecoilizeDebugger(props) {
         break;
       // Implementing the throttle change
       case 'throttleEdit':
-        throttleLimit = parseInt(msg.data.payload.value);
+        throttleLimit = parseInt(payload.value);
         break;
       default:
         break;
@@ -215,18 +191,38 @@ export default function RecoilizeDebugger(props) {
     setSnapshots(snapshotsArray);
   };
 
+  // old code below. May be delted if everything works
+  // ****
   // Sends window an action and payload message.
-  const sendWindowMessage = (action, payload) => {
-    window.postMessage(
-      JSON.parse(
-        JSON.stringify({
-          action,
-          payload,
-        }),
-      ),
-      '*',
-    );
-  };
+  //
+
+  // const sendWindowMessage = (action, payload) => {
+  //   window.postMessage(
+  //     JSON.parse(
+  //       JSON.stringify({
+  //         action,
+  //         payload,
+  //       }),
+  //     ),
+  //     '*',
+  //   );
+  // };
+
+  function sendWindowMessage(action, payload) {
+    // creates a a template object with origin and recipient
+    const objectTemplate = {
+      action: null,
+      payload: null,
+      origininatedFrom: 'RecoilizeDebugger',
+      intendedRecipient: 'contentScript',
+    };
+    // create a new object to send to the window from the template and the passed in arguments
+    const objectToSend = Object.assign({}, objectTemplate, {action, payload});
+    // create a deep clone of the object
+    const deepCopyOfObjectToSend = JSON.parse(JSON.stringify(objectToSend));
+    // send the deep clone to the window
+    window.postMessage(deepCopyOfObjectToSend, '*');
+  }
 
   const createDevToolDataObject = (
     filteredSnapshot,

@@ -24,15 +24,31 @@ it must do so through the shared DOM. An example can be accomplished using windo
 window.postMessage(
   {
     action: 'contentScriptStarted',
-    origininatedFrom: 'recoilizeContentScript',
+    payload: null,
+    origininatedFrom: 'contentScript',
+    intendedRecipient: 'RecoilizeDebugger',
   },
   '*',
 );
 
-// Listen to messages from Recoilize module within dev webpage
+// Set up event listener to receive messages from the Recoilize module running in the webpage being debugged
 window.addEventListener('message', msg => {
-  console.log('contentScript.ts received the following message: ', msg.data);
-  // MDN - Sends a single message to event listeners
+  console.log(
+    'contentScript.ts received the following MESSAGE: ',
+    msg.data.message,
+  );
+  console.log(
+    'contentScript.ts received the following message FROM: ',
+    msg.data.origininatedFrom,
+  );
+  console.log(
+    'contentScript.ts received the following message To: ',
+    msg.data.intendedRecipient,
+  );
+  console.log(
+    'contentScript.ts received the following message payload:',
+    msg.data.payload,
+  );
   chrome.runtime.sendMessage(msg.data);
 });
 
