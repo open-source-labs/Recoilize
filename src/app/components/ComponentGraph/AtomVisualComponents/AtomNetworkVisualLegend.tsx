@@ -2,7 +2,9 @@ import React, {useState} from 'react';
 import Atom from './Atom';
 import Selector from './Selector';
 
-const AtomNetworkLegend = props => {
+// NOTE: both button does not currently do anything
+const AtomNetworkVisualLegend = props => {
+
   const {setSelectedRecoilValue, atomList, hasSuspense, selectorList} = props;
 
   // hook for selected button styles on the legend
@@ -101,4 +103,4 @@ const AtomNetworkLegend = props => {
   );
 };
 
-export default AtomNetworkLegend;
+export default AtomNetworkVisualLegend;

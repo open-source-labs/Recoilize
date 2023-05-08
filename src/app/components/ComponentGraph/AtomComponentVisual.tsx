@@ -7,8 +7,7 @@ import {
   selectZoomState,
   setDefaultZoom,
 } from '../../state-management/slices/ZoomSlice';
-import Atom from './AtomVisualComponents/Atom';
-import Selector from './AtomVisualComponents/Selector';
+import AtomNetworkVisualLegend from './AtomVisualComponents/AtomNetworkVisualLegend';
 
 interface AtomComponentVisualProps {
   componentAtomTree: componentAtomTree;
@@ -48,17 +47,8 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
   const [atomList, setAtomList] = useState(Object.keys(atoms)); // returns an array of atom's properties
   const [selectorList, setSelectorList] = useState(Object.keys(selectors));
 
-  // need to create a hook for toggling
-  const [showAtomMenu, setShowAtomMenu] = useState<boolean>(false);
-  const [showSelectorMenu, setShowSelectorMenu] = useState<boolean>(false);
-
-  // hook for selected button styles on the legend
-  const [atomButtonClicked, setAtomButtonClicked] = useState<boolean>(false);
-  const [selectorButtonClicked, setSelectorButtonClicked] = useState<boolean>(
-    false,
-  );
+  // both button currently does not do anything
   const [bothButtonClicked, setBothButtonClicked] = useState<boolean>(false);
-  const [isDropDownItem, setIsDropDownItem] = useState<boolean>(false);
 
   // hooks for sibling level node spacing adjustment
   const [siblingSpacingFactor, setSiblingSpacingFactor] = useState<number>(1);
@@ -477,33 +467,6 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
     }
   }, [componentAtomTree, rawToggle, siblingSpacingFactor, parentSpacingFactor, vertOrient, selectedRecoilValue]);
 
-  // setting the component's user interface state by checking if the dropdown menu is open or not
-  function openDropdown(e: React.MouseEvent) {
-    const target = e.target as Element;
-    // the button element with id 'AtomP'
-    if (target.id === 'AtomP') {
-      setAtomButtonClicked(true);
-      setSelectorButtonClicked(false);
-      setShowAtomMenu(!showAtomMenu);
-      setShowSelectorMenu(false);
-    } else {
-      setAtomButtonClicked(false);
-      setSelectorButtonClicked(true);
-      setShowSelectorMenu(!showSelectorMenu);
-      setShowAtomMenu(false);
-    }
-  }
-
-  // resetting the component's user interface state when toggling between atoms & selectors
-  const resetNodes = () => {
-    setIsDropDownItem(false);
-    setSelectedRecoilValue([]);
-    setShowSelectorMenu(false);
-    setShowAtomMenu(false);
-    setAtomButtonClicked(false);
-    setSelectorButtonClicked(false);
-  };
-
   return (
     <div className="AtomComponentVisual">
       <svg id="canvas"></svg>
@@ -575,47 +538,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
           </span>
         </button>
       </div>
-      <div className="AtomNetworkLegend">
-        <div className="AtomLegend" />
-        <button
-          onClick={isDropDownItem ? resetNodes : openDropdown}
-          id="AtomP"
-          className={
-            atomButtonClicked ? 'AtomP atomSelected' : 'AtomP atomLegendDefault'
-          }>
-          ATOM
-        </button>
-        {showAtomMenu && (
-          <div id="atomDrop" className="AtomDropDown">
-            {atomList.map((atom, i) => (
-              <Atom i={i} atom={atom} key={i} setSelectedRecoilValue={setSelectedRecoilValue} setIsDropDownItem ={setIsDropDownItem}/>
-            ))}
-          </div>
-        )}
-        <div className="SelectorLegend"></div>
-        <button
-          onClick={isDropDownItem ? resetNodes : openDropdown}
-          id="SelectorP"
-          className={
-            selectorButtonClicked
-              ? 'SelectorP selectorSelected'
-              : 'SelectorP selectorLegendDefault'
-          }>
-          SELECTOR
-        </button>
-        {showSelectorMenu && (
-          <div id="selectorDrop" className="SelectorDropDown">
-            {selectorList.map((selector, i) => (
-              <Selector i={i} selector={selector} setSelectedRecoilValue={setSelectedRecoilValue} setIsDropDownItem={setIsDropDownItem}/>
-            ))}
-          </div>
-        )}
-        <div className="bothLegend"></div>
-        <button className="bothLegendDefault">BOTH</button>
-        <div className={hasSuspense ? 'suspenseLegend' : ''}></div>
-        <p>{hasSuspense ? 'SUSPENSE' : ''}</p>
-        <div className="tooltipContainer"></div>
-      </div>
+      <AtomNetworkVisualLegend setSelectedRecoilValue={setSelectedRecoilValue} atomList={atomList} hasSuspense={hasSuspense} selectorList={selectorList}/>
     </div>
   );
 };
