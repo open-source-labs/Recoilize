@@ -1,8 +1,8 @@
 import React from 'react';
 import {fireEvent, screen} from '@testing-library/react';
-import {cleanup, render, generateStore} from '../../../tests/testing';
-import ThrottleSettings from '../ThrottleSettings';
-import { snapshotHistoryMock } from '../../../../../mock/state-snapshot';
+import {cleanup, render, generateStore} from '../../testing';
+import ThrottleSettings from '../../../app/components/Settings/ThrottleSettings';
+import { snapshotHistoryMock } from '../../../../mock/state-snapshot';
 import '@testing-library/dom';
 import '@testing-library/jest-dom'
 

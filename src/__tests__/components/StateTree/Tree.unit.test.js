@@ -1,14 +1,14 @@
 import React from 'react';
 import '@testing-library/jest-dom'
 
-import {render, generateStore, screen, cleanup} from '../../../tests/testing';
+import {render, generateStore, screen, cleanup} from '../../testing';
 
-import Tree from '../Tree';
+import Tree from '../../../app/components/StateTree/Tree';
 
 // this test is loosely based on this article on rendering React tests https://betterprogramming.pub/react-testing-library-configuration-for-productive-unit-testing-5d0c446f3b3d
 
 // this is our mock state that we will use to run our tests
-import { snapshotHistoryMock } from '../../../../../mock/state-snapshot';
+import { snapshotHistoryMock } from '../../../../mock/state-snapshot';
 
 afterEach(cleanup);
 

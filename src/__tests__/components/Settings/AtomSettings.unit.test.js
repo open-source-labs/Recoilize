@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {cleanup, render, generateStore} from '../../../tests/testing';
+import {cleanup, render, generateStore} from '../../testing';
 import '@testing-library/jest-dom'
 import '@testing-library/dom';
-import AtomSettings from '../AtomSettings';
-import { snapshotHistoryMock } from '../../../../../mock/state-snapshot';
+import AtomSettings from '../../../app/components/Settings/AtomSettings';
+import { snapshotHistoryMock } from '../../../../mock/state-snapshot';
 const {Multiselect} = require('multiselect-react-dropdown');
 
 afterEach(cleanup);

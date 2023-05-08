@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Diff from '../Diff';
+import Diff from '../../../../app/components/StateDiff/Diff';
 
 import {
   render,

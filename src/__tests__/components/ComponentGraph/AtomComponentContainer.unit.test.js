@@ -1,11 +1,11 @@
 import React from 'react';
-import AtomComponentVisualContainer from '../AtomComponentContainer';
-import {cleanup, render, generateStore, screen} from '../../../tests/testing';
+import AtomComponentVisualContainer from '../../../app/components/ComponentGraph/AtomComponentContainer';
+import {cleanup, render, generateStore, screen} from '../../testing';
 
 afterEach(cleanup);
 
 // this is our mock state that we will use to run our tests
-import {snapshotHistoryMock} from '../../../../../mock/state-snapshot';
+import {snapshotHistoryMock} from '../../../../mock/state-snapshot';
 
 // currently giving this just the snapshot
 // also needs selectZoomState

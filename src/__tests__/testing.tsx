@@ -5,7 +5,7 @@ import React, {FC, ReactElement} from 'react';
 import {render, RenderOptions} from '@testing-library/react';
 import {Provider} from 'react-redux';
 
-import {rootReducer} from '../state-management/index';
+import {rootReducer} from '../app/state-management/index';
 import {configureStore, Store, PreloadedState} from '@reduxjs/toolkit';
 
 export type ProvidersRenderOptions = {

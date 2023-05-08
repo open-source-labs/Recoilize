@@ -4,7 +4,7 @@ import {getQueriesForElement, getByText} from '@testing-library/dom';
 
 import {render, fireEvent} from '@testing-library/react';
 
-import Navbar from '../NavBar';
+import Navbar from '../../../app/components/NavBar/NavBar';
 
 it('renders to the dom', () => {
   const {debug} = render(<Navbar tabsList={[]} />);

@@ -1,6 +1,6 @@
 import React from 'react';
 import ComparisonGraph from '../ComparisonGraph';
-import {render, cleanup, fireEvent, generateStore, screen} from '../../../tests/testing';
+import {render, cleanup, fireEvent, generateStore, screen} from '../../../testing';
 
 import '@testing-library/dom';
 import '@testing-library/jest-dom'

@@ -1,5 +1,5 @@
 import React from 'react';
-import Network from '../AtomNetwork';
+import Network from '../../../app/components/AtomNetwork/AtomNetwork';
 import {
   render,
   cleanup,
@@ -12,7 +12,7 @@ import '@testing-library/jest-dom/extend-expect';
 // currently, this test does not cover ability to drag atoms/selectors in the visualizer
 
 // this is our mock state that we will use to run our tests
-import {snapshotHistoryMock} from '../../../../../mock/state-snapshot';
+import {snapshotHistoryMock} from '../../../../mock/state-snapshot';
 
 afterEach(cleanup);
 

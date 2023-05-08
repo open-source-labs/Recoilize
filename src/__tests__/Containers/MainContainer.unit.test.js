@@ -3,10 +3,10 @@ import React from 'react';
 import { Provider } from 'react-redux';
 import "@testing-library/jest-dom";
 
-import { MainContainer } from '../MainContainer';
-import { cleanup, generateStore, render, screen } from '../../tests/testing';
+import { MainContainer } from '../../app/Containers/MainContainer';
+import { cleanup, generateStore, render, screen } from '../testing';
 // this is our mock state that we will use to run our tests
-import { snapshotHistoryMock } from '../../../../mock/state-snapshot'
+import { snapshotHistoryMock } from '../../../mock/state-snapshot'
 
 const store = generateStore({ snapshot: snapshotHistoryMock})
 

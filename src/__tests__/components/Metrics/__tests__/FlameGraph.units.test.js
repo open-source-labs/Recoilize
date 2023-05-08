@@ -1,6 +1,6 @@
 import React from 'react';
 import FlameGraph from '../FlameGraph';
-import { snapshotHistoryMock } from '../../../../../mock/state-snapshot';
+import { snapshotHistoryMock } from '../../../testing';
 import {componentAtomTreeMock} from '../../../../../mock/snapshot.js';
 import {render, cleanup, screen} from '@testing-library/react';
 import '@testing-library/jest-dom'
