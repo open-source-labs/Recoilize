@@ -1,26 +1,11 @@
 import React from 'react';
 import RankedGraph from '../RankedGraph';
-import {render, cleanup} from '@testing-library/react';
+import {render, cleanup, screen} from '@testing-library/react';
 import '@testing-library/dom';
 import '@testing-library/jest-dom'
 
-import {screen} from '../../../tests/testing';
 
-// CURRENTLY AT 79% COVERAGE (up from 32%)
-
-/*            What should we be testing for the Ranked Graph?
-  - Keeps track of individual component render time (meaning the PlaygroundRender, Board, Row in our mock data)
-  - For our tests, the ranked graph component needs the data ([{name: , actualDuration}]), height, and width (these two we can create mock data for)
-    - We need to test:
-      - Rendering properly (x)
-      - No initial values (should not be passing because graphs are rendering when we havent started the playground) 
-      - Check that labels are properly being passed in  (x)
-          - getting atom1,2,3
-          - getting actualDuration
-
-      - Check that the x-axis is rendering 
-*/
-
+//create empty mock data
 const mockNoValue = [
   {
     name: '', 
@@ -28,6 +13,7 @@ const mockNoValue = [
   }
 ]
 
+//create mock data with name and actualDuration properties
 const mock = [
   {
     name: 'atom1', 
@@ -44,6 +30,7 @@ const mock = [
   
 ]
 
+//mock heigh and width
 const mockHeight = 50
 const mockWidth = 30
 
@@ -102,20 +89,6 @@ describe('Ranked graph displays correct information', () => {
   });
 });
 
-// //Ensure that the x-axis is rendering 
-// describe('Ranked graph axis label', () => {
-//   it('should have a y-axis label', () => {
-//     const {asFragment} = render(
-//       <RankedGraph
-//         data={mock}
-//         width={mockWidth}
-//         height={mockHeight}
-//       />
-//     )
-//     //checking if new component being rendered initially matches snapshot
-//     expect(screen.queryByText('tick')).toBeInTheDocument();
-//   });
-// });
 //This is passing, but it should not be passing
 describe('Ranked graph initial rendering', () => {
   it('should not render without initial data', () => {
