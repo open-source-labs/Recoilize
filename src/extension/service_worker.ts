@@ -51,6 +51,9 @@ chrome.runtime.onConnect.addListener(port => {
             action: 'recordSnapshot',
             // payload is an array of objects
             // payload element example: {atomsAndSelectors, componentAtomTree, filteredSnapshot, indexDiff:}
+
+            // r4- result is the argument passed into the  callback function invoked after chrome.storage.local.get
+            // has completed executing as Chrome returns the data to you via an argument to that function.
             payload: result[tabId],
           });
           console.log('connections tabId: ', connections[tabId]);
@@ -113,6 +116,16 @@ chrome.runtime.onConnect.addListener(port => {
 chrome.runtime.onMessage.addListener((msg, sender) => {
   // Error handling if there isn't a proper tabId
   if (!sender.tab) return;
+
+  // r4 - this is a test to filer out messages without a payload
+  if (!msg.payload) return;
+
+  //
+  // r4 - the following code will check to see if a payload object exists in the message.
+  // if the object doesn't exist return out of the function.
+  // this is howevewer a temporary fix and and more permanent fix will need to be implemented by adding a
+  // property to the RecoilizeDebugger in the module in the npm store
+  //
 
   console.log('service_worker.ts chromeruntime msg: ', msg);
 

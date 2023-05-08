@@ -91,19 +91,50 @@ export default function RecoilizeDebugger(props) {
   // React lifecycle hook on re-render
   useEffect(() => {
     // Window listener for messages from dev tool UI & service_worker.js AKA background script
-    window.addEventListener('message', onMessageReceived);
+
+    //
+    //
+    // R4 - old code
+    // window.addEventListener('message', onMessageReceived);
+    //
+    //
+
+    // R4 - new code
+    window.addEventListener('message', filterOrigin);
 
     if (!isRestoredState) {
       const devToolData = createDevToolDataObject(filteredSnapshot);
-      // Post message to content script on every re-render of the developers application only if content script has started
+
+      /* 
+      Post message to content script on every re-render of the developers 
+      application
+      */
+
       sendWindowMessage('recordSnapshot', devToolData);
     } else {
       isRestoredState = false;
     }
-
+    // r4 -old code
+    //
+    //
     // Clears the window event listener.
-    return () => window.removeEventListener('message', onMessageReceived);
+    //return () => window.removeEventListener('message', onMessageReceived);
+    //
+    //
+
+    // r4- new code: Clears the window event listener on component unmount
+    return () => window.removeEventListener('message', filterOrigin);
   });
+
+  // function to check if the message originated from the content script of the extension
+  function filterOrigin(msg) {
+    console.log('from filterOrigin', msg);
+    if (msg.origininatedFrom === 'recoilizeContentScript') {
+      return onMessageReceived(msg);
+    } else {
+      return;
+    }
+  }
 
   // Listener callback for messages sent to windowf
   const onMessageReceived = msg => {

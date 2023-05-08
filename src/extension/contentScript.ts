@@ -14,7 +14,20 @@ it must do so through the shared DOM. An example can be accomplished using windo
 // R4 - the following line sends a message to the window
 // and it is picked up in the window by the RecoilizeDebugger Component
 // once chrome tab connects with the content-script
-window.postMessage({action: 'contentScriptStarted'}, '*');
+
+//
+// R4 - previous code
+// window.postMessage({action: 'contentScriptStarted'}, '*');
+//
+
+// R4 - new code
+window.postMessage(
+  {
+    action: 'contentScriptStarted',
+    origininatedFrom: 'recoilizeContentScript',
+  },
+  '*',
+);
 
 // Listen to messages from Recoilize module within dev webpage
 window.addEventListener('message', msg => {

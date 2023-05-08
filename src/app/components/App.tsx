@@ -92,15 +92,19 @@ const App: React.FC = () => {
     //   'here is the service_worker (previously known as background script) connection post message IN APP',
     //   service_worker,
     // );
-    // LISTEN for messages FROM bg script
+
+    // LISTEN for messages FROM service_worker AKA background script
     backgroundConnection.onMessage.addListener(msg => {
       if (msg.action === 'recordSnapshot') {
         // ! sets the initial selected
         // console.log('should have our atoms and selectors: ', msg.payload);
 
-        // the following checks to see if element 1 exists,
-        // BUT i suspect, it should check is element 0 zero exists
-        // meaning that there isn't any elemenets in the array
+        /*
+        R4 - the following checks to see if element 1 exists,
+        BUT i suspect, it should check is element 0 zero exists
+        meaning that there isn't any elemenets in the array
+        */
+
         if (!msg.payload[1]) {
           // ensures we only set initially
           const arr: selectedTypes[] = [];
