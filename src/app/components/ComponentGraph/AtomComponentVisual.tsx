@@ -7,8 +7,8 @@ import {
   selectZoomState,
   setDefaultZoom,
 } from '../../state-management/slices/ZoomSlice';
-import Atom from './Atom';
-import Selector from './Selector';
+import Atom from './AtomVisualComponents/Atom';
+import Selector from './AtomVisualComponents/Selector';
 
 interface AtomComponentVisualProps {
   componentAtomTree: componentAtomTree;
