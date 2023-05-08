@@ -14,6 +14,7 @@ const ComparisonGraph: React.FC<ComparisonGraphProps> = ({
   width,
   height,
 }: ComparisonGraphProps) => {
+
   const snapshotHistory = useAppSelector(
     (state: {snapshot: {snapshotHistory: any}}) =>
       state.snapshot.snapshotHistory,
@@ -25,7 +26,7 @@ const ComparisonGraph: React.FC<ComparisonGraphProps> = ({
     {name: 'current', duration: 0},
   ];
 
-  // retrieve and get total duration for past serie from the local storage
+  // retrieve and get total duration for past series from the local storage
   const values: any[] = [];
   const keys = Object.keys(localStorage);
   let i = keys.length;
@@ -33,19 +34,28 @@ const ComparisonGraph: React.FC<ComparisonGraphProps> = ({
     const series = localStorage.getItem(keys[i]);
     values.push(JSON.parse(series));
   }
+
+  //only for the past display
+  //seems to be adding the tree base duration from the componentAtomTree in each element of the value array to the duration that is displayed in the screen (total time?)
   for (const element of values) {
     displayData[0].duration += element.componentAtomTree.treeBaseDuration;
   }
 
+  //values are the current values vs snapshotHistory which are past values?
   let total = 0;
   for (const element of snapshotHistory) {
     total += element.componentAtomTree.treeBaseDuration;
   }
+
+  //only for present display
   displayData[1].duration = total;
   // delete series in local storage
   const deleteSeries = () => {
+    console.log('in delete series')
     for (const i of keys) {
+      console.log('localStorage:', localStorage);
       localStorage.removeItem(i);
+      console.log('localStorage removed:', localStorage);
     }
   };
 
