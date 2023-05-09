@@ -57,6 +57,7 @@ const ComparisonGraph: React.FC<ComparisonGraphProps> = ({
       localStorage.removeItem(i);
       console.log('localStorage removed:', localStorage);
     }
+    return localStorage;
   };
 
   // svg
