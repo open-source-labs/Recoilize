@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import "@testing-library/jest-dom";
 
 import { MainContainer } from '../../app/Containers/MainContainer';
-import { cleanup, generateStore, render, screen } from '../testing';
+import { cleanup, generateStore, render, screen } from '../testignore/testing';
 // this is our mock state that we will use to run our tests
 import { snapshotHistoryMock } from '../../../mock/state-snapshot'
 

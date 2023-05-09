@@ -1,7 +1,7 @@
 import React from 'react';
 import '@testing-library/jest-dom'
 
-import {render, generateStore, screen, cleanup} from '../../testing';
+import {render, generateStore, screen, cleanup} from '../../testignore/testing';
 
 import Tree from '../../../app/components/StateTree/Tree';
 

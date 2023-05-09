@@ -1,6 +1,6 @@
 import React from 'react';
 import {fireEvent, screen} from '@testing-library/react';
-import {cleanup, render, generateStore} from '../../testing';
+import {cleanup, render, generateStore} from '../../testignore/testing';
 import ThrottleSettings from '../../../app/components/Settings/ThrottleSettings';
 import { snapshotHistoryMock } from '../../../../mock/state-snapshot';
 import '@testing-library/dom';

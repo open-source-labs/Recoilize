@@ -1,5 +1,6 @@
 import React, {useEffect} from 'react';
 import { MainContainer } from '../Containers/MainContainer';
+import { ModuleNotFoundContainer } from '../Containers/ModuleNotFoundContainer';
 import {selectedTypes} from '../../types';
 // importing the diff to find difference
 import {diff} from 'jsondiffpatch';
@@ -19,8 +20,8 @@ import {
 } from '../state-management/slices/FilterSlice';
 import {setAtomsAndSelectors} from '../state-management/slices/AtomsAndSelectorsSlice';
 
-const LOGO_URL = './assets/Recoilize-v2.png';
-const App: React.FC = () => {
+
+const App = () => {
   const dispatch = useAppDispatch();
 
   // useState hook to update the snapshotHistory array
@@ -37,6 +38,7 @@ const App: React.FC = () => {
   // todo: Create algo that will clean up the big setSnapshothistory object, now and before
   // ! Setting up the selected
   const filterData = useAppSelector(selectFilterState);
+  console.log('filteredData', filterData);
 
   // Whenever snapshotHistory changes, useEffect will run, and selected will be updated
   useEffect(() => {
@@ -47,12 +49,14 @@ const App: React.FC = () => {
     if (snapshotHistory[renderIndex]) {
       last = snapshotHistory[renderIndex].filteredSnapshot;
     }
+
     // we must compare with the original
     for (let key in last) {
       if (!snapshotHistory[0].filteredSnapshot[key]) {
         // only push if the name doesn't already exist
         const check = () => {
           for (let i = 0; i < selected.length; i++) {
+            console.log('selected', selected);
             // break if it exists
             if (selected[i].name === key) {
               return true;
@@ -62,11 +66,12 @@ const App: React.FC = () => {
           return false;
         };
         if (!check()) {
-          // console.log('after Check');
+          console.log('check returned false', key)
           dispatch(addSelected({name: key}));
         }
       }
     }
+    console.log('selected', selected); // currently this appears to be "selecting" the entire app... it does not change in the console.log()
   }, [snapshotHistory]); // Only re-run the effect if snapshot history changes -- react hooks
 
   //Update cleanComponentAtomTree as Render Index changes
@@ -123,13 +128,17 @@ const App: React.FC = () => {
           dispatch(updateFilter(msg.payload));
         } else {
           // push the difference between the objects
-          const delta = diff(
-            msg.payload[msg.payload.length - 2],
-            msg.payload[msg.payload.length - 1],
-          );
-          // only push if the snapshot length is chill
+          // const delta = diff(
+          //   msg.payload[msg.payload.length - 2],
+          //   msg.payload[msg.payload.length - 1],
+          // );
+          // console.log('msg.payload', msg.payload);
+          // console.log('1', msg.payload[msg.payload.length - 1]);
+          // console.log('2', msg.payload[msg.payload.length - 2])
+          // console.log('delta', delta)
+          // // only push if the snapshot length is chill
           if (filterData.length < msg.payload.length) {
-            dispatch(updateFilter([delta]));
+            dispatch(updateFilter([msg.payload[msg.payload.length - 1]]));
           }
         }
       }
@@ -140,22 +149,7 @@ const App: React.FC = () => {
   const renderMainContainer: JSX.Element = <MainContainer />;
 
   // Render module not found message if snapHistory is null, this means we have not detected a recoil app with recoilize module installed properly
-  const renderModuleNotFoundContainer: JSX.Element = (
-    <div className="notFoundContainer">
-      <img className="logo" src={LOGO_URL} />
-      <p>
-        Supported only with Recoil apps with the Recoilize NPM module.
-        <br />
-        Please follow the installation instructions at&nbsp;
-        <a
-          target="_blank"
-          href="https://github.com/open-source-labs/Recoilize"
-          rel="noreferrer">
-          Recoilize
-        </a>
-      </p>
-    </div>
-  );
+  const renderModuleNotFoundContainer: JSX.Element = <ModuleNotFoundContainer />;
   
   return (
     <div className="App" key="App">

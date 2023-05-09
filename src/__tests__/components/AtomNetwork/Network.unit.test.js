@@ -6,7 +6,7 @@ import {
   generateStore,
   screen,
   fireEvent,
-} from '../../../tests/testing';
+} from '../../testignore/testing';
 import '@testing-library/jest-dom/extend-expect';
 
 // currently, this test does not cover ability to drag atoms/selectors in the visualizer

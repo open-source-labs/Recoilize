@@ -1,5 +1,5 @@
 import React from 'react';
-import {render, generateStore, cleanup} from '../../../testing';
+import {render, generateStore, cleanup} from '../../../testignore/testing';
 import Metrics from '../../../../app/components/Metrics/MetricsContainer';
 import { snapshotHistoryMock } from '../../../../../mock/state-snapshot';
 import '@testing-library/jest-dom'

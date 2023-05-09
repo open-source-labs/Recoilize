@@ -6,7 +6,7 @@ import {
   generateStore,
   screen,
   fireEvent,
-} from '../../testing';
+} from '../../testignore/testing';
 import '@testing-library/jest-dom/extend-expect';
 
 // this is our mock state that we will use to run our tests

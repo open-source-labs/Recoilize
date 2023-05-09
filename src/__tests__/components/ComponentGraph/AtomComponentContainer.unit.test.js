@@ -1,6 +1,6 @@
 import React from 'react';
 import AtomComponentVisualContainer from '../../../app/components/ComponentGraph/AtomComponentContainer';
-import {cleanup, render, generateStore, screen} from '../../testing';
+import {cleanup, render, generateStore, screen} from '../../testignore/testing';
 
 afterEach(cleanup);
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {cleanup, render, generateStore} from '../../testing';
+import {cleanup, render, generateStore} from '../../testignore/testing';
 import '@testing-library/jest-dom'
 import '@testing-library/dom';
 import AtomSettings from '../../../app/components/Settings/AtomSettings';
