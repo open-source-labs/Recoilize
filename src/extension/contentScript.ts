@@ -13,14 +13,6 @@ it must do so through the shared DOM. An example can be accomplished using windo
 
 // R4 - the following line sends a message to the window
 // and it is picked up in the window by the RecoilizeDebugger Component
-// once chrome tab connects with the content-script
-
-//
-// R4 - previous code
-// window.postMessage({action: 'contentScriptStarted'}, '*');
-//
-
-// R4 - new code
 window.postMessage(
   {
     action: 'contentScriptStarted',
@@ -33,23 +25,38 @@ window.postMessage(
 
 // Set up event listener to receive messages from the Recoilize module running in the webpage being debugged
 window.addEventListener('message', msg => {
+  // deconstruct values from message received
+  const {action, payload, origininatedFrom, intendedRecipient} = msg.data;
+
+  // Check for specific message actions: moduleInitialized, persistSnapshots, recordSnapshot...
+  // To ensure backward compatibility, we chose to block by actions instead of sender/receiver (which would be ideal)
+  if (
+    action !== 'moduleInitialized' &&
+    action !== 'persistSnapshots' &&
+    action !== 'recordSnapshot'
+  ) {
+    // return out of the functionif the actions are not in the list above
+    return;
+  }
+
+  // create an object with the properties received in the message
+  const messageReceived = {
+    action,
+    payload,
+    origininatedFrom,
+    intendedRecipient,
+  };
+
+  // create a structured clone to remove any intended messages from other sites
+  const messageToSend = structuredClone(messageReceived);
+
+  // console log to test the logic of this function
   console.log(
-    'contentScript.ts received the following MESSAGE: ',
-    msg.data.message,
+    'this is messge being relayed by the content script',
+    messageToSend,
   );
-  console.log(
-    'contentScript.ts received the following message FROM: ',
-    msg.data.origininatedFrom,
-  );
-  console.log(
-    'contentScript.ts received the following message To: ',
-    msg.data.intendedRecipient,
-  );
-  console.log(
-    'contentScript.ts received the following message payload:',
-    msg.data.payload,
-  );
-  chrome.runtime.sendMessage(msg.data);
+
+  chrome.runtime.sendMessage(messageToSend);
 });
 
 // listening for messages from the background script AKA service_worker
