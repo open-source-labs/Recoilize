@@ -29,14 +29,17 @@ chrome.runtime.onConnect.addListener(port => {
   such as between a content script and a background AKA service_worker script or between a popup and a background script AKA service_worker. 
   The Port object provides methods for sending and receiving messages over the connection.
   */
+
   const devToolsListener = (msg: Msg, port: object) => {
+    // deconstruct tabId and action from msg
+    const {tabId, action} = msg;
+
+    // console.log to
     console.log(
       'in the onConnect of background AKA service_worker script IN BG SCRIPT ',
       msg,
       port,
     );
-
-    const {tabId, action} = msg;
 
     switch (action) {
       case 'devToolInitialized':
