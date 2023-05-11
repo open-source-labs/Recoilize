@@ -2,8 +2,15 @@ import React, {useState} from 'react';
 import Atom from './Atom';
 import Selector from './Selector';
 
+interface PropsInterface {
+  setSelectedRecoilValue: React.Dispatch<React.SetStateAction<string[]>>;
+  atomList: string[];
+  hasSuspense: boolean;
+  selectorList: string[];
+}
+
 // NOTE: both button does not currently do anything
-const AtomNetworkVisualLegend = props => {
+const AtomNetworkVisualLegend = (props: PropsInterface) => {
 
   const {setSelectedRecoilValue, atomList, hasSuspense, selectorList} = props;
 

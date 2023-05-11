@@ -19,7 +19,7 @@ interface AtomComponentVisualProps {
   setSelectedRecoilValue: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
-const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
+const AtomComponentVisual = ({
     componentAtomTree,
     cleanedComponentAtomTree,
     selectedRecoilValue,
@@ -27,7 +27,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
     selectors,
     setStr,
     setSelectedRecoilValue,
-  }) => {
+  }: AtomComponentVisualProps): JSX.Element => {
 
   const zoomSelector = useAppSelector(selectZoomState);
   const {x, y, k} = zoomSelector; // initial scaling

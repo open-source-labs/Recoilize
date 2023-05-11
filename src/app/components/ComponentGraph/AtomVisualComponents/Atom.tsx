@@ -1,10 +1,17 @@
 import React from 'react';
 
+interface PropsInterface {
+  i: number;
+  atom: string;
+  setSelectedRecoilValue: React.Dispatch<React.SetStateAction<string[]>>;
+  setIsDropDownItem: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
 // when the ATOM button is clicked, it will render these 'Atom' buttons, which can be clicked to highlight the atoms on the component graph
-const Atom = props => {
+const Atom = (props: PropsInterface) => {
   const {i, atom, setSelectedRecoilValue, setIsDropDownItem} = props;
 
-  const handleClick = event => {
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     if (
       !(event.target as HTMLInputElement).classList.contains('atomSelected') &&
       (event.target as HTMLInputElement).classList.contains('atomNotSelected')
