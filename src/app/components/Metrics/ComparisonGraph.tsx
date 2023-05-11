@@ -9,11 +9,11 @@ interface ComparisonGraphProps {
   height?: number;
 }
 
-const ComparisonGraph: React.FC<ComparisonGraphProps> = ({
+const ComparisonGraph = ({
   data,
   width,
   height,
-}: ComparisonGraphProps) => {
+}: ComparisonGraphProps): JSX.Element => {
 
   const snapshotHistory = useAppSelector(
     (state: {snapshot: {snapshotHistory: any}}) =>
