@@ -32,6 +32,7 @@ const config = {
         },
       },
       {
+        // scss is uploaded to dependencies, not devDependencies. Also not used anywhere (5.2023 KW)
         test: /\.scss$/,
         use: ['style-loader', 'css-loader', 'sass-loader'],
       },

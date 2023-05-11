@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import MainContainer from '../Containers/MainContainer';
+import { MainContainer } from '../Containers/MainContainer';
 import {selectedTypes} from '../../types';
 // importing the diff to find difference
 import {diff} from 'jsondiffpatch';
@@ -165,6 +165,7 @@ const App: React.FC = () => {
       </p>
     </div>
   );
+  
   return (
     <div className="App" key="App">
       {snapshotHistory.length
