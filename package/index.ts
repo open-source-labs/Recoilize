@@ -65,7 +65,7 @@ export default function RecoilizeDebugger(props: any) {
       isRestoredState = false;
     }
 
-    // Window listener for messages from dev tool UI & background.js
+    // Window listener for messages from dev tool UI & Background script AKA service_worker.js
     window.addEventListener('message', onMessageReceived);
 
     // Clears the window event listener.
@@ -78,9 +78,8 @@ export default function RecoilizeDebugger(props: any) {
     switch (msg.data.action) {
       // Checks to see if content script has started before sending initial snapshot
       case 'contentScriptStarted':
-        const initialFilteredSnapshot = formatAtomSelectorRelationship(
-          filteredSnapshot,
-        );
+        const initialFilteredSnapshot =
+          formatAtomSelectorRelationship(filteredSnapshot);
         const devToolData = createDevToolDataObject(initialFilteredSnapshot);
         sendWindowMessage('moduleInitialized', devToolData);
         break;
@@ -108,12 +107,13 @@ export default function RecoilizeDebugger(props: any) {
     return {
       filteredSnapshot: filteredSnapshot,
       componentAtomTree: formatFiberNodes(
-        // test `React.createRoot` first 
+        // test `React.createRoot` first
         root[
           Object.keys(root).find(key =>
             key.startsWith('__reactContainer$'),
           ) as string
-        ] || root._reactRootContainer._internalRoot.current),
+        ] || root._reactRootContainer._internalRoot.current,
+      ),
     };
   };
 
