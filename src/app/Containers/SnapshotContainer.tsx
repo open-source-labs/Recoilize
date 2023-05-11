@@ -142,11 +142,13 @@ export const SnapshotsContainer: React.FC = () => {
 
   // create a function to store current data to local storage
   const toLocalStorage = (data: any) => {
+    console.log('trigger toLocalStorage');
     for (let i = 0; i < data.length; i++) {
-      // console.log('trigger toLocalStorage');
       const jsonData = JSON.stringify(data[i]);
       localStorage.setItem(`${i}`, jsonData);
+      console.log('localStorage:', localStorage)
     }
+    return localStorage;
   };
 
   return (
@@ -171,7 +173,8 @@ export const SnapshotsContainer: React.FC = () => {
       </span>
       <button
         className="save-series-button"
-        onClick={e => {
+        onClick={(e) => {
+          console.log('button click')
           toLocalStorage(snapshotHistory);
         }}>
         Save Series
