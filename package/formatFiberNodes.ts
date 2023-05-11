@@ -10,6 +10,7 @@ type node = {
   actualDuration: number;
   treeBaseDuration: number;
   return: any;
+  memoizedState: any;
 };
 
 type formattedNode = {
@@ -45,9 +46,9 @@ const formatFiberNodes = (node: node) => {
   return formattedNode;
 };
 
-const createAtomsSelectorArray = (node: any) => {
+const createAtomsSelectorArray = (node: node): any[] => {
   // initialize empty array for all atoms and selectors.  Elements will be all atom and selector names, as strings
-  const recoilNodes = [];
+  const recoilNodes: any[] = [];
 
   //start the pointer at node.memoizedState. All nodes should have this key.
   let currentNode = node.memoizedState;
