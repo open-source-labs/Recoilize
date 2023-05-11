@@ -5,6 +5,14 @@ import React, {useEffect, useState, useRef} from 'react';
 
 import {useAppSelector, useAppDispatch} from '../state-management/hooks'; // -> these hooks are created in a separate file per documentation (5.2023 KW)
 
+/* import FUNCTIONS used in this container */
+import filterFunc from '../functions/SnapshotContainerFunctions/filterFunc'; // -> used to compare state
+import fwrdClr from '../functions/SnapshotContainerFunctions/fwrdClr';
+import prevClr from '../functions/SnapshotContainerFunctions/prevClr';
+import timeTravelFunc from '../functions/SnapshotContainerFunctions/timeTravelFunc';
+import toLocalStorage from '../functions/SnapshotContainerFunctions/toLocalStorage';
+
+/* import STATE MANAGEMENT SLICES used in this container */
 import {selectFilterState} from '../state-management/slices/FilterSlice';
 import {setRenderIndex} from '../state-management/slices/SnapshotSlice';
 
@@ -52,6 +60,7 @@ export const SnapshotsContainer: React.FC = () => {
     
     const x: boolean = filterFunc();
 
+    console.log(x);
     if (x === false) {
       continue;
     }
@@ -154,6 +163,8 @@ export const SnapshotsContainer: React.FC = () => {
       localStorage.setItem(`${i}`, jsonData);
     }
   };
+
+  console.log('snapshotDivs', snapshotDivs)
 
   return (
     <div className="SnapshotsContainer" data-testid="SnapshotsContainer">
