@@ -3,7 +3,7 @@ import React from 'react';
 const Selector = props => {
   const {i, setSelectedRecoilValue, selector, setIsDropDownItem} = props;
 
-  const handleClick = event => {
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     if (
       !(event.target as HTMLInputElement).classList.contains(
         'selectorSelected',
