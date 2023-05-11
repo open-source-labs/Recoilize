@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import * as d3 from 'd3';
 import {dataDurationArr} from '../../../types';
 import {useAppSelector} from '../../state-management/hooks';

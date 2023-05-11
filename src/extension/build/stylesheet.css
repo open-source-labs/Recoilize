@@ -48,13 +48,6 @@ button:active {
   transform: translateY(4px);
 }
 
-#series {
-  color: #fff;
-  text-decoration-line: underline;
-  text-align: end;
-  padding-right: 150px;
-}
-
 /* APP -> MAIN CONTAINER */
 .App,
 #root {
