@@ -12,10 +12,10 @@ interface Connections {
   [tabId: string]: any;
 }
 
-// once background-script AKA service_worker start, start with cleared connections
+// once service_worker (previously known as background script) start, start with cleared connections
 const connections: Connections = {};
 
-// once background AKA service_worker starts, start with cleared local storage
+// once service_worker (previously known as background script) starts, start with cleared local storage
 // this only happens when we open chrome again, not on refresh
 chrome.storage.local.clear(function (): void {
   chrome.storage.local.get(null, function (result): void {});
@@ -26,7 +26,7 @@ chrome.storage.local.clear(function (): void {
 chrome.runtime.onConnect.addListener(port => {
   /*
   PORT represents a communication channel between different parts of a Chrome extension, 
-  such as between a content script and a background AKA service_worker script or between a popup and a background script AKA service_worker. 
+  such as between a content script and a service_worker script or between a popup and a service_worker. 
   The Port object provides methods for sending and receiving messages over the connection.
   */
 
@@ -34,11 +34,11 @@ chrome.runtime.onConnect.addListener(port => {
     // deconstruct tabId and action from msg
     const {tabId, action} = msg;
 
-    // console.log to
+    // console.log to print the message object and the port to the service_worker console in chrome
     console.log(
-      'in the onConnect of background AKA service_worker script IN BG SCRIPT ',
-      msg,
-      port,
+      'log: in the onConnect IN service_worker.ts',
+      `message: ${msg}`,
+      `port: ${port}`,
     );
 
     switch (action) {
@@ -59,6 +59,7 @@ chrome.runtime.onConnect.addListener(port => {
             // has completed executing as Chrome returns the data to you via an argument to that function.
             payload: result[tabId],
           });
+          // uncomment the lines below to log into the service_worker console in chrome
           console.log('connections tabId: ', connections[tabId]);
           console.log('connections: ', connections);
           console.log('tabId: ', tabId);
