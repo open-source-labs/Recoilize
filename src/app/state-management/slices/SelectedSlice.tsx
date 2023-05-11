@@ -3,7 +3,7 @@ import {selectedTypes} from '../../../types';
 
 interface selectedState {
   selectedData: selectedTypes[];
-}
+};
 
 const initialState: selectedState = {
   selectedData: [],

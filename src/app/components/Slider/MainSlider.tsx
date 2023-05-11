@@ -73,7 +73,7 @@ function MainSlider() {
   };
 
   const forwardButton = () => {
-    console.log('forward');
+    // console.log('forward');
     if (renderIndex < snapshotHistory.length - 1) {
       dispatch(setRenderIndex(renderIndex + 1));
       timeTravelFunc(renderIndex + 1);
