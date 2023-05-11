@@ -1,6 +1,11 @@
 import React, {useEffect, useState, useRef} from 'react';
+/* dependency import notes/ explanations:
+  - { useRef }: a React Hook that lets you reference a value that’s not needed for rendering. It’s particularly common to use a ref to manipulate the DOM. React has built-in support for this.
+*/
+
+import {useAppSelector, useAppDispatch} from '../state-management/hooks'; // -> these hooks are created in a separate file per documentation (5.2023 KW)
+
 import {selectFilterState} from '../state-management/slices/FilterSlice';
-import {useAppSelector, useAppDispatch} from '../state-management/hooks';
 import {setRenderIndex} from '../state-management/slices/SnapshotSlice';
 
 export const SnapshotsContainer: React.FC = () => {
@@ -44,6 +49,7 @@ export const SnapshotsContainer: React.FC = () => {
       }
       return false;
     };
+    
     const x: boolean = filterFunc();
 
     if (x === false) {
