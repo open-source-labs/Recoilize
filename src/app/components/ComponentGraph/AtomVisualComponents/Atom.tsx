@@ -4,7 +4,7 @@ interface PropsInterface {
   i: number;
   atom: string;
   setSelectedRecoilValue: React.Dispatch<React.SetStateAction<string[]>>;
-  setIsDropDownItem: React.Dispatch<React.SetStateAction<boolean>>
+  setIsDropDownItem: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 // when the ATOM button is clicked, it will render these 'Atom' buttons, which can be clicked to highlight the atoms on the component graph

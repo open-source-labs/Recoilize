@@ -1,6 +1,13 @@
 import React from 'react';
 
-const Selector = props => {
+interface PropsInterface {
+  i: number;
+  setSelectedRecoilValue: React.Dispatch<React.SetStateAction<string[]>>;
+  selector: string;
+  setIsDropDownItem: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const Selector = (props: PropsInterface) => {
   const {i, setSelectedRecoilValue, selector, setIsDropDownItem} = props;
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
