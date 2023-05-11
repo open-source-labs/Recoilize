@@ -19,7 +19,7 @@ const ComparisonGraph: React.FC<ComparisonGraphProps> = ({
     (state: {snapshot: {snapshotHistory: any}}) =>
       state.snapshot.snapshotHistory,
   );
-  console.log('comparison snapshot ', snapshotHistory);
+  // console.log('comparison snapshot ', snapshotHistory);
   // declare an array that holds 2 objects: past and current
   const displayData = [
     {name: 'past', duration: 0},
@@ -51,11 +51,11 @@ const ComparisonGraph: React.FC<ComparisonGraphProps> = ({
   displayData[1].duration = total;
   // delete series in local storage
   const deleteSeries = () => {
-    console.log('in delete series')
+    // console.log('in delete series')
     for (const i of keys) {
-      console.log('localStorage:', localStorage);
+      // console.log('localStorage:', localStorage);
       localStorage.removeItem(i);
-      console.log('localStorage removed:', localStorage);
+      // console.log('localStorage removed:', localStorage);
     }
     return localStorage;
   };

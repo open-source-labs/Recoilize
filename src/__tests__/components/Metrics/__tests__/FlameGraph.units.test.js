@@ -38,7 +38,7 @@ describe('Flame graph displays correct information', () => {
     const board = screen.queryByText('Board');
     const row = screen.queryAllByText('Row');
     const box = screen.queryAllByText('Box');
-    console.log(box)
+    // console.log(box)
     
     expect(board).toBeVisible();
     expect(box[0]).toBeVisible();

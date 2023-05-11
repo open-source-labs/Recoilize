@@ -116,7 +116,7 @@ export const SnapshotsContainer: React.FC = () => {
       <button
         className="save-series-button"
         onClick={(e) => {
-          console.log('button click')
+          // console.log('button click')
           toLocalStorage(snapshotHistory);
         }}>
         Save Series
