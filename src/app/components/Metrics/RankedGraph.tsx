@@ -8,11 +8,11 @@ interface RankedGraphProps {
   height?: number;
 }
 
-const RankedGraph: React.FC<RankedGraphProps> = ({
+const RankedGraph = ({
   data,
   width,
   height,
-}: RankedGraphProps) => {
+}: RankedGraphProps): JSX.Element => {
   const svgRef = useRef();
   useEffect(() => {
     document.getElementById('canvas').innerHTML = '';
