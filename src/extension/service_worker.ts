@@ -12,37 +12,54 @@ interface Connections {
   [tabId: string]: any;
 }
 
-// once background-script start, start with cleared connections
+// once service_worker (previously known as background script) start, start with cleared connections
 const connections: Connections = {};
 
-// once background starts, start with cleared local storage
+// once service_worker (previously known as background script) starts, start with cleared local storage
 // this only happens when we open chrome again, not on refresh
 chrome.storage.local.clear(function (): void {
   chrome.storage.local.get(null, function (result): void {});
 });
 
+// RUNS when devtool is connected
 // LISTEN for initial connection from dev tool
-// runs when devtool is connected
 chrome.runtime.onConnect.addListener(port => {
+  /*
+  PORT represents a communication channel between different parts of a Chrome extension, 
+  such as between a content script and a service_worker script or between a popup and a service_worker. 
+  The Port object provides methods for sending and receiving messages over the connection.
+  */
+
   const devToolsListener = (msg: Msg, port: object) => {
-    console.log(
-      'in the onConnect of background script IN BG SCRIPT ',
-      msg,
-      port,
-    );
+    // deconstruct tabId and action from msg
     const {tabId, action} = msg;
+
+    // console.log to print the message object and the port to the service_worker console in chrome
+    console.log('---onConnect_log_start---');
+    console.log('log: in the onConnect IN service_worker.ts');
+    console.log('message:', msg);
+    console.log('port:', port);
+    console.log('---onConnect_log_end---');
 
     switch (action) {
       case 'devToolInitialized':
+        // assigns an object connection a property with a key of msg[tabId] and a value of the PORT
         connections[tabId] = port;
         // read and send back to dev tool current local storage for corresponding tabId & port
         console.log('local chrome storage: ', chrome.storage.local);
         chrome.storage.local.get(null, function (result) {
           console.log('chrome.storage.local.get result: ', result);
+          // Use the PORTs postMessage method to send an action and a payload
           connections[tabId].postMessage({
             action: 'recordSnapshot',
+            // payload is an array of objects
+            // payload element example: {atomsAndSelectors, componentAtomTree, filteredSnapshot, indexDiff:}
+
+            // r4- result is the argument passed into the  callback function invoked after chrome.storage.local.get
+            // has completed executing as Chrome returns the data to you via an argument to that function.
             payload: result[tabId],
           });
+          // uncomment the lines below to log into the service_worker console in chrome
           console.log('connections tabId: ', connections[tabId]);
           console.log('connections: ', connections);
           console.log('tabId: ', tabId);
@@ -104,7 +121,17 @@ chrome.runtime.onMessage.addListener((msg, sender) => {
   // Error handling if there isn't a proper tabId
   if (!sender.tab) return;
 
-  console.log("background.ts chromeruntime msg: ", msg);
+  // r4 - this is a test to filer out messages without a payload
+  if (!msg.payload) return;
+
+  //
+  // r4 - the following code will check to see if a payload object exists in the message.
+  // if the object doesn't exist return out of the function.
+  // this is howevewer a temporary fix and and more permanent fix will need to be implemented by adding a
+  // property to the RecoilizeDebugger in the module in the npm store
+  //
+
+  console.log('service_worker.ts chromeruntime msg: ', msg);
 
   // Grabs tab id from content script and converts it to a string
   const tabId = `${sender.tab.id}`;

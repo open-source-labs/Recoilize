@@ -89,17 +89,30 @@ const App = () => {
 
   /* <----- SNAPSHOTHISTORY -----> */
   useEffect(() => {
-    // setup connection to background script
+    // SETUP connection to background script AKA service_worker script
     const backgroundConnection = chrome.runtime.connect();
-    // initialize connection to background script
+    // INITIALIZE connection to background script AKA service_worker script
     backgroundConnection.postMessage({
       action: 'devToolInitialized',
       tabId: chrome.devtools.inspectedWindow.tabId,
     });
-    // listen for messages from background script
+    // console.log(
+    //   'here is the service_worker (previously known as background script) connection post message IN APP',
+    //   service_worker,
+    // );
+
+    // LISTEN for messages FROM service_worker AKA background script
     backgroundConnection.onMessage.addListener(msg => {
       if (msg.action === 'recordSnapshot') {
-        // only set initially
+        // ! sets the initial selected
+        // console.log('should have our atoms and selectors: ', msg.payload);
+
+        /*
+        R4 - the following checks to see if element 1 exists,
+        BUT i suspect, it should check is element 0 zero exists
+        meaning that there isn't any elemenets in the array
+        */
+
         if (!msg.payload[1]) {
           const arr: selectedTypes[] = [];
           for (let key in msg.payload[0].filteredSnapshot) {

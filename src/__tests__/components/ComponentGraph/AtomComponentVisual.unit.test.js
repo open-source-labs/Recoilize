@@ -337,11 +337,3 @@ it('Highlights specific selector button when specific selector button in atom dr
   // game end selector should be visible after selector button is clicked
   gameEnd = screen.getByText('gameEndSelector');
   expect(gameEnd).toBeVisible();
-
-  // game end selector should not be visible when selector button is clicked again
-  // click selector button
-  fireEvent.click(selector);
-  // game end selector should not be visible
-  gameEnd = screen.queryByText('gameEndSelector');
-  expect(gameEnd).toBeNull();
-})

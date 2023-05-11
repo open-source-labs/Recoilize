@@ -3,18 +3,17 @@
   "version": "3.1.2",
   "devtools_page": "devtools.html",
   "description": "A Chrome extension that helps debug Recoil applications by memorizing the state of components with every render.",
-  "manifest_version": 2,
-  "content_security_policy": "script-src 'self' 'unsafe-eval' ; object-src 'self'",
+  "manifest_version": 3,
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self';"
+  },
   "icons": {
     "16": "assets/Recoilize-v2.png",
     "48": "assets/Recoilize-v2.png",
     "128": "assets/Recoilize-v2.png"
   },
   "permissions": ["storage"],
-  "background": {
-    "scripts": ["bundles/background.bundle.js"],
-    "persistent": false
-  },
+  "background": {"service_worker": "bundles/service_worker.bundle.js"},
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
