@@ -35,11 +35,11 @@ chrome.runtime.onConnect.addListener(port => {
     const {tabId, action} = msg;
 
     // console.log to print the message object and the port to the service_worker console in chrome
-    console.log(
-      'log: in the onConnect IN service_worker.ts',
-      `message: ${msg}`,
-      `port: ${port}`,
-    );
+    console.log('---onConnect_log_start---');
+    console.log('log: in the onConnect IN service_worker.ts');
+    console.log('message', msg);
+    console.log('port:', port);
+    console.log('---onConnect_log_end---');
 
     switch (action) {
       case 'devToolInitialized':
