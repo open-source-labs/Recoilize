@@ -20,6 +20,7 @@ import {
 import {setAtomsAndSelectors} from '../state-management/slices/AtomsAndSelectorsSlice';
 
 const LOGO_URL = './assets/Recoilize-v2.png';
+
 const App: React.FC = () => {
   const dispatch = useAppDispatch();
 
@@ -80,29 +81,36 @@ const App: React.FC = () => {
 
   // useEffect for snapshotHistory
   useEffect(() => {
-    // SETUP connection to bg script
+    // SETUP connection to background script AKA service_worker script
     const backgroundConnection = chrome.runtime.connect();
-    // INITIALIZE connection to bg script
+    // INITIALIZE connection to background script AKA service_worker script
     backgroundConnection.postMessage({
       action: 'devToolInitialized',
       tabId: chrome.devtools.inspectedWindow.tabId,
     });
     // console.log(
-    //   'here is the background connection post message IN APP',
-    //   backgroundConnection,
+    //   'here is the service_worker (previously known as background script) connection post message IN APP',
+    //   service_worker,
     // );
-    // LISTEN for messages FROM bg script
+
+    // LISTEN for messages FROM service_worker AKA background script
     backgroundConnection.onMessage.addListener(msg => {
       if (msg.action === 'recordSnapshot') {
         // ! sets the initial selected
-        //console.log('should have our atoms and selectors: ', msg.payload);
+        // console.log('should have our atoms and selectors: ', msg.payload);
+
+        /*
+        R4 - the following checks to see if element 1 exists,
+        BUT i suspect, it should check is element 0 zero exists
+        meaning that there isn't any elemenets in the array
+        */
+
         if (!msg.payload[1]) {
           // ensures we only set initially
           const arr: selectedTypes[] = [];
           for (let key in msg.payload[0].filteredSnapshot) {
             arr.push({name: key});
           }
-          // setSelected(arr);
           //console.log('arr in App.tsx send to setSelected', arr)
           dispatch(setSelected(arr));
         }
@@ -114,7 +122,7 @@ const App: React.FC = () => {
 
         // update state with the atoms and selectors!!!
         dispatch(setAtomsAndSelectors(msg.payload[0].atomsAndSelectors));
-        
+
         //console.log('Payload: IS IT HERE??, ', msg.payload);
 
         // ! Setting the FILTER Array
@@ -150,7 +158,8 @@ const App: React.FC = () => {
         <a
           target="_blank"
           href="https://github.com/open-source-labs/Recoilize"
-          rel="noreferrer">
+          rel="noreferrer"
+        >
           Recoilize
         </a>
       </p>
