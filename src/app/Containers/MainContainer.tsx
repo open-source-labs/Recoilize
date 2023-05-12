@@ -3,7 +3,7 @@ import { SnapshotsContainer } from './SnapshotContainer';
 import { VisualContainer } from './VisualContainer';
 import TravelContainer from './TravelContainer';
 
-export const MainContainer: React.FC = () => {
+export const MainContainer = () => {
   return (
     <div className="MainContainer">
       <SnapshotsContainer />
