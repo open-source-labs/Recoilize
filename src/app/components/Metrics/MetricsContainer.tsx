@@ -87,43 +87,39 @@ const Metrics: React.FC = () => {
     }
   };
 
-  if (dataDurationArr.length <= 0) {
-    return <>There is not state at the moment</>;
-  } else {
-    //render the toggle buttons and the appropriate graph based on GraphType state variable
-    return (
-      <div id="metricsWrapper">
-        <div data-testid="canvas" className="graphContainer">
-          <button
-            className="graphButton"
-            autoFocus={true}
-            onClick={() => {
-              toggleGraphFunc('flame');
-            }}
-          >
-            Flame Graph
-          </button>
-          <button
-            className="graphButton"
-            onClick={() => {
-              toggleGraphFunc('ranked');
-            }}
-          >
-            Ranked Graph
-          </button>
-          <button
-            className="graphButton"
-            onClick={() => {
-              toggleGraphFunc('comparison');
-            }}
-          >
-            Comparison Graph
-          </button>
-        </div>
-        {determineRender()}
+  //render the toggle buttons and the appropriate graph based on GraphType state variable
+  return (
+    <div id="metricsWrapper">
+      <div data-testid="canvas" className="graphContainer">
+        <button
+          className="graphButton"
+          autoFocus={true}
+          onClick={() => {
+            toggleGraphFunc('flame');
+          }}
+        >
+          Flame Graph
+        </button>
+        <button
+          className="graphButton"
+          onClick={() => {
+            toggleGraphFunc('ranked');
+          }}
+        >
+          Ranked Graph
+        </button>
+        <button
+          className="graphButton"
+          onClick={() => {
+            toggleGraphFunc('comparison');
+          }}
+        >
+          Comparison Graph
+        </button>
       </div>
-    );
-  }
+      {determineRender()}
+    </div>
+  );
 };
 
 export default Metrics;
