@@ -18,7 +18,7 @@ export const SnapshotsContainer: React.FC = () => {
   let snapshotHistoryLength = snapshotHistory.length;
 
   useEffect(() => {
-    snapshotEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+    snapshotEndRef.current?.scrollIntoView({behavior: 'smooth'});
   }, [snapshotHistoryLength]);
 
   const snapshotDivs: JSX.Element[] = [];
@@ -77,7 +77,8 @@ export const SnapshotsContainer: React.FC = () => {
         }
         onClick={() => {
           dispatch(setRenderIndex(i));
-        }}>
+        }}
+      >
         {/* <li>{i}</li> */}
         <li>{`${Math.round(renderTime * 100) / 100}ms`}</li>
         <button
@@ -89,7 +90,8 @@ export const SnapshotsContainer: React.FC = () => {
           }
           onClick={() => {
             timeTravelFunc(i);
-          }}>
+          }}
+        >
           Jump
         </button>
       </div>,
@@ -102,11 +104,10 @@ export const SnapshotsContainer: React.FC = () => {
     indexDiff = filterData[0].indexDiff;
   }
 
-  // functionality to postMessage the selected snapshot index to background.js
+  // functionality to postMessage the selected snapshot index to service_worker
   const timeTravelFunc = (index: number) => {
     // variable to store/reference connection
     const backgroundConnection = chrome.runtime.connect();
-    //const test = chrome.extension.getBackgroundPage();
     // post the message with index in payload to the connection
     backgroundConnection.postMessage({
       action: 'snapshotTimeTravel',
@@ -146,14 +147,16 @@ export const SnapshotsContainer: React.FC = () => {
     for (let i = 0; i < data.length; i++) {
       const jsonData = JSON.stringify(data[i]);
       localStorage.setItem(`${i}`, jsonData);
-      console.log('localStorage:', localStorage)
+      console.log('localStorage:', localStorage);
     }
     return localStorage;
   };
 
   return (
     <div className="SnapshotsContainer" data-testid="SnapshotsContainer">
-      <div id="clear-snapshots-title" data-testid="clear-snapshots-title">Clear Snapshots</div>
+      <div id="clear-snapshots-title" data-testid="clear-snapshots-title">
+        Clear Snapshots
+      </div>
       <div className="clear-buttons">
         <button onClick={prevClr} id="prevClr">
           Previous
@@ -168,15 +171,17 @@ export const SnapshotsContainer: React.FC = () => {
           fontWeight: 'bold',
           marginTop: '10px',
           marginBottom: '10px',
-        }}>
+        }}
+      >
         Snapshots
       </span>
       <button
         className="save-series-button"
-        onClick={(e) => {
-          console.log('button click')
+        onClick={e => {
+          console.log('button click');
           toLocalStorage(snapshotHistory);
-        }}>
+        }}
+      >
         Save Series
       </button>
       <div className="SnapshotsList" data-testid="SnapshotsList">
