@@ -48,16 +48,17 @@ export default function RecoilizeDebugger(props: any) {
     recoilizeRoot = document.getElementById('root');
   }
 
-  const snapshot: Snapshot = useRecoilSnapshot();
+  // had to type this as any because type snapshot let to error "Property '_store' does not exist on type 'Snapshot'"
+  const snapshot: any = useRecoilSnapshot();
 
   // getNodes_UNSTABLE will return an iterable that contains atom and selector objects.
   const nodes: RecoilValue<unknown>[] = [...snapshot.getNodes_UNSTABLE()];
   // Local state of all previous snapshots to use for time traveling when requested by dev tools.
-  const [snapshots, setSnapshots] = useState<Snapshot[]>([snapshot]);
+  const [snapshots, setSnapshots] = useState([snapshot]);
   // const [isRestoredState, setRestoredState] = useState(false);
   const gotoSnapshot = useGotoRecoilSnapshot();
 
-  const filteredSnapshot = {};
+  const filteredSnapshot: {} | node = {};
 
   /*
   A nodeDeps object is constructed using getDeps_UNSTABLE. 
@@ -188,13 +189,13 @@ export default function RecoilizeDebugger(props: any) {
   const switchPersistMode = () => {
     if (isPersistedState === 'false' || isPersistedState === null) {
       // switch isPersistedState in sessionStorage to true
-      sessionStorage.setItem('isPersistedState', true);
+      sessionStorage.setItem('isPersistedState', 'true');
 
       // stores the length of current list of snapshots in sessionStorage
-      sessionStorage.setItem('persistedSnapshots', snapshots.length);
+      sessionStorage.setItem('persistedSnapshots', snapshots.length.toString());
     } else {
       // switch isPersistedState in sessionStorage to false
-      sessionStorage.setItem('isPersistedState', false);
+      sessionStorage.setItem('isPersistedState', 'false');
     }
   };
 
@@ -240,9 +241,9 @@ export default function RecoilizeDebugger(props: any) {
   };
 
   const createDevToolDataObject = (
-    filteredSnapshot: node,
-    diff: number | undefined,
-    atomsAndSelectors: AtomsAndSelectorsInterface,
+    filteredSnapshot: node | {},
+    diff?: number | undefined,
+    atomsAndSelectors?: AtomsAndSelectorsInterface,
   ) => {
     // test `React.createRoot` first
     let rootFiberNode =
