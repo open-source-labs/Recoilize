@@ -1,3 +1,4 @@
+import {string} from 'prop-types';
 import {useState, useEffect} from 'react';
 import {
   useRecoilTransactionObserver_UNSTABLE,
@@ -7,6 +8,13 @@ import {
   RecoilValue,
 } from 'recoil';
 import formatFiberNodes from './formatFiberNodes';
+import {node} from '../src/types';
+
+interface AtomsAndSelectorsInterface {
+  atoms: string[];
+  selectors: string[];
+  $selectors: any;
+}
 
 // grabs isPersistedState from sessionStorage
 let isPersistedState: string | null =
@@ -28,8 +36,9 @@ export default function RecoilizeDebugger(props: any) {
   // We should ask for Array of atoms and selectors.
   // Captures all atoms that were defined to get the initial state
 
+  // could possibly improve typing here, but html/jsx element/ null all lead to errors
   // Define a recoilizeRoot variable which will be assigned based on whether a root is passed in as a prop
-  let recoilizeRoot: HTMLElement | null;
+  let recoilizeRoot;
 
   // Check if a root was passed to props.
   if (props.root) {
@@ -44,7 +53,7 @@ export default function RecoilizeDebugger(props: any) {
   // getNodes_UNSTABLE will return an iterable that contains atom and selector objects.
   const nodes: RecoilValue<unknown>[] = [...snapshot.getNodes_UNSTABLE()];
   // Local state of all previous snapshots to use for time traveling when requested by dev tools.
-  const [snapshots, setSnapshots ] = useState<Snapshot[]>([snapshot]);
+  const [snapshots, setSnapshots] = useState<Snapshot[]>([snapshot]);
   // const [isRestoredState, setRestoredState] = useState(false);
   const gotoSnapshot = useGotoRecoilSnapshot();
 
@@ -59,13 +68,16 @@ export default function RecoilizeDebugger(props: any) {
   const nodeDeps = {};
   const nodeSubscriptions = {};
 
-  nodes.forEach(node => {
-    const getDeps = [...snapshot.getInfo_UNSTABLE(node).deps];
+  nodes.forEach((node: RecoilValue<unknown>) => {
+    const getDeps: RecoilValue<unknown>[] = [
+      ...snapshot.getInfo_UNSTABLE(node).deps,
+    ];
     nodeDeps[node.key] = getDeps.map(dep => dep.key);
   });
 
+  // pretty sure these are strings, not entirely sure
   for (let key in nodeDeps) {
-    nodeDeps[key].forEach(node => {
+    nodeDeps[key].forEach((node: string) => {
       if (nodeSubscriptions[node]) {
         nodeSubscriptions[node].push(key);
       } else {
@@ -74,7 +86,7 @@ export default function RecoilizeDebugger(props: any) {
     });
   }
 
-  // should re-type here
+  // cannot re-type here because TS does not support __proto__
   // Traverse all atoms and selector state nodes and get value
   nodes.forEach((node: any, index) => {
     const type = node.__proto__.constructor.name;
@@ -228,16 +240,16 @@ export default function RecoilizeDebugger(props: any) {
   };
 
   const createDevToolDataObject = (
-    filteredSnapshot,
-    diff,
-    atomsAndSelectors,
+    filteredSnapshot: node,
+    diff: number | undefined,
+    atomsAndSelectors: AtomsAndSelectorsInterface,
   ) => {
     // test `React.createRoot` first
     let rootFiberNode =
       recoilizeRoot[
         Object.keys(recoilizeRoot).find(key =>
           key.startsWith('__reactContainer$'),
-        )
+        )!
       ] || recoilizeRoot._reactRootContainer._internalRoot.current;
 
     if (diff === undefined) {
