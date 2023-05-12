@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {diff, formatters} from 'jsondiffpatch';
-import ReactHtmlParser from 'react-html-parser';
+import ReactHtmlParser from 'html-react-parser';
 import {useAppSelector} from '../../state-management/hooks';
 
 // renders the difference between the most recent state change and the previous

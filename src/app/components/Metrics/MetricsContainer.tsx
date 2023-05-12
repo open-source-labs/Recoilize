@@ -1,10 +1,13 @@
 import React, {Children, useState} from 'react';
-import {ParentSize} from '@vx/responsive';
+// import {ParentSize} from '@vx/responsive';
+import {ParentSize} from '@visx/responsive'
 import {dataDurationArr} from '../../../types';
 import FlameGraph from './FlameGraph.js';
 import RankedGraph from './RankedGraph';
 import ComparisonGraph from './ComparisonGraph';
 import {useAppSelector} from '../../state-management/hooks';
+
+
 
 interface IFiberTreeTraverse {
   name: string;
