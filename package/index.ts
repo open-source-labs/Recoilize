@@ -30,13 +30,13 @@ let throttleLimit: number = 70;
 
 // assign the value of selectorsObject in formatRecoilizeSelectors function
 // will contain the selectors from a user application
-let selectorsObject;
+let selectorsObject: {};
 
 export default function RecoilizeDebugger(props: any) {
   // We should ask for Array of atoms and selectors.
   // Captures all atoms that were defined to get the initial state
 
-  // could possibly improve typing here, but html/jsx element/ null all lead to errors
+  // Could possibly improve typing here, but html/jsx element/ null all lead to errors
   // Define a recoilizeRoot variable which will be assigned based on whether a root is passed in as a prop
   let recoilizeRoot;
 
@@ -76,7 +76,6 @@ export default function RecoilizeDebugger(props: any) {
     nodeDeps[node.key] = getDeps.map(dep => dep.key);
   });
 
-  // pretty sure these are strings, not entirely sure
   for (let key in nodeDeps) {
     nodeDeps[key].forEach((node: string) => {
       if (nodeSubscriptions[node]) {

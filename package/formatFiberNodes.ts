@@ -48,7 +48,7 @@ const formatFiberNodes = (node: node) => {
   return formattedNode;
 };
 
-const createAtomsSelectorArray = (node: node): any[] => {
+const createAtomsSelectorArray = (node: any): any[] => {
   // initialize empty array for all atoms and selectors.  Elements will be all atom and selector names, as strings
   const recoilNodes: any[] = [];
 
