@@ -85,7 +85,7 @@ const RankedGraph = ({
       .on('mouseover', function () {
         d3.select(this).attr('opacity', '0.85');
         const backgroundConnection = chrome.runtime.connect();
-        const barName = this.data;
+        const barName = data;
         const payload = {
           action: 'mouseover',
           tabId: chrome.devtools.inspectedWindow.tabId,
