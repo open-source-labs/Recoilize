@@ -62,8 +62,9 @@ const AtomNetworkVisual: React.FC = () => {
     // sets starting position of the atomNetwork graph.
     // const width = networkContainer.clientWidth;
     // const height = networkContainer.clientHeight;
-    const width = 300;
-    const height = 300;
+    // const width:number = 300;
+    // const height:number = 300;
+    // const viewBoxArray:Array<number> = [-width/2, -height/2, width, height]
 
     // snap will be newFilteredCurSnap if searchValue exists, if not original
     let snap: any = searchValue ? newFilteredCurSnap : filteredCurSnap;
@@ -92,7 +93,10 @@ const AtomNetworkVisual: React.FC = () => {
       const svg = d3
         // .create('svg')
         .select('#networkCanvas')
-        .attr('viewBox', [-width / 2, -height / 2, width, height]);
+        // .attr('viewBox', [-width / 2, -height / 2, width, height]);
+        .attr('viewBox', '-150 -150 300 300');
+        console.log('svg:', svg)
+        console.log('typeof svg:', typeof svg)
 
       const link = svg
         .append('g')
@@ -147,8 +151,8 @@ const AtomNetworkVisual: React.FC = () => {
         svg.attr('transform', d3.event.transform);
       }
 
-      var zoomHandler = d3.zoom().on('zoom', zoomActions);
-      zoomHandler(svg);
+      const zoomHandler = () => d3.zoom().on('zoom', zoomActions);
+      zoomHandler();
 
       // allows the nodes to be draggable
       const dragDrop = d3

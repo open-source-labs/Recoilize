@@ -116,24 +116,27 @@ const AtomComponentVisual = ({
 
     // https://github.com/d3/d3-zoom/blob/v3.0.0/README.md#zoom_transform
     svgContainer.call(
-      zoom.transform,
+      // zoom.transform,
+      d3.zoom().scaleExtent([0.05, 0.9]).on('zoom', function () {
+        svgContainer.attr('transform', d3.event.transform);
+      }),
       // Changes the initial view, (left, top)
       d3.zoomIdentity.translate(x, y).scale(k),
     );
 
     // allows the canvas to be zoom-able
-    svgContainer.call(
-      d3
-        .zoom()
-        .scaleExtent([0.05, 0.9]) // [max zoomed out view, max zoomed in view]
-        .on('zoom', zoomed),
-    );
+    // svgContainer.call(
+    //   d3
+    //     .zoom()
+    //     .scaleExtent([0.05, 0.9]) // [max zoomed out view, max zoomed in view]
+    //     .on('zoom', zoomed),
+    // );
 
     // helper function that allows for zooming
     function zoomed() {
       g.attr('transform', d3.event.transform).on(
         'mouseup',
-        dispatch(
+        dispatch.call(
           updateZoomState(d3.zoomTransform(d3.select('#canvas').node())),
         ),
       );
@@ -152,7 +155,7 @@ const AtomComponentVisual = ({
       let nodes = root.descendants(),
         links = root.descendants().slice(1);
 
-      let node = g
+      let node:any = g
         .selectAll('g.node')
       .attr('stroke-width', 5)
       .data(nodes, function (d: any): number {
@@ -206,7 +209,7 @@ const AtomComponentVisual = ({
               atsel.push(d.data.recoilNodes[x]);
             }
             // change the opacity of the node when the mouse is over
-            d3.select(this).transition().duration('50').attr('opacity', '.85');
+            d3.select(this).transition().duration(50).attr('opacity', '.85');
 
             // created a str for hover div to have corrensponding info
             // let newStr = formatAtomSelectorText(atsel).join('<br>');
@@ -249,7 +252,7 @@ const AtomComponentVisual = ({
           }
         })
         .on('mouseout', function (d: any, i: number): void {
-          d3.select(this).transition().duration('50').attr('opacity', '1');
+          d3.select(this).transition().duration(50).attr('opacity', '1');
           tooltip.style('opacity', 0);
         });
 
@@ -303,7 +306,7 @@ const AtomComponentVisual = ({
         })
         .remove();
 
-      let link = g
+      let link: any = g
         .attr('fill', 'none')
         .attr('stroke-width', 5)
         .selectAll('path.link')
