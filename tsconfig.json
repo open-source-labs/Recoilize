@@ -8,8 +8,9 @@
     "preserveConstEnums": true,
     "sourceMap": true,
     "allowJs": true,
-    "jsx": "react",
+    "jsx": "react-jsx",
     "target": "esnext",
+    "moduleResolution": "node",
     "esModuleInterop": true
   },
   "include": ["./src/app/**/*", "./index.d.ts"],

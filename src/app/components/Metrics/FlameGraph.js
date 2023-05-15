@@ -3,8 +3,10 @@ import {scaleLinear} from 'd3-scale';
 import {interpolate} from 'd3-interpolate';
 import {format as d3format} from 'd3-format';
 import {hierarchy} from 'd3-hierarchy';
-import {Group} from '@vx/group';
-import {Partition} from '@vx/hierarchy';
+import {Group} from '@visx/group';
+// import {Group} from '@vx/group';
+import {Partition} from '@visx/hierarchy';
+// import {Partition} from '@vx/hierarchy';
 import {useSpring, animated} from 'react-spring';
 
 //determining the number of decimal places displayed
