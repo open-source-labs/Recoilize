@@ -8,11 +8,11 @@ interface RankedGraphProps {
   height?: number;
 }
 
-const RankedGraph: React.FC<RankedGraphProps> = ({
+const RankedGraph = ({
   data,
   width,
   height,
-}: RankedGraphProps) => {
+}: RankedGraphProps): JSX.Element => {
   const svgRef = useRef();
   useEffect(() => {
     document.getElementById('canvas').innerHTML = '';
@@ -85,7 +85,7 @@ const RankedGraph: React.FC<RankedGraphProps> = ({
       .on('mouseover', function () {
         d3.select(this).attr('opacity', '0.85');
         const backgroundConnection = chrome.runtime.connect();
-        const barName = this.data;
+        const barName = data;
         const payload = {
           action: 'mouseover',
           tabId: chrome.devtools.inspectedWindow.tabId,

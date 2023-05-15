@@ -1,4 +1,5 @@
-import React, {useEffect, useRef, useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
+import * as React from 'react';
 import * as d3 from 'd3';
 import {dataDurationArr} from '../../../types';
 import {useAppSelector} from '../../state-management/hooks';
@@ -9,7 +10,7 @@ interface ComparisonGraphProps {
   height?: number;
 }
 
-const ComparisonGraph: React.FC<ComparisonGraphProps> = ({
+const ComparisonGraph = ({
   data,
   width,
   height,
@@ -19,7 +20,7 @@ const ComparisonGraph: React.FC<ComparisonGraphProps> = ({
     (state: {snapshot: {snapshotHistory: any}}) =>
       state.snapshot.snapshotHistory,
   );
-  // console.log('comparison snapshot ', snapshotHistory);
+  console.log('comparison snapshot ', snapshotHistory);
   // declare an array that holds 2 objects: past and current
   const displayData = [
     {name: 'past', duration: 0},
@@ -42,7 +43,7 @@ const ComparisonGraph: React.FC<ComparisonGraphProps> = ({
   }
 
   //values are the current values vs snapshotHistory which are past values?
-  let total = 0;
+  let total: number = 0;
   for (const element of snapshotHistory) {
     total += element.componentAtomTree.treeBaseDuration;
   }
@@ -51,11 +52,11 @@ const ComparisonGraph: React.FC<ComparisonGraphProps> = ({
   displayData[1].duration = total;
   // delete series in local storage
   const deleteSeries = () => {
-    // console.log('in delete series')
+    console.log('in delete series')
     for (const i of keys) {
-      // console.log('localStorage:', localStorage);
+      console.log('localStorage:', localStorage);
       localStorage.removeItem(i);
-      // console.log('localStorage removed:', localStorage);
+      console.log('localStorage removed:', localStorage);
     }
     return localStorage;
   };
@@ -133,7 +134,7 @@ const ComparisonGraph: React.FC<ComparisonGraphProps> = ({
       .on('mouseover', function () {
         d3.select(this).attr('opacity', '0.85');
         const backgroundConnection = chrome.runtime.connect();
-        const barName = this.data;
+        const barName = data;
         const payload = {
           action: 'mouseover',
           tabId: chrome.devtools.inspectedWindow.tabId,
