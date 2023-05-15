@@ -17,7 +17,7 @@ import {setRenderIndex} from '../state-management/slices/SnapshotSlice';
 
 
 // refactored from React.FC (not recommended) (5.2023 KW)
-export const SnapshotsContainer: React.FC = () => {
+export const SnapshotsContainer = () => {
     // The useDispatch hook (which is utilized in useAppDispatch -> see hooks file) returns a function. So it is assigned to a variable. Then, in the “onClick” function below, it is used to dispatch the 'setRenderIndex' action. (5.2023 KW)
   const dispatch = useAppDispatch();
 
