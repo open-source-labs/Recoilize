@@ -70,11 +70,6 @@ chrome.runtime.onMessage.addListener(msg => {
       // Comment by from R4 team -  in this  case, theRecoilize Debugger Module in the webpage is the intended recipient
       window.postMessage(msg, '*');
       break;
-    case 'persistState':
-      // Comment by from R4 team - the window.postMessage() sends a message to the page's window object.
-      // Comment by from R4 team - in this  case, the RecoilizeDebugger Module in the webpage is the intended recipient
-      window.postMessage(msg, '*');
-      break;
     case 'throttleEdit':
       // Comment by from R4 team - the window.postMessage() sends a message to the page's window object.
       // Comment by from R4 team - in this  case, the RecoilizeDebugger Module in the webpage is the intended recipient
