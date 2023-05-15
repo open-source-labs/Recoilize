@@ -3,7 +3,7 @@
 // Message Interface
 interface Msg {
   action: string;
-  tabId?: string;
+  tabId: string;
   payload?: object;
   test?: number;
 }
@@ -32,7 +32,7 @@ chrome.runtime.onConnect.addListener(port => {
 
   const devToolsListener = (msg: Msg, port: object) => {
     // deconstruct tabId and action from msg
-    const {tabId, action} = msg;
+    const {tabId, action}: Msg = msg;
 
     // console.log to print the message object and the port to the service_worker console in chrome
     console.log('---onConnect_log_start---');
