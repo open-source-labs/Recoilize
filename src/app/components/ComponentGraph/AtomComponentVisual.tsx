@@ -136,9 +136,12 @@ const AtomComponentVisual = ({
     function zoomed() {
       g.attr('transform', d3.event.transform).on(
         'mouseup',
-        dispatch.call(
-          updateZoomState(d3.zoomTransform(d3.select('#canvas').node())),
-        ),
+        d3.zoom().on('zoom', function () {
+          g.attr('transform', d3.event.transform);
+        }),
+        // dispatch.call(
+        //   updateZoomState(d3.zoomTransform(d3.select('#canvas').node())),
+        // ),
       );
     }
 
