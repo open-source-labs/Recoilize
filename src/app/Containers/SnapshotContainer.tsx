@@ -1,4 +1,4 @@
-import React, {useEffect, useState, useRef} from 'react';
+import React, {useEffect, useRef} from 'react';
 /* dependency import notes/ explanations:
   - { useRef }: a React Hook that lets you reference a value that’s not needed for rendering. It’s particularly common to use a ref to manipulate the DOM. React has built-in support for this.
 */
@@ -7,8 +7,6 @@ import {useAppSelector, useAppDispatch} from '../state-management/hooks'; // -> 
 
 /* import FUNCTIONS used in this container */
 import filterFunc from '../functions/SnapshotContainerFunctions/filterFunc'; // -> used to compare state
-import fwrdClr from '../functions/SnapshotContainerFunctions/fwrdClr';
-import prevClr from '../functions/SnapshotContainerFunctions/prevClr';
 import timeTravelFunc from '../functions/SnapshotContainerFunctions/timeTravelFunc';
 import toLocalStorage from '../functions/SnapshotContainerFunctions/toLocalStorage';
 
@@ -74,7 +72,6 @@ export const SnapshotsContainer: React.FC = () => {
         onClick={() => {
           dispatch(setRenderIndex(i));
         }}>
-        {/* <li>{i}</li> */}
         <li>{`${Math.round(renderTime * 100) / 100}ms`}</li>
         <button
           className="timeTravelButton"
@@ -90,6 +87,36 @@ export const SnapshotsContainer: React.FC = () => {
         </button>
       </div>,
     );
+  };
+
+  /* <----- FORWARD CLEAR -----> */
+  // function to remove all snapshots ahead of selected snapshot (removes divs)
+  // would maybe try to move this to different file to shorten this code further. didn't have time to get this to work (5.2023 KW)
+  function fwrdClr() {
+    const snapshotListArr = document.querySelectorAll('.individualSnapshot');
+  
+    for (let i = snapshotListArr.length - 1; i >= 0; i--) {
+      let index = parseInt(snapshotListArr[i].id.match(/\d+/g)[0]);
+  
+      if (index > renderIndex) {
+        snapshotListArr[i].parentNode.removeChild(snapshotListArr[i]);
+      } else break;
+    };
+  };
+
+  /* <----- PREVIOUS CLEAR -----> */
+  // function to remove all snapshots behind selected snapshot (removes divs)
+  // would maybe try to move this to different file to shorten this code further. didn't have time to get this to work (5.2023 KW)
+  function prevClr() {
+    const snapshotListArr = document.querySelectorAll('.individualSnapshot');
+  
+    for (let i = 0; i < snapshotListArr.length; i++) {
+      let index = parseInt(snapshotListArr[i].id.match(/\d+/g)[0]);
+  
+      if (index < renderIndex) {
+        snapshotListArr[i].parentNode.removeChild(snapshotListArr[i]);
+      } else break;
+    }
   };
 
 
@@ -116,7 +143,6 @@ export const SnapshotsContainer: React.FC = () => {
       <button
         className="save-series-button"
         onClick={(e) => {
-          // console.log('button click')
           toLocalStorage(snapshotHistory);
         }}>
         Save Series
