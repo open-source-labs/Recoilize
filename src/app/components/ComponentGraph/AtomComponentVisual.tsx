@@ -115,16 +115,8 @@ const AtomComponentVisual = ({
     let zoom = d3.zoom().on('zoom', zoomed);
 
     // https://github.com/d3/d3-zoom/blob/v3.0.0/README.md#zoom_transform
-    // svgContainer.call(
-    //   // zoom.transform,
-    //   d3.zoom()
-    //   .scaleExtent([0.05, 0.9])
-    //   .on('zoom', function () {
-    //     svgContainer.attr('transform', d3.event.transform);
-    //   }),
-    //   // Changes the initial view, (left, top)
+
     //   d3.zoomIdentity.translate(x, y).scale(k),
-    // );
 
     // allows the canvas to be zoom-able
     svgContainer.call(
