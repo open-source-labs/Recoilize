@@ -30,7 +30,7 @@ let throttleLimit: number = 70;
 
 // assign the value of selectorsObject in formatRecoilizeSelectors function
 // will contain the selectors from a user application
-let selectorsObject: {};
+let selectorsObject;
 
 export default function RecoilizeDebugger(props: any) {
   // We should ask for Array of atoms and selectors.
@@ -58,7 +58,7 @@ export default function RecoilizeDebugger(props: any) {
   // const [isRestoredState, setRestoredState] = useState(false);
   const gotoSnapshot = useGotoRecoilSnapshot();
 
-  const filteredSnapshot: {} | node = {};
+  const filteredSnapshot = {};
 
   /*
   A nodeDeps object is constructed using getDeps_UNSTABLE. 
