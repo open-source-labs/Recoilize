@@ -93,10 +93,15 @@ const AtomNetworkVisual: React.FC = () => {
       const svg = d3
         // .create('svg')
         .select('#networkCanvas')
+        .append('svg')
         // .attr('viewBox', [-width / 2, -height / 2, width, height]);
-        .attr('viewBox', '-150 -150 300 300');
-        console.log('svg:', svg)
-        console.log('typeof svg:', typeof svg)
+        .attr('viewBox', '-150 -150 300 300')
+        .call(d3.zoom().on("zoom", function () {
+          svg.attr("transform", d3.event.transform)
+        }))
+        .append('g')
+        // console.log('svg:', svg)
+        // console.log('typeof svg:', typeof svg)
 
       const link = svg
         .append('g')
@@ -147,12 +152,12 @@ const AtomNetworkVisual: React.FC = () => {
       });
 
       //Zoom functions
-      function zoomActions() {
-        svg.attr('transform', d3.event.transform);
-      }
+      // function zoomActions() {
+      //   svg.attr('transform', d3.event.transform);
+      // }
 
-      const zoomHandler = () => d3.zoom().on('zoom', zoomActions);
-      zoomHandler();
+      // const zoomHandler = () => d3.zoom().on('zoom', zoomActions);
+      // zoomHandler();
 
       // allows the nodes to be draggable
       const dragDrop = d3
