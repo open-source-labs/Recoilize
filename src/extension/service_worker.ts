@@ -1,5 +1,7 @@
 // TO CONSOLE LOG IN THIS FILE, we need to go to chrome://extensions/ and click inspect on the actual devTOOL!
 
+// There are several *commented  out* consolelogs in this file that can be uncommented to help future contributors debug the app
+
 // Message Interface
 interface Msg {
   action: string;
@@ -35,20 +37,20 @@ chrome.runtime.onConnect.addListener(port => {
     const {tabId, action}: Msg = msg;
 
     // console.log to print the message object and the port to the service_worker console in chrome
-    console.log('---onConnect_log_start---');
-    console.log('log: in the onConnect IN service_worker.ts');
-    console.log('message:', msg);
-    console.log('port:', port);
-    console.log('---onConnect_log_end---');
+    // console.log('---onConnect_log_start---');
+    // console.log('log: in the onConnect IN service_worker.ts');
+    // console.log('message:', msg);
+    // console.log('port:', port);
+    // console.log('---onConnect_log_end---');
 
     switch (action) {
       case 'devToolInitialized':
         // assigns an object connection a property with a key of msg[tabId] and a value of the PORT
         connections[tabId] = port;
+        // console.log('local chrome storage: ', chrome.storage.local);
         // read and send back to dev tool current local storage for corresponding tabId & port
-        console.log('local chrome storage: ', chrome.storage.local);
         chrome.storage.local.get(null, function (result) {
-          console.log('chrome.storage.local.get result: ', result);
+          // console.log('chrome.storage.local.get result: ', result);
           // Use the PORTs postMessage method to send an action and a payload
           connections[tabId].postMessage({
             action: 'recordSnapshot',
@@ -86,7 +88,7 @@ chrome.runtime.onConnect.addListener(port => {
 
       case 'throttleEdit':
         if (tabId) {
-          console.log('doing a throttle edit');
+          // console.log('doing a throttle edit');
           chrome.tabs.sendMessage(Number(tabId), msg);
         }
         break;
@@ -122,7 +124,7 @@ chrome.runtime.onMessage.addListener((msg, sender) => {
   // Comment by R4 team - this is a test to filter out messages without a payload
   if (!msg.payload) return;
 
-  console.log('service_worker.ts chromeruntime msg: ', msg);
+  // console.log('service_worker.ts chromeruntime msg: ', msg);
 
   // Grabs tab id from content script and converts it to a string
   const tabId = `${sender.tab.id}`;
