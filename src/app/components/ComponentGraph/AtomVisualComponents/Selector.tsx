@@ -7,6 +7,8 @@ interface PropsInterface {
   setIsDropDownItem: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
+// when the SELECTOR button is clicked, it will render these 'Selector' buttons, which can be clicked to highlight the selectors on the component graph
+// once the button is clicked, it remains highlighted (currently stays the color yellow) unless ATOM is clicked. would consider adjusting this for better UI (5.2023)
 const Selector = (props: PropsInterface) => {
   const {i, setSelectedRecoilValue, selector, setIsDropDownItem} = props;
 

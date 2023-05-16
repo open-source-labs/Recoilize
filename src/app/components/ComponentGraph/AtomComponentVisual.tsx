@@ -1,3 +1,6 @@
+// would consider breaking this file up and placing large functions in their own file, then importing. be mindful of this change's impact on testing. could run into problems with that (5.2023)
+// d3 requires updating. this will likely be a large task for future devs and it is possible this entire file needs to be rewritten because it includes a few d3 methods that are no longer used. (5.2023)
+
 import React, {useState, useEffect} from 'react';
 import * as d3 from 'd3';
 import {componentAtomTree, atom, selector} from '../../../types';
@@ -8,6 +11,7 @@ import {
   setDefaultZoom,
 } from '../../state-management/slices/ZoomSlice';
 import AtomNetworkVisualLegend from './AtomVisualComponents/AtomNetworkVisualLegend';
+
 
 interface AtomComponentVisualProps {
   componentAtomTree: componentAtomTree;
