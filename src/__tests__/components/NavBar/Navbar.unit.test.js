@@ -7,10 +7,12 @@ import {render, fireEvent} from '@testing-library/react';
 
 import Navbar from '../../../app/components/NavBar/NavBar';
 
+// check that component renders
 it('renders to the dom', () => {
   const {debug} = render(<Navbar tabsList={[]} />);
 });
 
+// pass in test tabs to nav bar component
 it('renders to the dom with the tab name', () => {
   const {getByText} = render(
     <Navbar tabsList={['testtab1', 'testtab2', 'testtab3']} />,
@@ -20,6 +22,7 @@ it('renders to the dom with the tab name', () => {
   expect(tab1).toBeVisible();
 });
 
+// test clicking NavBar tab
 it('sets tab when tab is clicked', () => {
   const {getByText} = render(
     <Navbar

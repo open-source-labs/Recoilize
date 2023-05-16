@@ -43,7 +43,7 @@ const AtomComponentVisual = ({
   // useState hook to update whether a suspense component will be shown on the component graph
   const [hasSuspense, setHasSuspense] = useState<boolean>(false);
 
-  //declare hooks to render lists of atoms or selectors
+  // declare hooks to render lists of atoms or selectors
   const [atomList, setAtomList] = useState(Object.keys(atoms)); // returns an array of atom's properties
   const [selectorList, setSelectorList] = useState(Object.keys(selectors));
 

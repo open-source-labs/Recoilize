@@ -5,7 +5,7 @@ import {filteredSnapshot, atom, selector} from '../../../types';
 import {useAppSelector} from '../../state-management/hooks';
 
 const AtomComponentVisualContainer: React.FC = () => {
-  //Retrieve State from store
+  // Retrieve State from store
   const snapshotHistory = useAppSelector(
     state => state.snapshot.snapshotHistory,
   );
@@ -13,12 +13,15 @@ const AtomComponentVisualContainer: React.FC = () => {
   const cleanedComponentAtomTree = useAppSelector(
     state => state.snapshot.cleanComponentAtomTree,
   );
+
+  // get filtered current snapshot from snapshot history
   const filteredCurSnap: filteredSnapshot =
     snapshotHistory[renderIndex].filteredSnapshot;
+  
+  // get component atom tree (object with properties actual duration and childen, a list of atoms)
   const componentAtomTree = snapshotHistory[renderIndex].componentAtomTree;
 
   // this will be the atom or selector from the AtomSelectorLegend that the user clicked on.  an array with the ele at index 0 as the name of the atom/selector, and ele at index 1 will be 'atom' or 'selector'
-  // Why was selectedRecoilValue formatted as an array? why not an object?
   const [selectedRecoilValue, setSelectedRecoilValue] = useState<string[]>([]);
   const [str, setStr] = useState<string[]>([]);
 

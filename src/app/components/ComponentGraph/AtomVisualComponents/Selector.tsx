@@ -7,6 +7,7 @@ interface PropsInterface {
   setIsDropDownItem: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
+// this component renders a single selector button, which can be clicked to display the list of selectors
 const Selector = (props: PropsInterface) => {
   const {i, setSelectedRecoilValue, selector, setIsDropDownItem} = props;
 
@@ -50,7 +51,7 @@ const Selector = (props: PropsInterface) => {
     setSelectedRecoilValue([selector, 'selector']);
     setIsDropDownItem(true);
   };
-  
+
   return (
     <div className="dropDownButtonDiv">
       <button

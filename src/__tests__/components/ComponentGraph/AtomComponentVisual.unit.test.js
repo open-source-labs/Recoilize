@@ -14,6 +14,8 @@ import {snapshotHistoryMock} from '../../../../mock/state-snapshot';
 
 afterEach(cleanup);
 
+// this testing file should be split into multiple files
+
 // define array of atoms to be passed down as props
 const atoms = [
   'playStart',
