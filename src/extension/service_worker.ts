@@ -59,15 +59,15 @@ chrome.runtime.onConnect.addListener(port => {
             // has completed executing as Chrome returns the data to you via an argument to that function.
             payload: result[tabId],
           });
-          // uncomment the lines below to log into the service_worker console in chrome
-          console.log('---storage__log_start---');
-          console.log(
-            'log: storage.local invokes a callback. Find relevant information below',
-          );
-          console.log('connections tabId: ', connections[tabId]);
-          console.log('connections: ', connections);
-          console.log('tabId: ', tabId);
-          console.log('---storage_log_end---');
+          // UNCOMMENT the lines below to log into the service_worker console in chrome
+          // console.log('---storage__log_start---');
+          // console.log(
+          //   'log: storage.local invokes a callback. Find relevant info below',
+          // );
+          // console.log('connections tabId: ', connections[tabId]);
+          // console.log('connections: ', connections);
+          // console.log('tabId: ', tabId);
+          // console.log('---storage_log_end---');
         });
         break;
 
@@ -83,12 +83,12 @@ chrome.runtime.onConnect.addListener(port => {
           chrome.tabs.sendMessage(Number(tabId), msg);
         }
         break;
+
       case 'throttleEdit':
         if (tabId) {
           console.log('doing a throttle edit');
           chrome.tabs.sendMessage(Number(tabId), msg);
         }
-        // window.postMessage({action: 'throttleChange'}, throttler);
         break;
 
       default:
@@ -119,15 +119,8 @@ chrome.runtime.onMessage.addListener((msg, sender) => {
   // Error handling if there isn't a proper tabId
   if (!sender.tab) return;
 
-  // r4 - this is a test to filer out messages without a payload
+  // Comment by R4 team - this is a test to filter out messages without a payload
   if (!msg.payload) return;
-
-  //
-  // r4 - the following code will check to see if a payload object exists in the message.
-  // if the object doesn't exist return out of the function.
-  // this is howevewer a temporary fix and and more permanent fix will need to be implemented by adding a
-  // property to the RecoilizeDebugger in the module in the npm store
-  //
 
   console.log('service_worker.ts chromeruntime msg: ', msg);
 
@@ -143,7 +136,6 @@ chrome.runtime.onMessage.addListener((msg, sender) => {
 
       // Next snapshot from the msg payload
       const snapshot = msg.payload;
-      //console.log('snapshot: ', snapshot);
 
       // Get current snapshot history from local storage
       chrome.storage.local.get([tabId], function (result) {
@@ -175,16 +167,8 @@ chrome.runtime.onMessage.addListener((msg, sender) => {
       });
       break;
 
-    // const devToolData = createDevToolDataObject(
-    //   initialFilteredSnapshot,
-    //   indexDiff,
-    //   atomsAndSelectorsMsg,
-    //   selectorsObject,
-    // );
-
     // If the module is loaded for first time or refreshed reset snapshot History and send initial payload
     case 'moduleInitialized':
-      //console.log('module has been initialized IN BG SCRIPT', msg);
       const tabIdSnapshotHistory = [msg.payload];
       // set tabId within local storage to initial snapshot sent from module
       chrome.storage.local.set({[tabId]: tabIdSnapshotHistory}, function () {
