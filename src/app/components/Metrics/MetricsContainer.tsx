@@ -1,12 +1,20 @@
-import React, {useState} from 'react';
-import {ParentSize} from '@vx/responsive';
+import React, {Children, useState} from 'react';
+// import {ParentSize} from '@vx/responsive';
+import {ParentSize} from '@visx/responsive'
 import {dataDurationArr} from '../../../types';
 import FlameGraph from './FlameGraph.js';
 import RankedGraph from './RankedGraph';
 import ComparisonGraph from './ComparisonGraph';
 import {useAppSelector} from '../../state-management/hooks';
 
-const Metrics: React.FC = () => {
+
+
+interface IFiberTreeTraverse {
+  name: string;
+  actualDuration: number
+}
+
+const Metrics = (): JSX.Element => {
   const cleanedComponentAtomTree = useAppSelector(
     state => state.snapshot.cleanComponentAtomTree,
   );
@@ -22,12 +30,12 @@ const Metrics: React.FC = () => {
 
   // create an empty array to store objects for property name and actualDuration for rankedGraph
   const dataDurationArr: dataDurationArr = [];
-  let length = 0;
+  let length: number = 0;
   // function to traverse through the fiber tree
   const namesAndDurations = (node: any) => {
     if (node === undefined) return;
     if (node.name && node.actualDuration) {
-      const obj: any = {};
+      const obj: Partial<IFiberTreeTraverse> = {};
       if (node.name.length > length) {
         length = node.name.length;
       }

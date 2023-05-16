@@ -7,7 +7,7 @@ exports[`Flame graph displays correct information should render cleanedComponent
     width="50"
   >
     <g
-      class="vx-group"
+      class="visx-group"
       transform="translate(0, 0)"
     >
       <g
@@ -456,7 +456,7 @@ exports[`Flame graph initial rendering should not render when no values are pass
     width="50"
   >
     <g
-      class="vx-group"
+      class="visx-group"
       transform="translate(0, 0)"
     >
       <g
