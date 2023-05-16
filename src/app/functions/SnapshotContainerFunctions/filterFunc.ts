@@ -1,4 +1,4 @@
-// filterFunc compares states. if there is no change to the state, it will return false (5.2023 KW)
+// filterFunc compares states. if there is no change to the state, it will return false (5.2023)
 
 /* function params:
   - i - will import counter from for loop in SnapshotContainer

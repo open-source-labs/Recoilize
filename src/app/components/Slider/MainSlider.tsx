@@ -49,8 +49,6 @@ function MainSlider() {
     state => state.snapshot.snapshotHistory,
   );
   const filterData = useAppSelector(selectFilterState);
-  // console.log('this is renderIndex ', renderIndex);
-  // console.log('this is snapshotHistory length ', snapshotHistory.length);
 
   //indexDiff is used to ensure the index of filter matches the index of the snapshots array in the backend
   let indexDiff: number = 0;
@@ -61,7 +59,6 @@ function MainSlider() {
   const timeTravelFunc = (index: number) => {
     // variable to store/reference connection
     const backgroundConnection = chrome.runtime.connect();
-    //const test = chrome.extension.getBackgroundPage();
     // post the message with index in payload to the connection
     backgroundConnection.postMessage({
       action: 'snapshotTimeTravel',
@@ -73,7 +70,6 @@ function MainSlider() {
   };
 
   const forwardButton = () => {
-    // console.log('forward');
     if (renderIndex < snapshotHistory.length - 1) {
       dispatch(setRenderIndex(renderIndex + 1));
       timeTravelFunc(renderIndex + 1);

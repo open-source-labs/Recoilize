@@ -1,4 +1,4 @@
-import {configureStore /*, getDefaultMiddleware*/} from '@reduxjs/toolkit';
+import { configureStore } from '@reduxjs/toolkit';
 import throttleReducer from './slices/ThrottleSlice';
 import zoomReducer from '../state-management/slices/ZoomSlice';
 import snapshotReducer from '../state-management/slices/SnapshotSlice';
@@ -14,9 +14,7 @@ import {
 import storage from 'redux-persist/lib/storage/session';
 import {combineReducers} from 'redux';
 
-// const customizedPayloadAction = getDefaultMiddleware({
-//   serializableCheck: false,
-// });
+
 
 const reducers = combineReducers({
   zoom: zoomReducer,

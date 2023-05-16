@@ -1,8 +1,8 @@
-import React, {useEffect} from 'react';
-const {Multiselect} = require('multiselect-react-dropdown');
-import {selectedTypes} from '../../../types';
-import {useAppSelector, useAppDispatch} from '../../state-management/hooks';
-import {setSelected} from '../../state-management/slices/SelectedSlice';
+import React from 'react';
+const { Multiselect } = require('multiselect-react-dropdown');
+import { selectedTypes } from '../../../types';
+import { useAppSelector, useAppDispatch } from '../../state-management/hooks';
+import { setSelected } from '../../state-management/slices/SelectedSlice';
 
 const AtomSettings: React.FC = () => {
   const dispatch = useAppDispatch();
@@ -29,7 +29,7 @@ const AtomSettings: React.FC = () => {
     selected2.push({name: selected[i].name});
   }
 
-  // Todo: Create a conditional that will update the selected options onchange of the array -- updates if they are not equal, will add in NEW ADDITIONS
+  // Todo: Create a conditional that will update the selected options onchange of the array -- updates if they are not equal, will add in NEW ADDITIONS (??.20??) -> don't know what this is referring to or if it was executed (5.2023)
   // onSelect & onRemove functions for when selecting & removing atoms/selectors from the filter
   const onSelect = (selectedList: selectedTypes[]): void => {
     dispatch(setSelected(selectedList)); // propdrilled, so edited up top
@@ -38,6 +38,7 @@ const AtomSettings: React.FC = () => {
   const onRemove = (selectedList: selectedTypes[]): void => {
     dispatch(setSelected(selectedList));
   };
+  
   return (
     <div>
       <h2>Atom and Selector Filter</h2>

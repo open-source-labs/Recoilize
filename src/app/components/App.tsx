@@ -45,12 +45,12 @@ const App = () => {
   ); 
 
  
-  // initial state of filterData is an empty array. with each state change, the items that have changed are ALL that is added to this array. for example: tic-tac-toe -> if player X decides to play square 0, the nextPlayer (which was O) is updated, the contents of square 0 are updated. nothing else is included in the array (5.2023 KW)
+  // initial state of filterData is an empty array. with each state change, the items that have changed are ALL that is added to this array. for example: tic-tac-toe -> if player X decides to play square 0, the nextPlayer (which was O) is updated, the contents of square 0 are updated. nothing else is included in the array (5.2023)
   const filterData = useAppSelector(selectFilterState); 
 
 
   /* <----- UPDATE SELECTED STATE IN SNAPSHOT CONTAINER -----> */
-  // automatically updates the state that is selected in the snapshot container (on left, where time and jump are displayed) to the most recent state (5.2023 KW) 
+  // automatically updates the state that is selected in the snapshot container (on left, where time and jump are displayed) to the most recent state (5.2023) 
   useEffect(() => {
     dispatch(setRenderIndex(snapshotHistory.length - 1));
     
