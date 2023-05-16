@@ -51,10 +51,12 @@ window.addEventListener('message', msg => {
   const messageToSend = structuredClone(messageReceived);
 
   // uncomment the following lines log to test the logic of this function by printing the message to send object
+  //
   // console.log(
   //   'this is message being relayed by the content script',
   //   messageToSend,
   // );
+  //
 
   chrome.runtime.sendMessage(messageToSend);
 });
