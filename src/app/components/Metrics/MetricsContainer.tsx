@@ -104,21 +104,24 @@ const Metrics = (): JSX.Element => {
           autoFocus={true}
           onClick={() => {
             toggleGraphFunc('flame');
-          }}>
+          }}
+        >
           Flame Graph
         </button>
         <button
           className="graphButton"
           onClick={() => {
             toggleGraphFunc('ranked');
-          }}>
+          }}
+        >
           Ranked Graph
         </button>
         <button
           className="graphButton"
           onClick={() => {
             toggleGraphFunc('comparison');
-          }}>
+          }}
+        >
           Comparison Graph
         </button>
       </div>

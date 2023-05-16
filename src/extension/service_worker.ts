@@ -78,13 +78,6 @@ chrome.runtime.onConnect.addListener(port => {
           chrome.tabs.sendMessage(Number(tabId), msg);
         }
         break;
-
-      case 'persistState':
-        if (tabId) {
-          // if msg tabId provided, send persistState command to content-script
-          chrome.tabs.sendMessage(Number(tabId), msg);
-        }
-        break;
       case 'throttleEdit':
         if (tabId) {
           console.log('doing a throttle edit');
