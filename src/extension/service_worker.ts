@@ -15,8 +15,8 @@ interface Connections {
 // once service_worker (previously known as background script) start, start with cleared connections
 const connections: Connections = {};
 
-// once service_worker (previously known as background script) starts, start with cleared local storage
-// this only happens when we open chrome again, not on refresh
+// The service_worker (previously known as background script) starts with cleared local storage
+// This only occurs when Chrome is reopened, not on page refresh.
 chrome.storage.local.clear(function (): void {
   chrome.storage.local.get(null, function (result): void {});
 });
@@ -25,7 +25,7 @@ chrome.storage.local.clear(function (): void {
 // LISTEN for initial connection from dev tool
 chrome.runtime.onConnect.addListener(port => {
   /*
-  PORT represents a communication channel between different parts of a Chrome extension, 
+  In refards to the port argument, port represents a communication channel between different parts of a Chrome extension, 
   such as between a content script and a service_worker script or between a popup and a service_worker. 
   The Port object provides methods for sending and receiving messages over the connection.
   */
@@ -55,14 +55,19 @@ chrome.runtime.onConnect.addListener(port => {
             // payload is an array of objects
             // payload element example: {atomsAndSelectors, componentAtomTree, filteredSnapshot, indexDiff:}
 
-            // r4- result is the argument passed into the  callback function invoked after chrome.storage.local.get
+            // r4 - in the lines below result is the argument passed into the  callback function invoked after chrome.storage.local.get
             // has completed executing as Chrome returns the data to you via an argument to that function.
             payload: result[tabId],
           });
           // uncomment the lines below to log into the service_worker console in chrome
+          console.log('---storage__log_start---');
+          console.log(
+            'log: storage.local invokes a callback. Find relevant information below',
+          );
           console.log('connections tabId: ', connections[tabId]);
           console.log('connections: ', connections);
           console.log('tabId: ', tabId);
+          console.log('---storage_log_end---');
         });
         break;
 
