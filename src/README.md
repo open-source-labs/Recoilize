@@ -6,31 +6,50 @@ Though Recoil.js is still in the experimental state, it has proved its ability a
 
 ## File Structure
 
-The scr folder contains Recoilize's source code - frontend and chrome extension.
+The src folder contains Recoilize's source code - frontend and Chrome extension.
 
 ```
-src/
-├── app/                      # Frontend code
-│   ├── components/           # React components
-│   ├── Containers/           # More React components
-│   ├── state-management/     # Redux Toolkit Slices
-│   ├── utils/                # Helper Functions
-│   └── index.tsx             # Starting point for root App component
-│
-├── types/
-│   └── index.d.ts            #
-│
-├── extension/                # Chrome Extension code
-│   ├── build/                # Destination for bundles and manifest.json (Chrome config file)
-│   │                         #
-│   ├── service_worker.js         # Chrome Service Worker Script (previously called background script)
-│   └── contentScript.ts      # Chrome Content Script
-└──
+src/                        
+├── __tests__              # Tests for all files within the app folder 
+│                     
+├── app                    # Code for the frontend
+│   ├── Containers         # React container components
+│   ├── components
+│   │   ├── App.tsx        # App component
+│   │   ├── AtomNetwork
+│   │   ├── ComponentGraph
+│   │   ├── Metrics
+│   │   ├── NavBar
+│   │   ├── Settings
+│   │   ├── Slider
+│   │   ├── StateDiff
+│   │   ├── StateTree
+│   │   └── Testing
+│   ├── functions          # Helper functions for components, separated by file
+│   ├── index.tsx          # Root file to render the app
+│   ├── state-management   # Redux toolkit slices
+│   └── utils              # More helper functions
+├── extension              # All files related to the Chrome extension
+│   ├── build              # Destination for bundles and manifest.json (Chrome config file)
+│   ├── contentScript.ts   # Chrome Content Script
+│   └── service_worker.ts  # Chrome service worker script
+└── types                  # Type definitions
+    └── index.d.ts
 ```
+
 
 Here is an in-depth view of the app's components:
 
 ![FRONTEND DATA FLOW](../assets/Diagram.png)
+
+## Testing the NPM Package
+The package folder contains the files for the npm package. To test the npm package, first navigate to the ./package folder within Recoilize. Then, pack the package by running `npm pack`. This will create a .tgz file that mimics the package as it would be published on npm. In the package.json of the application you are using to test Recoilize, add recoilize as a dependency, pointing to the .tgz file you just created. You should have something like this: 
+
+`"dependencies": {
+  "recoilize": "file:~/recoilize/recoilize-3.1.6.tgz"
+}`
+
+Note: the package files have been converted to TypeScript, however, using the compiled TypeScript files currently 
 
 ## Diagramming
 
