@@ -1,6 +1,6 @@
 {
   "name": "recoilize",
-  "version": "3.1.6",
+  "version": "4.0.0",
   "description": "Recoil Dev Tool",
   "main": "index.js",
   "repository": {
@@ -15,7 +15,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Bren Yamaguchi, Saejin Kang, Jonathan Escamilla, Sean Smith, Justin Choo, Anthony Lin, Spenser Schwartz, Steven Nguyen, Henry Taing, Seungho Baek, Taven Shumaker, Aaron Yang, Jesus Vargas, Davide Molino, Janis Hernandez, Jaime Baik, Anthony Magallanes, Edward Shei, Leonard Lew, Joey Ma, Harvey Nguyen, Victor Wang, Adam Allison, Ryan Wallace, Jordan Rice, William Chu",
+  "author": "Bren Yamaguchi, Saejin Kang, Jonathan Escamilla, Sean Smith, Justin Choo, Anthony Lin, Spenser Schwartz, Steven Nguyen, Henry Taing, Seungho Baek, Taven Shumaker, Aaron Yang, Jesus Vargas, Davide Molino, Janis Hernandez, Jaime Baik, Anthony Magallanes, Edward Shei, Leonard Lew, Joey Ma, Harvey Nguyen, Victor Wang, Adam Allison, Ryan Wallace, Jordan Rice, William Chu, Alejandro Florez, Anne-lise Emig, Giovana De La Cruz, Kasey Wolff",
   "license": "MIT",
   "devDependencies": {
     "typescript": "^3.9.6"

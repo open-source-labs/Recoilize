@@ -1,3 +1,5 @@
+// this mock/ hard coded data is used for testing purposes
+
 export const snapshotHistoryMock = {
   snapshotHistory: [
     {
