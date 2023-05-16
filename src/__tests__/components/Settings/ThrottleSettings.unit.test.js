@@ -1,10 +1,16 @@
 import React from 'react';
-import {fireEvent, screen} from '@testing-library/react';
-import {cleanup, render, generateStore} from '../../testignore/testing';
-import ThrottleSettings from '../../../app/components/Settings/ThrottleSettings';
-import { snapshotHistoryMock } from '../../../../mock/state-snapshot';
 import '@testing-library/dom';
 import '@testing-library/jest-dom'
+import { fireEvent, screen } from '@testing-library/react';
+import { 
+  cleanup, 
+  generateStore, 
+  render, 
+} from '../../testignore/testing'; // custom testing functions necessary to pass tests
+
+import ThrottleSettings from '../../../app/components/Settings/ThrottleSettings'; // component being tested
+import { snapshotHistoryMock } from '../../../../mock/state-snapshot'; // this is our mock state that we will use to run our tests
+
 
 afterEach(cleanup);
 const throttleDisplayMock = 1000;
@@ -18,6 +24,7 @@ describe('Throttle Component renders correctly', () => {
     document.body.appendChild(throttle)
     render(<ThrottleSettings />, {providers: {store}});
   });
+
   it('should render correct content', () => {
     const throttle = document.createElement('div');
     throttle.id = 'throttle';

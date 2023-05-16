@@ -1,11 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {cleanup, render, generateStore} from '../../testignore/testing';
 import '@testing-library/jest-dom'
 import '@testing-library/dom';
-import AtomSettings from '../../../app/components/Settings/AtomSettings';
-import { snapshotHistoryMock } from '../../../../mock/state-snapshot';
-const {Multiselect} = require('multiselect-react-dropdown');
+import { 
+  cleanup, 
+  generateStore, 
+  render, 
+} from '../../testignore/testing'; // custom testing functions necessary to pass tests
+
+import AtomSettings from '../../../app/components/Settings/AtomSettings'; // component being tested
+import { snapshotHistoryMock } from '../../../../mock/state-snapshot'; // this is our mock state that we will use to run our tests
+
+const { Multiselect } = require('multiselect-react-dropdown');
+
 
 afterEach(cleanup);
 
@@ -24,10 +31,4 @@ describe('Atom Settings', () => {
     const root = document.createElement('div');
     ReactDOM.render(<Multiselect />, root);
   });
-})
-  
-
-
-
-
-
+});

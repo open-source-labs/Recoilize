@@ -1,8 +1,14 @@
 import React from 'react';
-import RankedGraph from '../../../../app/components/Metrics/RankedGraph';
-import {render, cleanup, screen} from '@testing-library/react';
 import '@testing-library/dom';
 import '@testing-library/jest-dom'
+import { 
+  cleanup, 
+  render, 
+  screen 
+} from '@testing-library/react'; // custom testing functions necessary to pass tests
+
+import RankedGraph from '../../../../app/components/Metrics/RankedGraph'; // component being tested
+
 
 
 //create empty mock data

@@ -1,18 +1,18 @@
+// currently, this test does not cover ability to drag atoms/selectors in the visualizer (5.2023)
+
 import React from 'react';
-import Network from '../../../app/components/AtomNetwork/AtomNetwork';
-import {
-  render,
-  cleanup,
-  generateStore,
-  screen,
-  fireEvent,
-} from '../../testignore/testing';
 import '@testing-library/jest-dom/extend-expect';
+import {
+  cleanup,
+  fireEvent,
+  generateStore,
+  render,
+  screen,
+} from '../../testignore/testing'; // custom testing functions necessary to pass tests
 
-// currently, this test does not cover ability to drag atoms/selectors in the visualizer
+import Network from '../../../app/components/AtomNetwork/AtomNetwork'; // component we're testing
+import {snapshotHistoryMock} from '../../../../mock/state-snapshot'; // this is our mock state that we will use to run our tests
 
-// this is our mock state that we will use to run our tests
-import {snapshotHistoryMock} from '../../../../mock/state-snapshot';
 
 afterEach(cleanup);
 

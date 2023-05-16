@@ -2,11 +2,17 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import "@testing-library/jest-dom";
+import { 
+  cleanup, 
+  generateStore, 
+  render, 
+  screen 
+} from '../testignore/testing'; // custom testing functions necessary to pass tests
 
 import { SnapshotsContainer } from '../../app/Containers/SnapshotContainer';
-import { cleanup, generateStore, render, screen } from '../testignore/testing';
 // this is our mock state that we will use to run our tests (for future tests)
 import { snapshotHistoryMock } from '../../../mock/state-snapshot'
+
 
 const store = generateStore({ snapshot: snapshotHistoryMock})
 
@@ -48,14 +54,14 @@ describe('Snapshot Component Rendering', () => {
     const previousButton = screen.getByRole('button', { name: 'Previous' });
     expect(previousButton).toBeInTheDocument();
   });
-    // no test for button functionality b/c no button functionality...
+  // need to test button functionality. no test for this currently (5.2023)
 
   /* <----- Render Forward Button test -----> */
   it(`should render a 'forward' button`, () => {
     const forwardButton = screen.getByRole('button', { name: 'Forward' });
     expect(forwardButton).toBeInTheDocument();
   });
-    // no test for button functionality b/c no button functionality...
+    // need to test button functionality. no test for this currently (5.2023)
 
 
   /* <----- Render Save Series Button test -----> */
@@ -63,7 +69,7 @@ describe('Snapshot Component Rendering', () => {
    const saveSeriesButton = screen.getByRole('button', { name: 'Save Series' });
    expect(saveSeriesButton).toBeInTheDocument();
   });
-  // no test for button functionality b/c no button functionality...
+  // no test for button functionality b/c no button functionality? (5.2023)
 
   /* <----- Render Snapshot Series List container test -----> */
   it('should render container that contains the snapshot series', () => {
@@ -79,12 +85,7 @@ describe('Snapshot Component Rendering', () => {
 
 });
 
-// would benefit from testing that the snapshot divs themselves render/ work
-describe('SnapshotContainer Functionality', () => {
-
-});
-
-// would benefit from testing that the snapshot divs themselves render/ work
+// would benefit from testing functionality of each item within this container
 describe('SnapshotContainer Functionality', () => {
 
 });

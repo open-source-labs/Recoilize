@@ -1,11 +1,17 @@
 import React from 'react';
-import ComparisonGraph from '../../../../app/components/Metrics/ComparisonGraph';
-import {render, cleanup, fireEvent, generateStore, screen} from '../../../testignore/testing';
-
 import '@testing-library/dom';
 import '@testing-library/jest-dom'
+import { 
+  cleanup, 
+  fireEvent, 
+  generateStore, 
+  render, 
+  screen 
+} from '../../../testignore/testing'; // custom testing functions necessary to pass tests
 
-import { snapshotHistoryMock } from '../../../../../mock/state-snapshot';
+import ComparisonGraph from '../../../../app/components/Metrics/ComparisonGraph'; // component being tested
+import { snapshotHistoryMock } from '../../../../../mock/state-snapshot'; // this is our mock state that we will use to run our tests
+
 
 const mock = [
   {
