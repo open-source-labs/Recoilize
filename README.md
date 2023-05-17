@@ -22,9 +22,6 @@ Download Recoilize from the [Chrome Store](https://chrome.google.com/webstore/de
 Visit the Recoilize [landing page](https://www.recoilize.io/) to demo
 
 
-## ** STILL IN BETA **
-Please note that Recoilize is in BETA. We will continue to make improvements and implement fixes but if you find any issues, please don't hesitate to report them in the issues tab or submit a PR and we'll happily take a look.
-
 
 # Installation
 ## Standard Installation:
