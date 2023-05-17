@@ -2,7 +2,7 @@
 
 ## Brief
 
-Though Recoil.js is still in the experimental state, it has proved its ability and has caught a tremendous amount of attention from experienced developers over the past three years. We created Recoilize with one mission in mind - providing a helpful debugging tool so developers can easily transition to Recoil.js. Recoilize is an open source product that is maintained and iterated on regularly, and we always welcome developers who are interested in contributing. Getting on board and understanding a new codebase is never easy, so here are some useful tips and information to help you get started quickly.
+Though Recoil.js is still in the experimental state, it has proven its ability and has caught a tremendous amount of attention from experienced developers over the past three years. We created Recoilize with one mission in mind - providing a helpful debugging tool so developers can easily transition to Recoil.js. Recoilize is an open source product that is maintained and iterated on regularly, and we always welcome developers who are interested in contributing. Getting on board and understanding a new codebase is never easy, so here are some useful tips and information to help you get started quickly.
 
 ## File Structure
 
@@ -29,10 +29,12 @@ src/
 │   ├── index.tsx          # Root file to render the app
 │   ├── state-management   # Redux toolkit slices
 │   └── utils              # More helper functions
+│
 ├── extension              # All files related to the Chrome extension
 │   ├── build              # Destination for bundles and manifest.json (Chrome config file)
 │   ├── contentScript.ts   # Chrome Content Script
 │   └── service_worker.ts  # Chrome service worker script
+│
 └── types                  # Type definitions
     └── index.d.ts
 ```
@@ -78,6 +80,7 @@ The Chrome extension files are located in src/extension. To test the Chrome exte
 - The "BOTH" button on the Component Graph is non-functional
 - The Snapshots "Jump" buttons sometimes do not work if the page has not been refreshed
 - The component graph sometimes renders off screen and needs to be zoomed in/out in order to be seen
+- The page sometimes needs to be refreshed in order for Recoilize to recognize an application using Recoil
 
 ## Understanding Chrome Extension's Communication Paths
 
