@@ -16,7 +16,7 @@
 
 Recoilize is a Chrome Dev Tool designed for debugging applications built with the Recoil.js state management library.
 
-The tool records Recoil state and allows users to easily debug their applications with features such as: time travel to previous states, visualization of the component graph and display of the atom selector network.
+The tool records Recoil state and allows users to easily debug their applications with features such as time travel to previous states, visualization of the component graph and display of the atom selector network.
 
 <br />
 
@@ -31,6 +31,8 @@ Visit the Recoilize [landing page](https://www.recoilize.io/) to demo
 
 # Installation
 ## Standard Installation:
+For installation in applications using React.js, follow the instructions below.
+
 <br />
 
 Install Recoilize Module (only available as an npm package)
@@ -127,31 +129,77 @@ export default MyApp;
 <br />
 <br />
 
-Once you have completed the steps above, open your application in Chrome and you're ready to start debugging with Recoilize!
+Once you have completed the steps above, open your application in Chrome, select the Recoilize Chrome extension, refresh the page*, and you're ready to start debugging with Recoilize!
 
 <br />
 
-##### (Only supported with React applications using Recoil as state management)
+##### *The Chrome Extension is only supported with React applications using Recoil as state management*
+
+##### **note that you may need to refresh your page before the extension registers that the Recoilize npm package has been installed within the application. This is a known bug that needs to be addressed*
 
 <br />
 <br />
 
-# Updates for Version 4.0.0
+# Updates for Version 4.0
 
-### <u>Support for Recoil 0.1.3</u>
+### <u>Manifest 3</u>
+
+Google is transitioning Chrome Extensions to Manifest v3. Soon, Manifest v2 will be phased out, and only extensions using Manifest v3 will be accepted and listed in the Chrome store. Because of this, one of the primary focuses for Recoilize 4.0 was to update the Chrome Extension to Manifest v3. With this update, users will still be able to utilize this amazing tool, as it has now been updated and complies with Manifest v3 requirements.
+
+<br />
+
+### <u>React 17 and 18 Compatibility</u>
+
+Recoilize is now compatible with React 17 and 18. 
+
+<br />
+
+### <u>Support for Recoil 0.1.3???</u>
 
 Recoilize now supports the most recent update to the Recoil library and is backwards compatible with older versions of Recoil.
 
 <br />
 
+### <u>Under the Hood</u>
+* Deprecated dependencies have been updated
+* React has been updated from 16 to 17
+* Increased testing coverage
+* Cleaner codebase for improved readability
+
+
+<br />
+<br />
+
+
+
+# Features 
+### <u>Atom Network</u>
+
+Easily visualize the relationship between atoms and selectors (the bread and butter of Recoil.js) with the use of the Atom Network.
+
+<br />
+
+<p align='center'> 
+<img src='./src/extension/build/assets/atomNetwork-gif.gif' width=600 height=300/>
+</p>
+
+<br />
+
+### <u>Snapshot Comparison</u>
+
+Optimizing your app is key. Component rendering time can be difficult to keep track of if you have a long series of snapshots, and render time can vary depending on the browser and device used. Users can save a series of state snapshots and use it later to analyze and compare with the most up to date series.
+
+<br />
+
+<p align='center'> 
+<img src='./src/extension/build/assets/snapshotcomparison-gif.gif' width=600 height=300/>
+</p>
+
+<br />
+
 ### <u>Time Travel with ease</u>
 
-If you had used Recoilize before, you would have noticed an annoying bug that sometimes breaks the app and won’t allow you to be productive. With the new version of Recoilize, that issue is forever gone. Users can now use the tool with confidence and worry-free.
-
-The main mission of Recoilize 3.0 is to make it more user-friendly, so you will enjoy our brand new time travel feature — the time travel slider! Why click and scroll through snapshots when you can do it with a slider and some buttons, right?
-
-
-
+Users may travel through their snapshot history with the use of a slider or buttons.
 
 <br />
 
@@ -163,39 +211,15 @@ The main mission of Recoilize 3.0 is to make it more user-friendly, so you will 
 
 ### <u>Customizable Component Graph</u>
 
-This is one of the coolest updates of Recoilize 3.0. We understand that different users have different ways of thinking and visualizing, and for that reason, the component tree now is fully customizable. You can expand or collapse the components, choose vertical or horizontal displays or adjust the spacing between elements.
+The component graph allows users to visualize the relationship between components and how they are rendered.
+
+Users have the ability to customize how they view the component graph. Components can be expanded or collapsed, and can also be displayed horizontally or vertically, depending on the users preference.
 
 <br />
 
 <p align='center'> 
 <img src='./src/extension/build/assets/componentTree-gif.gif' width=600 height=300/>
 </p>
-
-<br />
-
-### <u>Better User Experience with Atom Network</u>
-
-The atom network is one of the key features that differentiate Recoil.js from other alternative state management libraries. However, the atom network will grow bigger together with the app. At some points, it will be unmanageable and hard to keep track of all of the atoms. To make this easier and pain-free, the new Atom Network will allow you to freely move and arrange them anywhere you want.
-
-<br />
-
-<p align='center'> 
-<img src='./src/extension/build/assets/atomNetwork-gif.gif' width=600 height=300/>
-</p>
-
-<br />
-
-# Features 
-### <u>Snapshot Comparison</u>
-
-Optimizing your app is key. Component rendering time can be difficult to keep track of if you have a long series of snapshots, and render time can vary depending on the browser and device used. Users can save a series of state snapshots and use it later to analyze and compare with the most up to date series.
-
-<br />
-
-<p align='center'> 
-<img src='./src/extension/build/assets/snapshotcomparison-gif.gif' width=600 height=300/>
-</p>
-
 
 <br />
 
