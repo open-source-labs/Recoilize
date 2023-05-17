@@ -1,18 +1,36 @@
 <meta name='keywords' content='Recoil, Recoil.js, Recoil Dev Tool, Recoilize, Chrome Dev Tool, Recoil Chrome'>
 
+<a name="readme-top"></a>
+
 <p align='center'>
 <img src='./src/extension/build/assets/cover-photo-logo-recoilize.jpg' width=100%>
 </p>
 
-# Dev Tool for Recoil Applications
+# A Dev Tool for Recoil Applications
 
-# [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/oslabs-beta/Recoilize/blob/staging/LICENSE) [![npm version](https://img.shields.io/npm/v/recoilize)](https://www.npmjs.com/package/recoilize) ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)
+# [![Contributors](https://img.shields.io/github/contributors/open-source-labs/Recoilize.svg?style=for-the-badge)](https://github.com/open-source-labs/Recoilize/graphs/contributors) [![npm version](https://img.shields.io/npm/v/recoilize?style=for-the-badge)](https://www.npmjs.com/package/recoilize) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg?style=for-the-badge)](https://github.com/oslabs-beta/Recoilize/blob/staging/LICENSE) ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=for-the-badge)
 
 [Korean README 한국어](README_KO.md) (this README is not up to date with the latest README)
 
 <br />
 
 # About
+
+[![Typescript][TS.js]][TS-url]
+[![JavaScript][JavaScript]][JavaScript-url]
+[![React][React.js]][React-url]
+[![Redux][Redux]][Redux-url]
+[![RTK][RTK]][RTK-url]
+[![D3][D3.js]][d3-url]
+[![Node][Node.js]][Node-url]
+[![Jest][Jest]][Jest-url]
+[![Testing][Testing-Library]][Testing-Library-url]
+[![Git][Git]][Git-url]
+[![HTML5][HTML5]][HTML5-url]
+[![CSS3][CSS3]][CSS3-url]
+
+
+<br />
 
 Recoilize is a Chrome Dev Tool designed for debugging applications built with the Recoil.js state management library.
 
@@ -252,8 +270,8 @@ Recoilize allows the users to persist their application's state through a refres
 
 <br />
 
-## We will continue updating Recoilize alongside Recoil's updates!
 
+<br />
 <br />
 
 # Contributors
@@ -361,3 +379,33 @@ Giovana De La Cruz | [github](https://github.com/giovanacdlc) | [linkedin]()
 
 
 Kasey Wolff | [github](https://github.com/kaseywolff) | [linkedin](https://www.linkedin.com/in/kaseywolff/)
+
+
+<p align="right"><a href="#readme-top">back to top</a></p>
+
+
+
+[TS.js]: https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white
+[TS-url]: https://www.typescriptlang.org/
+[JavaScript]: https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E
+[JavaScript-url]: https://www.javascript.com/
+[React.js]: https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB
+[React-url]: https://reactjs.org/
+[Redux]: https://img.shields.io/badge/redux-%23593d88.svg?style=for-the-badge&logo=redux&logoColor=white
+[Redux-url]: https://redux.js.org/
+[RTK]: https://img.shields.io/badge/RTK-563D7C?style=for-the-badge&logo=redux&logoColor=white
+[RTK-url]: https://redux-toolkit.js.org/
+[Node.js]: https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white
+[Node-url]: https://nodejs.org/en/
+[D3.js]: https://img.shields.io/badge/d3.js-F9A03C?style=for-the-badge&logo=d3.js&logoColor=white
+[d3-url]: https://d3js.org/
+[Jest]: https://img.shields.io/badge/-jest-%23C21325?style=for-the-badge&logo=jest&logoColor=white
+[Jest-url]: https://jestjs.io/
+[Testing-Library]:https://img.shields.io/badge/testing%20library-E33332?style=for-the-badge&logo=testing-library&logoColor=white
+[Testing-Library-url]: https://testing-library.com/ 
+[Git]: https://img.shields.io/badge/git-%23F05033.svg?style=for-the-badge&logo=git&logoColor=white
+[Git-url]: https://git-scm.com/
+[CSS3]: https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white
+[CSS3-url]: https://www.w3schools.com/css/
+[HTML5]: https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white
+[HTML5-url]: https://www.w3schools.com/html/
