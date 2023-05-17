@@ -8,6 +8,8 @@ interface PropsInterface {
 }
 
 // when the ATOM button is clicked, it will render these 'Atom' buttons, which can be clicked to highlight the atoms on the component graph
+// once the button is clicked, it remains highlighted (currently stays the color yellow) unless SELECTOR is clicked. would consider adjusting this for better UI (5.2023)
+
 const Atom = (props: PropsInterface) => {
   const {i, atom, setSelectedRecoilValue, setIsDropDownItem} = props;
 

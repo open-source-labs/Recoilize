@@ -5,7 +5,6 @@ import '@testing-library/jest-dom/extend-expect';
 
 import {render, fireEvent} from '@testing-library/react';
 
-import Navbar from '../../../app/components/NavBar/NavBar';
 
 // check that component renders
 it('renders to the dom', () => {

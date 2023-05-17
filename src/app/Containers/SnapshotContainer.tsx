@@ -3,7 +3,7 @@ import React, {useEffect, useRef} from 'react';
   - { useRef }: a React Hook that lets you reference a value that’s not needed for rendering. It’s particularly common to use a ref to manipulate the DOM. React has built-in support for this.
 */
 
-import {useAppSelector, useAppDispatch} from '../state-management/hooks'; // -> these hooks are created in a separate file per documentation (5.2023 KW)
+import {useAppSelector, useAppDispatch} from '../state-management/hooks'; // -> these hooks are created in a separate file per documentation (5.2023)
 
 /* import FUNCTIONS used in this container */
 import filterFunc from '../functions/SnapshotContainerFunctions/filterFunc'; // -> used to compare state
@@ -14,12 +14,13 @@ import toLocalStorage from '../functions/SnapshotContainerFunctions/toLocalStora
 import {selectFilterState} from '../state-management/slices/FilterSlice';
 import {setRenderIndex} from '../state-management/slices/SnapshotSlice';
 
-// refactored from React.FC (not recommended) (5.2023 KW)
+
+// refactored from React.FC (not recommended) (5.2023)
 export const SnapshotsContainer = () => {
-  // The useDispatch hook (which is utilized in useAppDispatch -> see hooks file) returns a function. So it is assigned to a variable. Then, in the “onClick” function below, it is used to dispatch the 'setRenderIndex' action. (5.2023 KW)
+    // The useDispatch hook (which is utilized in useAppDispatch -> see hooks file) returns a function. So it is assigned to a variable. Then, in the “onClick” function below, it is used to dispatch the 'setRenderIndex' action. (5.2023)
   const dispatch = useAppDispatch();
 
-  // the useSelector hook (which is utilized in useAppDispatch -> see hooks file) is used to extract 'state' from the global state. We can take out any state we want to use in the component using the same way (5.2023 KW)
+  // the useSelector hook (which is utilized in useAppDispatch -> see hooks file) is used to extract 'state' from the global state. We can take out any state we want to use in the component using the same way (5.2023)
   const snapshotHistory = useAppSelector(
     state => state.snapshot.snapshotHistory,
   );
@@ -103,7 +104,7 @@ export const SnapshotsContainer = () => {
 
   /* <----- PREVIOUS CLEAR -----> */
   // function to remove all snapshots behind selected snapshot (removes divs)
-  // would maybe try to move this to different file to shorten this code further. didn't have time to get this to work (5.2023 KW)
+  // would maybe try to move this to different file to shorten this code further. didn't have time to get this to work (5.2023)
   function prevClr() {
     const snapshotListArr = document.querySelectorAll('.individualSnapshot');
 

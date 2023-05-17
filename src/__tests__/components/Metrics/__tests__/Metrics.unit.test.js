@@ -1,10 +1,20 @@
+// this unit test is currently failing. there appears to be an issue with the custom 'render' function. (5.2023)
+
 import React from 'react';
-import {render, generateStore, cleanup} from '../../../testignore/testing';
-import Metrics from '../../../../app/components/Metrics/MetricsContainer';
-import { snapshotHistoryMock } from '../../../../../mock/state-snapshot';
-import '@testing-library/jest-dom'
+import '@testing-library/jest-dom';
+import { 
+  cleanup,  
+  generateStore, 
+  render, 
+} from '../../../testignore/testing'; // custom testing functions necessary to pass tests
+
+import Metrics from '../../../../app/components/Metrics/MetricsContainer'; // component being tested
+import { snapshotHistoryMock } from '../../../../../mock/state-snapshot'; // this is our mock state that we will use to run our tests
+
+
 
 afterEach(cleanup);
+
 const store = generateStore({snapshot: snapshotHistoryMock});
 
 describe('Metrics rendering', () => {

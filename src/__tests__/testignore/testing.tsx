@@ -1,14 +1,15 @@
-// this file will hold our custom render, so that when we run tests the component is wrapped in a react-redux provider when Jest renders it
-// followed this guide: https://betterprogramming.pub/react-testing-library-configuration-for-productive-unit-testing-5d0c446f3b3d
+// this file will hold our custom render, so that when we run tests the component is wrapped in a react-redux provider when Jest renders it (5.2023)
+// follwed this guide: https://betterprogramming.pub/react-testing-library-configuration-for-productive-unit-testing-5d0c446f3b3d
 
-// this file is within a testignore folder because it is necessary for multiple test files, however we do not want to test it.
+// this file is within a testignore folder because it is necessary for multiple test files, however we do not want to test it. (5.2023)
 
-import React, {FC, ReactElement} from 'react';
-import {render, RenderOptions} from '@testing-library/react';
-import {Provider} from 'react-redux';
+import React, { ReactElement } from 'react';
+import { configureStore, PreloadedState, Store } from '@reduxjs/toolkit';
+import { render, RenderOptions } from '@testing-library/react';
+import { Provider } from 'react-redux';
 
-import {rootReducer} from '../../app/state-management/index';
-import {configureStore, Store, PreloadedState} from '@reduxjs/toolkit';
+import { rootReducer } from '../../app/state-management/index';
+
 
 export type ProvidersRenderOptions = {
   store?: Store;

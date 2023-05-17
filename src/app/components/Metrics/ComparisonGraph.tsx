@@ -20,7 +20,7 @@ const ComparisonGraph = ({
     (state: {snapshot: {snapshotHistory: any}}) =>
       state.snapshot.snapshotHistory,
   );
-  console.log('comparison snapshot ', snapshotHistory);
+
   // declare an array that holds 2 objects: past and current
   const displayData = [
     {name: 'past', duration: 0},
@@ -34,19 +34,19 @@ const ComparisonGraph = ({
   while (i--) {
     const series = localStorage.getItem(keys[i]);
     values.push(JSON.parse(series));
-  }
+  };
 
   //only for the past display
   //seems to be adding the tree base duration from the componentAtomTree in each element of the value array to the duration that is displayed in the screen (total time?)
   for (const element of values) {
     displayData[0].duration += element.componentAtomTree.treeBaseDuration;
-  }
+  };
 
   //values are the current values vs snapshotHistory which are past values?
   let total: number = 0;
   for (const element of snapshotHistory) {
     total += element.componentAtomTree.treeBaseDuration;
-  }
+  };
 
   //only for present display
   displayData[1].duration = total;

@@ -1,3 +1,4 @@
+// testing needs to be created for this container (5.2023)
 import React from 'react';
 
 const LOGO_URL = './assets//Recoilize-v2.png'; // -> this file is used in the chrome extension. directory is set up to retrieve image in extension folder

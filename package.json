@@ -12,7 +12,7 @@
       "./src/__tests__/testignore/"
     ]
   },
-  "version": "3.1.6",
+  "version": "3.2.0",
   "description": "A Chrome extension that helps debug Recoil applications by memorizing the state of components with every render.",
   "main": "index.js",
   "scripts": {
@@ -21,7 +21,7 @@
     "test": "jest",
     "lint": "eslint '**/*.tsx' '**/*.ts' '**/*.js' --ignore-path .gitignore"
   },
-  "author": "Bren Yamaguchi, Saejin Kang, Jonathan Escamilla, Sean Smith, Justin Choo, Anthony Lin, Spenser Schwartz, Steven Nguyen, Henry Taing, Seungho Baek, Taven Shumaker, Aaron Yang, Jesus Vargas, Davide Molino, Janis Hernandez, Jaime Baik, Anthony Magallanes, Edward Shei, Leonard Lew, Joey Ma, Harvey Nguyen, Victor Wang, Adam Allison, Ryan Wallace, Jordan Rice, William Chu",
+  "author": "Bren Yamaguchi, Saejin Kang, Jonathan Escamilla, Sean Smith, Justin Choo, Anthony Lin, Spenser Schwartz, Steven Nguyen, Henry Taing, Seungho Baek, Taven Shumaker, Aaron Yang, Jesus Vargas, Davide Molino, Janis Hernandez, Jaime Baik, Anthony Magallanes, Edward Shei, Leonard Lew, Joey Ma, Harvey Nguyen, Victor Wang, Adam Allison, Ryan Wallace, Jordan Rice, William Chu, Alejandro Florez, Anne-lise Emig, Giovana De La Cruz, Kasey Wolff",
   "license": "MIT",
   "devDependencies": {
     "@babel/core": "^7.18.0",

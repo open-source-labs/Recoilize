@@ -1,16 +1,16 @@
-import React, {useState} from 'react';
-import AtomComponentVisual from '../../../app/components/ComponentGraph/AtomComponentVisual';
-import {
-  render,
-  cleanup,
-  generateStore,
-  screen,
-  fireEvent,
-} from '../../testignore/testing';
+import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
+import {
+  cleanup,
+  fireEvent,
+  generateStore,
+  render,
+  screen,
+} from '../../testignore/testing'; // custom testing functions necessary to pass tests
 
-// this is our mock state that we will use to run our tests
-import {snapshotHistoryMock} from '../../../../mock/state-snapshot';
+import AtomComponentVisual from '../../../app/components/ComponentGraph/AtomComponentVisual'; // component being tested
+import {snapshotHistoryMock} from '../../../../mock/state-snapshot'; // this is our mock state that we will use to run our tests
+
 
 afterEach(cleanup);
 

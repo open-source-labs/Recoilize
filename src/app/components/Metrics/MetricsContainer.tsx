@@ -1,10 +1,9 @@
 import React, {Children, useState} from 'react';
-// import {ParentSize} from '@vx/responsive';
 import {ParentSize} from '@visx/responsive'
-import {dataDurationArr} from '../../../types';
 import FlameGraph from './FlameGraph.js';
 import RankedGraph from './RankedGraph';
 import ComparisonGraph from './ComparisonGraph';
+import {dataDurationArr} from '../../../types';
 import {useAppSelector} from '../../state-management/hooks';
 
 
@@ -18,10 +17,10 @@ const Metrics = (): JSX.Element => {
   const cleanedComponentAtomTree = useAppSelector(
     state => state.snapshot.cleanComponentAtomTree,
   );
-  //create state for the graph type toggle
+  // create state for the graph type toggle
   const [graphType, setGraphType] = useState<string>('flame');
 
-  //funciton that toggles the graphType state
+  // funciton that toggles the graphType state
   const toggleGraphFunc = (check: string): void => {
     if (check === 'flame') setGraphType('flame');
     if (check === 'ranked') setGraphType('ranked');
@@ -47,11 +46,11 @@ const Metrics = (): JSX.Element => {
   };
   namesAndDurations(cleanedComponentAtomTree);
 
-  //function that renders either graphComponent based on graphType state variable
+  // function that renders either graphComponent based on graphType state variable
   const determineRender: any = () => {
     if (graphType === 'flame') {
       return (
-        //ParentSize component allows us to scale the FlameGraph to fit its container.
+        // ParentSize component allows us to scale the FlameGraph to fit its container.
         <ParentSize>
           {size =>
             size.ref && (
@@ -95,7 +94,7 @@ const Metrics = (): JSX.Element => {
     }
   };
 
-  //render the toggle buttons and the appropriate graph based on GraphType state variable
+  // render the toggle buttons and the appropriate graph based on GraphType state variable
   return (
     <div id="metricsWrapper">
       <div data-testid="canvas" className="graphContainer">

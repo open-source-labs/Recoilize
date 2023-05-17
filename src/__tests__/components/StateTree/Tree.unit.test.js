@@ -1,14 +1,18 @@
+// this test is loosely based on this article on rendering React tests (5.2023)
+// https://betterprogramming.pub/react-testing-library-configuration-for-productive-unit-testing-5d0c446f3b3d
+
 import React from 'react';
 import '@testing-library/jest-dom'
+import { 
+  cleanup, 
+  generateStore, 
+  render, 
+  screen, 
+} from '../../testignore/testing'; // custom testing functions necessary to pass tests
 
-import {render, generateStore, screen, cleanup} from '../../testignore/testing';
+import Tree from '../../../app/components/StateTree/Tree'; // component being tested
+import { snapshotHistoryMock } from '../../../../mock/state-snapshot'; // this is our mock state that we will use to run our tests
 
-import Tree from '../../../app/components/StateTree/Tree';
-
-// this test is loosely based on this article on rendering React tests https://betterprogramming.pub/react-testing-library-configuration-for-productive-unit-testing-5d0c446f3b3d
-
-// this is our mock state that we will use to run our tests
-import { snapshotHistoryMock } from '../../../../mock/state-snapshot';
 
 afterEach(cleanup);
 

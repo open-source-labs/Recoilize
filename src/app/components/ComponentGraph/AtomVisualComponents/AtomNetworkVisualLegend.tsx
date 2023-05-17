@@ -17,8 +17,7 @@ const AtomNetworkVisualLegend = (props: PropsInterface) => {
 
   // hook for selected button styles on the legend
   const [atomButtonClicked, setAtomButtonClicked] = useState<boolean>(false);
-  const [selectorButtonClicked, setSelectorButtonClicked] =
-    useState<boolean>(false);
+  const [selectorButtonClicked, setSelectorButtonClicked] = useState<boolean>(false);
 
   // hook for toggling
   const [showAtomMenu, setShowAtomMenu] = useState<boolean>(false);

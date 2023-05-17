@@ -1,15 +1,16 @@
-import {setSearchValue} from '../../app/state-management/slices/AtomNetworkSlice';
-import {updateFilter} from '../../app/state-management/slices/FilterSlice';
-import {setSelected, addSelected} from '../../app/state-management/slices/SelectedSlice';
+import { setSearchValue } from '../../app/state-management/slices/AtomNetworkSlice';
+import { setSelected, addSelected } from '../../app/state-management/slices/SelectedSlice';
+import { updateFilter } from '../../app/state-management/slices/FilterSlice';
 import {
   setSnapshotHistory,
   setRenderIndex,
   setCleanComponentAtomTree,
 } from '../../app/state-management/slices/SnapshotSlice';
-import {newThrottle, resetThrottle} from '../../app/state-management/slices/ThrottleSlice';
-import {setDefaultZoom, updateZoomState} from '../../app/state-management/slices/ZoomSlice';
-import {store} from '../../app/state-management/index';
-import {snapshotHistoryMock} from '../../../mock/state-snapshot';
+import { newThrottle, resetThrottle } from '../../app/state-management/slices/ThrottleSlice';
+import { setDefaultZoom, updateZoomState } from '../../app/state-management/slices/ZoomSlice';
+import { store } from '../../app/state-management/index';
+import { snapshotHistoryMock } from '../../../mock/state-snapshot';
+
 
 describe('ZoomSlice', () => {
   it('update zoom state', () => {

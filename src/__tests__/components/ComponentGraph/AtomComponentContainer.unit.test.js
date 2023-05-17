@@ -1,11 +1,19 @@
+// currently giving this just the snapshot
+// also needs selectZoomState test (5.2023)
+
 import React from 'react';
-import AtomComponentVisualContainer from '../../../app/components/ComponentGraph/AtomComponentContainer';
-import {cleanup, render, generateStore} from '../../testignore/testing';
+import { 
+  cleanup, 
+  generateStore, 
+  render 
+} from '../../testignore/testing'; // custom testing functions necessary to pass tests
+
+import AtomComponentVisualContainer from '../../../app/components/ComponentGraph/AtomComponentContainer'; // component being tested
+import {snapshotHistoryMock} from '../../../../mock/state-snapshot'; // this is our mock state that we will use to run our tests
+
+
 
 afterEach(cleanup);
-
-// this is our mock state that we will use to run our tests
-import {snapshotHistoryMock} from '../../../../mock/state-snapshot';
 
 // define zoom for state (in zoom slice)
 // test is still able to generate automatic zoom data without this

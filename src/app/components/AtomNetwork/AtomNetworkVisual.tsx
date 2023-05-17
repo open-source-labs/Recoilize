@@ -1,8 +1,9 @@
-import React, {useState, useEffect} from 'react';
+import React, { useEffect } from 'react';
 import * as d3 from 'd3';
 import makeRelationshipLinks from '../../utils/makeRelationshipLinks';
-import {useAppSelector} from '../../state-management/hooks';
-import {filteredSnapshot} from '../../../types';
+import { useAppSelector } from '../../state-management/hooks';
+import { filteredSnapshot } from '../../../types';
+
 
 const AtomNetworkVisual: React.FC = () => {
   //Retrieve snapshotHistory State from Redux Store

@@ -5,6 +5,7 @@ const generateCleanComponentAtomTree = (
   ): componentAtomTree => {
     const obj = {} as componentAtomTree;
     let counter = 0;
+
     const innerClean = (inputObj: any, outputObj: any, counter: number = 0) => {
       if (
         (inputObj.tag === 0 || inputObj.tag === 2) &&
@@ -35,12 +36,14 @@ const generateCleanComponentAtomTree = (
           }
         }
       }
+
       // recursive call running through the whole component atom tree -- understand this better
       for (let i = 0; i < inputObj.children.length; i++) {
         innerClean(inputObj.children[i], outputObj, counter);
       }
       return outputObj;
     };
+    
     innerClean(inputObj, obj, counter);
   
     //ensure that the root element's actual duration is included in outObj
