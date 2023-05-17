@@ -15,7 +15,6 @@ import {selectFilterState} from '../state-management/slices/FilterSlice';
 import {setRenderIndex} from '../state-management/slices/SnapshotSlice';
 
 
-
 // refactored from React.FC (not recommended) (5.2023)
 export const SnapshotsContainer = () => {
     // The useDispatch hook (which is utilized in useAppDispatch -> see hooks file) returns a function. So it is assigned to a variable. Then, in the “onClick” function below, it is used to dispatch the 'setRenderIndex' action. (5.2023)
@@ -28,20 +27,18 @@ export const SnapshotsContainer = () => {
   const selected = useAppSelector(state => state.selected.selectedData);
 
   const renderIndex = useAppSelector(state => state.snapshot.renderIndex);
-  
+
   const filterData = useAppSelector(selectFilterState);
-  
+
   const snapshotEndRef = useRef<null | HTMLDivElement>(null);
 
   let snapshotHistoryLength = snapshotHistory.length;
 
-
   /* <--- AUTO SCROLL TO BOTTOM -----> */
   // this will automatically scroll us to the bottom when the snapshot history changes
   useEffect(() => {
-    snapshotEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+    snapshotEndRef.current?.scrollIntoView({behavior: 'smooth'});
   }, [snapshotHistoryLength]);
-
 
   // creating empty array for snapshots to be pushed into as they are created
   const snapshotDivs: JSX.Element[] = [];
@@ -57,7 +54,6 @@ export const SnapshotsContainer = () => {
     // renderTime is set equal to the actualDuration. If i is zero then we are obtaining actualDuration from the very first snapshot in snapshotHistory. This is to avoid having undefined filter elements since there will be no difference between snapshot at the first instance.
     let renderTime: number =
       snapshotHistory[i].componentAtomTree.treeBaseDuration;
- 
 
     snapshotDivs.push(
       <div
@@ -71,7 +67,8 @@ export const SnapshotsContainer = () => {
         }
         onClick={() => {
           dispatch(setRenderIndex(i));
-        }}>
+        }}
+      >
         <li>{`${Math.round(renderTime * 100) / 100}ms`}</li>
         <button
           className="timeTravelButton"
@@ -82,47 +79,49 @@ export const SnapshotsContainer = () => {
           }
           onClick={() => {
             timeTravelFunc(i, filterData);
-          }}>
+          }}
+        >
           Jump
         </button>
       </div>,
     );
-  };
+  }
 
   /* <----- FORWARD CLEAR -----> */
   // function to remove all snapshots ahead of selected snapshot (removes divs)
   // would maybe try to move this to different file to shorten this code further. didn't have time to get this to work (5.2023 KW)
   function fwrdClr() {
     const snapshotListArr = document.querySelectorAll('.individualSnapshot');
-  
+
     for (let i = snapshotListArr.length - 1; i >= 0; i--) {
       let index = parseInt(snapshotListArr[i].id.match(/\d+/g)[0]);
-  
+
       if (index > renderIndex) {
         snapshotListArr[i].parentNode.removeChild(snapshotListArr[i]);
       } else break;
-    };
-  };
+    }
+  }
 
   /* <----- PREVIOUS CLEAR -----> */
   // function to remove all snapshots behind selected snapshot (removes divs)
   // would maybe try to move this to different file to shorten this code further. didn't have time to get this to work (5.2023)
   function prevClr() {
     const snapshotListArr = document.querySelectorAll('.individualSnapshot');
-  
+
     for (let i = 0; i < snapshotListArr.length; i++) {
       let index = parseInt(snapshotListArr[i].id.match(/\d+/g)[0]);
-  
+
       if (index < renderIndex) {
         snapshotListArr[i].parentNode.removeChild(snapshotListArr[i]);
       } else break;
     }
-  };
-
+  }
 
   return (
     <div className="SnapshotsContainer" data-testid="SnapshotsContainer">
-      <div id="clear-snapshots-title" data-testid="clear-snapshots-title">Clear Snapshots</div>
+      <div id="clear-snapshots-title" data-testid="clear-snapshots-title">
+        Clear Snapshots
+      </div>
       <div className="clear-buttons">
         <button onClick={prevClr} id="prevClr">
           Previous
@@ -137,14 +136,16 @@ export const SnapshotsContainer = () => {
           fontWeight: 'bold',
           marginTop: '10px',
           marginBottom: '10px',
-        }}>
+        }}
+      >
         Snapshots
       </span>
       <button
         className="save-series-button"
-        onClick={(e) => {
+        onClick={e => {
           toLocalStorage(snapshotHistory);
-        }}>
+        }}
+      >
         Save Series
       </button>
       <div className="SnapshotsList" data-testid="SnapshotsList">

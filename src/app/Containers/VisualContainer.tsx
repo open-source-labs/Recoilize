@@ -33,12 +33,12 @@ export const VisualContainer: React.FC = () => {
 
     // settings tab
     Settings: <Settings />,
-    // add a testing tab
-    Testing: (
-      <RecoilRoot>
-        <Testing />
-      </RecoilRoot>
-    ),
+    // commenting out Testing tab because it's not currently functional
+    // Testing: (
+    //   <RecoilRoot>
+    //     <Testing />
+    //   </RecoilRoot>
+    // ),
   };
   // array of all nav obj keys
   const tabsList: string[] = Object.keys(nav);

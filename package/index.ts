@@ -10,10 +10,11 @@ import {
 import formatFiberNodes from './formatFiberNodes';
 import {node} from '../src/types';
 
-// NOTE: to test the typescript implementation, change the file names for formatFiberNodes.js and index.js, then compile the TS files by running 'tsc index.js'.
-// Currently, the TS files compile, however, the atoms and selectors are not properly formatted, and the state is empty. The component graph renders, but the State Diff and State tree windows are empty.
-// Because of this, the package uses ONLY the .js files, NOT the .ts files
-// A component is probably typed too strictly in this file
+/* NOTE: to test the typescript implementation, change the file names for formatFiberNodes.js and index.js so that the original files are not overwritten when the typescript is compiled. 
+Then compile the TS files by running 'tsc index.js' in the package folder.
+Currently, the TS files compile, however, the atoms and selectors are not properly formatted, and the state is empty. The component graph renders, but the State Diff and State tree windows are empty.
+Because of this, the package uses ONLY the .js files, NOT the .ts files
+A component is probably typed too strictly in this file */
 
 interface AtomsAndSelectorsInterface {
   atoms: string[];

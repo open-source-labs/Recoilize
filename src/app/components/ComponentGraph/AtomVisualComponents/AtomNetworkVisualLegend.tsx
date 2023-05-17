@@ -9,6 +9,7 @@ interface PropsInterface {
   selectorList: string[];
 }
 
+// this component renders the "ATOM", "SELECTOR", and "BOTH" buttons within the Component Graph tab
 // NOTE: both button does not currently do anything
 const AtomNetworkVisualLegend = (props: PropsInterface) => {
 

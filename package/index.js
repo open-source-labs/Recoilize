@@ -158,9 +158,6 @@ export default function RecoilizeDebugger(props) {
       case 'snapshotTimeTravel':
         timeTravelToSnapshot(msg);
         break;
-      case 'persistState':
-        switchPersistMode();
-        break;
       // Implementing the throttle change
       case 'throttleEdit':
         throttleLimit = parseInt(payload.value);
@@ -170,43 +167,12 @@ export default function RecoilizeDebugger(props) {
     }
   };
 
-  // assigns or switches isPersistedState in sessionStorage
-  const switchPersistMode = () => {
-    if (isPersistedState === 'false' || isPersistedState === null) {
-      // switch isPersistedState in sessionStorage to true
-      sessionStorage.setItem('isPersistedState', true);
-
-      // stores the length of current list of snapshots in sessionStorage
-      sessionStorage.setItem('persistedSnapshots', snapshots.length);
-    } else {
-      // switch isPersistedState in sessionStorage to false
-      sessionStorage.setItem('isPersistedState', false);
-    }
-  };
-
   // function retreives length and fills snapshot array
   const setProperIndexForPersistedState = () => {
     const retreived = sessionStorage.getItem('persistedSnapshots');
     const snapshotsArray = new Array(Number(retreived) + 1).fill({});
     setSnapshots(snapshotsArray);
   };
-
-  // old code below. May be delted if everything works
-  // ****
-  // Sends window an action and payload message.
-  //
-
-  // const sendWindowMessage = (action, payload) => {
-  //   window.postMessage(
-  //     JSON.parse(
-  //       JSON.stringify({
-  //         action,
-  //         payload,
-  //       }),
-  //     ),
-  //     '*',
-  //   );
-  // };
 
   function sendWindowMessage(action, payload) {
     // creates a a template object with origin and recipient

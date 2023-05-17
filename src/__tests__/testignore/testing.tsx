@@ -1,4 +1,4 @@
-// this file will hold our custom render, so that when we run tests the component is wrapped in a provider with necessary state when Jest renders it (5.2023)
+// this file will hold our custom render, so that when we run tests the component is wrapped in a react-redux provider when Jest renders it (5.2023)
 // follwed this guide: https://betterprogramming.pub/react-testing-library-configuration-for-productive-unit-testing-5d0c446f3b3d
 
 // this file is within a testignore folder because it is necessary for multiple test files, however we do not want to test it. (5.2023)
@@ -19,6 +19,7 @@ export type CustomRenderOptions = {
   providers?: ProvidersRenderOptions;
 };
 
+// this sets up our provider to give the component a react-redux provider. Followed from React-Testing-Library's custom render docs
 const AllTheProviders =
   (options: ProvidersRenderOptions = {}) =>
   ({children}: {children: React.ReactNode}) => {
@@ -26,7 +27,7 @@ const AllTheProviders =
     return <Provider store={store}>{children}</Provider>;
   };
 
-// custom render function wraps our component in a provider
+// this uses the wrapper option to wrap whatever we are rendering in our "AllTheProviders" component
 const customRender = (
   ui: ReactElement,
   options: CustomRenderOptions & Omit<RenderOptions, 'wrapper'> = {},
@@ -35,6 +36,7 @@ const customRender = (
   render(ui, {wrapper: AllTheProviders(providers), ...others});
 };
 
+// this generates a store for the component to use
 export const generateStore = (
   preloadedState: PreloadedState<typeof rootReducer>,
 ) => {
@@ -46,5 +48,7 @@ export const generateStore = (
   });
 };
 
+// use the wildcare here so that we can import anything from react testing library from this file
 export * from '@testing-library/react';
+// when we import render from this file, we will be importing our custom render function, wrapping the component in a provider
 export {customRender as render};

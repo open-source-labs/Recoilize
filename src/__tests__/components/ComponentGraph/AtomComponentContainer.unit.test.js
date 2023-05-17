@@ -20,6 +20,7 @@ afterEach(cleanup);
 const zoom = {zoomData: {k: 0.09, x: 221, y: 662}}
 
 it('Atom component container renders', () => {
+  // component needs a div with id of "canvas" in order to render
   const canvas = document.createElement('div');
   canvas.id = 'canvas';
   document.body.appendChild(canvas)
