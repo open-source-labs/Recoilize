@@ -139,14 +139,19 @@ Once you have completed the steps above, open your application in Chrome and you
 # Updates for Version 4.0.0
 
 ### <u>Support for Recoil 0.1.3</u>
+
 Recoilize now supports the most recent update to the Recoil library and is backwards compatible with older versions of Recoil.
 
 <br />
 
 ### <u>Time Travel with ease</u>
+
 If you had used Recoilize before, you would have noticed an annoying bug that sometimes breaks the app and won’t allow you to be productive. With the new version of Recoilize, that issue is forever gone. Users can now use the tool with confidence and worry-free.
 
 The main mission of Recoilize 3.0 is to make it more user-friendly, so you will enjoy our brand new time travel feature — the time travel slider! Why click and scroll through snapshots when you can do it with a slider and some buttons, right?
+
+
+
 
 <br />
 
@@ -157,6 +162,7 @@ The main mission of Recoilize 3.0 is to make it more user-friendly, so you will 
 <br />
 
 ### <u>Customizable Component Graph</u>
+
 This is one of the coolest updates of Recoilize 3.0. We understand that different users have different ways of thinking and visualizing, and for that reason, the component tree now is fully customizable. You can expand or collapse the components, choose vertical or horizontal displays or adjust the spacing between elements.
 
 <br />
