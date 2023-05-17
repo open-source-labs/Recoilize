@@ -51,28 +51,30 @@ window.addEventListener('message', msg => {
   const messageToSend = structuredClone(messageReceived);
 
   // uncomment the following lines log to test the logic of this function by printing the message to send object
+  //
   // console.log(
   //   'this is message being relayed by the content script',
   //   messageToSend,
   // );
+  //
 
   chrome.runtime.sendMessage(messageToSend);
 });
 
 // listening for messages from the service_worker --previously called the background script
 chrome.runtime.onMessage.addListener(msg => {
-  // Comment by from R4 team - deconstruct msg.action from the msg object into a variable with the name of action.
+  // Comment by R4 team - deconstruct msg.action from the msg object into a variable with the name of action.
   const {action} = msg;
-  // Comment by from R4 team -  use a switch statement to determine what action to take based on the value of "action".
+  // Comment by R4 team -  use a switch statement to determine what action to take based on the value of "action".
   switch (action) {
     case 'snapshotTimeTravel':
-      // Comment by from R4 team -  the window.postMessage() sends a message to the page's window object.
-      // Comment by from R4 team -  in this  case, theRecoilize Debugger Module in the webpage is the intended recipient
+      // Comment by R4 team -  the window.postMessage() sends a message to the page's window object.
+      // Comment by R4 team -  in this  case, theRecoilize Debugger Module in the webpage is the intended recipient
       window.postMessage(msg, '*');
       break;
     case 'throttleEdit':
-      // Comment by from R4 team - the window.postMessage() sends a message to the page's window object.
-      // Comment by from R4 team - in this  case, the RecoilizeDebugger Module in the webpage is the intended recipient
+      // Comment by R4 team - the window.postMessage() sends a message to the page's window object.
+      // Comment by R4 team - in this  case, the RecoilizeDebugger Module in the webpage is the intended recipient
       window.postMessage(msg, '*');
       break;
   }
