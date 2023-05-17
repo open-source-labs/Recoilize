@@ -1,20 +1,32 @@
 <meta name='keywords' content='Recoil, Recoil.js, Recoil Dev Tool, Recoilize, Chrome Dev Tool, Recoil Chrome'>
 
-<a name="readme-top"></a>
+<a id="readme-top"></a>
+
+
+<div align='center'>
+
+[![Contributors][contributors]][contributors-url] 
+[![chrome version][chrome-v]][chrome-url]
+[![npm version][npm-v]][npm-url]
+[![GitHub license][license]][license-url] 
+![PRs Welcome][PRs]
+
+</div>
 
 <p align='center'>
 <img src='./src/extension/build/assets/cover-photo-logo-recoilize.jpg' width=100%>
 </p>
 
+
 # A Dev Tool for Recoil Applications
 
-# [![Contributors](https://img.shields.io/github/contributors/open-source-labs/Recoilize.svg?style=for-the-badge)](https://github.com/open-source-labs/Recoilize/graphs/contributors) [![npm version](https://img.shields.io/npm/v/recoilize?style=for-the-badge)](https://www.npmjs.com/package/recoilize) [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg?style=for-the-badge)](https://github.com/oslabs-beta/Recoilize/blob/staging/LICENSE) ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=for-the-badge)
-
-[Korean README 한국어](README_KO.md) (this README is not up to date with the latest README)
+#### [Korean README 한국어](README_KO.md) *- this README is not up to date with the latest README*
 
 <br />
 
 # About
+
+<!-- <div align='center'> -->
 
 [![Typescript][TS.js]][TS-url]
 [![JavaScript][JavaScript]][JavaScript-url]
@@ -29,8 +41,11 @@
 [![HTML5][HTML5]][HTML5-url]
 [![CSS3][CSS3]][CSS3-url]
 
+<!-- </div> -->
 
 <br />
+
+
 
 Recoilize is a Chrome Dev Tool designed for debugging applications built with the Recoil.js state management library.
 
@@ -38,7 +53,7 @@ The tool records Recoil state and allows users to easily debug their application
 
 <br />
 
-Download Recoilize from the [Chrome Store](https://chrome.google.com/webstore/detail/recoilize/jhfmmdhbinleghabnblahfjfalfgidik)
+Download Recoilize from the [Chrome Store][chrome-url]
 
 
 Visit the Recoilize [landing page](https://www.recoilize.io/) to demo
@@ -382,6 +397,23 @@ Kasey Wolff | [github](https://github.com/kaseywolff) | [linkedin](https://www.l
 
 
 <p align="right"><a href="#readme-top">back to top</a></p>
+
+
+
+
+
+
+<!-- BADGES/ SHIELDS and URLs -->
+
+[contributors]: https://img.shields.io/github/contributors/open-source-labs/Recoilize.svg?style=for-the-badge
+[contributors-url]: https://github.com/open-source-labs/Recoilize/graphs/contributors
+[npm-v]: https://img.shields.io/npm/v/recoilize?style=for-the-badge
+[npm-url]: https://www.npmjs.com/package/recoilize
+[chrome-v]: https://img.shields.io/chrome-web-store/v/jhfmmdhbinleghabnblahfjfalfgidik?style=for-the-badge
+[chrome-url]: https://chrome.google.com/webstore/detail/recoilize/jhfmmdhbinleghabnblahfjfalfgidik
+[license]: https://img.shields.io/badge/license-MIT-blue.svg?style=for-the-badge
+[license-url]: https://github.com/oslabs-beta/Recoilize/blob/staging/LICENSE
+[PRs]: https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=for-the-badge
 
 
 
