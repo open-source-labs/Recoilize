@@ -1,5 +1,7 @@
 <meta name='keywords' content='Recoil, Recoil.js, Recoil Dev Tool, Recoilize, Chrome Dev Tool, Recoil Chrome'>
 
+*this README is not up to date with the latest README*
+
 <p align='center'>
 <img src='./src/extension/build/assets/cover-photo-logo-recoilize.jpg' width=100%>
 </p>
