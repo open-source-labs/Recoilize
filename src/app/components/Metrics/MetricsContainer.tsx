@@ -1,19 +1,26 @@
-import React, {useState} from 'react';
-import {ParentSize} from '@vx/responsive';
-import {dataDurationArr} from '../../../types';
+import React, {Children, useState} from 'react';
+import {ParentSize} from '@visx/responsive'
 import FlameGraph from './FlameGraph.js';
 import RankedGraph from './RankedGraph';
 import ComparisonGraph from './ComparisonGraph';
+import {dataDurationArr} from '../../../types';
 import {useAppSelector} from '../../state-management/hooks';
 
-const Metrics: React.FC = () => {
+
+
+interface IFiberTreeTraverse {
+  name: string;
+  actualDuration: number
+}
+
+const Metrics = (): JSX.Element => {
   const cleanedComponentAtomTree = useAppSelector(
     state => state.snapshot.cleanComponentAtomTree,
   );
-  //create state for the graph type toggle
+  // create state for the graph type toggle
   const [graphType, setGraphType] = useState<string>('flame');
 
-  //funciton that toggles the graphType state
+  // funciton that toggles the graphType state
   const toggleGraphFunc = (check: string): void => {
     if (check === 'flame') setGraphType('flame');
     if (check === 'ranked') setGraphType('ranked');
@@ -22,12 +29,12 @@ const Metrics: React.FC = () => {
 
   // create an empty array to store objects for property name and actualDuration for rankedGraph
   const dataDurationArr: dataDurationArr = [];
-  let length = 0;
+  let length: number = 0;
   // function to traverse through the fiber tree
   const namesAndDurations = (node: any) => {
     if (node === undefined) return;
     if (node.name && node.actualDuration) {
-      const obj: any = {};
+      const obj: Partial<IFiberTreeTraverse> = {};
       if (node.name.length > length) {
         length = node.name.length;
       }
@@ -39,11 +46,11 @@ const Metrics: React.FC = () => {
   };
   namesAndDurations(cleanedComponentAtomTree);
 
-  //function that renders either graphComponent based on graphType state variable
+  // function that renders either graphComponent based on graphType state variable
   const determineRender: any = () => {
     if (graphType === 'flame') {
       return (
-        //ParentSize component allows us to scale the FlameGraph to fit its container.
+        // ParentSize component allows us to scale the FlameGraph to fit its container.
         <ParentSize>
           {size =>
             size.ref && (
@@ -87,7 +94,7 @@ const Metrics: React.FC = () => {
     }
   };
 
-  //render the toggle buttons and the appropriate graph based on GraphType state variable
+  // render the toggle buttons and the appropriate graph based on GraphType state variable
   return (
     <div id="metricsWrapper">
       <div data-testid="canvas" className="graphContainer">
@@ -96,21 +103,24 @@ const Metrics: React.FC = () => {
           autoFocus={true}
           onClick={() => {
             toggleGraphFunc('flame');
-          }}>
+          }}
+        >
           Flame Graph
         </button>
         <button
           className="graphButton"
           onClick={() => {
             toggleGraphFunc('ranked');
-          }}>
+          }}
+        >
           Ranked Graph
         </button>
         <button
           className="graphButton"
           onClick={() => {
             toggleGraphFunc('comparison');
-          }}>
+          }}
+        >
           Comparison Graph
         </button>
       </div>

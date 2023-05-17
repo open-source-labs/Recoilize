@@ -17,12 +17,6 @@ const initialState: selectedState = {
   },
 };
 
-// zoom: zoomReducer,
-// throttle: throttleReducer,
-// snapshot: snapshotReducer,
-// atomNetwork: atomNetworkReducer,
-// filter: filterReducer,
-// selected: selectedReducer,
 
 export const atomsAndSelectorsSlice = createSlice({
   name: 'atomsAndSelectors',
@@ -34,7 +28,6 @@ export const atomsAndSelectorsSlice = createSlice({
   },
 });
 
-console.log('atomsAndSelectorsSlice:', atomsAndSelectorsSlice);
 
 export const {setAtomsAndSelectors} = atomsAndSelectorsSlice.actions;
 

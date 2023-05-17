@@ -1,3 +1,6 @@
+// would consider breaking this file up and placing large functions in their own file, then importing. be mindful of this change's impact on testing. could run into problems with that (5.2023)
+// d3 requires updating. this will likely be a large task for future devs and it is possible this entire file needs to be rewritten because it includes a few d3 methods that are no longer used. (5.2023)
+
 import React, {useState, useEffect} from 'react';
 import * as d3 from 'd3';
 import {componentAtomTree, atom, selector} from '../../../types';
@@ -7,6 +10,8 @@ import {
   selectZoomState,
   setDefaultZoom,
 } from '../../state-management/slices/ZoomSlice';
+import AtomNetworkVisualLegend from './AtomVisualComponents/AtomNetworkVisualLegend';
+
 
 interface AtomComponentVisualProps {
   componentAtomTree: componentAtomTree;
@@ -18,7 +23,7 @@ interface AtomComponentVisualProps {
   setSelectedRecoilValue: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
-const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
+const AtomComponentVisual = ({
     componentAtomTree,
     cleanedComponentAtomTree,
     selectedRecoilValue,
@@ -26,7 +31,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
     selectors,
     setStr,
     setSelectedRecoilValue,
-  }) => {
+  }: AtomComponentVisualProps): JSX.Element => {
 
   const zoomSelector = useAppSelector(selectZoomState);
   const {x, y, k} = zoomSelector; // initial scaling
@@ -42,21 +47,12 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
   // useState hook to update whether a suspense component will be shown on the component graph
   const [hasSuspense, setHasSuspense] = useState<boolean>(false);
 
-  //declare hooks to render lists of atoms or selectors
+  // declare hooks to render lists of atoms or selectors
   const [atomList, setAtomList] = useState(Object.keys(atoms)); // returns an array of atom's properties
   const [selectorList, setSelectorList] = useState(Object.keys(selectors));
 
-  // need to create a hook for toggling
-  const [showAtomMenu, setShowAtomMenu] = useState<boolean>(false);
-  const [showSelectorMenu, setShowSelectorMenu] = useState<boolean>(false);
-
-  // hook for selected button styles on the legend
-  const [atomButtonClicked, setAtomButtonClicked] = useState<boolean>(false);
-  const [selectorButtonClicked, setSelectorButtonClicked] = useState<boolean>(
-    false,
-  );
+  // both button currently does not do anything
   const [bothButtonClicked, setBothButtonClicked] = useState<boolean>(false);
-  const [isDropDownItem, setIsDropDownItem] = useState<boolean>(false);
 
   // hooks for sibling level node spacing adjustment
   const [siblingSpacingFactor, setSiblingSpacingFactor] = useState<number>(1);
@@ -123,27 +119,27 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
     let zoom = d3.zoom().on('zoom', zoomed);
 
     // https://github.com/d3/d3-zoom/blob/v3.0.0/README.md#zoom_transform
-    svgContainer.call(
-      zoom.transform,
-      // Changes the initial view, (left, top)
-      d3.zoomIdentity.translate(x, y).scale(k),
-    );
+
+    //   d3.zoomIdentity.translate(x, y).scale(k),
 
     // allows the canvas to be zoom-able
     svgContainer.call(
       d3
         .zoom()
         .scaleExtent([0.05, 0.9]) // [max zoomed out view, max zoomed in view]
-        .on('zoom', zoomed),
+        .on('zoom', zoomed)
     );
 
     // helper function that allows for zooming
     function zoomed() {
       g.attr('transform', d3.event.transform).on(
         'mouseup',
-        dispatch(
-          updateZoomState(d3.zoomTransform(d3.select('#canvas').node())),
-        ),
+        d3.zoom().on('zoom', function () {
+          g.attr('transform', d3.event.transform);
+        }),
+        // dispatch.call(
+        //   updateZoomState(d3.zoomTransform(d3.select('#canvas').node())),
+        // ),
       );
     }
 
@@ -160,7 +156,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
       let nodes = root.descendants(),
         links = root.descendants().slice(1);
 
-      let node = g
+      let node:any = g
         .selectAll('g.node')
       .attr('stroke-width', 5)
       .data(nodes, function (d: any): number {
@@ -198,6 +194,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
         .enter()
         .append('g')
         .attr('class', 'node')
+        .attr('data-testid', 'node')
         .attr('transform', function (): string {
           return `translate(${source.y0}, ${source.x0})`;
         // getting <g class="node"> && setting its "transform" attr to "translate(x, y) --> css manipulation"
@@ -213,7 +210,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
               atsel.push(d.data.recoilNodes[x]);
             }
             // change the opacity of the node when the mouse is over
-            d3.select(this).transition().duration('50').attr('opacity', '.85');
+            d3.select(this).transition().duration(50).attr('opacity', '.85');
 
             // created a str for hover div to have corrensponding info
             // let newStr = formatAtomSelectorText(atsel).join('<br>');
@@ -256,7 +253,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
           }
         })
         .on('mouseout', function (d: any, i: number): void {
-          d3.select(this).transition().duration('50').attr('opacity', '1');
+          d3.select(this).transition().duration(50).attr('opacity', '1');
           tooltip.style('opacity', 0);
         });
 
@@ -310,7 +307,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
         })
         .remove();
 
-      let link = g
+      let link: any = g
         .attr('fill', 'none')
         .attr('stroke-width', 5)
         .selectAll('path.link')
@@ -474,33 +471,6 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
     }
   }, [componentAtomTree, rawToggle, siblingSpacingFactor, parentSpacingFactor, vertOrient, selectedRecoilValue]);
 
-  // setting the component's user interface state by checking if the dropdown menu is open or not
-  function openDropdown(e: React.MouseEvent) {
-    const target = e.target as Element;
-    // the button element with id 'AtomP'
-    if (target.id === 'AtomP') {
-      setAtomButtonClicked(true);
-      setSelectorButtonClicked(false);
-      setShowAtomMenu(!showAtomMenu);
-      setShowSelectorMenu(false);
-    } else {
-      setAtomButtonClicked(false);
-      setSelectorButtonClicked(true);
-      setShowSelectorMenu(!showSelectorMenu);
-      setShowAtomMenu(false);
-    }
-  }
-
-  // resetting the component's user interface state when toggling between atoms & selectors
-  const resetNodes = () => {
-    setIsDropDownItem(false);
-    setSelectedRecoilValue([]);
-    setShowSelectorMenu(false);
-    setShowAtomMenu(false);
-    setAtomButtonClicked(false);
-    setSelectorButtonClicked(false);
-  };
-
   return (
     <div className="AtomComponentVisual">
       <svg id="canvas"></svg>
@@ -544,6 +514,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
       </div>
       <div className='graphBtnContainer'>
         <button
+          data-testid='expand'
           id='fixedButton'
           className='graphBtn'
           style={{
@@ -554,7 +525,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
             dispatch(setDefaultZoom());
           }}>
           <span>
-            {rawToggle ? 'Expand' : 'Collapse'}
+            {rawToggle ? 'Collapse' : 'Expand'}
           </span>
         </button>
         <button
@@ -571,154 +542,7 @@ const AtomComponentVisual: React.FC<AtomComponentVisualProps> = ({
           </span>
         </button>
       </div>
-      <div className="AtomNetworkLegend">
-        <div className="AtomLegend" />
-        <button
-          onClick={isDropDownItem ? resetNodes : openDropdown}
-          id="AtomP"
-          className={
-            atomButtonClicked ? 'AtomP atomSelected' : 'AtomP atomLegendDefault'
-          }>
-          ATOM
-        </button>
-        {showAtomMenu && (
-          <div id="atomDrop" className="AtomDropDown">
-            {atomList.map((atom, i) => (
-              <div className="dropDownButtonDiv">
-                <button
-                  id={`atom-drop${i}`}
-                  className="atom-class atomDropDown"
-                  key={i}
-                  onClick={event => {
-                    if (
-                      !(event.target as HTMLInputElement).classList.contains(
-                        'atomSelected',
-                      ) &&
-                      (event.target as HTMLInputElement).classList.contains(
-                        'atomNotSelected',
-                      )
-                    ) {
-                      (event.target as HTMLInputElement).classList.replace(
-                        'atomNotSelected',
-                        'atomSelected',
-                      );
-                    } else if (
-                      !(event.target as HTMLInputElement).classList.contains(
-                        'atomSelected',
-                      ) &&
-                      !(event.target as HTMLInputElement).classList.contains(
-                        'atomNotSelected',
-                      )
-                    ) {
-                      (event.target as HTMLInputElement).classList.add(
-                        'atomSelected',
-                      );
-                    }
-
-                    document.querySelectorAll('.atom-class').forEach(item => {
-                      if (
-                        item.id !== `atom-drop${i}` &&
-                        item.classList.contains('atomSelected')
-                      ) {
-                        item.classList.replace(
-                          'atomSelected',
-                          'atomNotSelected',
-                        );
-                      } else if (
-                        item.id !== `atom-drop${i}` &&
-                        !item.classList.contains('atomNotSelected')
-                      ) {
-                        item.classList.add('atomNotSelected');
-                      }
-                    });
-
-                    setSelectedRecoilValue([atom, 'atom']);
-                    setIsDropDownItem(true);
-                  }}>
-                  {atom}
-                </button>
-              </div>
-            ))}
-          </div>
-        )}
-        <div className="SelectorLegend"></div>
-        <button
-          onClick={isDropDownItem ? resetNodes : openDropdown}
-          id="SelectorP"
-          className={
-            selectorButtonClicked
-              ? 'SelectorP selectorSelected'
-              : 'SelectorP selectorLegendDefault'
-          }>
-          SELECTOR
-        </button>
-        {showSelectorMenu && (
-          <div id="selectorDrop" className="SelectorDropDown">
-            {selectorList.map((selector, i) => (
-              <div className="dropDownButtonDiv">
-                <button
-                  id={`selector-drop${i}`}
-                  className="selector-class selectorDropDown"
-                  key={i}
-                  onClick={event => {
-                    if (
-                      !(event.target as HTMLInputElement).classList.contains(
-                        'selectorSelected',
-                      ) &&
-                      (event.target as HTMLInputElement).classList.contains(
-                        'selectorNotSelected',
-                      )
-                    ) {
-                      (event.target as HTMLInputElement).classList.replace(
-                        'selectorNotSelected',
-                        'selectorSelected',
-                      );
-                    } else if (
-                      !(event.target as HTMLInputElement).classList.contains(
-                        'selectorSelected',
-                      ) &&
-                      !(event.target as HTMLInputElement).classList.contains(
-                        'selectorNotSelected',
-                      )
-                    ) {
-                      (event.target as HTMLInputElement).classList.add(
-                        'selectorSelected',
-                      );
-                    }
-
-                    document
-                      .querySelectorAll('.selector-class')
-                      .forEach(item => {
-                        if (
-                          item.id !== `selector-drop${i}` &&
-                          item.classList.contains('selectorSelected')
-                        ) {
-                          item.classList.replace(
-                            'selectorSelected',
-                            'selectorNotSelected',
-                          );
-                        } else if (
-                          item.id !== `selector-drop${i}` &&
-                          !item.classList.contains('selectorNotSelected')
-                        ) {
-                          item.classList.add('selectorNotSelected');
-                        }
-                      });
-                    setSelectedRecoilValue([selector, 'selector']);
-                    setIsDropDownItem(true);
-                  }}>
-                  {selector}
-                </button>
-              </div>
-            ))}
-          </div>
-        )}
-        <div className="bothLegend"></div>
-        <button className="bothLegendDefault">BOTH</button>
-        <div className={hasSuspense ? 'suspenseLegend' : ''}></div>
-        <p>{hasSuspense ? 'SUSPENSE' : ''}</p>
-        <div className="tooltipContainer"></div>
-      </div>
+      <AtomNetworkVisualLegend setSelectedRecoilValue={setSelectedRecoilValue} atomList={atomList} hasSuspense={hasSuspense} selectorList={selectorList}/>
     </div>
   );
 };

@@ -1,7 +1,7 @@
-import React, {useState} from 'react';
-import {diff, formatters} from 'jsondiffpatch';
-import ReactHtmlParser from 'react-html-parser';
-import {useAppSelector} from '../../state-management/hooks';
+import React, { useState } from 'react';
+import { diff, formatters } from 'jsondiffpatch';
+import ReactHtmlParser from 'html-react-parser';
+import { useAppSelector } from '../../state-management/hooks';
 
 // renders the difference between the most recent state change and the previous
 const Diff: React.FC = () => {
@@ -12,7 +12,6 @@ const Diff: React.FC = () => {
   const renderIndex = useAppSelector(state => state.snapshot.renderIndex);
 
   const currentState = useAppSelector(state => state);
-  console.log('newState in Diff: ', currentState);
 
   const filteredPrevSnap =
     renderIndex > 0

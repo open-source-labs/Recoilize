@@ -1,8 +1,9 @@
-import React, {useState, useEffect} from 'react';
+import React, { useEffect } from 'react';
 import * as d3 from 'd3';
 import makeRelationshipLinks from '../../utils/makeRelationshipLinks';
-import {useAppSelector} from '../../state-management/hooks';
-import {filteredSnapshot} from '../../../types';
+import { useAppSelector } from '../../state-management/hooks';
+import { filteredSnapshot } from '../../../types';
+
 
 const AtomNetworkVisual: React.FC = () => {
   //Retrieve snapshotHistory State from Redux Store
@@ -59,11 +60,6 @@ const AtomNetworkVisual: React.FC = () => {
     let edgelabels: any;
 
     const networkContainer = document.querySelector('.networkContainer');
-    // sets starting position of the atomNetwork graph.
-    // const width = networkContainer.clientWidth;
-    // const height = networkContainer.clientHeight;
-    const width = 300;
-    const height = 300;
 
     // snap will be newFilteredCurSnap if searchValue exists, if not original
     let snap: any = searchValue ? newFilteredCurSnap : filteredCurSnap;
@@ -90,9 +86,13 @@ const AtomNetworkVisual: React.FC = () => {
         .force('y', d3.forceY());
 
       const svg = d3
-        // .create('svg')
         .select('#networkCanvas')
-        .attr('viewBox', [-width / 2, -height / 2, width, height]);
+        .append('svg')
+        .attr('viewBox', '-150 -150 300 300')
+        .call(d3.zoom().on("zoom", function () {
+          svg.attr("transform", d3.event.transform)
+        }))
+        .append('g')
 
       const link = svg
         .append('g')
@@ -142,15 +142,6 @@ const AtomNetworkVisual: React.FC = () => {
         node.attr('cx', (d: any) => d.x).attr('cy', (d: any) => d.y);
       });
 
-      //Zoom functions
-      function zoomActions() {
-        svg.attr('transform', d3.event.transform);
-      }
-
-      var zoomHandler = d3.zoom().on('zoom', zoomActions);
-      zoomHandler(svg);
-
-      // allows the nodes to be draggable
       const dragDrop = d3
         .drag()
         .on('start', (node: {fx: any; x: any; fy: any; y: any}) => {

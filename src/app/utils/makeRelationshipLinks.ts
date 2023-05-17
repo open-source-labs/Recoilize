@@ -11,7 +11,6 @@ const makeRelationshipLinks = (obj: any) => {
   const relationships: relationships = {nodes: [], links: []};
   if (!obj) return relationships;
 
-  // relationships.nodes = makeNodes(obj);
 
   // to help with O(1) look up for nodeKeys & target => source combinations
   const nodeCache: caches = {};

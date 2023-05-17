@@ -1,10 +1,10 @@
 const path = require('path');
-const ChromeExtensionReloader = require('webpack-chrome-extension-reloader');
+const NodePolyfillPlugin = require('node-polyfill-webpack-plugin');
 
 const config = {
   entry: {
     app: './src/app/index.tsx',
-    background: './src/extension/background.ts',
+    service_worker: './src/extension/service_worker.ts',
     content: './src/extension/contentScript.ts',
   },
   output: {
@@ -32,6 +32,7 @@ const config = {
         },
       },
       {
+        // scss is uploaded to dependencies, not devDependencies. Also not used anywhere (5.2023 KW)
         test: /\.scss$/,
         use: ['style-loader', 'css-loader', 'sass-loader'],
       },
@@ -44,19 +45,16 @@ const config = {
   resolve: {
     extensions: ['.tsx', '.ts', '.js', '.jsx'],
   },
-  plugins: [],
+  plugins: [new NodePolyfillPlugin()],
+  // the following option prevents webpack from minifying the code
+  optimization: {
+    minimize: false,
+  },
 };
 
-module.exports = (env, argv) => {
-  if (argv.mode === 'development') {
-    config.plugins.push(
-      new ChromeExtensionReloader({
-        entries: {
-          contentScript: ['app', 'content'],
-          background: ['background'],
-        },
-      }),
-    );
-  }
-  return config;
-};
+// module.exports = {
+//   // Other rules...
+//   plugins: [new NodePolyfillPlugin()],
+// };
+
+module.exports = config;

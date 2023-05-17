@@ -34,11 +34,18 @@ button {
   color: #e6e6e6;
   background: none;
 }
+
 button:hover {
   color: white;
   border: 1px solid white;
   background-color: #212121;
   text-emphasis: bold;
+}
+
+button:active {
+  background-color: #212121;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
 }
 
 /* APP -> MAIN CONTAINER */

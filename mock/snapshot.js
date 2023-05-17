@@ -1,3 +1,4 @@
+// this mock/ hard coded data is used for testing purposes
 export const filteredCurSnapMock = {
   dummyAtom1: {
     contents: {hello: [], hi: []},

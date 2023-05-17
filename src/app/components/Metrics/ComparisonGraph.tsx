@@ -1,4 +1,5 @@
-import React, {useEffect, useRef} from 'react';
+import {useEffect, useRef, useState} from 'react';
+import * as React from 'react';
 import * as d3 from 'd3';
 import {dataDurationArr} from '../../../types';
 import {useAppSelector} from '../../state-management/hooks';
@@ -9,44 +10,55 @@ interface ComparisonGraphProps {
   height?: number;
 }
 
-const ComparisonGraph: React.FC<ComparisonGraphProps> = ({
+const ComparisonGraph = ({
   data,
   width,
   height,
 }: ComparisonGraphProps) => {
+
   const snapshotHistory = useAppSelector(
     (state: {snapshot: {snapshotHistory: any}}) =>
       state.snapshot.snapshotHistory,
   );
-  console.log('comparison snapshot ', snapshotHistory);
+
   // declare an array that holds 2 objects: past and current
   const displayData = [
     {name: 'past', duration: 0},
     {name: 'current', duration: 0},
   ];
 
-  // retrieve and get total duration for past serie from the local storage
+  // retrieve and get total duration for past series from the local storage
   const values: any[] = [];
   const keys = Object.keys(localStorage);
   let i = keys.length;
   while (i--) {
     const series = localStorage.getItem(keys[i]);
     values.push(JSON.parse(series));
-  }
+  };
+
+  //only for the past display
+  //seems to be adding the tree base duration from the componentAtomTree in each element of the value array to the duration that is displayed in the screen (total time?)
   for (const element of values) {
     displayData[0].duration += element.componentAtomTree.treeBaseDuration;
-  }
+  };
 
-  let total = 0;
+  //values are the current values vs snapshotHistory which are past values?
+  let total: number = 0;
   for (const element of snapshotHistory) {
     total += element.componentAtomTree.treeBaseDuration;
-  }
+  };
+
+  //only for present display
   displayData[1].duration = total;
   // delete series in local storage
   const deleteSeries = () => {
+    console.log('in delete series')
     for (const i of keys) {
+      console.log('localStorage:', localStorage);
       localStorage.removeItem(i);
+      console.log('localStorage removed:', localStorage);
     }
+    return localStorage;
   };
 
   // svg
@@ -122,7 +134,7 @@ const ComparisonGraph: React.FC<ComparisonGraphProps> = ({
       .on('mouseover', function () {
         d3.select(this).attr('opacity', '0.85');
         const backgroundConnection = chrome.runtime.connect();
-        const barName = this.data;
+        const barName = data;
         const payload = {
           action: 'mouseover',
           tabId: chrome.devtools.inspectedWindow.tabId,

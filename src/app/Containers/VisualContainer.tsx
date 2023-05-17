@@ -14,7 +14,7 @@ type navTypes = {
 };
 
 // Renders Navbar and conditionally renders Diff, Visualizer, and Tree
-const VisualContainer: React.FC = () => {
+export const VisualContainer: React.FC = () => {
   // object containing all conditional renders based on navBar
   const nav: navTypes = {
     // compare the diff of filteredPrevSnap and filteredCurSnap
@@ -33,12 +33,12 @@ const VisualContainer: React.FC = () => {
 
     // settings tab
     Settings: <Settings />,
-    // add a testing tab
-    Testing: (
-      <RecoilRoot>
-        <Testing />
-      </RecoilRoot>
-    ),
+    // commenting out Testing tab because it's not currently functional
+    // Testing: (
+    //   <RecoilRoot>
+    //     <Testing />
+    //   </RecoilRoot>
+    // ),
   };
   // array of all nav obj keys
   const tabsList: string[] = Object.keys(nav);
@@ -46,7 +46,7 @@ const VisualContainer: React.FC = () => {
   const [tab, setTab] = useState<string>('State Diff');
   // conditionally render based on value of nav[tab]
   return (
-    <div className="VisualContainer">
+    <div className="VisualContainer" data-testid="VisualContainer">
       <NavBar setTab={setTab} tabsList={tabsList} tab={tab} />
       {nav[tab]}
     </div>

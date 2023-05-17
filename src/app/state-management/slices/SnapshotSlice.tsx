@@ -25,10 +25,6 @@ export const snapshotSlice = createSlice({
   },
 });
 
-console.log(
-  'what snapshotSlice looks like in SnapshotSlice.tsx: ',
-  snapshotSlice,
-);
 
 export const {setSnapshotHistory, setRenderIndex, setCleanComponentAtomTree} =
   snapshotSlice.actions;

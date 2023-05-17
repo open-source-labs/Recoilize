@@ -10,6 +10,9 @@ type node = {
   actualDuration: number;
   treeBaseDuration: number;
   return: any;
+  memoizedState?: any;
+  type?: any;
+  memoizedProps?: any;
 };
 
 type formattedNode = {
@@ -45,9 +48,9 @@ const formatFiberNodes = (node: node) => {
   return formattedNode;
 };
 
-const createAtomsSelectorArray = (node: any) => {
+const createAtomsSelectorArray = (node: any): any[] => {
   // initialize empty array for all atoms and selectors.  Elements will be all atom and selector names, as strings
-  const recoilNodes = [];
+  const recoilNodes: any[] = [];
 
   //start the pointer at node.memoizedState. All nodes should have this key.
   let currentNode = node.memoizedState;
@@ -55,24 +58,30 @@ const createAtomsSelectorArray = (node: any) => {
   // Traverse through the memoizedStates and look for the deps key which holds selectors or state.
 
   while (currentNode) {
-    // if the memoizedState has a deps key, and that deps key is an array of length 2 then the first value of that array will be an atom or selector
+    // if the memoizedState has a deps key, and that deps key is an array
+    // then the first value of that array will be an atom or selector
     if (
-      currentNode.deps &&
-      Array.isArray(currentNode.deps) &&
-      currentNode.deps.length === 2
+      typeof currentNode === 'object' &&
+      currentNode.hasOwnProperty('memoizedState') &&
+      typeof currentNode.memoizedState === 'object' &&
+      currentNode.memoizedState !== null &&
+      !Array.isArray(currentNode.memoizedState) &&
+      currentNode.memoizedState.hasOwnProperty('deps')
     ) {
-      // if the atom/selector already exist in the recoilNodes array then break from this while loop. At this point you are traversing through previous atom/selector deps.
-      if (recoilNodes.includes(currentNode.deps[0].key)) break;
-      recoilNodes.push(currentNode.deps[0].key);
-
-      // if an atom/selector was successfully pushed into the recoilNodes array then the pointer should now point to the next key, which will have its own deps key if there is another atom/selector
-      currentNode = currentNode.next;
-    } else {
-      // This is the case where there is no atom/selector in the memoizedState. Look into the memoized state of the next key. If that doesn't exist then break from the while loop because there are no atoms/selectors at this point.
-      if (!currentNode.next) break;
-      if (!currentNode.next.memoizedState) break;
-      currentNode = currentNode.next.memoizedState;
+      if (
+        Array.isArray(currentNode.memoizedState.deps) &&
+        typeof currentNode.memoizedState.deps[0] === 'object' &&
+        currentNode.memoizedState.deps[0] !== null
+      ) {
+        // if recoilNodes (arr) includes the current atom or selector
+        if (!recoilNodes.includes(currentNode.memoizedState.deps[0].key)) {
+          // otherwise push atom/selector to recoilNodes
+          recoilNodes.push(currentNode.memoizedState.deps[0].key);
+        }
+      }
     }
+    // move onto next node
+    currentNode = currentNode.next;
   }
   return recoilNodes;
 };

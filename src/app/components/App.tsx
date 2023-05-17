@@ -1,161 +1,152 @@
 import React, {useEffect} from 'react';
-import MainContainer from '../Containers/MainContainer';
-import {selectedTypes} from '../../types';
-// importing the diff to find difference
+// importing the diff to find difference (would maybe find an alternative to this?) (5.2023 KW)
 import {diff} from 'jsondiffpatch';
+
+/* <----- import types and custom hooks -----> */
+import {selectedTypes} from '../../types';
 import {useAppSelector, useAppDispatch} from '../state-management/hooks';
-import {
-  setSnapshotHistory,
-  setRenderIndex,
-  setCleanComponentAtomTree,
-} from '../state-management/slices/SnapshotSlice';
-import {
-  addSelected,
-  setSelected,
-} from '../state-management/slices/SelectedSlice';
-import {
-  updateFilter,
-  selectFilterState,
-} from '../state-management/slices/FilterSlice';
-import {setAtomsAndSelectors} from '../state-management/slices/AtomsAndSelectorsSlice';
 
-const LOGO_URL = './assets/Recoilize-v2.png';
-const App: React.FC = () => {
-  const dispatch = useAppDispatch();
+/* <----- import containers to be used in app -----> */
+import { MainContainer } from '../Containers/MainContainer';
+import { ModuleNotFoundContainer } from '../Containers/ModuleNotFoundContainer';
 
-  // useState hook to update the snapshotHistory array
-  // array of snapshots
+/* <----- import slices to be used in app -----> */
+import { setAtomsAndSelectors } from '../state-management/slices/AtomsAndSelectorsSlice';
+import { updateFilter, selectFilterState } from '../state-management/slices/FilterSlice';
+import { addSelected, setSelected } from '../state-management/slices/SelectedSlice';
+import { setSnapshotHistory, setRenderIndex, setCleanComponentAtomTree } from '../state-management/slices/SnapshotSlice';
+
+
+const App = () => {
+  const dispatch = useAppDispatch(); 
+
+  // snapshotHistory contains the history of the app's state
   const snapshotHistory = useAppSelector(
-    state => state.snapshot.snapshotHistory,
+    state => state.snapshot.snapshotHistory
+  ); 
+
+  const renderIndex = useAppSelector(
+    state => state.snapshot.renderIndex
   );
-  const renderIndex = useAppSelector(state => state.snapshot.renderIndex);
-  const selected = useAppSelector(state => state.selected.selectedData);
-  // selected will be an array with objects containing filteredSnapshot key names (the atoms and selectors)
-  // ex: [{name: 'Atom1'}, {name: 'Atom2'}, {name: 'Selector1'}, ...]
-  // const [selected, setSelected] = useState<selectedTypes[]>([]);
 
-  // todo: Create algo that will clean up the big setSnapshothistory object, now and before
-  // ! Setting up the selected
-  const filterData = useAppSelector(selectFilterState);
+  /* selected will be an array with objects containing filteredSnapshot key names (atoms and selectors)
+    ex: 
+    [
+      {name: 'Atom1'},
+      {name: 'Atom2'},
+      {name: 'Selector1'},
+      ...
+    ]
+    (?.20?? ??)
+  */
+  
+  const selected = useAppSelector(
+    state => state.selected.selectedData
+  ); 
 
-  // Whenever snapshotHistory changes, useEffect will run, and selected will be updated
+ 
+  // initial state of filterData is an empty array. with each state change, the items that have changed are ALL that is added to this array. for example: tic-tac-toe -> if player X decides to play square 0, the nextPlayer (which was O) is updated, the contents of square 0 are updated. nothing else is included in the array (5.2023)
+  const filterData = useAppSelector(selectFilterState); 
+
+
+  /* <----- UPDATE SELECTED STATE IN SNAPSHOT CONTAINER -----> */
+  // automatically updates the state that is selected in the snapshot container (on left, where time and jump are displayed) to the most recent state (5.2023) 
   useEffect(() => {
-    // whenever snapshotHistory changes, update renderIndex
     dispatch(setRenderIndex(snapshotHistory.length - 1));
-
+    
     let last;
     if (snapshotHistory[renderIndex]) {
+      // updating the last state each time this useEffect is called
       last = snapshotHistory[renderIndex].filteredSnapshot;
-    }
-    // we must compare with the original
+    };
+
+    // compare with first snapshot that was taken (original)
     for (let key in last) {
+      // only push if name (key) does not exist
       if (!snapshotHistory[0].filteredSnapshot[key]) {
-        // only push if the name doesn't already exist
         const check = () => {
           for (let i = 0; i < selected.length; i++) {
-            // break if it exists
-            if (selected[i].name === key) {
-              return true;
-            }
-          }
-          // does not exist
+            // break if name exists
+            return true;
+          };
           return false;
         };
+        // new key is added if check returns false
         if (!check()) {
-          // console.log('after Check');
           dispatch(addSelected({name: key}));
         }
       }
     }
-  }, [snapshotHistory]); // Only re-run the effect if snapshot history changes -- react hooks
+  }, [snapshotHistory]);
 
-  //Update cleanComponentAtomTree as Render Index changes
 
+  /* <----- UPDATING cleanComponentAtomTres AS renderIndex CHANGES -----> */
   useEffect(() => {
     if (snapshotHistory.length === 0) return;
-    dispatch(
-      setCleanComponentAtomTree(snapshotHistory[renderIndex].componentAtomTree),
-    );
+    dispatch(setCleanComponentAtomTree(snapshotHistory[renderIndex].componentAtomTree));
   }, [renderIndex]);
 
-  // useEffect for snapshotHistory
+
+  /* <----- SNAPSHOTHISTORY -----> */
   useEffect(() => {
-    // SETUP connection to bg script
+    // SETUP connection to background script AKA service_worker script
     const backgroundConnection = chrome.runtime.connect();
-    // INITIALIZE connection to bg script
+    // INITIALIZE connection to background script AKA service_worker script
     backgroundConnection.postMessage({
       action: 'devToolInitialized',
       tabId: chrome.devtools.inspectedWindow.tabId,
     });
     // console.log(
-    //   'here is the background connection post message IN APP',
-    //   backgroundConnection,
+    //   'here is the service_worker (previously known as background script) connection post message IN APP',
+    //   service_worker,
     // );
-    // LISTEN for messages FROM bg script
+
+    // LISTEN for messages FROM service_worker AKA background script
     backgroundConnection.onMessage.addListener(msg => {
       if (msg.action === 'recordSnapshot') {
         // ! sets the initial selected
-        //console.log('should have our atoms and selectors: ', msg.payload);
+        // console.log('should have our atoms and selectors: ', msg.payload);
+
+        /*
+        R4 - the following checks to see if element 1 exists,
+        BUT i suspect, it should check is element 0 zero exists
+        meaning that there isn't any elemenets in the array
+        */
+
         if (!msg.payload[1]) {
-          // ensures we only set initially
           const arr: selectedTypes[] = [];
           for (let key in msg.payload[0].filteredSnapshot) {
             arr.push({name: key});
           }
-          // setSelected(arr);
-          //console.log('arr in App.tsx send to setSelected', arr)
           dispatch(setSelected(arr));
         }
-        // console.log(
-        //   'this is snapshotHistory',
-        //   msg.payload[msg.payload.length - 1],
-        // );
         dispatch(setSnapshotHistory(msg.payload[msg.payload.length - 1]));
-
-        // update state with the atoms and selectors!!!
+        // update state with atoms and selectors
         dispatch(setAtomsAndSelectors(msg.payload[0].atomsAndSelectors));
-        
-        //console.log('Payload: IS IT HERE??, ', msg.payload);
 
-        // ! Setting the FILTER Array
+        // setting the filter array
         if (!msg.payload[1] && filterData.length === 0) {
-          // todo: currently the filter does not work if recoilize is not open, we must change msg.payload to incorporate delta function in the backend
+          // todo: currently the filter does not work if recoilize is not open, we must change msg.payload to incorporate delta function in the backend (0.20?? ??)
           dispatch(updateFilter(msg.payload));
         } else {
-          // push the difference between the objects
+          // push difference between objects (would maybe find alternative?)
           const delta = diff(
             msg.payload[msg.payload.length - 2],
-            msg.payload[msg.payload.length - 1],
+            msg.payload[msg.payload.length - 1]
           );
-          // only push if the snapshot length is chill
           if (filterData.length < msg.payload.length) {
             dispatch(updateFilter([delta]));
           }
-        }
-      }
+        };
+      };
     });
   }, []);
-
-  // Render main container if we have detected a recoil app with the recoilize module passing data
+  
   const renderMainContainer: JSX.Element = <MainContainer />;
+  const renderModuleNotFoundContainer: JSX.Element = <ModuleNotFoundContainer />;
 
-  // Render module not found message if snapHistory is null, this means we have not detected a recoil app with recoilize module installed properly
-  const renderModuleNotFoundContainer: JSX.Element = (
-    <div className="notFoundContainer">
-      <img className="logo" src={LOGO_URL} />
-      <p>
-        Supported only with Recoil apps with the Recoilize NPM module.
-        <br />
-        Please follow the installation instructions at&nbsp;
-        <a
-          target="_blank"
-          href="https://github.com/open-source-labs/Recoilize"
-          rel="noreferrer">
-          Recoilize
-        </a>
-      </p>
-    </div>
-  );
+
+  // if the app has recoilize installed, render the main container. otherwise, render the module not found container (5.2023 KW)
   return (
     <div className="App" key="App">
       {snapshotHistory.length
@@ -164,4 +155,5 @@ const App: React.FC = () => {
     </div>
   );
 };
+
 export default App;

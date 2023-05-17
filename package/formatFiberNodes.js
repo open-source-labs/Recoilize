@@ -1,4 +1,6 @@
-// node parameter should be root of the fiber node tree, can be grapped with startNode from below
+// the below code has not been modified in 2 years. future devs seemed to be converting this file to typescript. all below comments are from 2 years ago (05.2023)
+
+// node parameter should be root of the fiber node tree, can be grabbed with startNode from below
 // const startNode = document.getElementById('root')._reactRootContainer._internalRoot.current;
 
 const formatFiberNodes = node => {
