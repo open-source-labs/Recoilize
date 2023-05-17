@@ -4,57 +4,50 @@
 <img src='./src/extension/build/assets/cover-photo-logo-recoilize.jpg' width=100%>
 </p>
 
-<h1>Debugger for Recoil Applications</h1>
+# Debugger for Recoil Applications
 
 # [![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/oslabs-beta/Recoilize/blob/staging/LICENSE) [![npm version](https://img.shields.io/npm/v/recoilize)](https://www.npmjs.com/package/recoilize) ![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)
 
-[Korean README 한국어](README_KO.md)
+[Korean README 한국어](README_KO.md) --> this README is not up to date with the latest README
 
-<h1> About</h1>
-<p>
-Recoilize is a Chrome Dev Tool meant for debugging applications built with the experimental Recoil.js state management library.
+# About
+
+Recoilize is a Chrome Dev Tool designed for debugging applications built with the Recoil.js state management library.
 
 The tool records Recoil state and allows users to easily debug their applications with features such as: time travel to previous states, visualization of the component graph and display of the atom selector network.
 
-</p>
+Download Recoilize from the [Chrome Store](https://chrome.google.com/webstore/detail/recoilize/jhfmmdhbinleghabnblahfjfalfgidik)
 
-<p>
-Download Recoilize from the <a href='https://chrome.google.com/webstore/detail/recoilize/jhfmmdhbinleghabnblahfjfalfgidik'>Chrome Store</a>
-</p>
 
-<p>Visit the Recoilize <a href='https://www.recoilize.io/'>landing page</a> to demo</p>
+Visit the Recoilize [landing page](https://www.recoilize.io/) to demo
 
-<h2>
-** STILL IN BETA **
-</h2>
 
-<p>Please note that Recoilize is in BETA. We will continue to make improvements and implement fixes but if you find any issues, please dont hesitate to report them in the issues tab or submit a PR and we'll happily take a look.</p>
+## ** STILL IN BETA **
+Please note that Recoilize is in BETA. We will continue to make improvements and implement fixes but if you find any issues, please don't hesitate to report them in the issues tab or submit a PR and we'll happily take a look.
 
-<h1>
-Installation
-</h1>
 
-#### Install Recoilize Module
+# Installation
+## Standard Installation:
 
+Install Recoilize Module (only available as an npm package)
 ```js
 npm install recoilize
 ```
 
 ### ** IMPORTANT **
-
-#### Import RecoilizeDebugger from the Recoilize module
+Import RecoilizeDebugger from the Recoilize module
 
 ```js
 import RecoilizeDebugger from 'recoilize';
 ```
 
-#### Integrate RecoilizeDebugger as a React component within the recoil root:
+Integrate RecoilizeDebugger as a React component within the recoil root:
 
 ```js
 import RecoilizeDebugger from 'recoilize';
 import RecoilRoot from 'recoil';
 
-ReactDOM.render(
+root.render(
   <RecoilRoot>
     <RecoilizeDebugger />
     <App />
@@ -63,9 +56,9 @@ ReactDOM.render(
 );
 ```
 
-#### Please note, Recoilize assumes that the HTML element used to inject your React application has an ID of 'root'. If it does not the HTML element must be passed in as an attribute called 'root' to the RecoilizeDebugger component
+Please note, Recoilize assumes that the HTML element used to inject your React application has an ID of 'root'. If it does not, the HTML element must be passed in as an attribute called 'root' to the RecoilizeDebugger component
 
-#### Example:
+Example:
 
 ```js
 import RecoilizeDebugger from 'recoilize';
@@ -74,7 +67,7 @@ import RecoilRoot from 'recoil';
 //If your app injects on an element with ID of 'app'
 const app = document.getElementById('app');
 
-ReactDOM.render(
+root.render(
   <RecoilRoot>
     <RecoilizeDebugger root={app} />
     <App />
@@ -83,7 +76,8 @@ ReactDOM.render(
 );
 ```
 
-### In order to integrate Next.js applications with RecoilizeDebugger, follow the example below. 
+## Using Next.js:
+In order to integrate Next.js applications with RecoilizeDebugger, follow the example below. 
 
 ```js
 //If your application uses Next.js modify the _app.js as follows
@@ -124,8 +118,8 @@ export default MyApp;
 ```
 
 ## If you would like to use the Testing Window...
-### --Important-- <br>
-<p>formatRecoilizeSelectors is expecting you to update your atoms with writeable selectors. If you are using anything else to update your atom values, they will not be able to be read by the testing window. Furthermore, for atom/selector dependencies to be registered, you have to fire off a change in state before you choose a selector from the dropdown. Choosing a selector too soon will break the page.</p>
+###  --Important--
+formatRecoilizeSelectors is expecting you to update your atoms with writeable selectors. If you are using anything else to update your atom values, they will not be able to be read by the testing window. Furthermore, for atom/selector dependencies to be registered, you have to fire off a change in state before you choose a selector from the dropdown. Choosing a selector too soon will break the page.</p>
 
 <p>First, import formatRecoilizeSelectors from Recoilize.</p>
 
@@ -295,3 +289,11 @@ The flame graph displays the time a component took to render itself, and all of 
 <h4>Jordan Rice <a  href='https://github.com/JordanMRice' target=“_blank”>@github </a><a  href='https://www.linkedin.com/in/theoriginaljordanrice/' target=“_blank”>@linkedin</a> </h4>
 
 <h4>Ryan Wallace <a  href='https://github.com/RWallie' target=“_blank”>@github </a><a  href='https://www.linkedin.com/in/rwallie/' target=“_blank”>@linkedin</a> </h4>
+
+<h4>Alejandro Florez <a  href='https://github.com/AlejandroFlorez' target=“_blank”>@github </a><a  href='https://www.linkedin.com/in/florezalejandro/' target=“_blank”>@linkedin</a> </h4>
+
+X<h4>Anne-lise Emig <a  href='https://github.com/AlejandroFlorez' target=“_blank”>@github </a><a  href='https://www.linkedin.com/in/florezalejandro/' target=“_blank”>@linkedin</a> </h4>
+
+X<h4>Giovana De La Cruz <a  href='https://github.com/AlejandroFlorez' target=“_blank”>@github </a><a  href='https://www.linkedin.com/in/florezalejandro/' target=“_blank”>@linkedin</a> </h4>
+
+<h4>Kasey Wolff <a  href='https://github.com/kaseywolff' target=“_blank”>@github </a><a  href='https://www.linkedin.com/in/kaseywolff/' target=“_blank”>@linkedin</a> </h4>
