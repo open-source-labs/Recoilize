@@ -4,17 +4,17 @@ import {getQueriesForElement, getByText} from '@testing-library/dom';
 import '@testing-library/jest-dom/extend-expect';
 
 import {render, fireEvent} from '@testing-library/react';
-
+import NavBar from '../../../app/components/NavBar/NavBar';
 
 // check that component renders
 it('renders to the dom', () => {
-  const {debug} = render(<Navbar tabsList={[]} />);
+  const {debug} = render(<NavBar tabsList={[]} />);
 });
 
 // pass in test tabs to nav bar component
 it('renders to the dom with the tab name', () => {
   const {getByText} = render(
-    <Navbar tabsList={['testtab1', 'testtab2', 'testtab3']} />,
+    <NavBar tabsList={['testtab1', 'testtab2', 'testtab3']} />,
   );
 
   const tab1 = getByText('testtab1');
@@ -24,7 +24,7 @@ it('renders to the dom with the tab name', () => {
 // test clicking NavBar tab
 it('sets tab when tab is clicked', () => {
   const {getByText} = render(
-    <Navbar
+    <NavBar
       setTab={jest.fn()}
       tab={'testtab1'}
       tabsList={['testtab1', 'testtab2', 'testtab3']}
